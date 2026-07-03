@@ -1,0 +1,25 @@
+{
+  "name": "AshfallCamp.Tests.EditMode",
+  "rootNamespace": "AshfallCamp.Tests.EditMode",
+  "references": [
+    "AshfallCamp.Domain",
+    "AshfallCamp.Application",
+    "AshfallCamp.Infrastructure",
+    "UniTask",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

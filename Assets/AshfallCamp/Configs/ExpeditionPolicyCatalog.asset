@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2fcb8e64d2dd42438fcf13c0bbbd4ee, type: 3}
+  m_Name: ExpeditionPolicyCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.ExpeditionPolicyCatalogSO
+  Policies:
+  - Id: cautious
+    Name: Cautious
+    RiskModifier: 0.8
+    LootModifier: 0.85
+    DurationModifier: 1.15
+    FoodModifier: 1
+    WaterModifier: 1
+    PowerModifier: 0.95
+    NoiseModifier: -1
+  - Id: balanced
+    Name: Balanced
+    RiskModifier: 1
+    LootModifier: 1
+    DurationModifier: 1
+    FoodModifier: 1
+    WaterModifier: 1
+    PowerModifier: 1
+    NoiseModifier: 0
+  - Id: aggressive
+    Name: Aggressive
+    RiskModifier: 1.2
+    LootModifier: 1.1
+    DurationModifier: 0.9
+    FoodModifier: 1
+    WaterModifier: 1
+    PowerModifier: 1.1
+    NoiseModifier: 1
+  - Id: loot_focused
+    Name: Loot Focused
+    RiskModifier: 1.15
+    LootModifier: 1.25
+    DurationModifier: 1.15
+    FoodModifier: 1
+    WaterModifier: 1
+    PowerModifier: 0.95
+    NoiseModifier: 1
+  - Id: ammo_saving
+    Name: Ammo Saving
+    RiskModifier: 0.9
+    LootModifier: 0.95
+    DurationModifier: 1.1
+    FoodModifier: 1
+    WaterModifier: 1
+    PowerModifier: 0.9
+    NoiseModifier: -2

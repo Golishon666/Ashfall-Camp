@@ -1,0 +1,423 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using AshfallCamp.Application;
+using AshfallCamp.Domain;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+
+namespace AshfallCamp.Infrastructure
+{
+    public sealed class ScriptableObjectGameConfigProvider : IGameConfigProvider
+    {
+        private readonly GameConfigDatabaseSO _database;
+        private GameConfigSnapshot _current;
+
+        public ScriptableObjectGameConfigProvider(GameConfigDatabaseSO database)
+        {
+            _database = database;
+        }
+
+        public GameConfigSnapshot Current
+        {
+            get { return _current; }
+        }
+
+        public UniTask<GameConfigSnapshot> LoadAsync(CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            if (_database == null)
+            {
+                throw new InvalidOperationException("GameConfigDatabaseSO is not assigned.");
+            }
+
+            var snapshot = new GameConfigSnapshot();
+            FillResources(snapshot);
+            FillSurvivor(snapshot);
+            FillBackgrounds(snapshot);
+            FillTraits(snapshot);
+            FillPolicies(snapshot);
+            FillZones(snapshot);
+            FillEnemies(snapshot);
+            FillItems(snapshot);
+            FillBuildings(snapshot);
+            FillBalance(snapshot);
+            Validate(snapshot);
+            _current = snapshot;
+            return UniTask.FromResult(snapshot);
+        }
+
+        private void FillResources(GameConfigSnapshot snapshot)
+        {
+            if (_database.Resources == null) return;
+            foreach (var item in _database.Resources.Resources)
+            {
+                AddDefinition(snapshot.Resources, item.Id, new ResourceDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    HasCap = item.HasCap,
+                    StartAmount = item.StartAmount,
+                    StartCap = item.StartCap
+                }, "resources");
+            }
+        }
+
+        private void FillSurvivor(GameConfigSnapshot snapshot)
+        {
+            if (_database.Survivors == null) return;
+            var source = _database.Survivors.StartingSurvivor;
+            snapshot.StartingSurvivor.Name = source.Name;
+            snapshot.StartingSurvivor.BackgroundId = source.BackgroundId;
+            snapshot.StartingSurvivor.TraitIds = new List<string>(source.TraitIds);
+            snapshot.StartingSurvivor.WeaponItemId = source.WeaponItemId;
+            snapshot.StartingSurvivor.Skills = ToDictionary(source.Skills);
+        }
+
+        private void FillBackgrounds(GameConfigSnapshot snapshot)
+        {
+            if (_database.Backgrounds == null) return;
+            foreach (var item in _database.Backgrounds.Backgrounds)
+            {
+                AddDefinition(snapshot.Backgrounds, item.Id, new BackgroundDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    SkillBonuses = ToDictionary(item.SkillBonuses),
+                    StatBonuses = ToDictionary(item.StatBonuses)
+                }, "backgrounds");
+            }
+        }
+
+        private void FillTraits(GameConfigSnapshot snapshot)
+        {
+            if (_database.Traits == null) return;
+            foreach (var item in _database.Traits.Traits)
+            {
+                AddDefinition(snapshot.Traits, item.Id, new TraitDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    StatModifiers = ToDictionary(item.StatModifiers)
+                }, "traits");
+            }
+        }
+
+        private void FillPolicies(GameConfigSnapshot snapshot)
+        {
+            if (_database.Policies == null) return;
+            foreach (var item in _database.Policies.Policies)
+            {
+                AddDefinition(snapshot.Policies, item.Id, new ExpeditionPolicyDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    RiskModifier = item.RiskModifier,
+                    LootModifier = item.LootModifier,
+                    DurationModifier = item.DurationModifier,
+                    FoodModifier = item.FoodModifier,
+                    WaterModifier = item.WaterModifier,
+                    PowerModifier = item.PowerModifier,
+                    NoiseModifier = item.NoiseModifier
+                }, "policies");
+            }
+        }
+
+        private void FillZones(GameConfigSnapshot snapshot)
+        {
+            if (_database.Zones == null) return;
+            foreach (var item in _database.Zones.Zones)
+            {
+                var zone = new ZoneDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    RiskTier = item.RiskTier,
+                    BaseDurationSeconds = item.BaseDurationSeconds,
+                    MinDurationSeconds = item.MinDurationSeconds,
+                    MaxDurationSeconds = item.MaxDurationSeconds,
+                    FoodCostPerSurvivor = item.FoodCostPerSurvivor,
+                    WaterCostPerSurvivor = item.WaterCostPerSurvivor,
+                    RecommendedPower = item.RecommendedPower,
+                    BaseAmbushChance = item.BaseAmbushChance,
+                    RequiredBuildingLevels = ToDictionary(item.RequiredBuildingLevels)
+                };
+                foreach (var entry in item.EnemyTable) zone.EnemyTable.Add(new WeightedEntry { Id = entry.Id, Weight = entry.Weight });
+                foreach (var entry in item.EventTable) zone.EventTable.Add(new WeightedEntry { Id = entry.Id, Weight = entry.Weight });
+                foreach (var entry in item.LootTable) zone.LootTable.Add(new LootTableEntry { ResourceId = entry.ResourceId, Min = entry.Min, Max = entry.Max, Weight = entry.Weight });
+                foreach (var entry in item.UnlockConditions) zone.UnlockConditions.Add(new UnlockCondition { Type = entry.Type, Id = entry.Id, Value = entry.Value });
+                AddDefinition(snapshot.Zones, item.Id, zone, "zones");
+            }
+        }
+
+        private void FillEnemies(GameConfigSnapshot snapshot)
+        {
+            if (_database.Enemies == null) return;
+            foreach (var item in _database.Enemies.Enemies)
+            {
+                AddDefinition(snapshot.Enemies, item.Id, new EnemyDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    MaxHealth = item.MaxHealth,
+                    Armor = item.Armor,
+                    Evasion = item.Evasion,
+                    BaseDamage = item.BaseDamage,
+                    AttackType = item.AttackType,
+                    Accuracy = item.Accuracy,
+                    AttackIntervalSeconds = item.AttackIntervalSeconds,
+                    XpReward = item.XpReward
+                }, "enemies");
+            }
+        }
+
+        private void FillItems(GameConfigSnapshot snapshot)
+        {
+            if (_database.Items == null) return;
+            foreach (var item in _database.Items.Items)
+            {
+                AddDefinition(snapshot.Items, item.Id, new ItemDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Slot = item.Slot,
+                    WeaponType = item.WeaponType,
+                    BaseDamage = item.BaseDamage,
+                    Armor = item.Armor,
+                    AccuracyBonus = item.AccuracyBonus,
+                    CritBonus = item.CritBonus,
+                    NoisePerAttack = item.NoisePerAttack,
+                    MaxDurability = item.MaxDurability,
+                    RepairCostMultiplier = item.RepairCostMultiplier,
+                    CarryCapacityBonus = item.CarryCapacityBonus
+                }, "items");
+            }
+        }
+
+        private void FillBuildings(GameConfigSnapshot snapshot)
+        {
+            if (_database.Buildings == null) return;
+            foreach (var item in _database.Buildings.Buildings)
+            {
+                var building = new BuildingDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    StartingLevel = item.StartingLevel,
+                    StartsUnlocked = item.StartsUnlocked,
+                    AffectedResourceId = item.AffectedResourceId ?? string.Empty,
+                    ProducedResourceId = item.ProducedResourceId ?? string.Empty
+                };
+                foreach (var level in item.Levels)
+                {
+                    building.Levels.Add(new BuildingLevelDefinition
+                    {
+                        Level = level.Level,
+                        Cost = ToDictionary(level.Cost),
+                        SurvivorCap = level.SurvivorCap,
+                        SquadSize = level.SquadSize,
+                        ResourceCap = level.ResourceCap,
+                        ResourcePerMinute = level.ResourcePerMinute
+                    });
+                }
+                AddDefinition(snapshot.Buildings, item.Id, building, "buildings");
+            }
+        }
+
+        private void FillBalance(GameConfigSnapshot snapshot)
+        {
+            if (_database.Balance == null) return;
+            var source = _database.Balance.Balance;
+            snapshot.Balance = new BalanceDefinition
+            {
+                MaxOfflineSeconds = source.MaxOfflineSeconds,
+                SimulationTickSeconds = source.SimulationTickSeconds,
+                CombatTickSeconds = source.CombatTickSeconds,
+                ExpeditionStepSeconds = source.ExpeditionStepSeconds,
+                AutosaveSeconds = source.AutosaveSeconds,
+                ActiveCommandCooldownSeconds = source.ActiveCommandCooldownSeconds,
+                BaseAccuracyMelee = source.BaseAccuracyMelee,
+                BaseAccuracyFirearms = source.BaseAccuracyFirearms,
+                MinHitChance = source.MinHitChance,
+                MaxHitChance = source.MaxHitChance,
+                BaseCritChance = source.BaseCritChance,
+                CritMultiplier = source.CritMultiplier
+            };
+        }
+
+        private static Dictionary<string, int> ToDictionary(List<IntPairData> entries)
+        {
+            var result = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (var entry in entries)
+            {
+                if (!string.IsNullOrWhiteSpace(entry.Id)) result[entry.Id] = entry.Value;
+            }
+            return result;
+        }
+
+        private static void AddDefinition<T>(Dictionary<string, T> items, string id, T value, string label)
+        {
+            if (string.IsNullOrWhiteSpace(id)) throw new InvalidOperationException("Config catalog has empty id: " + label);
+            if (items.ContainsKey(id)) throw new InvalidOperationException("Config catalog has duplicate id: " + label + "/" + id);
+            items[id] = value;
+        }
+
+        private static void Validate(GameConfigSnapshot snapshot)
+        {
+            RequireAny(snapshot.Resources, "resources");
+            RequireAny(snapshot.Backgrounds, "backgrounds");
+            RequireAny(snapshot.Traits, "traits");
+            RequireAny(snapshot.Policies, "policies");
+            RequireAny(snapshot.Zones, "zones");
+            RequireAny(snapshot.Enemies, "enemies");
+            RequireAny(snapshot.Items, "items");
+            RequireAny(snapshot.Buildings, "buildings");
+            if (!snapshot.Policies.ContainsKey("balanced")) throw new InvalidOperationException("Policy catalog must include balanced.");
+            if (!snapshot.Resources.ContainsKey("scrap")) throw new InvalidOperationException("Resource catalog must include scrap.");
+            if (!snapshot.Backgrounds.ContainsKey(snapshot.StartingSurvivor.BackgroundId)) throw new InvalidOperationException("Starting survivor background is missing.");
+            foreach (var traitId in snapshot.StartingSurvivor.TraitIds)
+            {
+                if (!snapshot.Traits.ContainsKey(traitId)) throw new InvalidOperationException("Starting survivor trait is missing: " + traitId);
+            }
+            if (!snapshot.Items.ContainsKey(snapshot.StartingSurvivor.WeaponItemId)) throw new InvalidOperationException("Starting weapon item is missing.");
+            ValidateResources(snapshot);
+            ValidatePolicies(snapshot);
+            ValidateEnemies(snapshot);
+            ValidateItems(snapshot);
+            ValidateBuildings(snapshot);
+            foreach (var zone in snapshot.Zones.Values)
+            {
+                if (zone.BaseDurationSeconds <= 0) throw new InvalidOperationException("Zone duration must be positive: " + zone.Id);
+                if (zone.MinDurationSeconds <= 0 || zone.MaxDurationSeconds < zone.MinDurationSeconds) throw new InvalidOperationException("Zone duration bounds are invalid: " + zone.Id);
+                if (zone.FoodCostPerSurvivor < 0 || zone.WaterCostPerSurvivor < 0) throw new InvalidOperationException("Zone costs cannot be negative: " + zone.Id);
+                foreach (var requirement in zone.RequiredBuildingLevels)
+                {
+                    if (!snapshot.Buildings.ContainsKey(requirement.Key)) throw new InvalidOperationException("Zone requirement references unknown building: " + requirement.Key);
+                    if (requirement.Value < 0) throw new InvalidOperationException("Zone requirement level cannot be negative: " + zone.Id);
+                }
+                foreach (var enemy in zone.EnemyTable)
+                {
+                    if (!snapshot.Enemies.ContainsKey(enemy.Id)) throw new InvalidOperationException("Zone enemy table references unknown enemy: " + enemy.Id);
+                    if (enemy.Weight <= 0) throw new InvalidOperationException("Zone enemy weight must be positive: " + zone.Id);
+                }
+                foreach (var loot in zone.LootTable)
+                {
+                    if (!snapshot.Resources.ContainsKey(loot.ResourceId)) throw new InvalidOperationException("Zone loot references unknown resource: " + loot.ResourceId);
+                    if (loot.Weight <= 0 || loot.Min < 0 || loot.Max < loot.Min) throw new InvalidOperationException("Zone loot entry is invalid: " + zone.Id);
+                }
+                foreach (var condition in zone.UnlockConditions)
+                {
+                    if (condition.Value < 0) throw new InvalidOperationException("Zone unlock value cannot be negative: " + zone.Id);
+                    if (condition.Type == "zone_completions")
+                    {
+                        if (!snapshot.Zones.ContainsKey(condition.Id)) throw new InvalidOperationException("Zone unlock references unknown zone: " + condition.Id);
+                    }
+                    else if (condition.Type == "building_level")
+                    {
+                        if (!snapshot.Buildings.ContainsKey(condition.Id)) throw new InvalidOperationException("Zone unlock references unknown building: " + condition.Id);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Zone unlock has unknown type: " + condition.Type);
+                    }
+                }
+            }
+        }
+
+        private static void ValidateResources(GameConfigSnapshot snapshot)
+        {
+            foreach (var resource in snapshot.Resources.Values)
+            {
+                if (resource.StartAmount < 0) throw new InvalidOperationException("Resource start amount cannot be negative: " + resource.Id);
+                if (resource.HasCap && resource.StartCap < 0) throw new InvalidOperationException("Resource cap cannot be negative: " + resource.Id);
+                if (resource.HasCap && resource.StartAmount > resource.StartCap) throw new InvalidOperationException("Resource starts above cap: " + resource.Id);
+            }
+        }
+
+        private static void ValidatePolicies(GameConfigSnapshot snapshot)
+        {
+            foreach (var policy in snapshot.Policies.Values)
+            {
+                if (policy.RiskModifier <= 0 || policy.LootModifier <= 0 || policy.DurationModifier <= 0 || policy.FoodModifier <= 0 || policy.WaterModifier <= 0 || policy.PowerModifier <= 0)
+                {
+                    throw new InvalidOperationException("Policy modifiers must be positive: " + policy.Id);
+                }
+            }
+
+            if (snapshot.Balance.MaxOfflineSeconds <= 0) throw new InvalidOperationException("Max offline seconds must be positive.");
+            if (snapshot.Balance.SimulationTickSeconds <= 0) throw new InvalidOperationException("Simulation tick seconds must be positive.");
+            if (snapshot.Balance.ExpeditionStepSeconds <= 0) throw new InvalidOperationException("Expedition step seconds must be positive.");
+            if (snapshot.Balance.MinHitChance < 0 || snapshot.Balance.MaxHitChance > 1 || snapshot.Balance.MinHitChance > snapshot.Balance.MaxHitChance)
+            {
+                throw new InvalidOperationException("Hit chance bounds are invalid.");
+            }
+        }
+
+        private static void ValidateEnemies(GameConfigSnapshot snapshot)
+        {
+            foreach (var enemy in snapshot.Enemies.Values)
+            {
+                if (enemy.MaxHealth <= 0) throw new InvalidOperationException("Enemy health must be positive: " + enemy.Id);
+                if (enemy.BaseDamage < 0) throw new InvalidOperationException("Enemy damage cannot be negative: " + enemy.Id);
+                if (enemy.Armor < 0) throw new InvalidOperationException("Enemy armor cannot be negative: " + enemy.Id);
+                if (enemy.Evasion < 0 || enemy.Evasion > 1) throw new InvalidOperationException("Enemy evasion must be 0..1: " + enemy.Id);
+                if (enemy.Accuracy < 0 || enemy.Accuracy > 1) throw new InvalidOperationException("Enemy accuracy must be 0..1: " + enemy.Id);
+            }
+        }
+
+        private static void ValidateItems(GameConfigSnapshot snapshot)
+        {
+            foreach (var item in snapshot.Items.Values)
+            {
+                if (item.BaseDamage < 0) throw new InvalidOperationException("Item damage cannot be negative: " + item.Id);
+                if (item.Armor < 0) throw new InvalidOperationException("Item armor cannot be negative: " + item.Id);
+                if (item.MaxDurability <= 0) throw new InvalidOperationException("Item durability must be positive: " + item.Id);
+                if (item.RepairCostMultiplier < 0) throw new InvalidOperationException("Item repair cost multiplier cannot be negative: " + item.Id);
+            }
+        }
+
+        private static void ValidateBuildings(GameConfigSnapshot snapshot)
+        {
+            foreach (var building in snapshot.Buildings.Values)
+            {
+                if (!string.IsNullOrWhiteSpace(building.AffectedResourceId) && !snapshot.Resources.ContainsKey(building.AffectedResourceId))
+                {
+                    throw new InvalidOperationException("Building affects unknown resource: " + building.Id);
+                }
+
+                if (!string.IsNullOrWhiteSpace(building.ProducedResourceId) && !snapshot.Resources.ContainsKey(building.ProducedResourceId))
+                {
+                    throw new InvalidOperationException("Building produces unknown resource: " + building.Id);
+                }
+
+                if (building.Levels.Count == 0) throw new InvalidOperationException("Building has no levels: " + building.Id);
+                var levels = new HashSet<int>();
+                foreach (var level in building.Levels)
+                {
+                    if (level.Level < 0) throw new InvalidOperationException("Building level cannot be negative: " + building.Id);
+                    if (!levels.Add(level.Level)) throw new InvalidOperationException("Building has duplicate level: " + building.Id + "/" + level.Level);
+                    if (level.SurvivorCap < 0 || level.SquadSize < 0 || level.ResourceCap < 0 || level.ResourcePerMinute < 0) throw new InvalidOperationException("Building level values cannot be negative: " + building.Id);
+                    foreach (var cost in level.Cost)
+                    {
+                        if (!snapshot.Resources.ContainsKey(cost.Key)) throw new InvalidOperationException("Building cost references unknown resource: " + cost.Key);
+                        if (cost.Value < 0) throw new InvalidOperationException("Building cost cannot be negative: " + building.Id);
+                    }
+                }
+
+                if (BuildingSystem.GetLevel(building, building.StartingLevel) == null)
+                {
+                    throw new InvalidOperationException("Building starting level is missing: " + building.Id);
+                }
+            }
+        }
+
+        private static void RequireAny<T>(Dictionary<string, T> items, string label)
+        {
+            if (items.Count == 0) throw new InvalidOperationException("Config catalog is empty: " + label);
+            foreach (var key in items.Keys)
+            {
+                if (string.IsNullOrWhiteSpace(key)) throw new InvalidOperationException("Config catalog has empty id: " + label);
+            }
+        }
+    }
+}

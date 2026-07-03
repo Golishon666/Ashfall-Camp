@@ -1,0 +1,21 @@
+{
+  "name": "AshfallCamp.Composition",
+  "rootNamespace": "AshfallCamp.Composition",
+  "references": [
+    "AshfallCamp.Domain",
+    "AshfallCamp.Application",
+    "AshfallCamp.Infrastructure",
+    "AshfallCamp.Presentation",
+    "UniTask",
+    "VContainer"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

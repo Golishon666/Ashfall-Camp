@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bc61006db636d9419bd7e2bdb691a83, type: 3}
+  m_Name: ItemCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.ItemCatalogSO
+  Items:
+  - Id: rusty_knife
+    Name: Rusty Knife
+    Slot: 0
+    WeaponType: 1
+    BaseDamage: 4
+    Armor: 0
+    AccuracyBonus: 0.02
+    CritBonus: 0.01
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: metal_pipe
+    Name: Metal Pipe
+    Slot: 0
+    WeaponType: 1
+    BaseDamage: 6
+    Armor: 0
+    AccuracyBonus: 0
+    CritBonus: 0.01
+    NoisePerAttack: 0
+    MaxDurability: 90
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: machete
+    Name: Machete
+    Slot: 0
+    WeaponType: 1
+    BaseDamage: 9
+    Armor: 0
+    AccuracyBonus: -0.01
+    CritBonus: 0.02
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: rusty_revolver
+    Name: Rusty Revolver
+    Slot: 0
+    WeaponType: 2
+    BaseDamage: 10
+    Armor: 0
+    AccuracyBonus: -0.03
+    CritBonus: 0.04
+    NoisePerAttack: 3
+    MaxDurability: 60
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: sawn_off_shotgun
+    Name: Sawn-off Shotgun
+    Slot: 0
+    WeaponType: 2
+    BaseDamage: 16
+    Armor: 0
+    AccuracyBonus: -0.08
+    CritBonus: 0.03
+    NoisePerAttack: 5
+    MaxDurability: 50
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: hunting_rifle
+    Name: Hunting Rifle
+    Slot: 0
+    WeaponType: 2
+    BaseDamage: 14
+    Armor: 0
+    AccuracyBonus: 0.04
+    CritBonus: 0.05
+    NoisePerAttack: 3
+    MaxDurability: 70
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: leather_jacket
+    Name: Leather Jacket
+    Slot: 1
+    WeaponType: 0
+    BaseDamage: 0
+    Armor: 1
+    AccuracyBonus: 0
+    CritBonus: 0
+    NoisePerAttack: 0
+    MaxDurability: 100
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: scrap_armor
+    Name: Scrap Armor
+    Slot: 1
+    WeaponType: 0
+    BaseDamage: 0
+    Armor: 3
+    AccuracyBonus: 0
+    CritBonus: 0
+    NoisePerAttack: 0
+    MaxDurability: 120
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: medkit
+    Name: Medkit
+    Slot: 2
+    WeaponType: 0
+    BaseDamage: 0
+    Armor: 0
+    AccuracyBonus: 0
+    CritBonus: 0
+    NoisePerAttack: 0
+    MaxDurability: 1
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: toolkit
+    Name: Toolkit
+    Slot: 2
+    WeaponType: 0
+    BaseDamage: 0
+    Armor: 0
+    AccuracyBonus: 0
+    CritBonus: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: ammo_pack
+    Name: Ammo Pack
+    Slot: 2
+    WeaponType: 0
+    BaseDamage: 0
+    Armor: 0
+    AccuracyBonus: 0
+    CritBonus: 0
+    NoisePerAttack: 0
+    MaxDurability: 1
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 0
+  - Id: backpack
+    Name: Backpack
+    Slot: 2
+    WeaponType: 0
+    BaseDamage: 0
+    Armor: 0
+    AccuracyBonus: 0
+    CritBonus: 0
+    NoisePerAttack: 0
+    MaxDurability: 100
+    RepairCostMultiplier: 1
+    CarryCapacityBonus: 10

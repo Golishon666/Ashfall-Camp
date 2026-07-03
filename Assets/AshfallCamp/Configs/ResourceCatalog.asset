@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be765bc2bcf7ea34bb3e8842a04bd674, type: 3}
+  m_Name: ResourceCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.ResourceCatalogSO
+  Resources:
+  - Id: scrap
+    Name: Scrap
+    HasCap: 0
+    StartAmount: 15
+    StartCap: 0
+  - Id: food
+    Name: Food
+    HasCap: 1
+    StartAmount: 8
+    StartCap: 50
+  - Id: water
+    Name: Water
+    HasCap: 1
+    StartAmount: 6
+    StartCap: 40
+  - Id: weapon_parts
+    Name: Weapon Parts
+    HasCap: 0
+    StartAmount: 0
+    StartCap: 0
+  - Id: medicine
+    Name: Medicine
+    HasCap: 1
+    StartAmount: 1
+    StartCap: 20

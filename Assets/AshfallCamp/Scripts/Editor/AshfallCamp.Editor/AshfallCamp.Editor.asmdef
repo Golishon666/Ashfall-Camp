@@ -1,0 +1,26 @@
+{
+  "name": "AshfallCamp.Editor",
+  "rootNamespace": "AshfallCamp.Editor",
+  "references": [
+    "AshfallCamp.Domain",
+    "AshfallCamp.Application",
+    "AshfallCamp.Infrastructure",
+    "AshfallCamp.Presentation",
+    "AshfallCamp.Composition",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI",
+    "UniTask",
+    "VContainer"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582094b0936aea4499de10f8abed253a, type: 3}
+  m_Name: TraitCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.TraitCatalogSO
+  Traits:
+  - Id: brave
+    Name: Brave
+    StatModifiers:
+    - Id: morale
+      Value: 10
+  - Id: coward
+    Name: Coward
+    StatModifiers:
+    - Id: morale
+      Value: -10
+  - Id: careful
+    Name: Careful
+    StatModifiers: []
+  - Id: greedy
+    Name: Greedy
+    StatModifiers: []
+  - Id: lucky
+    Name: Lucky
+    StatModifiers: []
+  - Id: trigger_happy
+    Name: Trigger Happy
+    StatModifiers: []
+  - Id: tough
+    Name: Tough
+    StatModifiers:
+    - Id: max_health
+      Value: 15
+  - Id: old_injury
+    Name: Old Injury
+    StatModifiers: []
+  - Id: quiet
+    Name: Quiet
+    StatModifiers: []
+  - Id: clumsy
+    Name: Clumsy
+    StatModifiers: []

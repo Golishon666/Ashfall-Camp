@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e357daaa8f54243a92cbf75281fa86, type: 3}
+  m_Name: BackgroundCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.BackgroundCatalogSO
+  Backgrounds:
+  - Id: scavenger
+    Name: Scavenger
+    SkillBonuses:
+    - Id: scavenging
+      Value: 3
+    - Id: survival
+      Value: 1
+    StatBonuses:
+    - Id: carry_capacity
+      Value: 5
+  - Id: ex_cop
+    Name: Ex-Cop
+    SkillBonuses:
+    - Id: firearms
+      Value: 3
+    - Id: medicine
+      Value: 1
+    StatBonuses:
+    - Id: combat_morale
+      Value: 5
+  - Id: mechanic
+    Name: Mechanic
+    SkillBonuses:
+    - Id: mechanics
+      Value: 3
+    StatBonuses: []
+  - Id: nurse
+    Name: Nurse
+    SkillBonuses:
+    - Id: medicine
+      Value: 3
+    StatBonuses: []
+  - Id: brawler
+    Name: Brawler
+    SkillBonuses:
+    - Id: melee
+      Value: 3
+    StatBonuses:
+    - Id: max_health
+      Value: 10
+  - Id: hunter
+    Name: Hunter
+    SkillBonuses:
+    - Id: firearms
+      Value: 2
+    - Id: survival
+      Value: 2
+    StatBonuses: []

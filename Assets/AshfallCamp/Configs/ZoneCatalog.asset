@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df5c751a06eb1e3459215bc6a33af09e, type: 3}
+  m_Name: ZoneCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.ZoneCatalogSO
+  Zones:
+  - Id: abandoned_store
+    Name: Abandoned Store
+    RiskTier: 0
+    BaseDurationSeconds: 45
+    MinDurationSeconds: 30
+    MaxDurationSeconds: 90
+    FoodCostPerSurvivor: 1
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 5
+    BaseAmbushChance: 0.05
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: feral_dog
+      Weight: 60
+    - Id: starving_survivor
+      Weight: 40
+    LootTable:
+    - ResourceId: scrap
+      Min: 4
+      Max: 10
+      Weight: 100
+    - ResourceId: food
+      Min: 1
+      Max: 4
+      Weight: 70
+    EventTable: []
+    UnlockConditions: []
+  - Id: dry_suburb
+    Name: Dry Suburb
+    RiskTier: 0
+    BaseDurationSeconds: 90
+    MinDurationSeconds: 60
+    MaxDurationSeconds: 150
+    FoodCostPerSurvivor: 1
+    WaterCostPerSurvivor: 1
+    RecommendedPower: 8
+    BaseAmbushChance: 0.05
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: feral_dog
+      Weight: 50
+    - Id: mutant_stray
+      Weight: 50
+    LootTable:
+    - ResourceId: scrap
+      Min: 5
+      Max: 12
+      Weight: 100
+    - ResourceId: water
+      Min: 1
+      Max: 5
+      Weight: 80
+    EventTable: []
+    UnlockConditions:
+    - Type: zone_completions
+      Id: abandoned_store
+      Value: 2
+  - Id: ruined_clinic
+    Name: Ruined Clinic
+    RiskTier: 1
+    BaseDurationSeconds: 180
+    MinDurationSeconds: 120
+    MaxDurationSeconds: 260
+    FoodCostPerSurvivor: 2
+    WaterCostPerSurvivor: 1
+    RecommendedPower: 14
+    BaseAmbushChance: 0.12
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: starving_survivor
+      Weight: 50
+    - Id: raider
+      Weight: 50
+    LootTable:
+    - ResourceId: medicine
+      Min: 1
+      Max: 3
+      Weight: 80
+    - ResourceId: scrap
+      Min: 5
+      Max: 14
+      Weight: 100
+    EventTable: []
+    UnlockConditions:
+    - Type: building_level
+      Id: radio_tower
+      Value: 1
+  - Id: police_outpost
+    Name: Police Outpost
+    RiskTier: 1
+    BaseDurationSeconds: 300
+    MinDurationSeconds: 220
+    MaxDurationSeconds: 420
+    FoodCostPerSurvivor: 3
+    WaterCostPerSurvivor: 2
+    RecommendedPower: 22
+    BaseAmbushChance: 0.12
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: raider
+      Weight: 70
+    - Id: armored_raider
+      Weight: 30
+    LootTable:
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 8
+      Weight: 100
+    - ResourceId: scrap
+      Min: 8
+      Max: 18
+      Weight: 70
+    EventTable: []
+    UnlockConditions:
+    - Type: building_level
+      Id: workshop
+      Value: 1
+  - Id: mutant_tunnel
+    Name: Mutant Tunnel
+    RiskTier: 2
+    BaseDurationSeconds: 600
+    MinDurationSeconds: 420
+    MaxDurationSeconds: 780
+    FoodCostPerSurvivor: 4
+    WaterCostPerSurvivor: 3
+    RecommendedPower: 36
+    BaseAmbushChance: 0.2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: mutant_stray
+      Weight: 70
+    - Id: mutant_brute
+      Weight: 30
+    LootTable:
+    - ResourceId: medicine
+      Min: 2
+      Max: 6
+      Weight: 80
+    - ResourceId: scrap
+      Min: 12
+      Max: 30
+      Weight: 100
+    EventTable: []
+    UnlockConditions:
+    - Type: building_level
+      Id: radio_tower
+      Value: 2
