@@ -142,8 +142,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ui_backplate_clean_buildings_01_0
-      $11672$2941
+      name: ui_backplate_clean_buildings_01_0 $11672$2941
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,6 +178,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       ui_backplate_clean_buildings_01_0: -6591242928244036089
+      ui_backplate_clean_buildings_01_0 $11672$2941: -6591242928244036089
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

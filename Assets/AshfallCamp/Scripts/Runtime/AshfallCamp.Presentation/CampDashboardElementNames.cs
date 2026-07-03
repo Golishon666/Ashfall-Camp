@@ -43,6 +43,33 @@ namespace AshfallCamp.Presentation
 
         public const string BottomNavPlate = "BottomNavPlate";
 
+        public const string BrandPrefix = "Brand";
+        public const string ResourceIconPrefix = "Icon_";
+        public const string ResourceLabelPrefix = "Label_";
+        public const string ResourceValuePrefix = "Value_";
+        public const string CampStatusPrefix = "CampStatus";
+        public const string MeterPrefix = "Meter";
+        public const string CampSummaryPrefix = "CampSummary";
+        public const string SummaryPrefix = "Summary";
+        public const string RecentAlertsPrefix = "RecentAlerts";
+        public const string AlertPrefix = "Alert";
+        public const string FilterPrefix = "Filter_";
+        public const string FilterLabelPrefix = "FilterLabel_";
+        public const string BuildingPrefix = "Building";
+        public const string CostIconPrefix = "CostIcon_";
+        public const string CostValuePrefix = "CostValue_";
+        public const string CostMaxPrefix = "CostMax_";
+        public const string EmptyBuildingPrefix = "EmptyBuilding";
+        public const string CampOverviewPrefix = "CampOverview";
+        public const string CampMapPrefix = "CampMap";
+        public const string MapPinPrefix = "MapPin";
+        public const string ActiveExpeditionsPrefix = "ActiveExpeditions";
+        public const string ExpeditionPrefix = "Expedition";
+        public const string RadioIntelPrefix = "RadioIntel";
+        public const string BottomNavPrefix = "BottomNav";
+        public const string NavPrefix = "Nav_";
+        public const string NavLabelPrefix = "NavLabel_";
+
         public const string SummaryPopulation = "population";
         public const string SummaryIdleSurvivors = "idle_survivors";
         public const string SummaryBuildings = "buildings";
