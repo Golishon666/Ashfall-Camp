@@ -25,6 +25,17 @@ namespace AshfallCamp.Infrastructure
     }
 
     [Serializable]
+    public sealed class RecruitableSurvivorConfigData
+    {
+        public string Id;
+        public string Name;
+        public string BackgroundId;
+        public List<string> TraitIds = new List<string>();
+        public string WeaponItemId;
+        public List<IntPairData> Skills = new List<IntPairData>();
+    }
+
+    [Serializable]
     public sealed class BackgroundConfigData
     {
         public string Id;
@@ -145,6 +156,17 @@ namespace AshfallCamp.Infrastructure
         public double MaxHitChance = 0.95;
         public double BaseCritChance = 0.05;
         public double CritMultiplier = 1.75;
+        public string RecruitmentRequiredBuildingId = "radio_tower";
+        public int RecruitmentRequiredBuildingLevel;
+        public string RecruitmentScrapResourceId = "scrap";
+        public string RecruitmentFoodResourceId = "food";
+        public string RecruitmentWaterResourceId = "water";
+        public int RecruitmentBaseScrap = 20;
+        public double RecruitmentScrapExponent = 1.25;
+        public int RecruitmentBaseFood = 2;
+        public int RecruitmentFoodDivisor = 2;
+        public int RecruitmentBaseWater = 2;
+        public int RecruitmentWaterDivisor = 3;
     }
 
     [Serializable]

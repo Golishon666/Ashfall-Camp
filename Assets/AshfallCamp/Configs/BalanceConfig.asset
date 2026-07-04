@@ -25,3 +25,14 @@ MonoBehaviour:
     MaxHitChance: 0.95
     BaseCritChance: 0.05
     CritMultiplier: 1.75
+    RecruitmentRequiredBuildingId: radio_tower
+    RecruitmentRequiredBuildingLevel: 0
+    RecruitmentScrapResourceId: scrap
+    RecruitmentFoodResourceId: food
+    RecruitmentWaterResourceId: water
+    RecruitmentBaseScrap: 20
+    RecruitmentScrapExponent: 1.25
+    RecruitmentBaseFood: 2
+    RecruitmentFoodDivisor: 2
+    RecruitmentBaseWater: 2
+    RecruitmentWaterDivisor: 3

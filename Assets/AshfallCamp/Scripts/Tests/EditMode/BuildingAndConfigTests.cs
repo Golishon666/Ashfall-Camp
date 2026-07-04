@@ -5,6 +5,7 @@ using AshfallCamp.Application;
 using AshfallCamp.Domain;
 using AshfallCamp.Infrastructure;
 using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
 
 namespace AshfallCamp.Tests.EditMode
@@ -128,6 +129,29 @@ namespace AshfallCamp.Tests.EditMode
             DestroyDatabase(database);
         }
 
+        [Test]
+        public void StarterConfigAssetMatchesBootCoreDefaults()
+        {
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>("Assets/AshfallCamp/Configs/GameConfigDatabase.asset");
+            Assert.NotNull(database);
+
+            var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+
+            AssertResource(config, "scrap", 15, false, 0);
+            AssertResource(config, "food", 8, true, 50);
+            AssertResource(config, "water", 6, true, 40);
+            AssertResource(config, "medicine", 1, true, 20);
+            Assert.AreEqual("Mara", config.StartingSurvivor.Name);
+            Assert.AreEqual("rusty_knife", config.StartingSurvivor.WeaponItemId);
+            Assert.GreaterOrEqual(config.RecruitableSurvivors.Count, 6);
+            Assert.IsTrue(config.RecruitableSurvivors.ContainsKey("elias"));
+            Assert.IsTrue(config.Zones.ContainsKey("abandoned_store"));
+            Assert.IsTrue(config.Zones.ContainsKey("dry_suburb"));
+            Assert.IsTrue(config.Zones.ContainsKey("ruined_clinic"));
+            Assert.IsTrue(config.Zones.ContainsKey("police_outpost"));
+            Assert.IsTrue(config.Zones.ContainsKey("mutant_tunnel"));
+        }
+
         private static GameConfigDatabaseSO CreateValidDatabase()
         {
             var database = ScriptableObject.CreateInstance<GameConfigDatabaseSO>();
@@ -146,6 +170,15 @@ namespace AshfallCamp.Tests.EditMode
                 WeaponItemId = "rusty_knife",
                 Skills = new List<IntPairData> { new IntPairData("scavenging", 4), new IntPairData("melee", 1) }
             };
+            database.Survivors.RecruitableSurvivors.Add(new RecruitableSurvivorConfigData
+            {
+                Id = "elias",
+                Name = "Elias",
+                BackgroundId = "scavenger",
+                TraitIds = new List<string> { "careful" },
+                WeaponItemId = "rusty_knife",
+                Skills = new List<IntPairData> { new IntPairData("scavenging", 1), new IntPairData("melee", 1) }
+            });
 
             database.Backgrounds = ScriptableObject.CreateInstance<BackgroundCatalogSO>();
             database.Backgrounds.Backgrounds.Add(new BackgroundConfigData { Id = "scavenger", Name = "Scavenger" });
@@ -174,6 +207,16 @@ namespace AshfallCamp.Tests.EditMode
                     new BuildingLevelConfigData { Level = 1, Cost = new List<IntPairData> { new IntPairData("scrap", 25) }, SurvivorCap = 2, SquadSize = 1 }
                 }
             });
+            database.Buildings.Buildings.Add(new BuildingConfigData
+            {
+                Id = "radio_tower",
+                Name = "Radio Tower",
+                StartsUnlocked = true,
+                Levels = new List<BuildingLevelConfigData>
+                {
+                    new BuildingLevelConfigData { Level = 0 }
+                }
+            });
 
             database.Zones = ScriptableObject.CreateInstance<ZoneCatalogSO>();
             database.Zones.Zones.Add(new ZoneConfigData
@@ -192,6 +235,15 @@ namespace AshfallCamp.Tests.EditMode
             database.Balance = ScriptableObject.CreateInstance<BalanceConfigSO>();
             database.Balance.Balance = new BalanceConfigData();
             return database;
+        }
+
+        private static void AssertResource(GameConfigSnapshot config, string id, int startAmount, bool hasCap, int startCap)
+        {
+            Assert.IsTrue(config.Resources.ContainsKey(id), "Missing resource: " + id);
+            var resource = config.Resources[id];
+            Assert.AreEqual(startAmount, resource.StartAmount, id + " start amount");
+            Assert.AreEqual(hasCap, resource.HasCap, id + " cap flag");
+            Assert.AreEqual(startCap, resource.StartCap, id + " start cap");
         }
 
         private static void DestroyDatabase(GameConfigDatabaseSO database)

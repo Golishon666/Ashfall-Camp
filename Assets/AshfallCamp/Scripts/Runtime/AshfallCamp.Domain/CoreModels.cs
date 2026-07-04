@@ -79,6 +79,7 @@ namespace AshfallCamp.Domain
     {
         public int ExpeditionsCompleted;
         public int ExpeditionsFailed;
+        public int SurvivorsRecruited;
         public int CombatsWon;
         public int CombatsLost;
         public Dictionary<string, int> TotalResourcesGained = new Dictionary<string, int>(StringComparer.Ordinal);
@@ -208,6 +209,20 @@ namespace AshfallCamp.Domain
         public BuildingState Building;
     }
 
+    public sealed class RecruitSurvivorRequest
+    {
+        public uint Seed;
+        public long NowUnixMs;
+    }
+
+    public sealed class RecruitSurvivorResult
+    {
+        public ValidationResult Validation = new ValidationResult();
+        public SurvivorState Survivor;
+        public InventoryItemState Weapon;
+        public Dictionary<string, int> Cost = new Dictionary<string, int>(StringComparer.Ordinal);
+    }
+
     public sealed class OfflineProgressReport
     {
         public double AppliedSeconds;
@@ -226,6 +241,7 @@ namespace AshfallCamp.Domain
         public Dictionary<string, EnemyDefinition> Enemies = new Dictionary<string, EnemyDefinition>(StringComparer.Ordinal);
         public Dictionary<string, ItemDefinition> Items = new Dictionary<string, ItemDefinition>(StringComparer.Ordinal);
         public Dictionary<string, BuildingDefinition> Buildings = new Dictionary<string, BuildingDefinition>(StringComparer.Ordinal);
+        public Dictionary<string, RecruitableSurvivorDefinition> RecruitableSurvivors = new Dictionary<string, RecruitableSurvivorDefinition>(StringComparer.Ordinal);
         public BalanceDefinition Balance = new BalanceDefinition();
         public StartingSurvivorDefinition StartingSurvivor = new StartingSurvivorDefinition();
     }
@@ -372,6 +388,17 @@ namespace AshfallCamp.Domain
         public double MaxHitChance = 0.95;
         public double BaseCritChance = 0.05;
         public double CritMultiplier = 1.75;
+        public string RecruitmentRequiredBuildingId = "radio_tower";
+        public int RecruitmentRequiredBuildingLevel;
+        public string RecruitmentScrapResourceId = "scrap";
+        public string RecruitmentFoodResourceId = "food";
+        public string RecruitmentWaterResourceId = "water";
+        public int RecruitmentBaseScrap = 20;
+        public double RecruitmentScrapExponent = 1.25;
+        public int RecruitmentBaseFood = 2;
+        public int RecruitmentFoodDivisor = 2;
+        public int RecruitmentBaseWater = 2;
+        public int RecruitmentWaterDivisor = 3;
     }
 
     public sealed class StartingSurvivorDefinition
@@ -380,6 +407,16 @@ namespace AshfallCamp.Domain
         public string BackgroundId = "scavenger";
         public List<string> TraitIds = new List<string>();
         public string WeaponItemId = "rusty_knife";
+        public Dictionary<string, int> Skills = new Dictionary<string, int>(StringComparer.Ordinal);
+    }
+
+    public sealed class RecruitableSurvivorDefinition
+    {
+        public string Id = string.Empty;
+        public string Name = string.Empty;
+        public string BackgroundId = string.Empty;
+        public List<string> TraitIds = new List<string>();
+        public string WeaponItemId = string.Empty;
         public Dictionary<string, int> Skills = new Dictionary<string, int>(StringComparer.Ordinal);
     }
 }

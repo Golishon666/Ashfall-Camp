@@ -1,123 +1,143 @@
 using System;
 using System.Collections.Generic;
 using AshfallCamp.Domain;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 namespace AshfallCamp.Presentation
 {
-    internal sealed class BuildingGridView
+    [DisallowMultipleComponent]
+    public sealed class BuildingGridView : MonoBehaviour
     {
-        private readonly CampUiCatalogSO _catalog;
-        private readonly Action<string> _upgradeRequested;
-        private readonly Dictionary<string, BuildingCardView> _cards = new Dictionary<string, BuildingCardView>(StringComparer.Ordinal);
+        [SerializeField] private TextMeshProUGUI title;
+        [SerializeField] private List<FilterBinding> filters = new List<FilterBinding>();
+        [SerializeField] private List<BuildingCardView> cards = new List<BuildingCardView>();
 
-        public BuildingGridView(CampUiCatalogSO catalog, Action<string> upgradeRequested)
+        private readonly Dictionary<string, FilterBinding> _filterLookup = new Dictionary<string, FilterBinding>(StringComparer.Ordinal);
+        private readonly Dictionary<string, BuildingCardView> _cardLookup = new Dictionary<string, BuildingCardView>(StringComparer.Ordinal);
+        private bool _lookupDirty = true;
+        private Action<string> _upgradeRequested;
+
+        public void ConfigureBindings(TextMeshProUGUI titleLabel, IEnumerable<FilterBinding> filterBindings, IEnumerable<BuildingCardView> buildingCards)
         {
-            _catalog = catalog;
+            title = titleLabel;
+            filters.Clear();
+            if (filterBindings != null)
+            {
+                filters.AddRange(filterBindings);
+            }
+
+            cards.Clear();
+            if (buildingCards != null)
+            {
+                cards.AddRange(buildingCards);
+            }
+
+            _lookupDirty = true;
+            ApplyUpgradeHandler();
+        }
+
+        public void SetUpgradeHandler(Action<string> upgradeRequested)
+        {
             _upgradeRequested = upgradeRequested;
+            ApplyUpgradeHandler();
         }
 
-        public void Build(VisualElement main)
+        public void Render(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
         {
-            var center = new VisualElement();
-            center.style.flexGrow = 1;
-            center.style.flexDirection = FlexDirection.Column;
-            main.Add(center);
+            if (state == null || config == null || catalog == null) return;
+            EnsureLookup();
 
-            BuildHeader(center);
+            UiText.Set(title, catalog.BuildingScreenTitle);
+            RenderFilters(catalog);
 
-            var grid = new VisualElement();
-            grid.style.flexGrow = 1;
-            grid.style.flexDirection = FlexDirection.Row;
-            grid.style.flexWrap = Wrap.Wrap;
-            grid.style.alignContent = Align.FlexStart;
-            center.Add(grid);
-
-            for (var i = 0; i < _catalog.Buildings.Count; i++)
+            foreach (var entry in catalog.Buildings)
             {
-                var card = new BuildingCardView(_catalog, _catalog.Buildings[i], i, _upgradeRequested);
-                card.Build(grid);
-                _cards[_catalog.Buildings[i].BuildingId] = card;
-            }
-
-            AddEmptyBuildSlot(grid);
-        }
-
-        public void Render(GameState state, GameConfigSnapshot config)
-        {
-            foreach (var card in _cards.Values)
-            {
-                card.Render(state, config);
+                if (entry == null || string.IsNullOrWhiteSpace(entry.BuildingId)) continue;
+                BuildingCardView card;
+                if (_cardLookup.TryGetValue(entry.BuildingId, out card) && card != null)
+                {
+                    card.Render(catalog, entry, state, config);
+                }
             }
         }
 
-        private void BuildHeader(VisualElement parent)
+        private void EnsureLookup()
         {
-            var theme = _catalog.Theme;
-            var header = new VisualElement();
-            header.style.height = 72;
-            header.style.flexDirection = FlexDirection.Row;
-            header.style.alignItems = Align.Center;
-            parent.Add(header);
-
-            var title = new Label(_catalog.BuildingScreenTitle);
-            title.style.fontSize = 42;
-            title.style.color = theme.Teal;
-            title.style.unityFontStyleAndWeight = FontStyle.Bold;
-            title.style.marginRight = 28;
-            header.Add(title);
-
-            foreach (var filter in _catalog.BuildingFilters)
+            if (!_lookupDirty) return;
+            _filterLookup.Clear();
+            foreach (var filter in filters)
             {
-                AddFilterTab(header, filter);
+                if (filter == null || string.IsNullOrWhiteSpace(filter.Id)) continue;
+                _filterLookup[filter.Id] = filter;
+            }
+
+            _cardLookup.Clear();
+            foreach (var card in cards)
+            {
+                if (card == null || string.IsNullOrWhiteSpace(card.BuildingId)) continue;
+                _cardLookup[card.BuildingId] = card;
+            }
+
+            _lookupDirty = false;
+        }
+
+        private void RenderFilters(CampUiCatalogSO catalog)
+        {
+            foreach (var entry in catalog.BuildingFilters)
+            {
+                if (entry == null || string.IsNullOrWhiteSpace(entry.Id)) continue;
+                FilterBinding binding;
+                if (!_filterLookup.TryGetValue(entry.Id, out binding)) continue;
+
+                UiText.Set(binding.Label, entry.Label);
+                if (binding.Panel != null)
+                {
+                    binding.Panel.color = entry.IsActive
+                        ? catalog.Theme.Teal
+                        : new Color(catalog.Theme.PaperDark.r, catalog.Theme.PaperDark.g, catalog.Theme.PaperDark.b, 0.55f);
+                }
+
+                if (binding.Label != null)
+                {
+                    binding.Label.color = entry.IsActive ? catalog.Theme.Paper : catalog.Theme.Ink;
+                }
             }
         }
 
-        private void AddFilterTab(VisualElement parent, FilterUiEntry filter)
+        private void ApplyUpgradeHandler()
         {
-            var theme = _catalog.Theme;
-            var tab = new Label(filter.Label);
-            tab.style.width = 150;
-            tab.style.height = 42;
-            tab.style.marginRight = 10;
-            tab.style.backgroundColor = filter.IsActive ? theme.Teal : new Color(theme.PaperDark.r, theme.PaperDark.g, theme.PaperDark.b, 0.45f);
-            tab.style.color = filter.IsActive ? theme.Paper : theme.Ink;
-            tab.style.unityTextAlign = TextAnchor.MiddleCenter;
-            tab.style.unityFontStyleAndWeight = FontStyle.Bold;
-            UiStyle.SetBorder(tab, theme.Line, 1);
-            UiStyle.SetRadius(tab, 4);
-            parent.Add(tab);
+            foreach (var card in cards)
+            {
+                if (card != null)
+                {
+                    card.SetUpgradeHandler(_upgradeRequested);
+                }
+            }
         }
 
-        private void AddEmptyBuildSlot(VisualElement parent)
+        [Serializable]
+        public sealed class FilterBinding
         {
-            var theme = _catalog.Theme;
-            var slot = new VisualElement();
-            slot.style.width = Length.Percent(32.2f);
-            slot.style.height = 292;
-            slot.style.backgroundColor = new Color(0.86f, 0.78f, 0.62f, 0.16f);
-            slot.style.alignItems = Align.Center;
-            slot.style.justifyContent = Justify.Center;
-            UiStyle.SetBorder(slot, new Color(0.43f, 0.33f, 0.22f, 0.22f), 1);
-            UiStyle.SetRadius(slot, 4);
-            parent.Add(slot);
+            [SerializeField] private string id;
+            [SerializeField] private Image panel;
+            [SerializeField] private TextMeshProUGUI label;
 
-            var plus = new Label("+");
-            plus.style.width = 70;
-            plus.style.height = 70;
-            UiStyle.SetBorder(plus, theme.MutedInk, 2);
-            plus.style.color = theme.MutedInk;
-            plus.style.fontSize = 44;
-            plus.style.unityTextAlign = TextAnchor.MiddleCenter;
-            UiStyle.SetRadius(plus, 35);
-            slot.Add(plus);
+            public FilterBinding()
+            {
+            }
 
-            var text = new Label(_catalog.EmptyBuildingTitle);
-            text.style.marginTop = 14;
-            text.style.color = theme.Ink;
-            text.style.unityFontStyleAndWeight = FontStyle.Bold;
-            slot.Add(text);
+            public FilterBinding(string id, Image panel, TextMeshProUGUI label)
+            {
+                this.id = id;
+                this.panel = panel;
+                this.label = label;
+            }
+
+            public string Id { get { return id; } }
+            public Image Panel { get { return panel; } }
+            public TextMeshProUGUI Label { get { return label; } }
         }
     }
 }

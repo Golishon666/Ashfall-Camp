@@ -33,6 +33,11 @@ namespace AshfallCamp.Application
         UniTask<BuildingUpgradeResult> ExecuteAsync(string buildingId, CancellationToken ct);
     }
 
+    public interface IRecruitSurvivorUseCase
+    {
+        UniTask<RecruitSurvivorResult> ExecuteAsync(RecruitSurvivorRequest request, CancellationToken ct);
+    }
+
     public interface ITickGameUseCase
     {
         UniTask ExecuteAsync(double deltaSeconds, CancellationToken ct);
@@ -51,8 +56,21 @@ namespace AshfallCamp.Application
 
     public interface ISaveRepository
     {
-        UniTask<GameState> LoadAsync(CancellationToken ct);
+        UniTask<SaveRepositoryLoadResult> LoadAsync(CancellationToken ct);
         UniTask SaveAsync(GameState state, CancellationToken ct);
+    }
+
+    public interface IUnixTimeProvider
+    {
+        long NowUnixMs { get; }
+    }
+
+    public sealed class SystemUnixTimeProvider : IUnixTimeProvider
+    {
+        public long NowUnixMs
+        {
+            get { return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(); }
+        }
     }
 
     public sealed class LoadGameResult
@@ -61,6 +79,12 @@ namespace AshfallCamp.Application
         public bool CreatedNew;
         public bool UsedBackup;
         public string Message = string.Empty;
+    }
+
+    public sealed class SaveRepositoryLoadResult
+    {
+        public GameState State;
+        public bool UsedBackup;
     }
 
     public sealed class GameStateStore : IGameStateReader, IGameStateWriter, IDisposable
@@ -162,6 +186,36 @@ namespace AshfallCamp.Application
             await _writer.MutateAsync(state =>
             {
                 _lastResult = BuildingSystem.Upgrade(state, _configs.Current, buildingId);
+                return state;
+            }, ct);
+            return _lastResult;
+        }
+    }
+
+    public sealed class RecruitSurvivorUseCase : IRecruitSurvivorUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private readonly IGameConfigProvider _configs;
+        private RecruitSurvivorResult _lastResult;
+
+        public RecruitSurvivorUseCase(IGameStateWriter writer, IGameConfigProvider configs)
+        {
+            _writer = writer;
+            _configs = configs;
+        }
+
+        public async UniTask<RecruitSurvivorResult> ExecuteAsync(RecruitSurvivorRequest request, CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            if (_configs.Current == null)
+            {
+                await _configs.LoadAsync(ct);
+            }
+
+            _lastResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _lastResult = RecruitmentSystem.Recruit(state, _configs.Current, request);
                 return state;
             }, ct);
             return _lastResult;
@@ -308,7 +362,8 @@ namespace AshfallCamp.Application
         {
             ct.ThrowIfCancellationRequested();
             var config = await _configs.LoadAsync(ct);
-            var loaded = await _repository.LoadAsync(ct);
+            var repositoryResult = await _repository.LoadAsync(ct);
+            var loaded = repositoryResult != null ? repositoryResult.State : null;
             var result = new LoadGameResult();
             if (loaded == null)
             {
@@ -318,9 +373,10 @@ namespace AshfallCamp.Application
             }
             else
             {
+                result.UsedBackup = repositoryResult != null && repositoryResult.UsedBackup;
                 Migrate(loaded);
                 EnsureConfiguredState(loaded, config);
-                result.Message = "Loaded Ashfall Camp save.";
+                result.Message = result.UsedBackup ? "Loaded Ashfall Camp backup save." : "Loaded Ashfall Camp save.";
             }
 
             BuildingSystem.ApplyAllBuildingEffects(loaded, config);

@@ -60,7 +60,7 @@ namespace AshfallCamp.Domain
 
     public static class GameStateFactory
     {
-        private static readonly string[] SkillIds =
+        public static readonly string[] SkillIds =
         {
             "scavenging", "melee", "firearms", "survival", "mechanics", "medicine"
         };
@@ -108,12 +108,34 @@ namespace AshfallCamp.Domain
             var weapon = CreateItemState(config.StartingSurvivor.WeaponItemId, config, "item_1");
             state.Inventory.Add(weapon);
 
+            var survivor = CreateSurvivorState(
+                "survivor_1",
+                config.StartingSurvivor.Name,
+                config.StartingSurvivor.BackgroundId,
+                config.StartingSurvivor.TraitIds,
+                config.StartingSurvivor.Skills,
+                config);
+            survivor.Equipment.WeaponItemUid = weapon.Uid;
+            weapon.EquippedBySurvivorId = survivor.Id;
+            state.Survivors.Add(survivor);
+            state.NextId = 2;
+            return state;
+        }
+
+        public static SurvivorState CreateSurvivorState(
+            string survivorId,
+            string name,
+            string backgroundId,
+            List<string> traitIds,
+            Dictionary<string, int> skills,
+            GameConfigSnapshot config)
+        {
             var survivor = new SurvivorState
             {
-                Id = "survivor_1",
-                Name = config.StartingSurvivor.Name,
-                BackgroundId = config.StartingSurvivor.BackgroundId,
-                TraitIds = new List<string>(config.StartingSurvivor.TraitIds),
+                Id = survivorId ?? string.Empty,
+                Name = name ?? string.Empty,
+                BackgroundId = backgroundId ?? string.Empty,
+                TraitIds = traitIds == null ? new List<string>() : new List<string>(traitIds),
                 Health = 30,
                 MaxHealth = 30,
                 Morale = 50
@@ -125,21 +147,20 @@ namespace AshfallCamp.Domain
                 survivor.SkillXp[skillId] = 0;
             }
 
-            foreach (var pair in config.StartingSurvivor.Skills)
+            if (skills != null)
             {
-                survivor.Skills[pair.Key] = pair.Value;
+                foreach (var pair in skills)
+                {
+                    survivor.Skills[pair.Key] = pair.Value;
+                }
             }
 
             ApplyBackground(survivor, config);
             ApplyTraits(survivor, config);
-            survivor.Equipment.WeaponItemUid = weapon.Uid;
-            weapon.EquippedBySurvivorId = survivor.Id;
-            state.Survivors.Add(survivor);
-            state.NextId = 2;
-            return state;
+            return survivor;
         }
 
-        private static InventoryItemState CreateItemState(string itemId, GameConfigSnapshot config, string uid)
+        public static InventoryItemState CreateItemState(string itemId, GameConfigSnapshot config, string uid)
         {
             ItemDefinition item;
             if (!config.Items.TryGetValue(itemId, out item))
@@ -241,6 +262,152 @@ namespace AshfallCamp.Domain
         {
             int amount;
             return state.Resources.TryGetValue(resourceId, out amount) ? amount : 0;
+        }
+    }
+
+    public static class RecruitmentSystem
+    {
+        public static ValidationResult ValidateBroadcast(GameState state, GameConfigSnapshot config)
+        {
+            var result = new ValidationResult();
+            if (state == null || config == null)
+            {
+                result.Errors.Add("Recruitment state is missing.");
+                return result;
+            }
+
+            if (state.Survivors.Count >= state.SurvivorCap)
+            {
+                result.Errors.Add("Survivor cap reached.");
+            }
+
+            if (!HasRequiredBuilding(state, config))
+            {
+                result.Errors.Add("Radio tower is not ready.");
+            }
+
+            if (CountAvailableCandidates(state, config) == 0)
+            {
+                result.Errors.Add("No survivor signals available.");
+            }
+
+            if (!ResourceSystem.CanSpend(state, CalculateCost(state, config)))
+            {
+                result.Errors.Add("Not enough resources.");
+            }
+
+            return result;
+        }
+
+        public static RecruitSurvivorResult Recruit(GameState state, GameConfigSnapshot config, RecruitSurvivorRequest request)
+        {
+            var validation = ValidateBroadcast(state, config);
+            var result = new RecruitSurvivorResult
+            {
+                Validation = validation,
+                Cost = CalculateCost(state, config)
+            };
+            if (!validation.IsValid)
+            {
+                return result;
+            }
+
+            var candidate = PickCandidate(state, config, request.Seed);
+            if (candidate == null)
+            {
+                result.Validation.Errors.Add("No survivor signals available.");
+                return result;
+            }
+
+            ResourceSystem.TrySpend(state, result.Cost);
+            var weapon = GameStateFactory.CreateItemState(candidate.WeaponItemId, config, "item_" + state.NextId++);
+            var survivor = GameStateFactory.CreateSurvivorState(
+                "survivor_" + state.NextId++,
+                candidate.Name,
+                candidate.BackgroundId,
+                candidate.TraitIds,
+                candidate.Skills,
+                config);
+
+            survivor.Equipment.WeaponItemUid = weapon.Uid;
+            weapon.EquippedBySurvivorId = survivor.Id;
+            state.Inventory.Add(weapon);
+            state.Survivors.Add(survivor);
+            state.Statistics.SurvivorsRecruited++;
+
+            result.Survivor = survivor;
+            result.Weapon = weapon;
+            return result;
+        }
+
+        public static Dictionary<string, int> CalculateCost(GameState state, GameConfigSnapshot config)
+        {
+            var cost = new Dictionary<string, int>(StringComparer.Ordinal);
+            if (state == null || config == null) return cost;
+
+            var balance = config.Balance;
+            var survivorCount = Math.Max(1, state.Survivors.Count);
+            AddCost(cost, balance.RecruitmentScrapResourceId, (int)Math.Floor(balance.RecruitmentBaseScrap * Math.Pow(survivorCount, balance.RecruitmentScrapExponent)));
+            AddCost(cost, balance.RecruitmentFoodResourceId, balance.RecruitmentBaseFood + survivorCount / Math.Max(1, balance.RecruitmentFoodDivisor));
+            AddCost(cost, balance.RecruitmentWaterResourceId, balance.RecruitmentBaseWater + survivorCount / Math.Max(1, balance.RecruitmentWaterDivisor));
+            return cost;
+        }
+
+        public static int CountAvailableCandidates(GameState state, GameConfigSnapshot config)
+        {
+            var count = 0;
+            foreach (var candidate in config.RecruitableSurvivors.Values)
+            {
+                if (!IsAlreadyRecruited(state, candidate)) count++;
+            }
+
+            return count;
+        }
+
+        private static void AddCost(Dictionary<string, int> cost, string resourceId, int amount)
+        {
+            if (string.IsNullOrWhiteSpace(resourceId) || amount <= 0) return;
+            cost[resourceId] = amount;
+        }
+
+        private static bool HasRequiredBuilding(GameState state, GameConfigSnapshot config)
+        {
+            var requiredId = config.Balance.RecruitmentRequiredBuildingId;
+            if (string.IsNullOrWhiteSpace(requiredId)) return true;
+
+            BuildingState building;
+            return state.Buildings.TryGetValue(requiredId, out building) &&
+                   building.IsUnlocked &&
+                   building.Level >= config.Balance.RecruitmentRequiredBuildingLevel;
+        }
+
+        private static RecruitableSurvivorDefinition PickCandidate(GameState state, GameConfigSnapshot config, uint seed)
+        {
+            var candidates = new List<RecruitableSurvivorDefinition>();
+            foreach (var candidate in config.RecruitableSurvivors.Values)
+            {
+                if (!IsAlreadyRecruited(state, candidate))
+                {
+                    candidates.Add(candidate);
+                }
+            }
+
+            if (candidates.Count == 0) return null;
+            var rng = new SeededRandom(seed == 0 ? (uint)Math.Max(1, state.NextId) * 2654435761u : seed);
+            return candidates[rng.RangeInclusive(0, candidates.Count - 1)];
+        }
+
+        private static bool IsAlreadyRecruited(GameState state, RecruitableSurvivorDefinition candidate)
+        {
+            foreach (var survivor in state.Survivors)
+            {
+                if (string.Equals(survivor.Name, candidate.Name, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 

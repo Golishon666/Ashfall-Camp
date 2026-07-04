@@ -9,23 +9,23 @@ namespace AshfallCamp.Composition
 {
     [ExecuteAlways]
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(UiRootView))]
+    [RequireComponent(typeof(CampDashboardView))]
     public sealed class CampUiPrefabPreview : MonoBehaviour
     {
         [SerializeField] private GameConfigDatabaseSO configDatabase;
-        [SerializeField] private UiRootView uiRootView;
+        [SerializeField] private CampDashboardView dashboardView;
         [SerializeField] private bool renderInEditMode = true;
 
-        public void SetReferences(GameConfigDatabaseSO database, UiRootView view)
+        public void SetReferences(GameConfigDatabaseSO database, CampDashboardView view)
         {
             configDatabase = database;
-            uiRootView = view;
+            dashboardView = view;
             RenderPreview();
         }
 
         private void Reset()
         {
-            uiRootView = GetComponent<UiRootView>();
+            dashboardView = GetComponent<CampDashboardView>();
         }
 
         private void OnEnable()
@@ -55,15 +55,15 @@ namespace AshfallCamp.Composition
             if (this == null) return;
 #endif
             if (UnityEngine.Application.isPlaying || !renderInEditMode || configDatabase == null) return;
-            if (uiRootView == null) uiRootView = GetComponent<UiRootView>();
-            if (uiRootView == null) return;
+            if (dashboardView == null) dashboardView = GetComponent<CampDashboardView>();
+            if (dashboardView == null) return;
 
             try
             {
                 var provider = new ScriptableObjectGameConfigProvider(configDatabase);
                 var config = provider.LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
                 var state = GameStateFactory.CreateNew(config, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
-                uiRootView.Render(state, config);
+                dashboardView.Render(state, config);
             }
             catch (Exception ex)
             {

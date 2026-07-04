@@ -31,3 +31,118 @@ MonoBehaviour:
       Value: 0
     - Id: medicine
       Value: 0
+  RecruitableSurvivors:
+  - Id: elias
+    Name: Elias
+    BackgroundId: ex_cop
+    TraitIds:
+    - brave
+    WeaponItemId: rusty_revolver
+    Skills:
+    - Id: scavenging
+      Value: 1
+    - Id: melee
+      Value: 1
+    - Id: firearms
+      Value: 4
+    - Id: survival
+      Value: 1
+    - Id: mechanics
+      Value: 0
+    - Id: medicine
+      Value: 1
+  - Id: nika
+    Name: Nika
+    BackgroundId: mechanic
+    TraitIds:
+    - careful
+    WeaponItemId: metal_pipe
+    Skills:
+    - Id: scavenging
+      Value: 1
+    - Id: melee
+      Value: 1
+    - Id: firearms
+      Value: 0
+    - Id: survival
+      Value: 1
+    - Id: mechanics
+      Value: 4
+    - Id: medicine
+      Value: 0
+  - Id: june
+    Name: June
+    BackgroundId: nurse
+    TraitIds:
+    - lucky
+    WeaponItemId: rusty_knife
+    Skills:
+    - Id: scavenging
+      Value: 1
+    - Id: melee
+      Value: 1
+    - Id: firearms
+      Value: 0
+    - Id: survival
+      Value: 1
+    - Id: mechanics
+      Value: 0
+    - Id: medicine
+      Value: 4
+  - Id: tomas
+    Name: Tomas
+    BackgroundId: brawler
+    TraitIds:
+    - tough
+    WeaponItemId: metal_pipe
+    Skills:
+    - Id: scavenging
+      Value: 0
+    - Id: melee
+      Value: 4
+    - Id: firearms
+      Value: 0
+    - Id: survival
+      Value: 1
+    - Id: mechanics
+      Value: 0
+    - Id: medicine
+      Value: 0
+  - Id: rhea
+    Name: Rhea
+    BackgroundId: hunter
+    TraitIds:
+    - quiet
+    WeaponItemId: hunting_rifle
+    Skills:
+    - Id: scavenging
+      Value: 1
+    - Id: melee
+      Value: 0
+    - Id: firearms
+      Value: 3
+    - Id: survival
+      Value: 3
+    - Id: mechanics
+      Value: 0
+    - Id: medicine
+      Value: 0
+  - Id: kade
+    Name: Kade
+    BackgroundId: scavenger
+    TraitIds:
+    - greedy
+    WeaponItemId: machete
+    Skills:
+    - Id: scavenging
+      Value: 3
+    - Id: melee
+      Value: 2
+    - Id: firearms
+      Value: 0
+    - Id: survival
+      Value: 1
+    - Id: mechanics
+      Value: 1
+    - Id: medicine
+      Value: 0

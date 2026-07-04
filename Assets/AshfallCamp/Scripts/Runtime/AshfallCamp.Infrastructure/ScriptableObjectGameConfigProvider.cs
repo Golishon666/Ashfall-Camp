@@ -72,6 +72,19 @@ namespace AshfallCamp.Infrastructure
             snapshot.StartingSurvivor.TraitIds = new List<string>(source.TraitIds);
             snapshot.StartingSurvivor.WeaponItemId = source.WeaponItemId;
             snapshot.StartingSurvivor.Skills = ToDictionary(source.Skills);
+
+            foreach (var item in _database.Survivors.RecruitableSurvivors)
+            {
+                AddDefinition(snapshot.RecruitableSurvivors, item.Id, new RecruitableSurvivorDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    BackgroundId = item.BackgroundId,
+                    TraitIds = new List<string>(item.TraitIds),
+                    WeaponItemId = item.WeaponItemId,
+                    Skills = ToDictionary(item.Skills)
+                }, "recruitable survivors");
+            }
         }
 
         private void FillBackgrounds(GameConfigSnapshot snapshot)
@@ -241,7 +254,18 @@ namespace AshfallCamp.Infrastructure
                 MinHitChance = source.MinHitChance,
                 MaxHitChance = source.MaxHitChance,
                 BaseCritChance = source.BaseCritChance,
-                CritMultiplier = source.CritMultiplier
+                CritMultiplier = source.CritMultiplier,
+                RecruitmentRequiredBuildingId = source.RecruitmentRequiredBuildingId,
+                RecruitmentRequiredBuildingLevel = source.RecruitmentRequiredBuildingLevel,
+                RecruitmentScrapResourceId = source.RecruitmentScrapResourceId,
+                RecruitmentFoodResourceId = source.RecruitmentFoodResourceId,
+                RecruitmentWaterResourceId = source.RecruitmentWaterResourceId,
+                RecruitmentBaseScrap = source.RecruitmentBaseScrap,
+                RecruitmentScrapExponent = source.RecruitmentScrapExponent,
+                RecruitmentBaseFood = source.RecruitmentBaseFood,
+                RecruitmentFoodDivisor = source.RecruitmentFoodDivisor,
+                RecruitmentBaseWater = source.RecruitmentBaseWater,
+                RecruitmentWaterDivisor = source.RecruitmentWaterDivisor
             };
         }
 
@@ -282,6 +306,7 @@ namespace AshfallCamp.Infrastructure
             if (!snapshot.Items.ContainsKey(snapshot.StartingSurvivor.WeaponItemId)) throw new InvalidOperationException("Starting weapon item is missing.");
             ValidateResources(snapshot);
             ValidatePolicies(snapshot);
+            ValidateRecruitment(snapshot);
             ValidateEnemies(snapshot);
             ValidateItems(snapshot);
             ValidateBuildings(snapshot);
@@ -350,6 +375,50 @@ namespace AshfallCamp.Infrastructure
             if (snapshot.Balance.MinHitChance < 0 || snapshot.Balance.MaxHitChance > 1 || snapshot.Balance.MinHitChance > snapshot.Balance.MaxHitChance)
             {
                 throw new InvalidOperationException("Hit chance bounds are invalid.");
+            }
+        }
+
+        private static void ValidateRecruitment(GameConfigSnapshot snapshot)
+        {
+            if (snapshot.RecruitableSurvivors.Count == 0) throw new InvalidOperationException("Config catalog is empty: recruitable survivors");
+            if (!string.IsNullOrWhiteSpace(snapshot.Balance.RecruitmentRequiredBuildingId) &&
+                !snapshot.Buildings.ContainsKey(snapshot.Balance.RecruitmentRequiredBuildingId))
+            {
+                throw new InvalidOperationException("Recruitment references unknown building: " + snapshot.Balance.RecruitmentRequiredBuildingId);
+            }
+
+            ValidateRecruitmentResource(snapshot, snapshot.Balance.RecruitmentScrapResourceId);
+            ValidateRecruitmentResource(snapshot, snapshot.Balance.RecruitmentFoodResourceId);
+            ValidateRecruitmentResource(snapshot, snapshot.Balance.RecruitmentWaterResourceId);
+            if (snapshot.Balance.RecruitmentRequiredBuildingLevel < 0) throw new InvalidOperationException("Recruitment building level cannot be negative.");
+            if (snapshot.Balance.RecruitmentBaseScrap < 0 || snapshot.Balance.RecruitmentBaseFood < 0 || snapshot.Balance.RecruitmentBaseWater < 0)
+            {
+                throw new InvalidOperationException("Recruitment base costs cannot be negative.");
+            }
+
+            if (snapshot.Balance.RecruitmentScrapExponent <= 0) throw new InvalidOperationException("Recruitment scrap exponent must be positive.");
+            if (snapshot.Balance.RecruitmentFoodDivisor <= 0 || snapshot.Balance.RecruitmentWaterDivisor <= 0) throw new InvalidOperationException("Recruitment cost divisors must be positive.");
+
+            var names = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var candidate in snapshot.RecruitableSurvivors.Values)
+            {
+                if (string.IsNullOrWhiteSpace(candidate.Name)) throw new InvalidOperationException("Recruitable survivor has empty name: " + candidate.Id);
+                if (!names.Add(candidate.Name)) throw new InvalidOperationException("Recruitable survivor has duplicate name: " + candidate.Name);
+                if (!snapshot.Backgrounds.ContainsKey(candidate.BackgroundId)) throw new InvalidOperationException("Recruitable survivor background is missing: " + candidate.Id);
+                foreach (var traitId in candidate.TraitIds)
+                {
+                    if (!snapshot.Traits.ContainsKey(traitId)) throw new InvalidOperationException("Recruitable survivor trait is missing: " + traitId);
+                }
+
+                if (!snapshot.Items.ContainsKey(candidate.WeaponItemId)) throw new InvalidOperationException("Recruitable survivor weapon item is missing: " + candidate.Id);
+            }
+        }
+
+        private static void ValidateRecruitmentResource(GameConfigSnapshot snapshot, string resourceId)
+        {
+            if (!string.IsNullOrWhiteSpace(resourceId) && !snapshot.Resources.ContainsKey(resourceId))
+            {
+                throw new InvalidOperationException("Recruitment cost references unknown resource: " + resourceId);
             }
         }
 

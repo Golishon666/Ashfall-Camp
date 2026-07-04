@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using AshfallCamp.Application;
+using AshfallCamp.Domain;
 using AshfallCamp.Presentation;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -12,15 +13,26 @@ namespace AshfallCamp.Composition
     public sealed class GameBootstrapper : IAsyncStartable
     {
         private readonly ISaveLoadUseCase _saveLoad;
+        private readonly IOfflineProgressUseCase _offlineProgress;
+        private readonly IUnixTimeProvider _clock;
 
-        public GameBootstrapper(ISaveLoadUseCase saveLoad)
+        public GameBootstrapper(ISaveLoadUseCase saveLoad, IOfflineProgressUseCase offlineProgress, IUnixTimeProvider clock)
         {
             _saveLoad = saveLoad;
+            _offlineProgress = offlineProgress;
+            _clock = clock;
         }
 
         public async UniTask StartAsync(CancellationToken cancellation = default)
         {
-            await _saveLoad.LoadOrCreateAsync(cancellation);
+            var load = await _saveLoad.LoadOrCreateAsync(cancellation);
+            if (load == null || load.CreatedNew || load.State == null) return;
+
+            var report = await _offlineProgress.ExecuteAsync(_clock.NowUnixMs, cancellation);
+            if (report != null && report.AppliedSeconds > 0)
+            {
+                await _saveLoad.SaveAsync(cancellation);
+            }
         }
     }
 
@@ -113,21 +125,29 @@ namespace AshfallCamp.Composition
         private readonly IGameStateReader _reader;
         private readonly IGameConfigProvider _configs;
         private readonly IUpgradeBuildingUseCase _upgradeBuilding;
+        private readonly ILaunchExpeditionUseCase _launchExpedition;
+        private readonly IRecruitSurvivorUseCase _recruitSurvivor;
         private IDisposable _stateSubscription;
         private double _accumulator;
         private bool _isUpgrading;
+        private bool _isLaunching;
+        private bool _isRecruiting;
 
-        public CampHudPresenter(IUiRootView view, IGameStateReader reader, IGameConfigProvider configs, IUpgradeBuildingUseCase upgradeBuilding)
+        public CampHudPresenter(IUiRootView view, IGameStateReader reader, IGameConfigProvider configs, IUpgradeBuildingUseCase upgradeBuilding, ILaunchExpeditionUseCase launchExpedition, IRecruitSurvivorUseCase recruitSurvivor)
         {
             _view = view;
             _reader = reader;
             _configs = configs;
             _upgradeBuilding = upgradeBuilding;
+            _launchExpedition = launchExpedition;
+            _recruitSurvivor = recruitSurvivor;
         }
 
         public void Start()
         {
             _view.UpgradeRequested += OnUpgradeRequested;
+            _view.ExpeditionLaunchRequested += OnExpeditionLaunchRequested;
+            _view.RecruitRequested += OnRecruitRequested;
             _stateSubscription = _reader.State.Subscribe(_ => RenderCurrent());
             RenderCurrent();
         }
@@ -144,6 +164,8 @@ namespace AshfallCamp.Composition
         public void Dispose()
         {
             _view.UpgradeRequested -= OnUpgradeRequested;
+            _view.ExpeditionLaunchRequested -= OnExpeditionLaunchRequested;
+            _view.RecruitRequested -= OnRecruitRequested;
             _stateSubscription?.Dispose();
         }
 
@@ -151,6 +173,18 @@ namespace AshfallCamp.Composition
         {
             if (_isUpgrading) return;
             UpgradeAsync(buildingId).Forget();
+        }
+
+        private void OnExpeditionLaunchRequested(ExpeditionLaunchViewRequest request)
+        {
+            if (_isLaunching || request == null) return;
+            LaunchExpeditionAsync(request).Forget();
+        }
+
+        private void OnRecruitRequested()
+        {
+            if (_isRecruiting) return;
+            RecruitAsync().Forget();
         }
 
         private async UniTaskVoid UpgradeAsync(string buildingId)
@@ -176,6 +210,126 @@ namespace AshfallCamp.Composition
             finally
             {
                 _isUpgrading = false;
+            }
+        }
+
+        private async UniTaskVoid LaunchExpeditionAsync(ExpeditionLaunchViewRequest request)
+        {
+            _isLaunching = true;
+            try
+            {
+                if (_configs.Current == null) return;
+
+                var state = _reader.State.CurrentValue;
+                var survivorIds = SelectIdleSurvivors(state);
+                if (survivorIds.Count == 0)
+                {
+                    Debug.LogWarning("Expedition launch blocked: no idle survivors.");
+                    return;
+                }
+
+                var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                var result = await _launchExpedition.ExecuteAsync(new LaunchExpeditionRequest
+                {
+                    ZoneId = request.ZoneId,
+                    PolicyId = ResolvePolicyId(request.PolicyId, _configs.Current),
+                    SurvivorIds = survivorIds,
+                    Seed = CreateLaunchSeed(state, now),
+                    NowUnixMs = now,
+                    ConfirmWarnings = true
+                }, CancellationToken.None);
+
+                if (!result.Validation.IsValid)
+                {
+                    Debug.LogWarning("Expedition launch blocked: " + string.Join(", ", result.Validation.Errors));
+                }
+
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isLaunching = false;
+            }
+        }
+
+        private async UniTaskVoid RecruitAsync()
+        {
+            _isRecruiting = true;
+            try
+            {
+                if (_configs.Current == null) return;
+
+                var state = _reader.State.CurrentValue;
+                var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                var result = await _recruitSurvivor.ExecuteAsync(new RecruitSurvivorRequest
+                {
+                    Seed = CreateLaunchSeed(state, now),
+                    NowUnixMs = now
+                }, CancellationToken.None);
+
+                if (!result.Validation.IsValid)
+                {
+                    Debug.LogWarning("Recruitment blocked: " + string.Join(", ", result.Validation.Errors));
+                }
+
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isRecruiting = false;
+            }
+        }
+
+        private static System.Collections.Generic.List<string> SelectIdleSurvivors(AshfallCamp.Domain.GameState state)
+        {
+            var result = new System.Collections.Generic.List<string>();
+            var maxCount = Math.Max(1, state.SquadSize);
+            foreach (var survivor in state.Survivors)
+            {
+                if (result.Count >= maxCount) break;
+                if (survivor.State == AshfallCamp.Domain.SurvivorActivityState.Idle)
+                {
+                    result.Add(survivor.Id);
+                }
+            }
+
+            return result;
+        }
+
+        private static string ResolvePolicyId(string requestedPolicyId, AshfallCamp.Domain.GameConfigSnapshot config)
+        {
+            if (!string.IsNullOrWhiteSpace(requestedPolicyId) && config.Policies.ContainsKey(requestedPolicyId))
+            {
+                return requestedPolicyId;
+            }
+
+            foreach (var policyId in config.Policies.Keys)
+            {
+                return policyId;
+            }
+
+            return string.Empty;
+        }
+
+        private static uint CreateLaunchSeed(AshfallCamp.Domain.GameState state, long nowUnixMs)
+        {
+            unchecked
+            {
+                return ((uint)nowUnixMs) ^ ((uint)Math.Max(1, state.NextId) * 2654435761u);
             }
         }
 

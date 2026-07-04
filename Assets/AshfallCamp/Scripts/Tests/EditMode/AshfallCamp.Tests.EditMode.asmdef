@@ -5,6 +5,8 @@
     "AshfallCamp.Domain",
     "AshfallCamp.Application",
     "AshfallCamp.Infrastructure",
+    "AshfallCamp.Composition",
+    "AshfallCamp.Presentation",
     "UniTask",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner"

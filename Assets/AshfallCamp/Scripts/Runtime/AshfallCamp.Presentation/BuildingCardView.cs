@@ -1,192 +1,171 @@
 using System;
 using AshfallCamp.Domain;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 namespace AshfallCamp.Presentation
 {
-    internal sealed class BuildingCardView
+    [DisallowMultipleComponent]
+    public sealed class BuildingCardView : MonoBehaviour
     {
-        private readonly CampUiCatalogSO _catalog;
-        private readonly BuildingUiEntry _entry;
-        private readonly int _index;
-        private readonly Action<string> _upgradeRequested;
-        private readonly BuildingCostRowView _costRow;
+        [SerializeField] private string buildingId;
+        [SerializeField] private TextMeshProUGUI imageLetter;
+        [SerializeField] private RawImage icon;
+        [SerializeField] private TextMeshProUGUI nameLabel;
+        [SerializeField] private TextMeshProUGUI levelLabel;
+        [SerializeField] private TextMeshProUGUI descriptionLabel;
+        [SerializeField] private TextMeshProUGUI effectLabel;
+        [SerializeField] private BuildingCostRowView costRow;
+        [SerializeField] private Button upgradeButton;
+        [SerializeField] private TextMeshProUGUI upgradeLabel;
 
-        private VisualElement _root;
-        private VisualElement _image;
-        private Label _imageLabel;
-        private VisualElement _icon;
-        private Label _nameLabel;
-        private Label _levelLabel;
-        private Label _descriptionLabel;
-        private Label _effectLabel;
-        private Button _button;
+        private Action<string> _upgradeRequested;
+        private bool _buttonWired;
 
-        public BuildingCardView(CampUiCatalogSO catalog, BuildingUiEntry entry, int index, Action<string> upgradeRequested)
+        public string BuildingId { get { return buildingId; } }
+
+        private void Awake()
         {
-            _catalog = catalog;
-            _entry = entry;
-            _index = index;
-            _upgradeRequested = upgradeRequested;
-            _costRow = new BuildingCostRowView(catalog);
+            WireButton();
         }
 
-        public void Build(VisualElement parent)
+        private void OnDestroy()
         {
-            var theme = _catalog.Theme;
-            _root = UiStyle.Panel(string.Empty, theme);
-            _root.style.width = Length.Percent(32.2f);
-            _root.style.height = 292;
-            _root.style.marginRight = Length.Percent(_index % 3 == 2 ? 0 : 1.6f);
-            _root.style.marginBottom = 16;
-            parent.Add(_root);
-
-            var body = new VisualElement();
-            body.style.flexGrow = 1;
-            body.style.flexDirection = FlexDirection.Row;
-            _root.Add(body);
-
-            BuildImage(body, theme);
-            BuildInfo(body, theme);
-
-            _button = UiStyle.CommandButton(_catalog.UpgradeButtonLabel, true, () => _upgradeRequested(_entry.BuildingId), theme);
-            _button.style.width = 126;
-            _button.style.marginRight = 6;
-            _costRow.Build(_root, _button);
-        }
-
-        public void Render(GameState state, GameConfigSnapshot config)
-        {
-            BuildingDefinition definition;
-            BuildingState building;
-            if (!config.Buildings.TryGetValue(_entry.BuildingId, out definition) || !state.Buildings.TryGetValue(_entry.BuildingId, out building))
+            if (upgradeButton != null)
             {
-                _root.style.display = DisplayStyle.None;
+                upgradeButton.onClick.RemoveListener(OnUpgradeClicked);
+            }
+        }
+
+        public void ConfigureBindings(
+            string id,
+            TextMeshProUGUI imageLetterText,
+            RawImage buildingIcon,
+            TextMeshProUGUI buildingName,
+            TextMeshProUGUI buildingLevel,
+            TextMeshProUGUI buildingDescription,
+            TextMeshProUGUI buildingEffect,
+            BuildingCostRowView costRowView,
+            Button button,
+            TextMeshProUGUI buttonLabel)
+        {
+            buildingId = id;
+            imageLetter = imageLetterText;
+            icon = buildingIcon;
+            nameLabel = buildingName;
+            levelLabel = buildingLevel;
+            descriptionLabel = buildingDescription;
+            effectLabel = buildingEffect;
+            costRow = costRowView;
+            upgradeButton = button;
+            upgradeLabel = buttonLabel;
+            _buttonWired = false;
+            WireButton();
+        }
+
+        public void SetUpgradeHandler(Action<string> upgradeRequested)
+        {
+            _upgradeRequested = upgradeRequested;
+            WireButton();
+        }
+
+        public void Render(CampUiCatalogSO catalog, BuildingUiEntry entry, GameState state, GameConfigSnapshot config)
+        {
+            if (catalog == null || entry == null || state == null || config == null || string.IsNullOrWhiteSpace(buildingId))
+            {
+                gameObject.SetActive(false);
                 return;
             }
 
-            _root.style.display = DisplayStyle.Flex;
-            _nameLabel.text = definition.Name;
-            _levelLabel.text = string.Format(_catalog.LevelLabelFormat, building.Level);
-            _descriptionLabel.text = _entry.Description;
-            _effectLabel.text = BuildingEffectTextFormatter.Format(_catalog, definition, building);
-            ApplyVisuals(definition);
-            _costRow.Render(definition, building);
-            UpdateUpgradeButton(state, config, definition, building);
-        }
+            BuildingDefinition definition;
+            BuildingState building;
+            var hasDefinition = config.Buildings.TryGetValue(buildingId, out definition);
+            var hasState = state.Buildings.TryGetValue(buildingId, out building);
+            gameObject.SetActive(hasDefinition && hasState);
+            if (!hasDefinition || !hasState) return;
 
-        private void BuildImage(VisualElement body, CampUiTheme theme)
-        {
-            _image = new VisualElement();
-            _image.style.width = Length.Percent(44);
-            _image.style.height = 150;
-            _image.style.backgroundColor = new Color(0.52f, 0.62f, 0.58f, 0.22f);
-            _image.style.marginRight = 14;
-            _image.style.overflow = Overflow.Hidden;
-            UiStyle.SetBorder(_image, theme.Line, 1);
-            UiStyle.SetRadius(_image, 3);
-            body.Add(_image);
-
-            _imageLabel = new Label(string.Empty);
-            _imageLabel.style.flexGrow = 1;
-            _imageLabel.style.fontSize = 54;
-            _imageLabel.style.color = new Color(0.18f, 0.38f, 0.4f, 0.32f);
-            _imageLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
-            _imageLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
-            _image.Add(_imageLabel);
-        }
-
-        private void BuildInfo(VisualElement body, CampUiTheme theme)
-        {
-            var info = new VisualElement();
-            info.style.flexGrow = 1;
-            body.Add(info);
-
-            var row = new VisualElement();
-            row.style.flexDirection = FlexDirection.Row;
-            row.style.alignItems = Align.Center;
-            info.Add(row);
-
-            _icon = new VisualElement();
-            _icon.style.width = 34;
-            _icon.style.height = 34;
-            _icon.style.backgroundColor = theme.Teal;
-            _icon.style.marginRight = 10;
-            UiStyle.SetRadius(_icon, 3);
-            row.Add(_icon);
-
-            var titleStack = new VisualElement();
-            titleStack.style.flexGrow = 1;
-            row.Add(titleStack);
-
-            _nameLabel = new Label(string.Empty);
-            _nameLabel.style.fontSize = 20;
-            _nameLabel.style.color = theme.Teal;
-            _nameLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
-            titleStack.Add(_nameLabel);
-
-            _levelLabel = new Label(string.Empty);
-            _levelLabel.style.fontSize = 14;
-            _levelLabel.style.color = theme.Ink;
-            titleStack.Add(_levelLabel);
-
-            _descriptionLabel = new Label(string.Empty);
-            _descriptionLabel.style.fontSize = 13;
-            _descriptionLabel.style.whiteSpace = WhiteSpace.Normal;
-            _descriptionLabel.style.color = theme.Ink;
-            _descriptionLabel.style.marginTop = 10;
-            info.Add(_descriptionLabel);
-
-            _effectLabel = new Label(string.Empty);
-            _effectLabel.style.fontSize = 12;
-            _effectLabel.style.whiteSpace = WhiteSpace.Normal;
-            _effectLabel.style.color = theme.MutedInk;
-            _effectLabel.style.marginTop = 8;
-            info.Add(_effectLabel);
-        }
-
-        private void ApplyVisuals(BuildingDefinition definition)
-        {
-            _imageLabel.text = string.IsNullOrEmpty(definition.Name) ? string.Empty : definition.Name.Substring(0, 1).ToUpperInvariant();
-            if (_entry.Image != null)
+            UiText.Set(imageLetter, string.IsNullOrEmpty(definition.Name) ? string.Empty : definition.Name.Substring(0, 1).ToUpperInvariant());
+            FitSingleLineTitle(nameLabel);
+            if (icon != null && entry.Icon != null)
             {
-                UiStyle.TrySetBackground(_image, _entry.Image);
-                _imageLabel.style.display = DisplayStyle.None;
-            }
-            else
-            {
-                _imageLabel.style.display = DisplayStyle.Flex;
+                icon.texture = entry.Icon;
+                icon.color = Color.white;
             }
 
-            if (_entry.Icon != null)
+            UiText.Set(nameLabel, definition.Name);
+            UiText.Set(levelLabel, string.Format(catalog.LevelLabelFormat, building.Level));
+            UiText.Set(descriptionLabel, entry.Description);
+            UiText.Set(effectLabel, BuildingEffectTextFormatter.Format(catalog, definition, building));
+
+            if (costRow != null)
             {
-                UiStyle.TrySetBackground(_icon, _entry.Icon);
+                costRow.Render(catalog, definition, building);
             }
+
+            RenderUpgradeButton(catalog, state, config, definition, building);
         }
 
-        private void UpdateUpgradeButton(GameState state, GameConfigSnapshot config, BuildingDefinition definition, BuildingState building)
+        private void RenderUpgradeButton(CampUiCatalogSO catalog, GameState state, GameConfigSnapshot config, BuildingDefinition definition, BuildingState building)
         {
-            var validation = BuildingSystem.ValidateUpgrade(state, config, definition.Id);
-            if (BuildingSystem.GetLevel(definition, building.Level + 1) == null)
+            var nextLevel = BuildingSystem.GetLevel(definition, building.Level + 1);
+            var label = catalog.UpgradeButtonLabel;
+            var interactable = false;
+
+            if (nextLevel == null)
             {
-                _button.text = _catalog.MaxButtonLabel;
-                _button.SetEnabled(false);
+                label = catalog.MaxButtonLabel;
             }
             else if (!building.IsUnlocked)
             {
-                _button.text = _catalog.LockedButtonLabel;
-                _button.SetEnabled(false);
-            }
-            else if (!validation.IsValid)
-            {
-                _button.text = _catalog.NeedResourcesButtonLabel;
-                _button.SetEnabled(false);
+                label = catalog.LockedButtonLabel;
             }
             else
             {
-                _button.text = _catalog.UpgradeButtonLabel;
-                _button.SetEnabled(true);
+                var validation = BuildingSystem.ValidateUpgrade(state, config, definition.Id);
+                if (validation.IsValid)
+                {
+                    interactable = true;
+                    label = catalog.UpgradeButtonLabel;
+                }
+                else
+                {
+                    label = catalog.NeedResourcesButtonLabel;
+                }
+            }
+
+            UiText.Set(upgradeLabel, label);
+            if (upgradeButton != null)
+            {
+                upgradeButton.interactable = interactable;
+            }
+        }
+
+        private static void FitSingleLineTitle(TextMeshProUGUI label)
+        {
+            if (label == null) return;
+
+            label.textWrappingMode = TextWrappingModes.NoWrap;
+            label.overflowMode = TextOverflowModes.Ellipsis;
+            label.enableAutoSizing = true;
+            label.fontSizeMax = label.fontSize;
+            var readableMinimum = label.fontSize * 0.7f;
+            label.fontSizeMin = label.fontSizeMin > 0f ? Mathf.Min(label.fontSizeMin, readableMinimum) : readableMinimum;
+        }
+
+        private void WireButton()
+        {
+            if (_buttonWired || upgradeButton == null) return;
+            upgradeButton.onClick.RemoveListener(OnUpgradeClicked);
+            upgradeButton.onClick.AddListener(OnUpgradeClicked);
+            _buttonWired = true;
+        }
+
+        private void OnUpgradeClicked()
+        {
+            if (!string.IsNullOrWhiteSpace(buildingId))
+            {
+                _upgradeRequested?.Invoke(buildingId);
             }
         }
     }

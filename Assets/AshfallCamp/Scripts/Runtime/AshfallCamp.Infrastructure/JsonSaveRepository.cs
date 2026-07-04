@@ -27,13 +27,19 @@ namespace AshfallCamp.Infrastructure
             _backupPath = Path.Combine(_folderPath, "save.backup.json");
         }
 
-        public UniTask<GameState> LoadAsync(CancellationToken ct)
+        public UniTask<SaveRepositoryLoadResult> LoadAsync(CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();
             var primary = TryLoad(_savePath);
-            if (primary != null) return UniTask.FromResult(primary);
+            if (primary != null)
+            {
+                return UniTask.FromResult(new SaveRepositoryLoadResult { State = primary });
+            }
+
             var backup = TryLoad(_backupPath);
-            return UniTask.FromResult(backup);
+            return UniTask.FromResult(backup == null
+                ? null
+                : new SaveRepositoryLoadResult { State = backup, UsedBackup = true });
         }
 
         public UniTask SaveAsync(GameState state, CancellationToken ct)
@@ -159,10 +165,17 @@ namespace AshfallCamp.Infrastructure
             public List<IntPairData> Skills = new List<IntPairData>();
             public List<IntPairData> SkillXp = new List<IntPairData>();
             public SurvivorEquipmentSaveData Equipment = new SurvivorEquipmentSaveData();
+            public List<StatusEffectSaveData> StatusEffects = new List<StatusEffectSaveData>();
             public string CurrentExpeditionId;
 
             public static SurvivorSaveData FromState(SurvivorState state)
             {
+                var statusEffects = new List<StatusEffectSaveData>();
+                foreach (var effect in state.StatusEffects)
+                {
+                    statusEffects.Add(StatusEffectSaveData.FromState(effect));
+                }
+
                 return new SurvivorSaveData
                 {
                     Id = state.Id,
@@ -179,13 +192,14 @@ namespace AshfallCamp.Infrastructure
                     Skills = FromDictionary(state.Skills),
                     SkillXp = FromDictionary(state.SkillXp),
                     Equipment = SurvivorEquipmentSaveData.FromState(state.Equipment),
+                    StatusEffects = statusEffects,
                     CurrentExpeditionId = state.CurrentExpeditionId
                 };
             }
 
             public SurvivorState ToState()
             {
-                return new SurvivorState
+                var survivor = new SurvivorState
                 {
                     Id = Id,
                     Name = Name,
@@ -203,6 +217,33 @@ namespace AshfallCamp.Infrastructure
                     Equipment = Equipment != null ? Equipment.ToState() : new SurvivorEquipmentState(),
                     CurrentExpeditionId = CurrentExpeditionId
                 };
+
+                if (StatusEffects != null)
+                {
+                    foreach (var effect in StatusEffects)
+                    {
+                        survivor.StatusEffects.Add(effect.ToState());
+                    }
+                }
+
+                return survivor;
+            }
+        }
+
+        [Serializable]
+        private sealed class StatusEffectSaveData
+        {
+            public string Id;
+            public double RemainingSeconds;
+
+            public static StatusEffectSaveData FromState(StatusEffectState state)
+            {
+                return new StatusEffectSaveData { Id = state.Id, RemainingSeconds = state.RemainingSeconds };
+            }
+
+            public StatusEffectState ToState()
+            {
+                return new StatusEffectState { Id = Id, RemainingSeconds = RemainingSeconds };
             }
         }
 
@@ -344,12 +385,26 @@ namespace AshfallCamp.Infrastructure
             public ExpeditionStatus Status;
             public uint RandomState;
             public int Noise;
+            public List<ExpeditionLogSaveData> Log = new List<ExpeditionLogSaveData>();
             public List<IntPairData> AccumulatedLoot = new List<IntPairData>();
+            public List<InventoryItemSaveData> FoundItems = new List<InventoryItemSaveData>();
             public List<IntPairData> EnemiesDefeated = new List<IntPairData>();
             public List<string> WoundedSurvivorIds = new List<string>();
 
             public static ExpeditionSaveData FromState(ExpeditionState state)
             {
+                var log = new List<ExpeditionLogSaveData>();
+                foreach (var entry in state.Log)
+                {
+                    log.Add(ExpeditionLogSaveData.FromState(entry));
+                }
+
+                var foundItems = new List<InventoryItemSaveData>();
+                foreach (var item in state.FoundItems)
+                {
+                    foundItems.Add(InventoryItemSaveData.FromState(item));
+                }
+
                 return new ExpeditionSaveData
                 {
                     Id = state.Id,
@@ -364,7 +419,9 @@ namespace AshfallCamp.Infrastructure
                     Status = state.Status,
                     RandomState = state.RandomState,
                     Noise = state.Noise,
+                    Log = log,
                     AccumulatedLoot = FromDictionary(state.AccumulatedLoot),
+                    FoundItems = foundItems,
                     EnemiesDefeated = FromDictionary(state.EnemiesDefeated),
                     WoundedSurvivorIds = new List<string>(state.WoundedSurvivorIds)
                 };
@@ -372,7 +429,7 @@ namespace AshfallCamp.Infrastructure
 
             public ExpeditionState ToState()
             {
-                return new ExpeditionState
+                var expedition = new ExpeditionState
                 {
                     Id = Id,
                     ZoneId = ZoneId,
@@ -390,6 +447,41 @@ namespace AshfallCamp.Infrastructure
                     EnemiesDefeated = ToDictionary(EnemiesDefeated),
                     WoundedSurvivorIds = WoundedSurvivorIds ?? new List<string>()
                 };
+
+                if (Log != null)
+                {
+                    foreach (var entry in Log)
+                    {
+                        expedition.Log.Add(entry.ToState());
+                    }
+                }
+
+                if (FoundItems != null)
+                {
+                    foreach (var item in FoundItems)
+                    {
+                        expedition.FoundItems.Add(item.ToState());
+                    }
+                }
+
+                return expedition;
+            }
+        }
+
+        [Serializable]
+        private sealed class ExpeditionLogSaveData
+        {
+            public double AtSeconds;
+            public string Message;
+
+            public static ExpeditionLogSaveData FromState(ExpeditionLogEntry state)
+            {
+                return new ExpeditionLogSaveData { AtSeconds = state.AtSeconds, Message = state.Message };
+            }
+
+            public ExpeditionLogEntry ToState()
+            {
+                return new ExpeditionLogEntry { AtSeconds = AtSeconds, Message = Message };
             }
         }
 
@@ -409,6 +501,7 @@ namespace AshfallCamp.Infrastructure
         {
             public int ExpeditionsCompleted;
             public int ExpeditionsFailed;
+            public int SurvivorsRecruited;
             public int CombatsWon;
             public int CombatsLost;
             public List<IntPairData> TotalResourcesGained = new List<IntPairData>();
@@ -419,6 +512,7 @@ namespace AshfallCamp.Infrastructure
                 {
                     ExpeditionsCompleted = state.ExpeditionsCompleted,
                     ExpeditionsFailed = state.ExpeditionsFailed,
+                    SurvivorsRecruited = state.SurvivorsRecruited,
                     CombatsWon = state.CombatsWon,
                     CombatsLost = state.CombatsLost,
                     TotalResourcesGained = FromDictionary(state.TotalResourcesGained)
@@ -431,6 +525,7 @@ namespace AshfallCamp.Infrastructure
                 {
                     ExpeditionsCompleted = ExpeditionsCompleted,
                     ExpeditionsFailed = ExpeditionsFailed,
+                    SurvivorsRecruited = SurvivorsRecruited,
                     CombatsWon = CombatsWon,
                     CombatsLost = CombatsLost,
                     TotalResourcesGained = ToDictionary(TotalResourcesGained)

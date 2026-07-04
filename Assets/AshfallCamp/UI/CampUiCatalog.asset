@@ -30,17 +30,23 @@ MonoBehaviour:
   BuildingScreenTitle: BUILDINGS
   CampStatusTitle: CAMP STATUS
   CampStatusBody: Our camp is stable and ready to grow.
+  CampStatusBodyFormat: '{0} idle survivors, {1} need care, {2} squads out. Supplies {3}%.'
   CampStatusHealthyLabel: THRIVING
   CampStatusStrainedLabel: STRAINED
   CampStatusBadgeLabel: OK
+  CampStatusBadgeFormat: '{0} IDLE'
   StatusResourceId: food
   StatusStrainedBelowAmount: 2
+  StatusWarningPercentThreshold: 55
   MoraleLabel: Morale
   SafetyLabel: Safety
   SuppliesLabel: Supplies
   MoraleValueLabel: Good
   SafetyValueLabel: Secure
   SuppliesValueLabel: Stable
+  MoraleValueFormat: '{0}%'
+  SafetyValueFormat: '{0}%'
+  SuppliesValueFormat: '{0}%'
   CampSummaryTitle: CAMP SUMMARY
   CampSummaryNote: Expand the camp to unlock routes and systems.
   PopulationLabel: Population
@@ -49,11 +55,31 @@ MonoBehaviour:
   ProductionMetricLabel: Water / Hour
   ProductionMetricResourceId: water
   RecentAlertsTitle: RECENT ALERTS
+  NoAlertsTitle: CAMP QUIET
+  NoAlertsBody: No urgent issues in the last shift.
+  ActiveExpeditionAlertTitleFormat: '{0} EXPEDITION ACTIVE'
+  ActiveExpeditionAlertBodyFormat: '{0} route is {1}% complete.'
+  LowResourceAlertTitleFormat: LOW {0}
+  LowResourceAlertBodyFormat: Storage is at {0}/{1}.
+  LowResourceAlertPercentThreshold: 25
+  WoundedAlertTitleFormat: '{0} SURVIVOR NEEDS CARE'
+  WoundedAlertBodyFormat: '{0} is not ready for field work.'
+  UpgradeAvailableAlertTitleFormat: '{0} CAN UPGRADE'
+  UpgradeAvailableAlertBodyFormat: Next level {0} is affordable.
   CampOverviewTitle: CAMP OVERVIEW
   ActiveExpeditionsTitle: ACTIVE EXPEDITIONS
   RadioIntelTitle: RADIO INTEL
   RadioIntelBody: No transmission yet. Upgrade the radio tower to widen the search.
-  RadioIntelButton: LISTEN
+  RadioIntelBodyFormat: 'Routes {0}/{1}. Clears {2}. Survivors {3}/{4}. Broadcast: {5} scrap, {6} food, {7} water. Signals {8}.'
+  RadioIntelButton: BROADCAST
+  ExpeditionEmptyTitle: NO ROUTES
+  ExpeditionEmptySubtitle: Radio intel required
+  ExpeditionEmptyStatus: WAITING
+  ExpeditionActiveSubtitleFormat: '{0} survivors, {1}, {2} min left'
+  ExpeditionActiveStatusFormat: '{0}%'
+  ExpeditionRouteSubtitleFormat: '{0} risk, costs {1} food / {2} water'
+  ExpeditionRouteStatusFormat: '{0}% familiar'
+  DefaultExpeditionPolicyId: balanced
   EmptyBuildingTitle: BUILD NEW STRUCTURE
   UpgradeCostLabel: UPGRADE COST
   UpgradeButtonLabel: UPGRADE
@@ -68,6 +94,19 @@ MonoBehaviour:
   IdleSuffixLabel: idle
   PerHourSuffixLabel: /h
   LevelLabelFormat: Level {0}
+  SurvivorsScreenTitle: SURVIVORS
+  SurvivorsCountFormat: '{0} / {1} roster'
+  SurvivorEmptyTitle: NO SURVIVORS
+  SurvivorEmptyBody: Broadcast from the radio tower to find more people.
+  SurvivorCardStateFormat: '{0}  *  LVL {1}'
+  SurvivorCardSkillFormat: '{0} {1}'
+  SurvivorDetailTitle: '{0}  *  LEVEL {1}'
+  SurvivorDetailBackgroundFormat: 'Background: {0}'
+  SurvivorDetailTraitsFormat: 'Traits: {0}'
+  SurvivorDetailWeaponFormat: 'Weapon: {0}  ({1}/{2})'
+  SurvivorDetailStatsFormat: 'HP {0}/{1}  Morale {2}  Fatigue {3}  XP {4}'
+  SurvivorNoWeaponLabel: Unarmed
+  SurvivorNoTraitsLabel: None
   ResourceBar:
   - Id: scrap
     Label: SCRAP
@@ -109,6 +148,19 @@ MonoBehaviour:
   - Id: radio
     Label: RADIO
     IsActive: 0
+  SurvivorSkillLabels:
+  - Id: scavenging
+    Label: SCAV
+  - Id: melee
+    Label: MELEE
+  - Id: firearms
+    Label: FIRE
+  - Id: survival
+    Label: SURV
+  - Id: mechanics
+    Label: MECH
+  - Id: medicine
+    Label: MED
   Buildings:
   - BuildingId: barracks
     Description: Population capacity and squad size.
