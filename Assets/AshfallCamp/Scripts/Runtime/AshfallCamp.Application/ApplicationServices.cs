@@ -38,6 +38,16 @@ namespace AshfallCamp.Application
         UniTask<RecruitSurvivorResult> ExecuteAsync(RecruitSurvivorRequest request, CancellationToken ct);
     }
 
+    public interface IRepairItemUseCase
+    {
+        UniTask<RepairItemResult> ExecuteAsync(RepairItemRequest request, CancellationToken ct);
+    }
+
+    public interface IEquipItemUseCase
+    {
+        UniTask<EquipItemResult> ExecuteAsync(EquipItemRequest request, CancellationToken ct);
+    }
+
     public interface ITickGameUseCase
     {
         UniTask ExecuteAsync(double deltaSeconds, CancellationToken ct);
@@ -222,6 +232,66 @@ namespace AshfallCamp.Application
         }
     }
 
+    public sealed class RepairItemUseCase : IRepairItemUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private readonly IGameConfigProvider _configs;
+        private RepairItemResult _lastResult;
+
+        public RepairItemUseCase(IGameStateWriter writer, IGameConfigProvider configs)
+        {
+            _writer = writer;
+            _configs = configs;
+        }
+
+        public async UniTask<RepairItemResult> ExecuteAsync(RepairItemRequest request, CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            if (_configs.Current == null)
+            {
+                await _configs.LoadAsync(ct);
+            }
+
+            _lastResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _lastResult = WorkshopSystem.Repair(state, _configs.Current, request);
+                return state;
+            }, ct);
+            return _lastResult;
+        }
+    }
+
+    public sealed class EquipItemUseCase : IEquipItemUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private readonly IGameConfigProvider _configs;
+        private EquipItemResult _lastResult;
+
+        public EquipItemUseCase(IGameStateWriter writer, IGameConfigProvider configs)
+        {
+            _writer = writer;
+            _configs = configs;
+        }
+
+        public async UniTask<EquipItemResult> ExecuteAsync(EquipItemRequest request, CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            if (_configs.Current == null)
+            {
+                await _configs.LoadAsync(ct);
+            }
+
+            _lastResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _lastResult = WorkshopSystem.Equip(state, _configs.Current, request);
+                return state;
+            }, ct);
+            return _lastResult;
+        }
+    }
+
     public sealed class TickGameUseCase : ITickGameUseCase
     {
         private readonly IGameStateWriter _writer;
@@ -247,6 +317,7 @@ namespace AshfallCamp.Application
                 state.TotalPlayTimeSeconds += dt;
                 BuildingSystem.TickProduction(state, _configs.Current, dt);
                 ExpeditionSimulator.TickAll(state, _configs.Current, dt);
+                HealingSystem.Tick(state, _configs.Current, dt);
                 return state;
             }, ct);
         }
@@ -277,6 +348,7 @@ namespace AshfallCamp.Application
             {
                 var beforeResources = CopyResources(state.Resources);
                 var activeBefore = ActiveExpeditionIds(state);
+                var woundedBefore = WoundedSurvivorIds(state);
                 var elapsedMs = Math.Max(0, nowUnixMs - state.LastSaveAtUnixMs);
                 var offlineSeconds = GameMath.Clamp(elapsedMs / 1000.0, 0, _configs.Current.Balance.MaxOfflineSeconds);
                 _report.AppliedSeconds = offlineSeconds;
@@ -287,6 +359,7 @@ namespace AshfallCamp.Application
                     state.TotalPlayTimeSeconds += dt;
                     BuildingSystem.TickProduction(state, _configs.Current, dt);
                     ExpeditionSimulator.TickAll(state, _configs.Current, dt);
+                    HealingSystem.Tick(state, _configs.Current, dt);
                     remaining -= dt;
                 }
 
@@ -294,6 +367,8 @@ namespace AshfallCamp.Application
                 FillResourceDelta(beforeResources, state.Resources, _report.ResourcesGained);
                 FillCompletedExpeditions(activeBefore, state, _report.CompletedExpeditionIds);
                 FillWounded(state, _report.WoundedSurvivorIds);
+                FillHealed(woundedBefore, state, _report.HealedSurvivorIds);
+                state.LastOfflineReport = _report;
                 return state;
             }, ct);
             return _report;
@@ -311,6 +386,17 @@ namespace AshfallCamp.Application
             {
                 if (expedition.Status == ExpeditionStatus.Active) result.Add(expedition.Id);
             }
+            return result;
+        }
+
+        private static HashSet<string> WoundedSurvivorIds(GameState state)
+        {
+            var result = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var survivor in state.Survivors)
+            {
+                if (survivor.State == SurvivorActivityState.Wounded) result.Add(survivor.Id);
+            }
+
             return result;
         }
 
@@ -341,6 +427,17 @@ namespace AshfallCamp.Application
             foreach (var survivor in state.Survivors)
             {
                 if (survivor.State == SurvivorActivityState.Wounded) output.Add(survivor.Id);
+            }
+        }
+
+        private static void FillHealed(HashSet<string> woundedBefore, GameState state, List<string> output)
+        {
+            foreach (var survivor in state.Survivors)
+            {
+                if (woundedBefore.Contains(survivor.Id) && survivor.State != SurvivorActivityState.Wounded)
+                {
+                    output.Add(survivor.Id);
+                }
             }
         }
     }

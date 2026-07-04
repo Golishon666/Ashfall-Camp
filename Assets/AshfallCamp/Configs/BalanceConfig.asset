@@ -18,6 +18,7 @@ MonoBehaviour:
     CombatTickSeconds: 2
     ExpeditionStepSeconds: 10
     AutosaveSeconds: 30
+    OfflineReportMinimumSeconds: 60
     ActiveCommandCooldownSeconds: 30
     BaseAccuracyMelee: 0.78
     BaseAccuracyFirearms: 0.65
@@ -30,9 +31,20 @@ MonoBehaviour:
     RecruitmentScrapResourceId: scrap
     RecruitmentFoodResourceId: food
     RecruitmentWaterResourceId: water
+    ExpeditionFoodResourceId: food
+    ExpeditionWaterResourceId: water
     RecruitmentBaseScrap: 20
     RecruitmentScrapExponent: 1.25
     RecruitmentBaseFood: 2
     RecruitmentFoodDivisor: 2
     RecruitmentBaseWater: 2
     RecruitmentWaterDivisor: 3
+    WorkshopRequiredBuildingId: workshop
+    WorkshopRequiredBuildingLevel: 1
+    WorkshopRepairResourceId: weapon_parts
+    WorkshopRepairDurabilityBlock: 10
+    HealingRequiredBuildingId: infirmary
+    HealingRequiredBuildingLevel: 1
+    HealingDefaultWoundId: cuts
+    HealingDefaultWoundDurationSeconds: 300
+    HealingHealthOnWounded: 1

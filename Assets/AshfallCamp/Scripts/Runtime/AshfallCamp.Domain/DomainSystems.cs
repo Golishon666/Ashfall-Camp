@@ -411,6 +411,244 @@ namespace AshfallCamp.Domain
         }
     }
 
+    public static class WorkshopSystem
+    {
+        public static ValidationResult ValidateRepair(GameState state, GameConfigSnapshot config, RepairItemRequest request)
+        {
+            var result = new ValidationResult();
+            if (state == null || config == null || request == null)
+            {
+                result.Errors.Add("Workshop state is missing.");
+                return result;
+            }
+
+            if (!HasRequiredWorkshop(state, config))
+            {
+                result.Errors.Add("Workshop repair is locked.");
+            }
+
+            var item = FindItem(state, request.ItemUid);
+            if (item == null)
+            {
+                result.Errors.Add("Item is missing.");
+                return result;
+            }
+
+            if (!config.Items.ContainsKey(item.ItemId))
+            {
+                result.Errors.Add("Item definition is missing.");
+                return result;
+            }
+
+            if (item.Durability >= item.MaxDurability)
+            {
+                result.Errors.Add("Item is already fully repaired.");
+            }
+
+            if (!ResourceSystem.CanSpend(state, CalculateRepairCost(state, config, request.ItemUid)))
+            {
+                result.Errors.Add("Not enough repair resources.");
+            }
+
+            return result;
+        }
+
+        public static RepairItemResult Repair(GameState state, GameConfigSnapshot config, RepairItemRequest request)
+        {
+            var validation = ValidateRepair(state, config, request);
+            var result = new RepairItemResult
+            {
+                Validation = validation,
+                Item = request != null ? FindItem(state, request.ItemUid) : null,
+                Cost = request != null ? CalculateRepairCost(state, config, request.ItemUid) : new Dictionary<string, int>(StringComparer.Ordinal)
+            };
+
+            if (!validation.IsValid || result.Item == null)
+            {
+                return result;
+            }
+
+            ResourceSystem.TrySpend(state, result.Cost);
+            result.Item.Durability = Math.Max(1, result.Item.MaxDurability);
+            return result;
+        }
+
+        public static Dictionary<string, int> CalculateRepairCost(GameState state, GameConfigSnapshot config, string itemUid)
+        {
+            var cost = new Dictionary<string, int>(StringComparer.Ordinal);
+            if (state == null || config == null || string.IsNullOrWhiteSpace(itemUid)) return cost;
+
+            var item = FindItem(state, itemUid);
+            if (item == null) return cost;
+
+            ItemDefinition definition;
+            if (!config.Items.TryGetValue(item.ItemId, out definition)) return cost;
+
+            var missingDurability = Math.Max(0, item.MaxDurability - item.Durability);
+            if (missingDurability <= 0) return cost;
+
+            var block = Math.Max(1, config.Balance.WorkshopRepairDurabilityBlock);
+            var amount = (int)Math.Ceiling(missingDurability / (double)block * Math.Max(0, definition.RepairCostMultiplier));
+            if (!string.IsNullOrWhiteSpace(config.Balance.WorkshopRepairResourceId) && amount > 0)
+            {
+                cost[config.Balance.WorkshopRepairResourceId] = amount;
+            }
+
+            return cost;
+        }
+
+        public static ValidationResult ValidateEquip(GameState state, GameConfigSnapshot config, EquipItemRequest request)
+        {
+            var result = new ValidationResult();
+            if (state == null || config == null || request == null)
+            {
+                result.Errors.Add("Workshop state is missing.");
+                return result;
+            }
+
+            var survivor = FindSurvivor(state, request.SurvivorId);
+            if (survivor == null)
+            {
+                result.Errors.Add("Survivor is missing.");
+                return result;
+            }
+
+            if (survivor.State == SurvivorActivityState.OnExpedition || survivor.State == SurvivorActivityState.Missing)
+            {
+                result.Errors.Add("Survivor is not available.");
+            }
+
+            var item = FindItem(state, request.ItemUid);
+            if (item == null)
+            {
+                result.Errors.Add("Item is missing.");
+                return result;
+            }
+
+            ItemDefinition definition;
+            if (!config.Items.TryGetValue(item.ItemId, out definition))
+            {
+                result.Errors.Add("Item definition is missing.");
+                return result;
+            }
+
+            if (item.Durability <= 0)
+            {
+                result.Errors.Add("Item is broken.");
+            }
+
+            if (string.Equals(GetEquippedUid(survivor, definition.Slot), item.Uid, StringComparison.Ordinal))
+            {
+                result.Errors.Add("Item is already equipped.");
+            }
+
+            return result;
+        }
+
+        public static EquipItemResult Equip(GameState state, GameConfigSnapshot config, EquipItemRequest request)
+        {
+            var validation = ValidateEquip(state, config, request);
+            var result = new EquipItemResult
+            {
+                Validation = validation,
+                Survivor = request != null ? FindSurvivor(state, request.SurvivorId) : null,
+                Item = request != null ? FindItem(state, request.ItemUid) : null
+            };
+
+            if (!validation.IsValid || result.Survivor == null || result.Item == null)
+            {
+                return result;
+            }
+
+            var definition = config.Items[result.Item.ItemId];
+            result.PreviouslyEquippedItem = FindItem(state, GetEquippedUid(result.Survivor, definition.Slot));
+            if (result.PreviouslyEquippedItem != null)
+            {
+                result.PreviouslyEquippedItem.EquippedBySurvivorId = string.Empty;
+            }
+
+            ClearPreviousOwner(state, result.Item);
+            SetEquippedUid(result.Survivor, definition.Slot, result.Item.Uid);
+            result.Item.EquippedBySurvivorId = result.Survivor.Id;
+            return result;
+        }
+
+        public static InventoryItemState FindItem(GameState state, string itemUid)
+        {
+            if (state == null || string.IsNullOrWhiteSpace(itemUid)) return null;
+            foreach (var item in state.Inventory)
+            {
+                if (string.Equals(item.Uid, itemUid, StringComparison.Ordinal))
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
+        public static SurvivorState FindSurvivor(GameState state, string survivorId)
+        {
+            if (state == null || string.IsNullOrWhiteSpace(survivorId)) return null;
+            foreach (var survivor in state.Survivors)
+            {
+                if (string.Equals(survivor.Id, survivorId, StringComparison.Ordinal))
+                {
+                    return survivor;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool HasRequiredWorkshop(GameState state, GameConfigSnapshot config)
+        {
+            var requiredId = config.Balance.WorkshopRequiredBuildingId;
+            if (string.IsNullOrWhiteSpace(requiredId)) return true;
+
+            BuildingState building;
+            return state.Buildings.TryGetValue(requiredId, out building) &&
+                   building.IsUnlocked &&
+                   building.Level >= config.Balance.WorkshopRequiredBuildingLevel;
+        }
+
+        private static void ClearPreviousOwner(GameState state, InventoryItemState item)
+        {
+            if (item == null || string.IsNullOrWhiteSpace(item.EquippedBySurvivorId)) return;
+            var owner = FindSurvivor(state, item.EquippedBySurvivorId);
+            if (owner == null) return;
+
+            if (string.Equals(owner.Equipment.WeaponItemUid, item.Uid, StringComparison.Ordinal)) owner.Equipment.WeaponItemUid = string.Empty;
+            if (string.Equals(owner.Equipment.ArmorItemUid, item.Uid, StringComparison.Ordinal)) owner.Equipment.ArmorItemUid = string.Empty;
+            if (string.Equals(owner.Equipment.UtilityItemUid, item.Uid, StringComparison.Ordinal)) owner.Equipment.UtilityItemUid = string.Empty;
+            item.EquippedBySurvivorId = string.Empty;
+        }
+
+        private static string GetEquippedUid(SurvivorState survivor, ItemSlot slot)
+        {
+            if (survivor == null || survivor.Equipment == null) return string.Empty;
+            if (slot == ItemSlot.Armor) return survivor.Equipment.ArmorItemUid;
+            if (slot == ItemSlot.Utility) return survivor.Equipment.UtilityItemUid;
+            return survivor.Equipment.WeaponItemUid;
+        }
+
+        private static void SetEquippedUid(SurvivorState survivor, ItemSlot slot, string itemUid)
+        {
+            if (slot == ItemSlot.Armor)
+            {
+                survivor.Equipment.ArmorItemUid = itemUid ?? string.Empty;
+            }
+            else if (slot == ItemSlot.Utility)
+            {
+                survivor.Equipment.UtilityItemUid = itemUid ?? string.Empty;
+            }
+            else
+            {
+                survivor.Equipment.WeaponItemUid = itemUid ?? string.Empty;
+            }
+        }
+    }
+
     public static class BuildingSystem
     {
         public static ValidationResult ValidateUpgrade(GameState state, GameConfigSnapshot config, string buildingId)
@@ -679,10 +917,10 @@ namespace AshfallCamp.Domain
                 }
             }
 
-            var cost = CalculateCost(zone, GetPolicy(config, request.PolicyId), request.SurvivorIds.Count);
+            var cost = CalculateCost(config, zone, GetPolicy(config, request.PolicyId), request.SurvivorIds.Count);
             if (!ResourceSystem.CanSpend(state, cost))
             {
-                result.Errors.Add("Not enough food or water.");
+                result.Errors.Add("Not enough expedition resources.");
             }
 
             var power = SquadPowerSystem.CalculateSquadPower(state, config, request.SurvivorIds, request.PolicyId);
@@ -704,12 +942,28 @@ namespace AshfallCamp.Domain
 
         public static Dictionary<string, int> CalculateCost(ZoneDefinition zone, ExpeditionPolicyDefinition policy, int survivorCount)
         {
+            return CalculateCost(new BalanceDefinition(), zone, policy, survivorCount);
+        }
+
+        public static Dictionary<string, int> CalculateCost(GameConfigSnapshot config, ZoneDefinition zone, ExpeditionPolicyDefinition policy, int survivorCount)
+        {
+            return CalculateCost(config != null ? config.Balance : new BalanceDefinition(), zone, policy, survivorCount);
+        }
+
+        private static Dictionary<string, int> CalculateCost(BalanceDefinition balance, ZoneDefinition zone, ExpeditionPolicyDefinition policy, int survivorCount)
+        {
             var cost = new Dictionary<string, int>(StringComparer.Ordinal);
             var food = (int)Math.Ceiling(zone.FoodCostPerSurvivor * survivorCount * policy.FoodModifier);
             var water = (int)Math.Ceiling(zone.WaterCostPerSurvivor * survivorCount * policy.WaterModifier);
-            if (food > 0) cost["food"] = food;
-            if (water > 0) cost["water"] = water;
+            AddCost(cost, balance.ExpeditionFoodResourceId, food);
+            AddCost(cost, balance.ExpeditionWaterResourceId, water);
             return cost;
+        }
+
+        private static void AddCost(Dictionary<string, int> cost, string resourceId, int amount)
+        {
+            if (string.IsNullOrWhiteSpace(resourceId) || amount <= 0) return;
+            cost[resourceId] = amount;
         }
 
         private static int GetMaxSquadSize(GameState state)
@@ -746,7 +1000,7 @@ namespace AshfallCamp.Domain
 
             var zone = config.Zones[request.ZoneId];
             var policy = config.Policies.ContainsKey(request.PolicyId) ? config.Policies[request.PolicyId] : new ExpeditionPolicyDefinition();
-            ResourceSystem.TrySpend(state, ExpeditionValidator.CalculateCost(zone, policy, request.SurvivorIds.Count));
+            ResourceSystem.TrySpend(state, ExpeditionValidator.CalculateCost(config, zone, policy, request.SurvivorIds.Count));
 
             var expedition = new ExpeditionState
             {
@@ -950,6 +1204,102 @@ namespace AshfallCamp.Domain
         }
     }
 
+    public static class HealingSystem
+    {
+        public static void ApplyWound(GameState state, GameConfigSnapshot config, string survivorId)
+        {
+            if (state == null || config == null) return;
+            var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
+            if (survivor == null) return;
+
+            survivor.State = SurvivorActivityState.Wounded;
+            survivor.Health = GameMath.Clamp(Math.Min(survivor.Health, config.Balance.HealingHealthOnWounded), 1, Math.Max(1, survivor.MaxHealth));
+            EnsureWoundEffect(survivor, config);
+        }
+
+        public static void Tick(GameState state, GameConfigSnapshot config, double deltaSeconds)
+        {
+            if (state == null || config == null || deltaSeconds <= 0) return;
+            if (!IsHealingUnlocked(state, config)) return;
+
+            var dt = Math.Max(0, deltaSeconds);
+            foreach (var survivor in state.Survivors)
+            {
+                if (survivor.State != SurvivorActivityState.Wounded) continue;
+                var wound = EnsureWoundEffect(survivor, config);
+                if (wound == null) continue;
+
+                wound.RemainingSeconds = Math.Max(0, wound.RemainingSeconds - dt);
+                if (wound.RemainingSeconds <= 0)
+                {
+                    RemoveWoundEffect(survivor, config.Balance.HealingDefaultWoundId);
+                    survivor.Health = Math.Max(1, survivor.MaxHealth);
+                    survivor.State = SurvivorActivityState.Idle;
+                }
+            }
+        }
+
+        public static bool IsHealingUnlocked(GameState state, GameConfigSnapshot config)
+        {
+            if (state == null || config == null) return false;
+            var requiredId = config.Balance.HealingRequiredBuildingId;
+            if (string.IsNullOrWhiteSpace(requiredId)) return true;
+
+            BuildingState building;
+            return state.Buildings.TryGetValue(requiredId, out building) &&
+                   building.IsUnlocked &&
+                   building.Level >= config.Balance.HealingRequiredBuildingLevel;
+        }
+
+        private static StatusEffectState EnsureWoundEffect(SurvivorState survivor, GameConfigSnapshot config)
+        {
+            if (survivor == null || config == null || string.IsNullOrWhiteSpace(config.Balance.HealingDefaultWoundId)) return null;
+            var wound = FindStatusEffect(survivor, config.Balance.HealingDefaultWoundId);
+            if (wound == null)
+            {
+                wound = new StatusEffectState
+                {
+                    Id = config.Balance.HealingDefaultWoundId,
+                    RemainingSeconds = Math.Max(1, config.Balance.HealingDefaultWoundDurationSeconds)
+                };
+                survivor.StatusEffects.Add(wound);
+            }
+            else if (wound.RemainingSeconds <= 0)
+            {
+                wound.RemainingSeconds = Math.Max(1, config.Balance.HealingDefaultWoundDurationSeconds);
+            }
+
+            return wound;
+        }
+
+        private static StatusEffectState FindStatusEffect(SurvivorState survivor, string effectId)
+        {
+            if (survivor == null || string.IsNullOrWhiteSpace(effectId)) return null;
+            foreach (var effect in survivor.StatusEffects)
+            {
+                if (effect != null && string.Equals(effect.Id, effectId, StringComparison.Ordinal))
+                {
+                    return effect;
+                }
+            }
+
+            return null;
+        }
+
+        private static void RemoveWoundEffect(SurvivorState survivor, string effectId)
+        {
+            if (survivor == null || string.IsNullOrWhiteSpace(effectId)) return;
+            for (var i = survivor.StatusEffects.Count - 1; i >= 0; i--)
+            {
+                var effect = survivor.StatusEffects[i];
+                if (effect != null && string.Equals(effect.Id, effectId, StringComparison.Ordinal))
+                {
+                    survivor.StatusEffects.RemoveAt(i);
+                }
+            }
+        }
+    }
+
     public static class ExpeditionSimulator
     {
         public static void TickAll(GameState state, GameConfigSnapshot config, double deltaSeconds)
@@ -1001,7 +1351,7 @@ namespace AshfallCamp.Domain
                 if (!CombatResolver.ResolveCombat(state, config, expedition, enemyId))
                 {
                     expedition.Status = ExpeditionStatus.Failed;
-                    Fail(state, expedition);
+                    Fail(state, config, expedition);
                 }
             }
             else if (roll < 70 && zone.LootTable.Count > 0)
@@ -1054,7 +1404,15 @@ namespace AshfallCamp.Domain
                 var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
                 if (survivor == null) continue;
                 survivor.CurrentExpeditionId = string.Empty;
-                survivor.State = expedition.WoundedSurvivorIds.Contains(survivorId) ? SurvivorActivityState.Wounded : SurvivorActivityState.Idle;
+                if (expedition.WoundedSurvivorIds.Contains(survivorId))
+                {
+                    HealingSystem.ApplyWound(state, config, survivorId);
+                }
+                else
+                {
+                    survivor.State = SurvivorActivityState.Idle;
+                }
+
                 survivor.Fatigue = GameMath.Clamp(survivor.Fatigue + 8, 0, 100);
                 survivor.Xp += 5;
             }
@@ -1074,14 +1432,21 @@ namespace AshfallCamp.Domain
             state.Statistics.ExpeditionsCompleted++;
         }
 
-        private static void Fail(GameState state, ExpeditionState expedition)
+        private static void Fail(GameState state, GameConfigSnapshot config, ExpeditionState expedition)
         {
             foreach (var survivorId in expedition.SurvivorIds)
             {
                 var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
                 if (survivor == null) continue;
                 survivor.CurrentExpeditionId = string.Empty;
-                survivor.State = expedition.WoundedSurvivorIds.Contains(survivorId) ? SurvivorActivityState.Wounded : SurvivorActivityState.Missing;
+                if (expedition.WoundedSurvivorIds.Contains(survivorId))
+                {
+                    HealingSystem.ApplyWound(state, config, survivorId);
+                }
+                else
+                {
+                    survivor.State = SurvivorActivityState.Missing;
+                }
             }
             state.Statistics.ExpeditionsFailed++;
         }

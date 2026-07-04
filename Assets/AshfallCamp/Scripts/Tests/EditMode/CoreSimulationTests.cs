@@ -47,7 +47,7 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["food"] = 0;
             var noResources = ExpeditionValidator.Validate(state, config, Request("abandoned_store", 11));
             Assert.IsFalse(noResources.IsValid);
-            Assert.Contains("Not enough food or water.", noResources.Errors);
+            Assert.Contains("Not enough expedition resources.", noResources.Errors);
         }
 
         [Test]
@@ -147,6 +147,166 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void WorkshopRepairRequiresUpgradeResourcesAndDamagedItem()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Inventory[0].Durability = 50;
+            state.Resources["weapon_parts"] = 5;
+
+            var locked = WorkshopSystem.ValidateRepair(state, config, new RepairItemRequest { ItemUid = state.Inventory[0].Uid });
+            Assert.IsFalse(locked.IsValid);
+            Assert.Contains("Workshop repair is locked.", locked.Errors);
+
+            state.Resources["scrap"] = 100;
+            BuildingSystem.Upgrade(state, config, "workshop");
+            state.Resources["weapon_parts"] = 0;
+            var unaffordable = WorkshopSystem.ValidateRepair(state, config, new RepairItemRequest { ItemUid = state.Inventory[0].Uid });
+            Assert.IsFalse(unaffordable.IsValid);
+            Assert.Contains("Not enough repair resources.", unaffordable.Errors);
+
+            state.Resources["weapon_parts"] = 5;
+            state.Inventory[0].Durability = state.Inventory[0].MaxDurability;
+            var full = WorkshopSystem.ValidateRepair(state, config, new RepairItemRequest { ItemUid = state.Inventory[0].Uid });
+            Assert.IsFalse(full.IsValid);
+            Assert.Contains("Item is already fully repaired.", full.Errors);
+        }
+
+        [Test]
+        public void WorkshopRepairSpendsPartsAndRestoresDurability()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["weapon_parts"] = 5;
+            BuildingSystem.Upgrade(state, config, "workshop");
+            state.Inventory[0].Durability = 50;
+
+            var result = WorkshopSystem.Repair(state, config, new RepairItemRequest { ItemUid = state.Inventory[0].Uid });
+
+            Assert.IsTrue(result.Validation.IsValid);
+            Assert.AreEqual(80, state.Inventory[0].Durability);
+            Assert.AreEqual(2, state.Resources["weapon_parts"]);
+            Assert.AreEqual(3, result.Cost["weapon_parts"]);
+        }
+
+        [Test]
+        public void WorkshopEquipSwapsWeaponOwnership()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            var knife = state.Inventory[0];
+            var revolver = new InventoryItemState { Uid = "item_revolver", ItemId = "rusty_revolver", Durability = 60, MaxDurability = 60 };
+            state.Inventory.Add(revolver);
+
+            var result = WorkshopSystem.Equip(state, config, new EquipItemRequest { SurvivorId = "survivor_1", ItemUid = revolver.Uid });
+
+            Assert.IsTrue(result.Validation.IsValid);
+            Assert.AreEqual(revolver.Uid, state.Survivors[0].Equipment.WeaponItemUid);
+            Assert.AreEqual("survivor_1", revolver.EquippedBySurvivorId);
+            Assert.AreEqual(string.Empty, knife.EquippedBySurvivorId);
+            Assert.AreEqual(knife, result.PreviouslyEquippedItem);
+        }
+
+        [Test]
+        public void RepairItemUseCaseMutatesStore()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["weapon_parts"] = 5;
+            BuildingSystem.Upgrade(state, config, "workshop");
+            state.Inventory[0].Durability = 50;
+            var store = new GameStateStore();
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var useCase = new RepairItemUseCase(store, new StaticConfigProvider(config));
+
+            var result = useCase.ExecuteAsync(new RepairItemRequest { ItemUid = state.Inventory[0].Uid }, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.IsTrue(result.Validation.IsValid);
+            Assert.AreEqual(80, store.State.CurrentValue.Inventory[0].Durability);
+            Assert.AreEqual(2, store.State.CurrentValue.Resources["weapon_parts"]);
+        }
+
+        [Test]
+        public void EquipItemUseCaseMutatesStore()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            var revolver = new InventoryItemState { Uid = "item_revolver", ItemId = "rusty_revolver", Durability = 60, MaxDurability = 60 };
+            state.Inventory.Add(revolver);
+            var store = new GameStateStore();
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var useCase = new EquipItemUseCase(store, new StaticConfigProvider(config));
+
+            var result = useCase.ExecuteAsync(new EquipItemRequest { SurvivorId = "survivor_1", ItemUid = revolver.Uid }, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.IsTrue(result.Validation.IsValid);
+            Assert.AreEqual(revolver.Uid, store.State.CurrentValue.Survivors[0].Equipment.WeaponItemUid);
+            Assert.AreEqual("survivor_1", store.State.CurrentValue.Inventory[1].EquippedBySurvivorId);
+        }
+
+        [Test]
+        public void HealingRequiresInfirmaryAndCompletesWound()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+
+            HealingSystem.ApplyWound(state, config, "survivor_1");
+
+            Assert.AreEqual(SurvivorActivityState.Wounded, state.Survivors[0].State);
+            Assert.AreEqual(1, state.Survivors[0].Health);
+            Assert.AreEqual("cuts", state.Survivors[0].StatusEffects[0].Id);
+
+            HealingSystem.Tick(state, config, config.Balance.HealingDefaultWoundDurationSeconds);
+            Assert.AreEqual(SurvivorActivityState.Wounded, state.Survivors[0].State);
+
+            state.Buildings["infirmary"].Level = 1;
+            HealingSystem.Tick(state, config, config.Balance.HealingDefaultWoundDurationSeconds - 1);
+            Assert.AreEqual(SurvivorActivityState.Wounded, state.Survivors[0].State);
+
+            HealingSystem.Tick(state, config, 1);
+            Assert.AreEqual(SurvivorActivityState.Idle, state.Survivors[0].State);
+            Assert.AreEqual(state.Survivors[0].MaxHealth, state.Survivors[0].Health);
+            Assert.AreEqual(0, state.Survivors[0].StatusEffects.Count);
+        }
+
+        [Test]
+        public void TickGameUseCaseHealsWoundedSurvivor()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Buildings["infirmary"].Level = 1;
+            HealingSystem.ApplyWound(state, config, "survivor_1");
+            var store = new GameStateStore();
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var useCase = new TickGameUseCase(store, new StaticConfigProvider(config));
+
+            useCase.ExecuteAsync(config.Balance.HealingDefaultWoundDurationSeconds, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.AreEqual(SurvivorActivityState.Idle, store.State.CurrentValue.Survivors[0].State);
+            Assert.AreEqual(store.State.CurrentValue.Survivors[0].MaxHealth, store.State.CurrentValue.Survivors[0].Health);
+        }
+
+        [Test]
+        public void OfflineProgressReportsHealedSurvivors()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Buildings["infirmary"].Level = 1;
+            HealingSystem.ApplyWound(state, config, "survivor_1");
+            state.LastSaveAtUnixMs = 0;
+            var store = new GameStateStore();
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var useCase = new OfflineProgressUseCase(store, new StaticConfigProvider(config));
+
+            var report = useCase.ExecuteAsync((long)config.Balance.HealingDefaultWoundDurationSeconds * 1000, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.Contains("survivor_1", report.HealedSurvivorIds);
+            Assert.AreEqual(SurvivorActivityState.Idle, store.State.CurrentValue.Survivors[0].State);
+        }
+
+        [Test]
         public void ExpeditionSimulationIsDeterministicForSameSeed()
         {
             var config = TestConfigFactory.Create();
@@ -222,6 +382,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.Contains(result.Expedition.Id, report.CompletedExpeditionIds);
             Assert.GreaterOrEqual(report.ResourcesGained["scrap"], 5);
             Assert.GreaterOrEqual(store.State.CurrentValue.Resources["scrap"], 20);
+            Assert.AreSame(report, store.State.CurrentValue.LastOfflineReport);
         }
 
         [Test]

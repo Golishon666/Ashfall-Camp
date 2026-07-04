@@ -149,6 +149,7 @@ namespace AshfallCamp.Infrastructure
         public double CombatTickSeconds = 2;
         public double ExpeditionStepSeconds = 10;
         public double AutosaveSeconds = 30;
+        public double OfflineReportMinimumSeconds = 60;
         public double ActiveCommandCooldownSeconds = 30;
         public double BaseAccuracyMelee = 0.78;
         public double BaseAccuracyFirearms = 0.65;
@@ -161,12 +162,23 @@ namespace AshfallCamp.Infrastructure
         public string RecruitmentScrapResourceId = "scrap";
         public string RecruitmentFoodResourceId = "food";
         public string RecruitmentWaterResourceId = "water";
+        public string ExpeditionFoodResourceId = "food";
+        public string ExpeditionWaterResourceId = "water";
         public int RecruitmentBaseScrap = 20;
         public double RecruitmentScrapExponent = 1.25;
         public int RecruitmentBaseFood = 2;
         public int RecruitmentFoodDivisor = 2;
         public int RecruitmentBaseWater = 2;
         public int RecruitmentWaterDivisor = 3;
+        public string WorkshopRequiredBuildingId = "workshop";
+        public int WorkshopRequiredBuildingLevel = 1;
+        public string WorkshopRepairResourceId = "weapon_parts";
+        public int WorkshopRepairDurabilityBlock = 10;
+        public string HealingRequiredBuildingId = "infirmary";
+        public int HealingRequiredBuildingLevel = 1;
+        public string HealingDefaultWoundId = "cuts";
+        public double HealingDefaultWoundDurationSeconds = 300;
+        public int HealingHealthOnWounded = 1;
     }
 
     [Serializable]

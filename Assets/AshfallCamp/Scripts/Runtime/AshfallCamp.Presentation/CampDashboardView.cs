@@ -17,6 +17,10 @@ namespace AshfallCamp.Presentation
         [SerializeField] private CampAlertsPanelView alertsPanel;
         [SerializeField] private BuildingGridView buildingGrid;
         [SerializeField] private SurvivorsPanelView survivorsPanel;
+        [SerializeField] private ExpeditionsPanelView expeditionsPanel;
+        [SerializeField] private WorkshopPanelView workshopPanel;
+        [SerializeField] private ReportsPanelView reportsPanel;
+        [SerializeField] private RadioPanelView radioPanel;
         [SerializeField] private CampRightColumnView rightColumn;
         [SerializeField] private BottomNavView bottomNav;
         [SerializeField] private List<ScreenBinding> screens = new List<ScreenBinding>();
@@ -30,6 +34,8 @@ namespace AshfallCamp.Presentation
         public event Action<string> UpgradeRequested;
         public event Action<ExpeditionLaunchViewRequest> ExpeditionLaunchRequested;
         public event Action RecruitRequested;
+        public event Action<RepairItemRequest> RepairItemRequested;
+        public event Action<EquipItemRequest> EquipItemRequested;
 
         public Transform Root
         {
@@ -56,7 +62,11 @@ namespace AshfallCamp.Presentation
             CampAlertsPanelView alertsPanelView,
             BuildingGridView buildingGridView,
             CampRightColumnView rightColumnView,
-            BottomNavView bottomNavView)
+            BottomNavView bottomNavView,
+            ExpeditionsPanelView expeditionsPanelView = null,
+            WorkshopPanelView workshopPanelView = null,
+            ReportsPanelView reportsPanelView = null,
+            RadioPanelView radioPanelView = null)
         {
             catalog = uiCatalog;
             header = headerView;
@@ -65,6 +75,26 @@ namespace AshfallCamp.Presentation
             summaryPanel = summaryPanelView;
             alertsPanel = alertsPanelView;
             buildingGrid = buildingGridView;
+            if (expeditionsPanelView != null)
+            {
+                expeditionsPanel = expeditionsPanelView;
+            }
+
+            if (workshopPanelView != null)
+            {
+                workshopPanel = workshopPanelView;
+            }
+
+            if (reportsPanelView != null)
+            {
+                reportsPanel = reportsPanelView;
+            }
+
+            if (radioPanelView != null)
+            {
+                radioPanel = radioPanelView;
+            }
+
             rightColumn = rightColumnView;
             bottomNav = bottomNavView;
             _isBound = false;
@@ -85,6 +115,26 @@ namespace AshfallCamp.Presentation
             if (survivorsPanel != null)
             {
                 survivorsPanel.Render(state, config, catalog);
+            }
+
+            if (workshopPanel != null)
+            {
+                workshopPanel.Render(state, config, catalog);
+            }
+
+            if (expeditionsPanel != null)
+            {
+                expeditionsPanel.Render(state, config, catalog);
+            }
+
+            if (reportsPanel != null)
+            {
+                reportsPanel.Render(state, config, catalog);
+            }
+
+            if (radioPanel != null)
+            {
+                radioPanel.Render(state, config, catalog);
             }
 
             rightColumn.Render(state, config, catalog);
@@ -118,6 +168,22 @@ namespace AshfallCamp.Presentation
             }
 
             buildingGrid.SetUpgradeHandler(id => UpgradeRequested?.Invoke(id));
+            if (expeditionsPanel != null)
+            {
+                expeditionsPanel.SetLaunchHandler(request => ExpeditionLaunchRequested?.Invoke(request));
+            }
+
+            if (radioPanel != null)
+            {
+                radioPanel.SetBroadcastHandler(() => RecruitRequested?.Invoke());
+            }
+
+            if (workshopPanel != null)
+            {
+                workshopPanel.SetRepairHandler(request => RepairItemRequested?.Invoke(request));
+                workshopPanel.SetEquipHandler(request => EquipItemRequested?.Invoke(request));
+            }
+
             rightColumn.SetExpeditionLaunchHandler(request => ExpeditionLaunchRequested?.Invoke(request));
             rightColumn.SetRecruitHandler(() => RecruitRequested?.Invoke());
             bottomNav.SetSelectionHandler(OnScreenSelected);

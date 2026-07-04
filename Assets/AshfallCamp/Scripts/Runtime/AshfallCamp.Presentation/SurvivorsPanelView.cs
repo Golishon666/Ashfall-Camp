@@ -22,6 +22,7 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI detailBackground;
         [SerializeField] private TextMeshProUGUI detailTraits;
         [SerializeField] private TextMeshProUGUI detailWeapon;
+        [SerializeField] private TextMeshProUGUI detailTreatment;
         [SerializeField] private TextMeshProUGUI detailStats;
 
         private string _selectedSurvivorId = string.Empty;
@@ -38,7 +39,8 @@ namespace AshfallCamp.Presentation
             TextMeshProUGUI selectedDetailBackground,
             TextMeshProUGUI selectedDetailTraits,
             TextMeshProUGUI selectedDetailWeapon,
-            TextMeshProUGUI selectedDetailStats)
+            TextMeshProUGUI selectedDetailStats,
+            TextMeshProUGUI selectedDetailTreatment = null)
         {
             title = titleLabel;
             countLabel = survivorCountLabel;
@@ -56,6 +58,11 @@ namespace AshfallCamp.Presentation
             detailBackground = selectedDetailBackground;
             detailTraits = selectedDetailTraits;
             detailWeapon = selectedDetailWeapon;
+            if (selectedDetailTreatment != null)
+            {
+                detailTreatment = selectedDetailTreatment;
+            }
+
             detailStats = selectedDetailStats;
             WireCards();
         }
@@ -93,10 +100,11 @@ namespace AshfallCamp.Presentation
                 _selectedSurvivorId = state.Survivors[0].Id;
             }
 
+            var cardPresentations = CampDashboardTextFormatter.BuildSurvivorCards(state, catalog);
             for (var i = 0; i < cards.Count; i++)
             {
-                var survivor = i < state.Survivors.Count ? state.Survivors[i] : null;
-                cards[i].Render(survivor, config, catalog, string.Equals(_selectedSurvivorId, survivor != null ? survivor.Id : string.Empty, StringComparison.Ordinal));
+                var card = i < cardPresentations.Count ? cardPresentations[i] : null;
+                cards[i].Render(card, catalog, string.Equals(_selectedSurvivorId, card != null ? card.SurvivorId : string.Empty, StringComparison.Ordinal));
             }
 
             RenderDetail(FindSelectedSurvivor(state), state, config, catalog);
@@ -142,95 +150,13 @@ namespace AshfallCamp.Presentation
             UiText.SetActive(detailPanel, survivor != null);
             if (survivor == null) return;
 
-            UiText.Set(detailTitle, CampDashboardTextFormatter.Format(catalog.SurvivorDetailTitle, survivor.Name, survivor.Level));
-            UiText.Set(detailBackground, CampDashboardTextFormatter.Format(catalog.SurvivorDetailBackgroundFormat, GetBackgroundName(survivor, config)));
-            UiText.Set(detailTraits, CampDashboardTextFormatter.Format(catalog.SurvivorDetailTraitsFormat, FormatTraits(survivor, config, catalog)));
-            UiText.Set(detailWeapon, FormatWeapon(survivor, state, config, catalog));
-            UiText.Set(detailStats, CampDashboardTextFormatter.Format(
-                catalog.SurvivorDetailStatsFormat,
-                survivor.Health,
-                survivor.MaxHealth,
-                survivor.Morale,
-                survivor.Fatigue,
-                survivor.Xp));
-        }
-
-        private static string GetBackgroundName(SurvivorState survivor, GameConfigSnapshot config)
-        {
-            BackgroundDefinition background;
-            return config.Backgrounds.TryGetValue(survivor.BackgroundId, out background) ? background.Name : survivor.BackgroundId;
-        }
-
-        private static string FormatTraits(SurvivorState survivor, GameConfigSnapshot config, CampUiCatalogSO catalog)
-        {
-            if (survivor.TraitIds.Count == 0) return catalog.SurvivorNoTraitsLabel;
-
-            var names = new List<string>();
-            foreach (var traitId in survivor.TraitIds)
-            {
-                TraitDefinition trait;
-                names.Add(config.Traits.TryGetValue(traitId, out trait) ? trait.Name : traitId);
-            }
-
-            return string.Join(", ", names);
-        }
-
-        private static string FormatWeapon(SurvivorState survivor, GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
-        {
-            var item = FindEquippedWeapon(survivor, state);
-            if (item == null)
-            {
-                return CampDashboardTextFormatter.Format(catalog.SurvivorDetailWeaponFormat, catalog.SurvivorNoWeaponLabel, 0, 0);
-            }
-
-            ItemDefinition definition;
-            var itemName = config.Items.TryGetValue(item.ItemId, out definition) ? definition.Name : item.ItemId;
-            return CampDashboardTextFormatter.Format(catalog.SurvivorDetailWeaponFormat, itemName, item.Durability, item.MaxDurability);
-        }
-
-        private static InventoryItemState FindEquippedWeapon(SurvivorState survivor, GameState state)
-        {
-            if (survivor == null || state == null || string.IsNullOrWhiteSpace(survivor.Equipment.WeaponItemUid)) return null;
-            foreach (var item in state.Inventory)
-            {
-                if (string.Equals(item.Uid, survivor.Equipment.WeaponItemUid, StringComparison.Ordinal))
-                {
-                    return item;
-                }
-            }
-
-            return null;
-        }
-
-        private static string FormatTopSkill(SurvivorState survivor, CampUiCatalogSO catalog)
-        {
-            if (survivor == null || survivor.Skills.Count == 0) return string.Empty;
-
-            var bestId = string.Empty;
-            var bestValue = int.MinValue;
-            foreach (var pair in survivor.Skills)
-            {
-                if (pair.Value < bestValue) continue;
-                if (pair.Value == bestValue && string.CompareOrdinal(pair.Key, bestId) >= 0) continue;
-
-                bestId = pair.Key;
-                bestValue = pair.Value;
-            }
-
-            return CampDashboardTextFormatter.Format(catalog.SurvivorCardSkillFormat, GetSkillLabel(bestId, catalog), Math.Max(0, bestValue));
-        }
-
-        private static string GetSkillLabel(string skillId, CampUiCatalogSO catalog)
-        {
-            foreach (var entry in catalog.SurvivorSkillLabels)
-            {
-                if (entry != null && string.Equals(entry.Id, skillId, StringComparison.Ordinal))
-                {
-                    return entry.Label;
-                }
-            }
-
-            return skillId;
+            var detail = CampDashboardTextFormatter.BuildSurvivorDetail(survivor, state, config, catalog);
+            UiText.Set(detailTitle, detail.Title);
+            UiText.Set(detailBackground, detail.Background);
+            UiText.Set(detailTraits, detail.Traits);
+            UiText.Set(detailWeapon, detail.Weapon);
+            UiText.Set(detailTreatment, detail.Treatment);
+            UiText.Set(detailStats, detail.Stats);
         }
 
         [Serializable]
@@ -280,9 +206,9 @@ namespace AshfallCamp.Presentation
                 _cachedClick = null;
             }
 
-            public void Render(SurvivorState survivor, GameConfigSnapshot config, CampUiCatalogSO catalog, bool isSelected)
+            public void Render(CampSurvivorCardPresentation survivor, CampUiCatalogSO catalog, bool isSelected)
             {
-                _survivorId = survivor != null ? survivor.Id : string.Empty;
+                _survivorId = survivor != null ? survivor.SurvivorId : string.Empty;
                 UiText.SetActive(panel, survivor != null);
                 if (survivor == null) return;
 
@@ -294,10 +220,10 @@ namespace AshfallCamp.Presentation
                 }
 
                 var textColor = isSelected ? catalog.Theme.Paper : catalog.Theme.Ink;
-                UiText.Set(avatarLabel, string.IsNullOrEmpty(survivor.Name) ? string.Empty : survivor.Name.Substring(0, 1).ToUpperInvariant());
+                UiText.Set(avatarLabel, survivor.Avatar);
                 UiText.Set(nameLabel, survivor.Name);
-                UiText.Set(stateLabel, CampDashboardTextFormatter.Format(catalog.SurvivorCardStateFormat, survivor.State, survivor.Level));
-                UiText.Set(skillLabel, FormatTopSkill(survivor, catalog));
+                UiText.Set(stateLabel, survivor.State);
+                UiText.Set(skillLabel, survivor.Skill);
                 if (avatarLabel != null) avatarLabel.color = catalog.Theme.Paper;
                 if (nameLabel != null) nameLabel.color = textColor;
                 if (stateLabel != null) stateLabel.color = isSelected ? catalog.Theme.PaperDark : catalog.Theme.MutedInk;

@@ -72,6 +72,17 @@ MonoBehaviour:
   RadioIntelBody: No transmission yet. Upgrade the radio tower to widen the search.
   RadioIntelBodyFormat: 'Routes {0}/{1}. Clears {2}. Survivors {3}/{4}. Broadcast: {5} scrap, {6} food, {7} water. Signals {8}.'
   RadioIntelButton: BROADCAST
+  RadioScreenTitle: RADIO
+  RadioBroadcastTitle: BROADCAST CONTROL
+  RadioBroadcastCostFormat: 'Cost: {0}'
+  RadioBroadcastReadyLabel: Signal clear
+  RadioBroadcastBlockedFormat: 'Blocked: {0}'
+  RadioCandidateListTitle: SIGNALS
+  RadioCandidateEmptyTitle: NO SIGNALS
+  RadioCandidateEmptyBody: All known survivor signals are already in camp.
+  RadioCandidateCardMetaFormat: '{0}  *  {1}'
+  RadioCandidateSkillFormat: '{0} {1}'
+  RadioCandidateTraitsFormat: 'Traits: {0}'
   ExpeditionEmptyTitle: NO ROUTES
   ExpeditionEmptySubtitle: Radio intel required
   ExpeditionEmptyStatus: WAITING
@@ -79,6 +90,25 @@ MonoBehaviour:
   ExpeditionActiveStatusFormat: '{0}%'
   ExpeditionRouteSubtitleFormat: '{0} risk, costs {1} food / {2} water'
   ExpeditionRouteStatusFormat: '{0}% familiar'
+  ExpeditionScreenTitle: EXPEDITIONS
+  ExpeditionSelectedTitleFormat: '{0}  *  {1}'
+  ExpeditionSelectedDetailsFormat: 'Duration {0} min. Cost {1} food / {2} water. Power {3}/{4}. Familiarity {5}%.'
+  ExpeditionSelectedLootFormat: 'Expected loot: {0}'
+  ExpeditionLootRangeFormat: '{0} {1}-{2}'
+  ExpeditionSelectedEnemiesFormat: 'Known threats: {0}'
+  ExpeditionSelectedWarningsFormat: 'Warnings: {0}'
+  ExpeditionLaunchButton: LAUNCH
+  ExpeditionLaunchBlockedButton: BLOCKED
+  ExpeditionMonitorTitle: ACTIVE MONITOR
+  ExpeditionMonitorHeaderFormat: '{0}  *  {1} survivor(s)  *  {2} min left'
+  ExpeditionMonitorProgressFormat: 'Progress {0}%'
+  ExpeditionMonitorLootFormat: 'Loot so far: {0}'
+  ExpeditionMonitorNoiseFormat: 'Noise {0}'
+  ExpeditionMonitorLogFormat: 'Log: {0}'
+  ExpeditionLockedStatusFormat: 'Locked: {0}'
+  ExpeditionUnlockRequirementFormat: '{0} {1}'
+  ExpeditionNoWarningsLabel: None
+  ExpeditionMonitorLogLineCount: 3
   DefaultExpeditionPolicyId: balanced
   EmptyBuildingTitle: BUILD NEW STRUCTURE
   UpgradeCostLabel: UPGRADE COST
@@ -105,8 +135,44 @@ MonoBehaviour:
   SurvivorDetailTraitsFormat: 'Traits: {0}'
   SurvivorDetailWeaponFormat: 'Weapon: {0}  ({1}/{2})'
   SurvivorDetailStatsFormat: 'HP {0}/{1}  Morale {2}  Fatigue {3}  XP {4}'
+  SurvivorDetailTreatmentFormat: 'Treatment: {0}'
+  SurvivorDetailHealthyLabel: Healthy
+  SurvivorDetailWoundFormat: '{0}, {1} min left'
+  SurvivorDetailHealingLockedFormat: '{0}. Infirmary lvl {1} required'
   SurvivorNoWeaponLabel: Unarmed
   SurvivorNoTraitsLabel: None
+  WorkshopScreenTitle: WORKSHOP
+  WorkshopStatusFormat: 'Target {0}. Items {1}. Parts {2}. Repair requires Workshop lvl {3}.'
+  WorkshopEmptyTitle: NO GEAR
+  WorkshopEmptyBody: Expeditions and recruits can bring weapons back to camp.
+  WorkshopItemDurabilityFormat: 'Durability {0}/{1}'
+  WorkshopItemEquippedFormat: 'Equipped by {0}'
+  WorkshopItemUnequippedLabel: Stored
+  WorkshopRepairCostFormat: 'Repair: {0} parts'
+  WorkshopRepairButton: REPAIR
+  WorkshopEquipButton: EQUIP
+  WorkshopBrokenLabel: BROKEN
+  ReportsScreenTitle: REPORTS
+  ReportsEmptyTitle: NO REPORTS
+  ReportsEmptyBody: Complete an expedition or return after offline time to generate reports.
+  AfterActionPanelTitle: AFTER ACTION
+  AfterActionSuccessLabel: SUCCESS
+  AfterActionFailureLabel: FAILED
+  AfterActionOutcomeFormat: '{0}  *  {1}  *  {2} min'
+  AfterActionLootFormat: 'Loot: {0}'
+  AfterActionXpFormat: 'XP gained: {0}'
+  AfterActionWoundsFormat: 'Wounds: {0}'
+  AfterActionEnemiesFormat: 'Enemies defeated: {0}'
+  AfterActionEventsFormat: 'Events: {0}'
+  OfflineReportPanelTitle: OFFLINE REPORT
+  OfflineReportSummaryFormat: '{0} min passed while away'
+  OfflineReportResourcesFormat: 'Resources: {0}'
+  OfflineReportCompletedFormat: 'Expeditions completed: {0}'
+  OfflineReportHealingFormat: 'Healing completed: {0}'
+  OfflineReportWarningsFormat: 'Warnings: {0}'
+  ReportNoneLabel: None
+  ReportListSeparator: ', '
+  ReportCountFormat: '{0} x{1}'
   ResourceBar:
   - Id: scrap
     Label: SCRAP
@@ -221,6 +287,9 @@ MonoBehaviour:
     IsActive: 1
   - Id: workshop
     Label: WORKSHOP
+    IsActive: 0
+  - Id: reports
+    Label: REPORTS
     IsActive: 0
   - Id: radio
     Label: RADIO

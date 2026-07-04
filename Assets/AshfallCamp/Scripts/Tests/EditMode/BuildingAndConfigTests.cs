@@ -160,6 +160,7 @@ namespace AshfallCamp.Tests.EditMode
             database.Resources.Resources.Add(new ResourceConfigData { Id = "food", Name = "Food", HasCap = true, StartAmount = 8, StartCap = 50 });
             database.Resources.Resources.Add(new ResourceConfigData { Id = "water", Name = "Water", HasCap = true, StartAmount = 6, StartCap = 40 });
             database.Resources.Resources.Add(new ResourceConfigData { Id = "medicine", Name = "Medicine", HasCap = true, StartAmount = 1, StartCap = 20 });
+            database.Resources.Resources.Add(new ResourceConfigData { Id = "weapon_parts", Name = "Weapon Parts", HasCap = false, StartAmount = 0 });
 
             database.Survivors = ScriptableObject.CreateInstance<SurvivorCatalogSO>();
             database.Survivors.StartingSurvivor = new StartingSurvivorConfigData
@@ -215,6 +216,29 @@ namespace AshfallCamp.Tests.EditMode
                 Levels = new List<BuildingLevelConfigData>
                 {
                     new BuildingLevelConfigData { Level = 0 }
+                }
+            });
+            database.Buildings.Buildings.Add(new BuildingConfigData
+            {
+                Id = "workshop",
+                Name = "Workshop",
+                StartsUnlocked = true,
+                Levels = new List<BuildingLevelConfigData>
+                {
+                    new BuildingLevelConfigData { Level = 0 },
+                    new BuildingLevelConfigData { Level = 1, Cost = new List<IntPairData> { new IntPairData("scrap", 35) } }
+                }
+            });
+            database.Buildings.Buildings.Add(new BuildingConfigData
+            {
+                Id = "infirmary",
+                Name = "Infirmary",
+                StartsUnlocked = true,
+                AffectedResourceId = "medicine",
+                Levels = new List<BuildingLevelConfigData>
+                {
+                    new BuildingLevelConfigData { Level = 0, ResourceCap = 20 },
+                    new BuildingLevelConfigData { Level = 1, Cost = new List<IntPairData> { new IntPairData("scrap", 50), new IntPairData("medicine", 2) }, ResourceCap = 30 }
                 }
             });
 

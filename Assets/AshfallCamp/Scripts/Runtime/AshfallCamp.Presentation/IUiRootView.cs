@@ -10,6 +10,8 @@ namespace AshfallCamp.Presentation
         event Action<string> UpgradeRequested;
         event Action<ExpeditionLaunchViewRequest> ExpeditionLaunchRequested;
         event Action RecruitRequested;
+        event Action<RepairItemRequest> RepairItemRequested;
+        event Action<EquipItemRequest> EquipItemRequested;
         void Render(GameState state, GameConfigSnapshot config);
     }
 

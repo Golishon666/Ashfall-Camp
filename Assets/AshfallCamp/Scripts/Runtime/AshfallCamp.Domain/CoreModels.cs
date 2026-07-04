@@ -66,6 +66,7 @@ namespace AshfallCamp.Domain
         public Dictionary<string, ZoneState> Zones = new Dictionary<string, ZoneState>(StringComparer.Ordinal);
         public Dictionary<string, UpgradeState> Upgrades = new Dictionary<string, UpgradeState>(StringComparer.Ordinal);
         public List<ExpeditionState> Expeditions = new List<ExpeditionState>();
+        public OfflineProgressReport LastOfflineReport;
         public GameSettings Settings = new GameSettings();
         public GameStatistics Statistics = new GameStatistics();
     }
@@ -223,12 +224,39 @@ namespace AshfallCamp.Domain
         public Dictionary<string, int> Cost = new Dictionary<string, int>(StringComparer.Ordinal);
     }
 
+    public sealed class RepairItemRequest
+    {
+        public string ItemUid = string.Empty;
+    }
+
+    public sealed class RepairItemResult
+    {
+        public ValidationResult Validation = new ValidationResult();
+        public InventoryItemState Item;
+        public Dictionary<string, int> Cost = new Dictionary<string, int>(StringComparer.Ordinal);
+    }
+
+    public sealed class EquipItemRequest
+    {
+        public string SurvivorId = string.Empty;
+        public string ItemUid = string.Empty;
+    }
+
+    public sealed class EquipItemResult
+    {
+        public ValidationResult Validation = new ValidationResult();
+        public SurvivorState Survivor;
+        public InventoryItemState Item;
+        public InventoryItemState PreviouslyEquippedItem;
+    }
+
     public sealed class OfflineProgressReport
     {
         public double AppliedSeconds;
         public Dictionary<string, int> ResourcesGained = new Dictionary<string, int>(StringComparer.Ordinal);
         public List<string> CompletedExpeditionIds = new List<string>();
         public List<string> WoundedSurvivorIds = new List<string>();
+        public List<string> HealedSurvivorIds = new List<string>();
     }
 
     public sealed class GameConfigSnapshot
@@ -381,6 +409,7 @@ namespace AshfallCamp.Domain
         public double CombatTickSeconds = 2;
         public double ExpeditionStepSeconds = 10;
         public double AutosaveSeconds = 30;
+        public double OfflineReportMinimumSeconds = 60;
         public double ActiveCommandCooldownSeconds = 30;
         public double BaseAccuracyMelee = 0.78;
         public double BaseAccuracyFirearms = 0.65;
@@ -393,12 +422,23 @@ namespace AshfallCamp.Domain
         public string RecruitmentScrapResourceId = "scrap";
         public string RecruitmentFoodResourceId = "food";
         public string RecruitmentWaterResourceId = "water";
+        public string ExpeditionFoodResourceId = "food";
+        public string ExpeditionWaterResourceId = "water";
         public int RecruitmentBaseScrap = 20;
         public double RecruitmentScrapExponent = 1.25;
         public int RecruitmentBaseFood = 2;
         public int RecruitmentFoodDivisor = 2;
         public int RecruitmentBaseWater = 2;
         public int RecruitmentWaterDivisor = 3;
+        public string WorkshopRequiredBuildingId = "workshop";
+        public int WorkshopRequiredBuildingLevel = 1;
+        public string WorkshopRepairResourceId = "weapon_parts";
+        public int WorkshopRepairDurabilityBlock = 10;
+        public string HealingRequiredBuildingId = "infirmary";
+        public int HealingRequiredBuildingLevel = 1;
+        public string HealingDefaultWoundId = "cuts";
+        public double HealingDefaultWoundDurationSeconds = 300;
+        public int HealingHealthOnWounded = 1;
     }
 
     public sealed class StartingSurvivorDefinition

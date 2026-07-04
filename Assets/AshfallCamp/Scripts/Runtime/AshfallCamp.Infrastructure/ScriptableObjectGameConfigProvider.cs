@@ -248,6 +248,7 @@ namespace AshfallCamp.Infrastructure
                 CombatTickSeconds = source.CombatTickSeconds,
                 ExpeditionStepSeconds = source.ExpeditionStepSeconds,
                 AutosaveSeconds = source.AutosaveSeconds,
+                OfflineReportMinimumSeconds = source.OfflineReportMinimumSeconds,
                 ActiveCommandCooldownSeconds = source.ActiveCommandCooldownSeconds,
                 BaseAccuracyMelee = source.BaseAccuracyMelee,
                 BaseAccuracyFirearms = source.BaseAccuracyFirearms,
@@ -260,12 +261,23 @@ namespace AshfallCamp.Infrastructure
                 RecruitmentScrapResourceId = source.RecruitmentScrapResourceId,
                 RecruitmentFoodResourceId = source.RecruitmentFoodResourceId,
                 RecruitmentWaterResourceId = source.RecruitmentWaterResourceId,
+                ExpeditionFoodResourceId = source.ExpeditionFoodResourceId,
+                ExpeditionWaterResourceId = source.ExpeditionWaterResourceId,
                 RecruitmentBaseScrap = source.RecruitmentBaseScrap,
                 RecruitmentScrapExponent = source.RecruitmentScrapExponent,
                 RecruitmentBaseFood = source.RecruitmentBaseFood,
                 RecruitmentFoodDivisor = source.RecruitmentFoodDivisor,
                 RecruitmentBaseWater = source.RecruitmentBaseWater,
-                RecruitmentWaterDivisor = source.RecruitmentWaterDivisor
+                RecruitmentWaterDivisor = source.RecruitmentWaterDivisor,
+                WorkshopRequiredBuildingId = source.WorkshopRequiredBuildingId,
+                WorkshopRequiredBuildingLevel = source.WorkshopRequiredBuildingLevel,
+                WorkshopRepairResourceId = source.WorkshopRepairResourceId,
+                WorkshopRepairDurabilityBlock = source.WorkshopRepairDurabilityBlock,
+                HealingRequiredBuildingId = source.HealingRequiredBuildingId,
+                HealingRequiredBuildingLevel = source.HealingRequiredBuildingLevel,
+                HealingDefaultWoundId = source.HealingDefaultWoundId,
+                HealingDefaultWoundDurationSeconds = source.HealingDefaultWoundDurationSeconds,
+                HealingHealthOnWounded = source.HealingHealthOnWounded
             };
         }
 
@@ -306,7 +318,10 @@ namespace AshfallCamp.Infrastructure
             if (!snapshot.Items.ContainsKey(snapshot.StartingSurvivor.WeaponItemId)) throw new InvalidOperationException("Starting weapon item is missing.");
             ValidateResources(snapshot);
             ValidatePolicies(snapshot);
+            ValidateExpeditionBalance(snapshot);
             ValidateRecruitment(snapshot);
+            ValidateWorkshop(snapshot);
+            ValidateHealing(snapshot);
             ValidateEnemies(snapshot);
             ValidateItems(snapshot);
             ValidateBuildings(snapshot);
@@ -372,6 +387,7 @@ namespace AshfallCamp.Infrastructure
             if (snapshot.Balance.MaxOfflineSeconds <= 0) throw new InvalidOperationException("Max offline seconds must be positive.");
             if (snapshot.Balance.SimulationTickSeconds <= 0) throw new InvalidOperationException("Simulation tick seconds must be positive.");
             if (snapshot.Balance.ExpeditionStepSeconds <= 0) throw new InvalidOperationException("Expedition step seconds must be positive.");
+            if (snapshot.Balance.OfflineReportMinimumSeconds < 0) throw new InvalidOperationException("Offline report minimum seconds cannot be negative.");
             if (snapshot.Balance.MinHitChance < 0 || snapshot.Balance.MaxHitChance > 1 || snapshot.Balance.MinHitChance > snapshot.Balance.MaxHitChance)
             {
                 throw new InvalidOperationException("Hit chance bounds are invalid.");
@@ -420,6 +436,52 @@ namespace AshfallCamp.Infrastructure
             {
                 throw new InvalidOperationException("Recruitment cost references unknown resource: " + resourceId);
             }
+        }
+
+        private static void ValidateExpeditionBalance(GameConfigSnapshot snapshot)
+        {
+            ValidateExpeditionResource(snapshot, snapshot.Balance.ExpeditionFoodResourceId);
+            ValidateExpeditionResource(snapshot, snapshot.Balance.ExpeditionWaterResourceId);
+        }
+
+        private static void ValidateExpeditionResource(GameConfigSnapshot snapshot, string resourceId)
+        {
+            if (!string.IsNullOrWhiteSpace(resourceId) && !snapshot.Resources.ContainsKey(resourceId))
+            {
+                throw new InvalidOperationException("Expedition cost references unknown resource: " + resourceId);
+            }
+        }
+
+        private static void ValidateWorkshop(GameConfigSnapshot snapshot)
+        {
+            if (!string.IsNullOrWhiteSpace(snapshot.Balance.WorkshopRequiredBuildingId) &&
+                !snapshot.Buildings.ContainsKey(snapshot.Balance.WorkshopRequiredBuildingId))
+            {
+                throw new InvalidOperationException("Workshop references unknown building: " + snapshot.Balance.WorkshopRequiredBuildingId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(snapshot.Balance.WorkshopRepairResourceId) &&
+                !snapshot.Resources.ContainsKey(snapshot.Balance.WorkshopRepairResourceId))
+            {
+                throw new InvalidOperationException("Workshop repair references unknown resource: " + snapshot.Balance.WorkshopRepairResourceId);
+            }
+
+            if (snapshot.Balance.WorkshopRequiredBuildingLevel < 0) throw new InvalidOperationException("Workshop building level cannot be negative.");
+            if (snapshot.Balance.WorkshopRepairDurabilityBlock <= 0) throw new InvalidOperationException("Workshop repair durability block must be positive.");
+        }
+
+        private static void ValidateHealing(GameConfigSnapshot snapshot)
+        {
+            if (!string.IsNullOrWhiteSpace(snapshot.Balance.HealingRequiredBuildingId) &&
+                !snapshot.Buildings.ContainsKey(snapshot.Balance.HealingRequiredBuildingId))
+            {
+                throw new InvalidOperationException("Healing references unknown building: " + snapshot.Balance.HealingRequiredBuildingId);
+            }
+
+            if (snapshot.Balance.HealingRequiredBuildingLevel < 0) throw new InvalidOperationException("Healing building level cannot be negative.");
+            if (string.IsNullOrWhiteSpace(snapshot.Balance.HealingDefaultWoundId)) throw new InvalidOperationException("Healing wound id cannot be empty.");
+            if (snapshot.Balance.HealingDefaultWoundDurationSeconds <= 0) throw new InvalidOperationException("Healing wound duration must be positive.");
+            if (snapshot.Balance.HealingHealthOnWounded <= 0) throw new InvalidOperationException("Healing wounded health must be positive.");
         }
 
         private static void ValidateEnemies(GameConfigSnapshot snapshot)

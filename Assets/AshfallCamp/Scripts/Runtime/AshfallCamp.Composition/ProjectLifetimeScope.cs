@@ -36,6 +36,8 @@ namespace AshfallCamp.Composition
             builder.Register<LaunchExpeditionUseCase>(Lifetime.Singleton).As<ILaunchExpeditionUseCase>();
             builder.Register<UpgradeBuildingUseCase>(Lifetime.Singleton).As<IUpgradeBuildingUseCase>();
             builder.Register<RecruitSurvivorUseCase>(Lifetime.Singleton).As<IRecruitSurvivorUseCase>();
+            builder.Register<RepairItemUseCase>(Lifetime.Singleton).As<IRepairItemUseCase>();
+            builder.Register<EquipItemUseCase>(Lifetime.Singleton).As<IEquipItemUseCase>();
             builder.Register<TickGameUseCase>(Lifetime.Singleton).As<ITickGameUseCase>();
             builder.Register<OfflineProgressUseCase>(Lifetime.Singleton).As<IOfflineProgressUseCase>();
             builder.Register<SaveLoadUseCase>(Lifetime.Singleton).As<ISaveLoadUseCase>();

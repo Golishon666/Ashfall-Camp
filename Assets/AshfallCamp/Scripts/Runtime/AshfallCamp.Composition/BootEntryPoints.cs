@@ -127,13 +127,25 @@ namespace AshfallCamp.Composition
         private readonly IUpgradeBuildingUseCase _upgradeBuilding;
         private readonly ILaunchExpeditionUseCase _launchExpedition;
         private readonly IRecruitSurvivorUseCase _recruitSurvivor;
+        private readonly IRepairItemUseCase _repairItem;
+        private readonly IEquipItemUseCase _equipItem;
         private IDisposable _stateSubscription;
         private double _accumulator;
         private bool _isUpgrading;
         private bool _isLaunching;
         private bool _isRecruiting;
+        private bool _isRepairing;
+        private bool _isEquipping;
 
-        public CampHudPresenter(IUiRootView view, IGameStateReader reader, IGameConfigProvider configs, IUpgradeBuildingUseCase upgradeBuilding, ILaunchExpeditionUseCase launchExpedition, IRecruitSurvivorUseCase recruitSurvivor)
+        public CampHudPresenter(
+            IUiRootView view,
+            IGameStateReader reader,
+            IGameConfigProvider configs,
+            IUpgradeBuildingUseCase upgradeBuilding,
+            ILaunchExpeditionUseCase launchExpedition,
+            IRecruitSurvivorUseCase recruitSurvivor,
+            IRepairItemUseCase repairItem,
+            IEquipItemUseCase equipItem)
         {
             _view = view;
             _reader = reader;
@@ -141,6 +153,8 @@ namespace AshfallCamp.Composition
             _upgradeBuilding = upgradeBuilding;
             _launchExpedition = launchExpedition;
             _recruitSurvivor = recruitSurvivor;
+            _repairItem = repairItem;
+            _equipItem = equipItem;
         }
 
         public void Start()
@@ -148,6 +162,8 @@ namespace AshfallCamp.Composition
             _view.UpgradeRequested += OnUpgradeRequested;
             _view.ExpeditionLaunchRequested += OnExpeditionLaunchRequested;
             _view.RecruitRequested += OnRecruitRequested;
+            _view.RepairItemRequested += OnRepairItemRequested;
+            _view.EquipItemRequested += OnEquipItemRequested;
             _stateSubscription = _reader.State.Subscribe(_ => RenderCurrent());
             RenderCurrent();
         }
@@ -166,6 +182,8 @@ namespace AshfallCamp.Composition
             _view.UpgradeRequested -= OnUpgradeRequested;
             _view.ExpeditionLaunchRequested -= OnExpeditionLaunchRequested;
             _view.RecruitRequested -= OnRecruitRequested;
+            _view.RepairItemRequested -= OnRepairItemRequested;
+            _view.EquipItemRequested -= OnEquipItemRequested;
             _stateSubscription?.Dispose();
         }
 
@@ -185,6 +203,18 @@ namespace AshfallCamp.Composition
         {
             if (_isRecruiting) return;
             RecruitAsync().Forget();
+        }
+
+        private void OnRepairItemRequested(RepairItemRequest request)
+        {
+            if (_isRepairing || request == null) return;
+            RepairItemAsync(request).Forget();
+        }
+
+        private void OnEquipItemRequested(EquipItemRequest request)
+        {
+            if (_isEquipping || request == null) return;
+            EquipItemAsync(request).Forget();
         }
 
         private async UniTaskVoid UpgradeAsync(string buildingId)
@@ -291,6 +321,58 @@ namespace AshfallCamp.Composition
             finally
             {
                 _isRecruiting = false;
+            }
+        }
+
+        private async UniTaskVoid RepairItemAsync(RepairItemRequest request)
+        {
+            _isRepairing = true;
+            try
+            {
+                var result = await _repairItem.ExecuteAsync(request, CancellationToken.None);
+                if (!result.Validation.IsValid)
+                {
+                    Debug.LogWarning("Workshop repair blocked: " + string.Join(", ", result.Validation.Errors));
+                }
+
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isRepairing = false;
+            }
+        }
+
+        private async UniTaskVoid EquipItemAsync(EquipItemRequest request)
+        {
+            _isEquipping = true;
+            try
+            {
+                var result = await _equipItem.ExecuteAsync(request, CancellationToken.None);
+                if (!result.Validation.IsValid)
+                {
+                    Debug.LogWarning("Workshop equip blocked: " + string.Join(", ", result.Validation.Errors));
+                }
+
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isEquipping = false;
             }
         }
 
