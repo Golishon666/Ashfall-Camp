@@ -22,12 +22,12 @@ namespace AshfallCamp.Presentation
         private readonly Dictionary<string, BuildingPinBinding> _pinLookup = new Dictionary<string, BuildingPinBinding>(StringComparer.Ordinal);
         private bool _pinLookupDirty = true;
         private Action<ExpeditionLaunchViewRequest> _launchRequested;
-        private Action _recruitRequested;
+        private Action _broadcastRequested;
         private bool _radioButtonWired;
 
         private void OnDestroy()
         {
-            ClearRadioHandler();
+            ClearBroadcastHandler();
             foreach (var card in expeditionCards)
             {
                 if (card != null) card.ClearLaunchHandler();
@@ -74,9 +74,9 @@ namespace AshfallCamp.Presentation
             ApplyLaunchHandler();
         }
 
-        public void SetRecruitHandler(Action recruitRequested)
+        public void SetBroadcastHandler(Action broadcastRequested)
         {
-            _recruitRequested = recruitRequested;
+            _broadcastRequested = broadcastRequested;
             WireRadioButton();
         }
 
@@ -180,7 +180,7 @@ namespace AshfallCamp.Presentation
             _radioButtonWired = true;
         }
 
-        private void ClearRadioHandler()
+        private void ClearBroadcastHandler()
         {
             if (radioButton != null)
             {
@@ -188,12 +188,12 @@ namespace AshfallCamp.Presentation
             }
 
             _radioButtonWired = false;
-            _recruitRequested = null;
+            _broadcastRequested = null;
         }
 
         private void OnRadioClicked()
         {
-            _recruitRequested?.Invoke();
+            _broadcastRequested?.Invoke();
         }
 
         [Serializable]

@@ -107,6 +107,16 @@ MonoBehaviour:
       SquadSize: 0
       ResourceCap: 0
       ResourcePerMinute: 0
+    - Level: 4
+      Cost:
+      - Id: scrap
+        Value: 360
+      - Id: weapon_parts
+        Value: 28
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
   - Id: water_collector
     Name: Water Collector
     StartingLevel: 0
@@ -148,6 +158,16 @@ MonoBehaviour:
       SquadSize: 0
       ResourceCap: 160
       ResourcePerMinute: 3
+    - Level: 4
+      Cost:
+      - Id: scrap
+        Value: 280
+      - Id: weapon_parts
+        Value: 30
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 240
+      ResourcePerMinute: 4
   - Id: infirmary
     Name: Infirmary
     StartingLevel: 0
@@ -191,6 +211,16 @@ MonoBehaviour:
       SquadSize: 0
       ResourceCap: 60
       ResourcePerMinute: 0
+    - Level: 4
+      Cost:
+      - Id: scrap
+        Value: 420
+      - Id: medicine
+        Value: 22
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 80
+      ResourcePerMinute: 0
   - Id: radio_tower
     Name: Radio Tower
     StartingLevel: 0
@@ -230,6 +260,16 @@ MonoBehaviour:
         Value: 260
       - Id: weapon_parts
         Value: 25
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 4
+      Cost:
+      - Id: scrap
+        Value: 420
+      - Id: weapon_parts
+        Value: 45
       SurvivorCap: 0
       SquadSize: 0
       ResourceCap: 0

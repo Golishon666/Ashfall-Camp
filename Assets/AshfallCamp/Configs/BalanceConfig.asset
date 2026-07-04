@@ -39,6 +39,7 @@ MonoBehaviour:
     RecruitmentFoodDivisor: 2
     RecruitmentBaseWater: 2
     RecruitmentWaterDivisor: 3
+    RecruitmentCandidateCount: 2
     WorkshopRequiredBuildingId: workshop
     WorkshopRequiredBuildingLevel: 1
     WorkshopRepairResourceId: weapon_parts
@@ -48,3 +49,23 @@ MonoBehaviour:
     HealingDefaultWoundId: cuts
     HealingDefaultWoundDurationSeconds: 300
     HealingHealthOnWounded: 1
+    HealingMedicineResourceId: medicine
+    HealingMedicineCost: 1
+    HealingMedicineSeconds: 300
+    EmergencyScavengeDurationSeconds: 60
+    EmergencyScavengeCooldownSeconds: 300
+    EmergencyScavengeRewards:
+    - Id: scrap
+      Value: 3
+    - Id: food
+      Value: 2
+    - Id: water
+      Value: 2
+    DemoCompletionRequiresAnyCondition: 1
+    DemoCompletionConditions:
+    - Type: zone_completions
+      Id: mutant_tunnel
+      Value: 1
+    - Type: building_level
+      Id: radio_tower
+      Value: 2

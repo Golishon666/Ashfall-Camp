@@ -16,6 +16,9 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI idleSurvivorsLabel;
         [SerializeField] private TextMeshProUGUI buildingsLabel;
         [SerializeField] private TextMeshProUGUI productionLabel;
+        [SerializeField] private TextMeshProUGUI nextGoalTitle;
+        [SerializeField] private TextMeshProUGUI nextGoalBody;
+        [SerializeField] private TextMeshProUGUI nextGoalProgress;
 
         public void ConfigureBindings(
             TextMeshProUGUI populationValueText,
@@ -25,7 +28,10 @@ namespace AshfallCamp.Presentation
             TextMeshProUGUI populationLabelText,
             TextMeshProUGUI idleSurvivorsLabelText,
             TextMeshProUGUI buildingsLabelText,
-            TextMeshProUGUI productionLabelText)
+            TextMeshProUGUI productionLabelText,
+            TextMeshProUGUI nextGoalTitleText,
+            TextMeshProUGUI nextGoalBodyText,
+            TextMeshProUGUI nextGoalProgressText)
         {
             populationValue = populationValueText;
             idleSurvivorsValue = idleSurvivorsValueText;
@@ -35,6 +41,9 @@ namespace AshfallCamp.Presentation
             idleSurvivorsLabel = idleSurvivorsLabelText;
             buildingsLabel = buildingsLabelText;
             productionLabel = productionLabelText;
+            nextGoalTitle = nextGoalTitleText;
+            nextGoalBody = nextGoalBodyText;
+            nextGoalProgress = nextGoalProgressText;
         }
 
         public void Render(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
@@ -54,6 +63,11 @@ namespace AshfallCamp.Presentation
                 ? 0
                 : UiStateQueries.CalculateProductionPerHour(state, config, catalog.ProductionMetricResourceId);
             UiText.Set(productionValue, "+" + productionPerHour + catalog.PerHourSuffixLabel);
+
+            var goal = CampDashboardTextFormatter.BuildNextGoal(state, config, catalog);
+            UiText.Set(nextGoalTitle, goal.Title);
+            UiText.Set(nextGoalBody, string.IsNullOrWhiteSpace(goal.Body) ? catalog.CampSummaryNote : goal.Body);
+            UiText.Set(nextGoalProgress, goal.Progress);
         }
     }
 }

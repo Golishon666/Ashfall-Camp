@@ -269,6 +269,7 @@ namespace AshfallCamp.Infrastructure
                 RecruitmentFoodDivisor = source.RecruitmentFoodDivisor,
                 RecruitmentBaseWater = source.RecruitmentBaseWater,
                 RecruitmentWaterDivisor = source.RecruitmentWaterDivisor,
+                RecruitmentCandidateCount = source.RecruitmentCandidateCount,
                 WorkshopRequiredBuildingId = source.WorkshopRequiredBuildingId,
                 WorkshopRequiredBuildingLevel = source.WorkshopRequiredBuildingLevel,
                 WorkshopRepairResourceId = source.WorkshopRepairResourceId,
@@ -277,8 +278,19 @@ namespace AshfallCamp.Infrastructure
                 HealingRequiredBuildingLevel = source.HealingRequiredBuildingLevel,
                 HealingDefaultWoundId = source.HealingDefaultWoundId,
                 HealingDefaultWoundDurationSeconds = source.HealingDefaultWoundDurationSeconds,
-                HealingHealthOnWounded = source.HealingHealthOnWounded
+                HealingHealthOnWounded = source.HealingHealthOnWounded,
+                HealingMedicineResourceId = source.HealingMedicineResourceId,
+                HealingMedicineCost = source.HealingMedicineCost,
+                HealingMedicineSeconds = source.HealingMedicineSeconds,
+                EmergencyScavengeDurationSeconds = source.EmergencyScavengeDurationSeconds,
+                EmergencyScavengeCooldownSeconds = source.EmergencyScavengeCooldownSeconds,
+                EmergencyScavengeRewards = ToDictionary(source.EmergencyScavengeRewards),
+                DemoCompletionRequiresAnyCondition = source.DemoCompletionRequiresAnyCondition
             };
+            foreach (var condition in source.DemoCompletionConditions)
+            {
+                snapshot.Balance.DemoCompletionConditions.Add(new UnlockCondition { Type = condition.Type, Id = condition.Id, Value = condition.Value });
+            }
         }
 
         private static Dictionary<string, int> ToDictionary(List<IntPairData> entries)
@@ -322,6 +334,8 @@ namespace AshfallCamp.Infrastructure
             ValidateRecruitment(snapshot);
             ValidateWorkshop(snapshot);
             ValidateHealing(snapshot);
+            ValidateEmergencyScavenge(snapshot);
+            ValidateDemoCompletion(snapshot);
             ValidateEnemies(snapshot);
             ValidateItems(snapshot);
             ValidateBuildings(snapshot);
@@ -348,11 +362,11 @@ namespace AshfallCamp.Infrastructure
                 foreach (var condition in zone.UnlockConditions)
                 {
                     if (condition.Value < 0) throw new InvalidOperationException("Zone unlock value cannot be negative: " + zone.Id);
-                    if (condition.Type == "zone_completions")
+                    if (condition.Type == GameConditionTypes.ZoneCompletions)
                     {
                         if (!snapshot.Zones.ContainsKey(condition.Id)) throw new InvalidOperationException("Zone unlock references unknown zone: " + condition.Id);
                     }
-                    else if (condition.Type == "building_level")
+                    else if (condition.Type == GameConditionTypes.BuildingLevel)
                     {
                         if (!snapshot.Buildings.ContainsKey(condition.Id)) throw new InvalidOperationException("Zone unlock references unknown building: " + condition.Id);
                     }
@@ -414,6 +428,7 @@ namespace AshfallCamp.Infrastructure
 
             if (snapshot.Balance.RecruitmentScrapExponent <= 0) throw new InvalidOperationException("Recruitment scrap exponent must be positive.");
             if (snapshot.Balance.RecruitmentFoodDivisor <= 0 || snapshot.Balance.RecruitmentWaterDivisor <= 0) throw new InvalidOperationException("Recruitment cost divisors must be positive.");
+            if (snapshot.Balance.RecruitmentCandidateCount <= 0) throw new InvalidOperationException("Recruitment candidate count must be positive.");
 
             var names = new HashSet<string>(StringComparer.Ordinal);
             foreach (var candidate in snapshot.RecruitableSurvivors.Values)
@@ -452,6 +467,40 @@ namespace AshfallCamp.Infrastructure
             }
         }
 
+        private static void ValidateDemoCompletion(GameConfigSnapshot snapshot)
+        {
+            foreach (var condition in snapshot.Balance.DemoCompletionConditions)
+            {
+                if (condition == null) throw new InvalidOperationException("Demo completion condition is missing.");
+                if (condition.Value < 0) throw new InvalidOperationException("Demo completion condition value cannot be negative.");
+                if (condition.Type == GameConditionTypes.ZoneCompletions || condition.Type == GameConditionTypes.ZoneUnlocked)
+                {
+                    if (!snapshot.Zones.ContainsKey(condition.Id)) throw new InvalidOperationException("Demo completion references unknown zone: " + condition.Id);
+                }
+                else if (condition.Type == GameConditionTypes.BuildingLevel)
+                {
+                    if (!snapshot.Buildings.ContainsKey(condition.Id)) throw new InvalidOperationException("Demo completion references unknown building: " + condition.Id);
+                }
+                else if (IsDemoCompletionCountOnlyCondition(condition.Type))
+                {
+                    continue;
+                }
+                else if (condition.Type == GameConditionTypes.ResourceAmount)
+                {
+                    if (!snapshot.Resources.ContainsKey(condition.Id)) throw new InvalidOperationException("Demo completion references unknown resource: " + condition.Id);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Demo completion condition has unknown type: " + condition.Type);
+                }
+            }
+        }
+
+        private static bool IsDemoCompletionCountOnlyCondition(string type)
+        {
+            return type == GameConditionTypes.SurvivorCount || type == GameConditionTypes.ExpeditionsCompleted;
+        }
+
         private static void ValidateWorkshop(GameConfigSnapshot snapshot)
         {
             if (!string.IsNullOrWhiteSpace(snapshot.Balance.WorkshopRequiredBuildingId) &&
@@ -482,6 +531,26 @@ namespace AshfallCamp.Infrastructure
             if (string.IsNullOrWhiteSpace(snapshot.Balance.HealingDefaultWoundId)) throw new InvalidOperationException("Healing wound id cannot be empty.");
             if (snapshot.Balance.HealingDefaultWoundDurationSeconds <= 0) throw new InvalidOperationException("Healing wound duration must be positive.");
             if (snapshot.Balance.HealingHealthOnWounded <= 0) throw new InvalidOperationException("Healing wounded health must be positive.");
+            if (!string.IsNullOrWhiteSpace(snapshot.Balance.HealingMedicineResourceId) &&
+                !snapshot.Resources.ContainsKey(snapshot.Balance.HealingMedicineResourceId))
+            {
+                throw new InvalidOperationException("Healing medicine references unknown resource: " + snapshot.Balance.HealingMedicineResourceId);
+            }
+
+            if (snapshot.Balance.HealingMedicineCost < 0) throw new InvalidOperationException("Healing medicine cost cannot be negative.");
+            if (snapshot.Balance.HealingMedicineSeconds <= 0) throw new InvalidOperationException("Healing medicine seconds must be positive.");
+        }
+
+        private static void ValidateEmergencyScavenge(GameConfigSnapshot snapshot)
+        {
+            if (snapshot.Balance.EmergencyScavengeDurationSeconds <= 0) throw new InvalidOperationException("Emergency scavenge duration must be positive.");
+            if (snapshot.Balance.EmergencyScavengeCooldownSeconds < 0) throw new InvalidOperationException("Emergency scavenge cooldown cannot be negative.");
+            if (snapshot.Balance.EmergencyScavengeRewards.Count == 0) throw new InvalidOperationException("Emergency scavenge rewards cannot be empty.");
+            foreach (var reward in snapshot.Balance.EmergencyScavengeRewards)
+            {
+                if (!snapshot.Resources.ContainsKey(reward.Key)) throw new InvalidOperationException("Emergency scavenge reward references unknown resource: " + reward.Key);
+                if (reward.Value <= 0) throw new InvalidOperationException("Emergency scavenge reward must be positive: " + reward.Key);
+            }
         }
 
         private static void ValidateEnemies(GameConfigSnapshot snapshot)

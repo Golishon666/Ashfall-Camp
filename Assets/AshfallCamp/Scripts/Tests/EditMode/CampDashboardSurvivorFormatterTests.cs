@@ -28,6 +28,8 @@ namespace AshfallCamp.Tests.EditMode
             Assert.That(detail.Traits, Does.Contain("Careful"));
             Assert.That(detail.Weapon, Does.Contain("Rusty Knife"));
             Assert.AreEqual("Treatment: Healthy", detail.Treatment);
+            Assert.IsFalse(detail.ShowMedicineAction);
+            Assert.IsFalse(detail.CanUseMedicine);
             Assert.That(detail.Stats, Does.Contain("HP 30/30"));
 
             Object.DestroyImmediate(catalog);
@@ -44,11 +46,22 @@ namespace AshfallCamp.Tests.EditMode
             var detail = CampDashboardTextFormatter.BuildSurvivorDetail(state.Survivors[0], state, config, catalog);
 
             Assert.That(detail.Treatment, Does.Contain("Treatment: cuts 5m locked 1"));
+            Assert.IsTrue(detail.ShowMedicineAction);
+            Assert.IsFalse(detail.CanUseMedicine);
 
             state.Buildings["infirmary"].Level = 1;
             detail = CampDashboardTextFormatter.BuildSurvivorDetail(state.Survivors[0], state, config, catalog);
 
             Assert.AreEqual("Treatment: cuts 5m", detail.Treatment);
+            Assert.AreEqual("Medicine: Medicine x1", detail.MedicineCost);
+            Assert.AreEqual("Use Medicine", detail.MedicineButton);
+            Assert.IsTrue(detail.ShowMedicineAction);
+            Assert.IsTrue(detail.CanUseMedicine);
+
+            state.Resources["medicine"] = 0;
+            detail = CampDashboardTextFormatter.BuildSurvivorDetail(state.Survivors[0], state, config, catalog);
+
+            Assert.IsFalse(detail.CanUseMedicine);
 
             Object.DestroyImmediate(catalog);
         }
@@ -94,8 +107,13 @@ namespace AshfallCamp.Tests.EditMode
             catalog.SurvivorDetailHealthyLabel = "Healthy";
             catalog.SurvivorDetailWoundFormat = "{0} {1}m";
             catalog.SurvivorDetailHealingLockedFormat = "{0} locked {1}";
+            catalog.SurvivorDetailMedicineCostFormat = "Medicine: {0}";
+            catalog.SurvivorDetailUseMedicineButton = "Use Medicine";
             catalog.SurvivorNoWeaponLabel = "Unarmed";
             catalog.SurvivorNoTraitsLabel = "None";
+            catalog.ReportCountFormat = "{0} x{1}";
+            catalog.ReportListSeparator = ", ";
+            catalog.ReportNoneLabel = "None";
             catalog.SurvivorSkillLabels.Add(new SurvivorSkillUiEntry { Id = "scavenging", Label = "SCAV" });
             catalog.WorkshopStatusFormat = "Target {0} Items {1} Parts {2} Need {3}";
             catalog.WorkshopItemEquippedFormat = "Equipped by {0}";

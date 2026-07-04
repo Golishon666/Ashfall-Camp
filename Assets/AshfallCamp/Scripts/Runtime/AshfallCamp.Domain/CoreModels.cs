@@ -8,6 +8,24 @@ namespace AshfallCamp.Domain
         public const string CurrentSaveVersion = "0.1.0";
     }
 
+    public static class GameEventIds
+    {
+        public const string SurvivorJoined = "survivor_joined";
+        public const string DemoCompleted = "demo_completed";
+        public const string EmergencyScavengeCompleted = "emergency_scavenge_completed";
+    }
+
+    public static class GameConditionTypes
+    {
+        public const string ZoneCompletions = "zone_completions";
+        public const string ZoneUnlocked = "zone_unlocked";
+        public const string BuildingLevel = "building_level";
+        public const string SurvivorCount = "survivor_count";
+        public const string ResourceAmount = "resource_amount";
+        public const string ExpeditionsCompleted = "expeditions_completed";
+        public const string ActiveExpeditions = "active_expeditions";
+    }
+
     public enum SurvivorActivityState
     {
         Idle,
@@ -66,9 +84,44 @@ namespace AshfallCamp.Domain
         public Dictionary<string, ZoneState> Zones = new Dictionary<string, ZoneState>(StringComparer.Ordinal);
         public Dictionary<string, UpgradeState> Upgrades = new Dictionary<string, UpgradeState>(StringComparer.Ordinal);
         public List<ExpeditionState> Expeditions = new List<ExpeditionState>();
+        public List<CampEventState> CampEvents = new List<CampEventState>();
+        public RecruitmentState Recruitment = new RecruitmentState();
+        public RecoveryActionState Recovery = new RecoveryActionState();
         public OfflineProgressReport LastOfflineReport;
+        public GameProgressState Progress = new GameProgressState();
         public GameSettings Settings = new GameSettings();
         public GameStatistics Statistics = new GameStatistics();
+    }
+
+    public sealed class GameProgressState
+    {
+        public bool DemoCompleted;
+        public string DemoCompletionId = string.Empty;
+        public long DemoCompletedAtUnixMs;
+    }
+
+    public sealed class RecruitmentState
+    {
+        public List<string> PendingCandidateIds = new List<string>();
+        public long LastBroadcastAtUnixMs;
+    }
+
+    public sealed class RecoveryActionState
+    {
+        public bool EmergencyScavengeActive;
+        public double EmergencyScavengeRemainingSeconds;
+        public long EmergencyScavengeStartedAtUnixMs;
+        public double EmergencyScavengeCooldownRemainingSeconds;
+    }
+
+    public sealed class CampEventState
+    {
+        public string Id = string.Empty;
+        public string EventId = string.Empty;
+        public string SubjectId = string.Empty;
+        public string SubjectName = string.Empty;
+        public string DetailId = string.Empty;
+        public long AtUnixMs;
     }
 
     public sealed class GameSettings
@@ -212,8 +265,27 @@ namespace AshfallCamp.Domain
 
     public sealed class RecruitSurvivorRequest
     {
+        public string CandidateId = string.Empty;
+        public long NowUnixMs;
+    }
+
+    public sealed class BroadcastRecruitmentRequest
+    {
         public uint Seed;
         public long NowUnixMs;
+    }
+
+    public sealed class BroadcastRecruitmentResult
+    {
+        public ValidationResult Validation = new ValidationResult();
+        public Dictionary<string, int> Cost = new Dictionary<string, int>(StringComparer.Ordinal);
+        public List<string> CandidateIds = new List<string>();
+    }
+
+    public sealed class SkipRecruitmentCandidatesResult
+    {
+        public ValidationResult Validation = new ValidationResult();
+        public List<string> SkippedCandidateIds = new List<string>();
     }
 
     public sealed class RecruitSurvivorResult
@@ -248,6 +320,32 @@ namespace AshfallCamp.Domain
         public SurvivorState Survivor;
         public InventoryItemState Item;
         public InventoryItemState PreviouslyEquippedItem;
+    }
+
+    public sealed class UseMedicineRequest
+    {
+        public string SurvivorId = string.Empty;
+    }
+
+    public sealed class UseMedicineResult
+    {
+        public ValidationResult Validation = new ValidationResult();
+        public SurvivorState Survivor;
+        public Dictionary<string, int> Cost = new Dictionary<string, int>(StringComparer.Ordinal);
+        public bool Healed;
+    }
+
+    public sealed class EmergencyScavengeRequest
+    {
+        public long NowUnixMs;
+    }
+
+    public sealed class EmergencyScavengeResult
+    {
+        public ValidationResult Validation = new ValidationResult();
+        public bool Started;
+        public double DurationSeconds;
+        public Dictionary<string, int> Rewards = new Dictionary<string, int>(StringComparer.Ordinal);
     }
 
     public sealed class OfflineProgressReport
@@ -430,6 +528,7 @@ namespace AshfallCamp.Domain
         public int RecruitmentFoodDivisor = 2;
         public int RecruitmentBaseWater = 2;
         public int RecruitmentWaterDivisor = 3;
+        public int RecruitmentCandidateCount = 2;
         public string WorkshopRequiredBuildingId = "workshop";
         public int WorkshopRequiredBuildingLevel = 1;
         public string WorkshopRepairResourceId = "weapon_parts";
@@ -439,6 +538,14 @@ namespace AshfallCamp.Domain
         public string HealingDefaultWoundId = "cuts";
         public double HealingDefaultWoundDurationSeconds = 300;
         public int HealingHealthOnWounded = 1;
+        public string HealingMedicineResourceId = "medicine";
+        public int HealingMedicineCost = 1;
+        public double HealingMedicineSeconds = 300;
+        public double EmergencyScavengeDurationSeconds = 60;
+        public double EmergencyScavengeCooldownSeconds = 300;
+        public Dictionary<string, int> EmergencyScavengeRewards = new Dictionary<string, int>(StringComparer.Ordinal);
+        public bool DemoCompletionRequiresAnyCondition = true;
+        public List<UnlockCondition> DemoCompletionConditions = new List<UnlockCondition>();
     }
 
     public sealed class StartingSurvivorDefinition

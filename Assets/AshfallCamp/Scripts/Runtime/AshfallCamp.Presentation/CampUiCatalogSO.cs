@@ -35,6 +35,9 @@ namespace AshfallCamp.Presentation
         public string SuppliesValueFormat = string.Empty;
         public string CampSummaryTitle = string.Empty;
         public string CampSummaryNote = string.Empty;
+        public string NextGoalCompleteTitle = string.Empty;
+        public string NextGoalCompleteBody = string.Empty;
+        public string NextGoalProgressFormat = string.Empty;
         public string PopulationLabel = string.Empty;
         public string IdleSurvivorsLabel = string.Empty;
         public string BuildingsLabel = string.Empty;
@@ -43,6 +46,10 @@ namespace AshfallCamp.Presentation
         public string RecentAlertsTitle = string.Empty;
         public string NoAlertsTitle = string.Empty;
         public string NoAlertsBody = string.Empty;
+        public string SurvivorJoinedAlertTitleFormat = string.Empty;
+        public string SurvivorJoinedAlertBodyFormat = string.Empty;
+        public string DemoCompletedAlertTitleFormat = string.Empty;
+        public string DemoCompletedAlertBodyFormat = string.Empty;
         public string ActiveExpeditionAlertTitleFormat = string.Empty;
         public string ActiveExpeditionAlertBodyFormat = string.Empty;
         public string LowResourceAlertTitleFormat = string.Empty;
@@ -50,6 +57,13 @@ namespace AshfallCamp.Presentation
         public int LowResourceAlertPercentThreshold;
         public string WoundedAlertTitleFormat = string.Empty;
         public string WoundedAlertBodyFormat = string.Empty;
+        public string EmergencyScavengeAlertTitle = string.Empty;
+        public string EmergencyScavengeReadyBodyFormat = string.Empty;
+        public string EmergencyScavengeActiveBodyFormat = string.Empty;
+        public string EmergencyScavengeCooldownBodyFormat = string.Empty;
+        public string EmergencyScavengeButton = string.Empty;
+        public string EmergencyScavengeCompletedAlertTitle = string.Empty;
+        public string EmergencyScavengeCompletedAlertBodyFormat = string.Empty;
         public string UpgradeAvailableAlertTitleFormat = string.Empty;
         public string UpgradeAvailableAlertBodyFormat = string.Empty;
         public string CampOverviewTitle = string.Empty;
@@ -62,13 +76,18 @@ namespace AshfallCamp.Presentation
         public string RadioBroadcastTitle = string.Empty;
         public string RadioBroadcastCostFormat = string.Empty;
         public string RadioBroadcastReadyLabel = string.Empty;
+        public string RadioBroadcastPendingLabel = string.Empty;
         public string RadioBroadcastBlockedFormat = string.Empty;
         public string RadioCandidateListTitle = string.Empty;
+        public string RadioCandidateAwaitingTitle = string.Empty;
+        public string RadioCandidateAwaitingBody = string.Empty;
         public string RadioCandidateEmptyTitle = string.Empty;
         public string RadioCandidateEmptyBody = string.Empty;
         public string RadioCandidateCardMetaFormat = string.Empty;
         public string RadioCandidateSkillFormat = string.Empty;
         public string RadioCandidateTraitsFormat = string.Empty;
+        public string RadioCandidateRecruitButton = string.Empty;
+        public string RadioCandidateSkipButton = string.Empty;
         public string ExpeditionEmptyTitle = string.Empty;
         public string ExpeditionEmptySubtitle = string.Empty;
         public string ExpeditionEmptyStatus = string.Empty;
@@ -77,6 +96,11 @@ namespace AshfallCamp.Presentation
         public string ExpeditionRouteSubtitleFormat = string.Empty;
         public string ExpeditionRouteStatusFormat = string.Empty;
         public string ExpeditionScreenTitle = string.Empty;
+        public string ExpeditionSquadTitleFormat = string.Empty;
+        public string ExpeditionSquadMemberMetaFormat = string.Empty;
+        public string ExpeditionPolicyTitle = string.Empty;
+        public string ExpeditionPolicyDetailsFormat = string.Empty;
+        public string ExpeditionSurvivalChanceFormat = string.Empty;
         public string ExpeditionSelectedTitleFormat = string.Empty;
         public string ExpeditionSelectedDetailsFormat = string.Empty;
         public string ExpeditionSelectedLootFormat = string.Empty;
@@ -85,12 +109,23 @@ namespace AshfallCamp.Presentation
         public string ExpeditionSelectedWarningsFormat = string.Empty;
         public string ExpeditionLaunchButton = string.Empty;
         public string ExpeditionLaunchBlockedButton = string.Empty;
+        public string ExpeditionReviewRiskButton = string.Empty;
+        public string ExpeditionConfirmRiskButton = string.Empty;
+        public string ExpeditionRiskConfirmationNoticeFormat = string.Empty;
         public string ExpeditionMonitorTitle = string.Empty;
         public string ExpeditionMonitorHeaderFormat = string.Empty;
         public string ExpeditionMonitorProgressFormat = string.Empty;
         public string ExpeditionMonitorLootFormat = string.Empty;
         public string ExpeditionMonitorNoiseFormat = string.Empty;
         public string ExpeditionMonitorLogFormat = string.Empty;
+        public string ExpeditionMonitorThreatFormat = string.Empty;
+        public string ExpeditionMonitorWoundsFormat = string.Empty;
+        public string ExpeditionMonitorFoundItemsFormat = string.Empty;
+        public string ExpeditionMonitorNoiseLowLabel = string.Empty;
+        public string ExpeditionMonitorNoiseMediumLabel = string.Empty;
+        public string ExpeditionMonitorNoiseHighLabel = string.Empty;
+        public int ExpeditionMonitorNoiseMediumThreshold = 4;
+        public int ExpeditionMonitorNoiseHighThreshold = 8;
         public string ExpeditionLockedStatusFormat = string.Empty;
         public string ExpeditionUnlockRequirementFormat = string.Empty;
         public string ExpeditionNoWarningsLabel = string.Empty;
@@ -125,6 +160,8 @@ namespace AshfallCamp.Presentation
         public string SurvivorDetailHealthyLabel = string.Empty;
         public string SurvivorDetailWoundFormat = string.Empty;
         public string SurvivorDetailHealingLockedFormat = string.Empty;
+        public string SurvivorDetailMedicineCostFormat = string.Empty;
+        public string SurvivorDetailUseMedicineButton = string.Empty;
         public string SurvivorNoWeaponLabel = string.Empty;
         public string SurvivorNoTraitsLabel = string.Empty;
         public string WorkshopScreenTitle = string.Empty;
@@ -141,6 +178,13 @@ namespace AshfallCamp.Presentation
         public string ReportsScreenTitle = string.Empty;
         public string ReportsEmptyTitle = string.Empty;
         public string ReportsEmptyBody = string.Empty;
+        public string CampEventPanelTitle = string.Empty;
+        public string SurvivorJoinedReportTitleFormat = string.Empty;
+        public string SurvivorJoinedReportBodyFormat = string.Empty;
+        public string DemoCompletedReportTitleFormat = string.Empty;
+        public string DemoCompletedReportBodyFormat = string.Empty;
+        public string EmergencyScavengeReportTitle = string.Empty;
+        public string EmergencyScavengeReportBodyFormat = string.Empty;
         public string AfterActionPanelTitle = string.Empty;
         public string AfterActionSuccessLabel = string.Empty;
         public string AfterActionFailureLabel = string.Empty;
@@ -150,15 +194,24 @@ namespace AshfallCamp.Presentation
         public string AfterActionWoundsFormat = string.Empty;
         public string AfterActionEnemiesFormat = string.Empty;
         public string AfterActionEventsFormat = string.Empty;
+        public string AfterActionSendAgainButton = string.Empty;
         public string OfflineReportPanelTitle = string.Empty;
         public string OfflineReportSummaryFormat = string.Empty;
         public string OfflineReportResourcesFormat = string.Empty;
         public string OfflineReportCompletedFormat = string.Empty;
         public string OfflineReportHealingFormat = string.Empty;
         public string OfflineReportWarningsFormat = string.Empty;
+        public string SettingsScreenTitle = string.Empty;
+        public string SettingsAutosaveTitle = string.Empty;
+        public string SettingsAutosaveEnabledBodyFormat = string.Empty;
+        public string SettingsAutosaveDisabledBody = string.Empty;
+        public string SettingsAutosaveEnabledLabel = string.Empty;
+        public string SettingsAutosaveDisabledLabel = string.Empty;
+        public string SettingsAutosaveToggleLabel = string.Empty;
         public string ReportNoneLabel = string.Empty;
         public string ReportListSeparator = string.Empty;
         public string ReportCountFormat = string.Empty;
+        public List<CampNextGoalEntry> NextGoals = new List<CampNextGoalEntry>();
         public List<ResourceUiEntry> ResourceBar = new List<ResourceUiEntry>();
         public List<FilterUiEntry> BuildingFilters = new List<FilterUiEntry>();
         public List<BuildingUiEntry> Buildings = new List<BuildingUiEntry>();
@@ -180,6 +233,24 @@ namespace AshfallCamp.Presentation
         public Color Rust = new Color32(0xC9, 0x63, 0x3A, 0xFF);
         public Color Amber = new Color32(0xE1, 0xB4, 0x6A, 0xFF);
         public Color Line = new Color(0.43f, 0.33f, 0.22f, 0.28f);
+    }
+
+    [Serializable]
+    public sealed class CampNextGoalEntry
+    {
+        public string Id = string.Empty;
+        public string Title = string.Empty;
+        public string Body = string.Empty;
+        public bool CompleteWhenAnyCondition;
+        public List<CampGoalConditionEntry> Conditions = new List<CampGoalConditionEntry>();
+    }
+
+    [Serializable]
+    public sealed class CampGoalConditionEntry
+    {
+        public string Type = string.Empty;
+        public string Id = string.Empty;
+        public int Value;
     }
 
     [Serializable]

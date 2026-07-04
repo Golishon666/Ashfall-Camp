@@ -92,6 +92,10 @@ namespace AshfallCamp.Infrastructure
             public List<ZoneSaveData> Zones = new List<ZoneSaveData>();
             public List<UpgradeSaveData> Upgrades = new List<UpgradeSaveData>();
             public List<ExpeditionSaveData> Expeditions = new List<ExpeditionSaveData>();
+            public List<CampEventSaveData> CampEvents = new List<CampEventSaveData>();
+            public RecruitmentSaveData Recruitment = new RecruitmentSaveData();
+            public RecoverySaveData Recovery = new RecoverySaveData();
+            public GameProgressSaveData Progress = new GameProgressSaveData();
             public GameSettingsSaveData Settings = new GameSettingsSaveData();
             public GameStatisticsSaveData Statistics = new GameStatisticsSaveData();
 
@@ -106,6 +110,9 @@ namespace AshfallCamp.Infrastructure
                     NextId = state.NextId,
                     SurvivorCap = state.SurvivorCap,
                     SquadSize = state.SquadSize,
+                    Recruitment = RecruitmentSaveData.FromState(state.Recruitment),
+                    Recovery = RecoverySaveData.FromState(state.Recovery),
+                    Progress = GameProgressSaveData.FromState(state.Progress),
                     Settings = new GameSettingsSaveData { AutosaveEnabled = state.Settings.AutosaveEnabled },
                     Statistics = GameStatisticsSaveData.FromState(state.Statistics)
                 };
@@ -118,6 +125,7 @@ namespace AshfallCamp.Infrastructure
                 foreach (var item in state.Zones.Values) dto.Zones.Add(ZoneSaveData.FromState(item));
                 foreach (var item in state.Upgrades.Values) dto.Upgrades.Add(UpgradeSaveData.FromState(item));
                 foreach (var item in state.Expeditions) dto.Expeditions.Add(ExpeditionSaveData.FromState(item));
+                foreach (var item in state.CampEvents) dto.CampEvents.Add(CampEventSaveData.FromState(item));
                 return dto;
             }
 
@@ -135,6 +143,9 @@ namespace AshfallCamp.Infrastructure
                     Resources = ToDictionary(Resources),
                     ResourceCaps = ToDictionary(ResourceCaps),
                     ResourceProductionRemainders = ToDoubleDictionary(ResourceProductionRemainders),
+                    Recruitment = Recruitment != null ? Recruitment.ToState() : new RecruitmentState(),
+                    Recovery = Recovery != null ? Recovery.ToState() : new RecoveryActionState(),
+                    Progress = Progress != null ? Progress.ToState() : new GameProgressState(),
                     Settings = Settings != null ? Settings.ToState() : new GameSettings(),
                     Statistics = Statistics != null ? Statistics.ToState() : new GameStatistics()
                 };
@@ -144,6 +155,11 @@ namespace AshfallCamp.Infrastructure
                 foreach (var item in Zones) state.Zones[item.Id] = item.ToState();
                 foreach (var item in Upgrades) state.Upgrades[item.Id] = item.ToState();
                 foreach (var item in Expeditions) state.Expeditions.Add(item.ToState());
+                if (CampEvents != null)
+                {
+                    foreach (var item in CampEvents) state.CampEvents.Add(item.ToState());
+                }
+
                 return state;
             }
         }
@@ -493,6 +509,134 @@ namespace AshfallCamp.Infrastructure
             public GameSettings ToState()
             {
                 return new GameSettings { AutosaveEnabled = AutosaveEnabled };
+            }
+        }
+
+        [Serializable]
+        private sealed class CampEventSaveData
+        {
+            public string Id;
+            public string EventId;
+            public string SubjectId;
+            public string SubjectName;
+            public string DetailId;
+            public long AtUnixMs;
+
+            public static CampEventSaveData FromState(CampEventState state)
+            {
+                return new CampEventSaveData
+                {
+                    Id = state.Id,
+                    EventId = state.EventId,
+                    SubjectId = state.SubjectId,
+                    SubjectName = state.SubjectName,
+                    DetailId = state.DetailId,
+                    AtUnixMs = state.AtUnixMs
+                };
+            }
+
+            public CampEventState ToState()
+            {
+                return new CampEventState
+                {
+                    Id = Id ?? string.Empty,
+                    EventId = EventId ?? string.Empty,
+                    SubjectId = SubjectId ?? string.Empty,
+                    SubjectName = SubjectName ?? string.Empty,
+                    DetailId = DetailId ?? string.Empty,
+                    AtUnixMs = AtUnixMs
+                };
+            }
+        }
+
+        [Serializable]
+        private sealed class RecruitmentSaveData
+        {
+            public List<string> PendingCandidateIds = new List<string>();
+            public long LastBroadcastAtUnixMs;
+
+            public static RecruitmentSaveData FromState(RecruitmentState state)
+            {
+                var dto = new RecruitmentSaveData();
+                if (state == null) return dto;
+
+                if (state.PendingCandidateIds != null)
+                {
+                    dto.PendingCandidateIds = new List<string>(state.PendingCandidateIds);
+                }
+
+                dto.LastBroadcastAtUnixMs = state.LastBroadcastAtUnixMs;
+                return dto;
+            }
+
+            public RecruitmentState ToState()
+            {
+                return new RecruitmentState
+                {
+                    PendingCandidateIds = PendingCandidateIds != null ? new List<string>(PendingCandidateIds) : new List<string>(),
+                    LastBroadcastAtUnixMs = LastBroadcastAtUnixMs
+                };
+            }
+        }
+
+        [Serializable]
+        private sealed class RecoverySaveData
+        {
+            public bool EmergencyScavengeActive;
+            public double EmergencyScavengeRemainingSeconds;
+            public long EmergencyScavengeStartedAtUnixMs;
+            public double EmergencyScavengeCooldownRemainingSeconds;
+
+            public static RecoverySaveData FromState(RecoveryActionState state)
+            {
+                if (state == null) return new RecoverySaveData();
+                return new RecoverySaveData
+                {
+                    EmergencyScavengeActive = state.EmergencyScavengeActive,
+                    EmergencyScavengeRemainingSeconds = state.EmergencyScavengeRemainingSeconds,
+                    EmergencyScavengeStartedAtUnixMs = state.EmergencyScavengeStartedAtUnixMs,
+                    EmergencyScavengeCooldownRemainingSeconds = state.EmergencyScavengeCooldownRemainingSeconds
+                };
+            }
+
+            public RecoveryActionState ToState()
+            {
+                return new RecoveryActionState
+                {
+                    EmergencyScavengeActive = EmergencyScavengeActive,
+                    EmergencyScavengeRemainingSeconds = EmergencyScavengeRemainingSeconds,
+                    EmergencyScavengeStartedAtUnixMs = EmergencyScavengeStartedAtUnixMs,
+                    EmergencyScavengeCooldownRemainingSeconds = EmergencyScavengeCooldownRemainingSeconds
+                };
+            }
+        }
+
+        [Serializable]
+        private sealed class GameProgressSaveData
+        {
+            public bool DemoCompleted;
+            public string DemoCompletionId = string.Empty;
+            public long DemoCompletedAtUnixMs;
+
+            public static GameProgressSaveData FromState(GameProgressState state)
+            {
+                if (state == null) return new GameProgressSaveData();
+                return new GameProgressSaveData
+                {
+                    DemoCompleted = state.DemoCompleted,
+                    DemoCompletionId = state.DemoCompletionId,
+                    DemoCompletedAtUnixMs = state.DemoCompletedAtUnixMs
+                };
+            }
+
+            public GameProgressState ToState()
+            {
+                return new GameProgressState
+                {
+                    DemoCompleted = DemoCompleted,
+                    DemoCompletionId = DemoCompletionId ?? string.Empty,
+                    DemoCompletedAtUnixMs = DemoCompletedAtUnixMs
+                };
             }
         }
 

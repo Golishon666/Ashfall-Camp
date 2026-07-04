@@ -49,6 +49,9 @@ MonoBehaviour:
   SuppliesValueFormat: '{0}%'
   CampSummaryTitle: CAMP SUMMARY
   CampSummaryNote: Expand the camp to unlock routes and systems.
+  NextGoalCompleteTitle: DEMO COMPLETE
+  NextGoalCompleteBody: Signal found. The camp can survive another season.
+  NextGoalProgressFormat: '{0}/{1}'
   PopulationLabel: Population
   IdleSurvivorsLabel: Idle Survivors
   BuildingsLabel: Buildings
@@ -57,6 +60,10 @@ MonoBehaviour:
   RecentAlertsTitle: RECENT ALERTS
   NoAlertsTitle: CAMP QUIET
   NoAlertsBody: No urgent issues in the last shift.
+  SurvivorJoinedAlertTitleFormat: '{0} JOINED'
+  SurvivorJoinedAlertBodyFormat: 'Radio signal secured. Roster {1}/{2}.'
+  DemoCompletedAlertTitleFormat: SIGNAL FOUND
+  DemoCompletedAlertBodyFormat: 'Decoded from {0}. Demo objective complete.'
   ActiveExpeditionAlertTitleFormat: '{0} EXPEDITION ACTIVE'
   ActiveExpeditionAlertBodyFormat: '{0} route is {1}% complete.'
   LowResourceAlertTitleFormat: LOW {0}
@@ -64,6 +71,13 @@ MonoBehaviour:
   LowResourceAlertPercentThreshold: 25
   WoundedAlertTitleFormat: '{0} SURVIVOR NEEDS CARE'
   WoundedAlertBodyFormat: '{0} is not ready for field work.'
+  EmergencyScavengeAlertTitle: SCAVENGE AROUND CAMP
+  EmergencyScavengeReadyBodyFormat: 'No cost. {0}s for {1}.'
+  EmergencyScavengeActiveBodyFormat: 'Crew is checking the perimeter. {0}s left.'
+  EmergencyScavengeCooldownBodyFormat: 'Perimeter stripped. Ready again in {0}s.'
+  EmergencyScavengeButton: SCAVENGE
+  EmergencyScavengeCompletedAlertTitle: SUPPLIES RECOVERED
+  EmergencyScavengeCompletedAlertBodyFormat: 'Camp scavenge brought in {0}.'
   UpgradeAvailableAlertTitleFormat: '{0} CAN UPGRADE'
   UpgradeAvailableAlertBodyFormat: Next level {0} is affordable.
   CampOverviewTitle: CAMP OVERVIEW
@@ -76,13 +90,18 @@ MonoBehaviour:
   RadioBroadcastTitle: BROADCAST CONTROL
   RadioBroadcastCostFormat: 'Cost: {0}'
   RadioBroadcastReadyLabel: Signal clear
+  RadioBroadcastPendingLabel: Survivor signals awaiting decision
   RadioBroadcastBlockedFormat: 'Blocked: {0}'
   RadioCandidateListTitle: SIGNALS
+  RadioCandidateAwaitingTitle: AWAITING BROADCAST
+  RadioCandidateAwaitingBody: Start a broadcast to reveal available survivor signals.
   RadioCandidateEmptyTitle: NO SIGNALS
   RadioCandidateEmptyBody: All known survivor signals are already in camp.
   RadioCandidateCardMetaFormat: '{0}  *  {1}'
   RadioCandidateSkillFormat: '{0} {1}'
   RadioCandidateTraitsFormat: 'Traits: {0}'
+  RadioCandidateRecruitButton: RECRUIT
+  RadioCandidateSkipButton: SKIP SIGNALS
   ExpeditionEmptyTitle: NO ROUTES
   ExpeditionEmptySubtitle: Radio intel required
   ExpeditionEmptyStatus: WAITING
@@ -91,20 +110,36 @@ MonoBehaviour:
   ExpeditionRouteSubtitleFormat: '{0} risk, costs {1} food / {2} water'
   ExpeditionRouteStatusFormat: '{0}% familiar'
   ExpeditionScreenTitle: EXPEDITIONS
+  ExpeditionSquadTitleFormat: 'SQUAD {0}/{1}'
+  ExpeditionSquadMemberMetaFormat: '{0}  *  LVL {1}  *  {2}  *  PWR {3}'
+  ExpeditionPolicyTitle: POLICY
+  ExpeditionPolicyDetailsFormat: 'Risk x{0}  *  Loot x{1}  *  Time x{2}  *  Noise {3}'
+  ExpeditionSurvivalChanceFormat: 'Survival {0}%'
   ExpeditionSelectedTitleFormat: '{0}  *  {1}'
-  ExpeditionSelectedDetailsFormat: 'Duration {0} min. Cost {1} food / {2} water. Power {3}/{4}. Familiarity {5}%.'
+  ExpeditionSelectedDetailsFormat: 'Duration {0} min. Cost {1} food / {2} water. Power {3}/{4}. Familiarity {5}%. {6}.'
   ExpeditionSelectedLootFormat: 'Expected loot: {0}'
   ExpeditionLootRangeFormat: '{0} {1}-{2}'
   ExpeditionSelectedEnemiesFormat: 'Known threats: {0}'
   ExpeditionSelectedWarningsFormat: 'Warnings: {0}'
   ExpeditionLaunchButton: LAUNCH
   ExpeditionLaunchBlockedButton: BLOCKED
+  ExpeditionReviewRiskButton: REVIEW RISK
+  ExpeditionConfirmRiskButton: CONFIRM RISK
+  ExpeditionRiskConfirmationNoticeFormat: 'Confirm risk: {0}'
   ExpeditionMonitorTitle: ACTIVE MONITOR
   ExpeditionMonitorHeaderFormat: '{0}  *  {1} survivor(s)  *  {2} min left'
   ExpeditionMonitorProgressFormat: 'Progress {0}%'
   ExpeditionMonitorLootFormat: 'Loot so far: {0}'
-  ExpeditionMonitorNoiseFormat: 'Noise {0}'
+  ExpeditionMonitorNoiseFormat: 'Noise {0} ({1})'
   ExpeditionMonitorLogFormat: 'Log: {0}'
+  ExpeditionMonitorThreatFormat: 'Threats: {0}'
+  ExpeditionMonitorWoundsFormat: 'Wounds: {0}'
+  ExpeditionMonitorFoundItemsFormat: 'Found gear: {0}'
+  ExpeditionMonitorNoiseLowLabel: LOW
+  ExpeditionMonitorNoiseMediumLabel: MED
+  ExpeditionMonitorNoiseHighLabel: HIGH
+  ExpeditionMonitorNoiseMediumThreshold: 4
+  ExpeditionMonitorNoiseHighThreshold: 8
   ExpeditionLockedStatusFormat: 'Locked: {0}'
   ExpeditionUnlockRequirementFormat: '{0} {1}'
   ExpeditionNoWarningsLabel: None
@@ -139,6 +174,8 @@ MonoBehaviour:
   SurvivorDetailHealthyLabel: Healthy
   SurvivorDetailWoundFormat: '{0}, {1} min left'
   SurvivorDetailHealingLockedFormat: '{0}. Infirmary lvl {1} required'
+  SurvivorDetailMedicineCostFormat: 'Medicine: {0}'
+  SurvivorDetailUseMedicineButton: USE MEDICINE
   SurvivorNoWeaponLabel: Unarmed
   SurvivorNoTraitsLabel: None
   WorkshopScreenTitle: WORKSHOP
@@ -155,6 +192,13 @@ MonoBehaviour:
   ReportsScreenTitle: REPORTS
   ReportsEmptyTitle: NO REPORTS
   ReportsEmptyBody: Complete an expedition or return after offline time to generate reports.
+  CampEventPanelTitle: CAMP NOTES
+  SurvivorJoinedReportTitleFormat: '{0} JOINED THE CAMP'
+  SurvivorJoinedReportBodyFormat: 'Recovered from {1}. Roster now {2}/{3}.'
+  DemoCompletedReportTitleFormat: SIGNAL RECOVERED
+  DemoCompletedReportBodyFormat: '{0} yielded the final transmission. The camp can survive another season.'
+  EmergencyScavengeReportTitle: SUPPLIES RECOVERED
+  EmergencyScavengeReportBodyFormat: 'Camp scavenge brought in {0}.'
   AfterActionPanelTitle: AFTER ACTION
   AfterActionSuccessLabel: SUCCESS
   AfterActionFailureLabel: FAILED
@@ -164,15 +208,67 @@ MonoBehaviour:
   AfterActionWoundsFormat: 'Wounds: {0}'
   AfterActionEnemiesFormat: 'Enemies defeated: {0}'
   AfterActionEventsFormat: 'Events: {0}'
+  AfterActionSendAgainButton: SEND AGAIN
   OfflineReportPanelTitle: OFFLINE REPORT
   OfflineReportSummaryFormat: '{0} min passed while away'
   OfflineReportResourcesFormat: 'Resources: {0}'
   OfflineReportCompletedFormat: 'Expeditions completed: {0}'
   OfflineReportHealingFormat: 'Healing completed: {0}'
   OfflineReportWarningsFormat: 'Warnings: {0}'
+  SettingsScreenTitle: SETTINGS
+  SettingsAutosaveTitle: AUTOSAVE
+  SettingsAutosaveEnabledBodyFormat: 'Saving every {0}s while enabled.'
+  SettingsAutosaveDisabledBody: Autosave is off. The current choice is saved immediately.
+  SettingsAutosaveEnabledLabel: ENABLED
+  SettingsAutosaveDisabledLabel: DISABLED
+  SettingsAutosaveToggleLabel: Autosave
   ReportNoneLabel: None
   ReportListSeparator: ', '
   ReportCountFormat: '{0} x{1}'
+  NextGoals:
+  - Id: first_store
+    Title: 'NEXT: ABANDONED STORE'
+    Body: Send Mara to the Abandoned Store and bring back the first report.
+    CompleteWhenAnyCondition: 0
+    Conditions:
+    - Type: zone_completions
+      Id: abandoned_store
+      Value: 1
+  - Id: barracks_one
+    Title: 'NEXT: UPGRADE BARRACKS'
+    Body: Upgrade Barracks to open space for another survivor.
+    CompleteWhenAnyCondition: 0
+    Conditions:
+    - Type: building_level
+      Id: barracks
+      Value: 1
+  - Id: recruit_two
+    Title: 'NEXT: RECRUIT A SURVIVOR'
+    Body: Use the radio to bring a second survivor into camp.
+    CompleteWhenAnyCondition: 0
+    Conditions:
+    - Type: survivor_count
+      Id: ''
+      Value: 2
+  - Id: workshop_one
+    Title: 'NEXT: BUILD WORKSHOP'
+    Body: Upgrade Workshop to repair and equip scavenged gear.
+    CompleteWhenAnyCondition: 0
+    Conditions:
+    - Type: building_level
+      Id: workshop
+      Value: 1
+  - Id: demo_signal
+    Title: 'FINAL: FIND THE SIGNAL'
+    Body: Clear Mutant Tunnel or raise Radio Tower to level 2.
+    CompleteWhenAnyCondition: 1
+    Conditions:
+    - Type: zone_completions
+      Id: mutant_tunnel
+      Value: 1
+    - Type: building_level
+      Id: radio_tower
+      Value: 2
   ResourceBar:
   - Id: scrap
     Label: SCRAP
@@ -213,6 +309,9 @@ MonoBehaviour:
     IsActive: 0
   - Id: radio
     Label: RADIO
+    IsActive: 0
+  - Id: settings
+    Label: SETTINGS
     IsActive: 0
   SurvivorSkillLabels:
   - Id: scavenging

@@ -29,6 +29,80 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void EmergencyScavengeStartsWithoutIdleSurvivorsAndCompletesWithRewards()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Survivors[0].State = SurvivorActivityState.Wounded;
+            state.Resources["food"] = 0;
+            state.Resources["water"] = 0;
+
+            var result = RecoverySystem.StartEmergencyScavenge(state, config, new EmergencyScavengeRequest { NowUnixMs = 1000 });
+
+            Assert.IsTrue(result.Validation.IsValid);
+            Assert.IsTrue(result.Started);
+            Assert.IsTrue(state.Recovery.EmergencyScavengeActive);
+            Assert.AreEqual(60, state.Recovery.EmergencyScavengeRemainingSeconds);
+
+            RecoverySystem.Tick(state, config, 59);
+            Assert.IsTrue(state.Recovery.EmergencyScavengeActive);
+            RecoverySystem.Tick(state, config, 1);
+
+            Assert.IsFalse(state.Recovery.EmergencyScavengeActive);
+            Assert.AreEqual(18, state.Resources["scrap"]);
+            Assert.AreEqual(2, state.Resources["food"]);
+            Assert.AreEqual(2, state.Resources["water"]);
+            Assert.AreEqual(300, state.Recovery.EmergencyScavengeCooldownRemainingSeconds);
+            Assert.AreEqual(1, state.CampEvents.Count);
+            Assert.AreEqual(GameEventIds.EmergencyScavengeCompleted, state.CampEvents[0].EventId);
+
+            var cooldown = RecoverySystem.ValidateEmergencyScavenge(state, config, new EmergencyScavengeRequest { NowUnixMs = 62000 });
+            Assert.IsFalse(cooldown.IsValid);
+            Assert.Contains("Emergency scavenge is cooling down.", cooldown.Errors);
+
+            RecoverySystem.Tick(state, config, 300);
+            Assert.IsTrue(RecoverySystem.ValidateEmergencyScavenge(state, config, new EmergencyScavengeRequest { NowUnixMs = 362000 }).IsValid);
+        }
+
+        [Test]
+        public void EmergencyScavengeUseCaseAndTickMutateStore()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["food"] = 0;
+            state.Resources["water"] = 0;
+            var store = new GameStateStore();
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var start = new StartEmergencyScavengeUseCase(store, new StaticConfigProvider(config));
+            var tick = new TickGameUseCase(store, new StaticConfigProvider(config));
+
+            var started = start.ExecuteAsync(new EmergencyScavengeRequest { NowUnixMs = 10 }, CancellationToken.None).GetAwaiter().GetResult();
+            tick.ExecuteAsync(60, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.IsTrue(started.Validation.IsValid);
+            Assert.IsFalse(store.State.CurrentValue.Recovery.EmergencyScavengeActive);
+            Assert.AreEqual(2, store.State.CurrentValue.Resources["food"]);
+            Assert.AreEqual(2, store.State.CurrentValue.Resources["water"]);
+        }
+
+        [Test]
+        public void SetAutosaveUseCaseMutatesStoreAndSavesImmediately()
+        {
+            var state = GameStateFactory.CreateNew(TestConfigFactory.Create(), 0);
+            var store = new GameStateStore();
+            var repository = new FakeSaveRepository(state);
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var useCase = new SetAutosaveUseCase(store, repository);
+
+            var result = useCase.ExecuteAsync(false, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.IsFalse(result.AutosaveEnabled);
+            Assert.IsFalse(store.State.CurrentValue.Settings.AutosaveEnabled);
+            Assert.NotNull(repository.SavedState);
+            Assert.IsFalse(repository.SavedState.Settings.AutosaveEnabled);
+        }
+
+        [Test]
         public void LaunchValidationBlocksLockedWoundedAndUnaffordableRuns()
         {
             var config = TestConfigFactory.Create();
@@ -63,6 +137,31 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(7, state.Resources["food"]);
             Assert.AreEqual(SurvivorActivityState.OnExpedition, state.Survivors[0].State);
             Assert.AreEqual(result.Expedition.Id, state.Survivors[0].CurrentExpeditionId);
+        }
+
+        [Test]
+        public void LaunchWarningsRequireExplicitConfirmation()
+        {
+            var config = TestConfigFactory.Create();
+            config.Zones["abandoned_store"].RecommendedPower = 999;
+            var state = GameStateFactory.CreateNew(config, 0);
+            var request = Request("abandoned_store", 123);
+            request.ConfirmWarnings = false;
+
+            var blocked = ExpeditionLauncher.Launch(state, config, request);
+
+            Assert.IsTrue(blocked.Validation.IsValid);
+            Assert.AreEqual(1, blocked.Validation.Warnings.Count);
+            Assert.IsNull(blocked.Expedition);
+            Assert.AreEqual(0, state.Expeditions.Count);
+            Assert.AreEqual(SurvivorActivityState.Idle, state.Survivors[0].State);
+
+            request.ConfirmWarnings = true;
+            var launched = ExpeditionLauncher.Launch(state, config, request);
+
+            Assert.IsNotNull(launched.Expedition);
+            Assert.AreEqual(1, state.Expeditions.Count);
+            Assert.AreEqual(SurvivorActivityState.OnExpedition, state.Survivors[0].State);
         }
 
         [Test]
@@ -103,7 +202,7 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
-        public void RecruitmentSpendsResourcesAddsSurvivorAndEquipsWeapon()
+        public void RecruitmentBroadcastSpendsResourcesAndSelectionAddsSurvivor()
         {
             var config = TestConfigFactory.Create();
             var state = GameStateFactory.CreateNew(config, 0);
@@ -112,7 +211,17 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["water"] = 20;
             BuildingSystem.Upgrade(state, config, "barracks");
 
-            var result = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { Seed = 1 });
+            var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1, NowUnixMs = 25 });
+
+            Assert.IsTrue(broadcast.Validation.IsValid);
+            Assert.AreEqual(1, broadcast.CandidateIds.Count);
+            Assert.AreEqual("elias", broadcast.CandidateIds[0]);
+            Assert.AreEqual(55, state.Resources["scrap"]);
+            Assert.AreEqual(14, state.Resources["food"]);
+            Assert.AreEqual(18, state.Resources["water"]);
+            Assert.AreEqual(1, state.Recruitment.PendingCandidateIds.Count);
+
+            var result = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = "elias", NowUnixMs = 50 });
 
             Assert.IsTrue(result.Validation.IsValid);
             Assert.NotNull(result.Survivor);
@@ -123,11 +232,110 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(55, state.Resources["scrap"]);
             Assert.AreEqual(14, state.Resources["food"]);
             Assert.AreEqual(18, state.Resources["water"]);
+            Assert.AreEqual(0, result.Cost.Count);
+            Assert.AreEqual(0, state.Recruitment.PendingCandidateIds.Count);
             Assert.AreEqual(1, state.Statistics.SurvivorsRecruited);
+            Assert.AreEqual(1, state.CampEvents.Count);
+            Assert.AreEqual(GameEventIds.SurvivorJoined, state.CampEvents[0].EventId);
+            Assert.AreEqual(result.Survivor.Id, state.CampEvents[0].SubjectId);
         }
 
         [Test]
-        public void RecruitSurvivorUseCaseMutatesStore()
+        public void RecruitmentBroadcastUsesConfiguredCandidateCount()
+        {
+            var config = TestConfigFactory.Create();
+            config.RecruitableSurvivors["nora"] = new RecruitableSurvivorDefinition
+            {
+                Id = "nora",
+                Name = "Nora",
+                BackgroundId = "scavenger",
+                TraitIds = new List<string> { "careful" },
+                WeaponItemId = "rusty_knife",
+                Skills = new Dictionary<string, int>
+                {
+                    { "scavenging", 1 },
+                    { "melee", 1 },
+                    { "firearms", 0 },
+                    { "survival", 1 },
+                    { "mechanics", 0 },
+                    { "medicine", 0 }
+                }
+            };
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["food"] = 20;
+            state.Resources["water"] = 20;
+            BuildingSystem.Upgrade(state, config, "barracks");
+
+            var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1 });
+
+            Assert.IsTrue(broadcast.Validation.IsValid);
+            Assert.AreEqual(config.Balance.RecruitmentCandidateCount, broadcast.CandidateIds.Count);
+            CollectionAssert.AreEquivalent(new[] { "elias", "nora" }, broadcast.CandidateIds);
+        }
+
+        [Test]
+        public void RecruitmentCanTargetSpecificCandidate()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["food"] = 20;
+            state.Resources["water"] = 20;
+            BuildingSystem.Upgrade(state, config, "barracks");
+
+            var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 999 });
+            var result = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = broadcast.CandidateIds[0] });
+
+            Assert.IsTrue(result.Validation.IsValid);
+            Assert.AreEqual("Elias", result.Survivor.Name);
+            Assert.AreEqual(2, state.Survivors.Count);
+        }
+
+        [Test]
+        public void RecruitmentBlocksUnavailableCandidate()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["food"] = 20;
+            state.Resources["water"] = 20;
+            BuildingSystem.Upgrade(state, config, "barracks");
+
+            var withoutBroadcast = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = "elias" });
+            var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1 });
+            var result = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = "missing_signal" });
+
+            Assert.IsFalse(withoutBroadcast.Validation.IsValid);
+            Assert.IsFalse(result.Validation.IsValid);
+            Assert.Contains("Selected survivor signal is unavailable.", result.Validation.Errors);
+            Assert.AreEqual(1, state.Survivors.Count);
+            Assert.AreEqual(1, broadcast.CandidateIds.Count);
+            Assert.AreEqual(1, state.Recruitment.PendingCandidateIds.Count);
+        }
+
+        [Test]
+        public void RecruitmentSkipClearsPendingSignals()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["food"] = 20;
+            state.Resources["water"] = 20;
+            BuildingSystem.Upgrade(state, config, "barracks");
+
+            var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1 });
+            var skipped = RecruitmentSystem.SkipCandidates(state);
+
+            Assert.IsTrue(broadcast.Validation.IsValid);
+            Assert.IsTrue(skipped.Validation.IsValid);
+            Assert.AreEqual("elias", skipped.SkippedCandidateIds[0]);
+            Assert.AreEqual(0, state.Recruitment.PendingCandidateIds.Count);
+            Assert.IsTrue(RecruitmentSystem.ValidateBroadcast(state, config).IsValid);
+        }
+
+        [Test]
+        public void RecruitSurvivorUseCasesMutateStore()
         {
             var config = TestConfigFactory.Create();
             var state = GameStateFactory.CreateNew(config, 0);
@@ -137,10 +345,13 @@ namespace AshfallCamp.Tests.EditMode
             BuildingSystem.Upgrade(state, config, "barracks");
             var store = new GameStateStore();
             store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var broadcastUseCase = new BroadcastRecruitmentUseCase(store, new StaticConfigProvider(config));
             var useCase = new RecruitSurvivorUseCase(store, new StaticConfigProvider(config));
 
-            var result = useCase.ExecuteAsync(new RecruitSurvivorRequest { Seed = 1 }, CancellationToken.None).GetAwaiter().GetResult();
+            var broadcast = broadcastUseCase.ExecuteAsync(new BroadcastRecruitmentRequest { Seed = 1 }, CancellationToken.None).GetAwaiter().GetResult();
+            var result = useCase.ExecuteAsync(new RecruitSurvivorRequest { CandidateId = broadcast.CandidateIds[0] }, CancellationToken.None).GetAwaiter().GetResult();
 
+            Assert.IsTrue(broadcast.Validation.IsValid);
             Assert.IsTrue(result.Validation.IsValid);
             Assert.AreEqual(2, store.State.CurrentValue.Survivors.Count);
             Assert.AreEqual("Elias", store.State.CurrentValue.Survivors[1].Name);
@@ -272,6 +483,52 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void UseMedicineRequiresInfirmaryMedicineAndHealsWound()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            HealingSystem.ApplyWound(state, config, "survivor_1");
+
+            var locked = HealingSystem.UseMedicine(state, config, new UseMedicineRequest { SurvivorId = "survivor_1" });
+            Assert.IsFalse(locked.Validation.IsValid);
+            Assert.Contains("Infirmary is not ready.", locked.Validation.Errors);
+
+            state.Buildings["infirmary"].Level = 1;
+            state.Resources["medicine"] = 0;
+            var unaffordable = HealingSystem.UseMedicine(state, config, new UseMedicineRequest { SurvivorId = "survivor_1" });
+            Assert.IsFalse(unaffordable.Validation.IsValid);
+            Assert.Contains("Not enough medicine.", unaffordable.Validation.Errors);
+
+            state.Resources["medicine"] = 1;
+            var result = HealingSystem.UseMedicine(state, config, new UseMedicineRequest { SurvivorId = "survivor_1" });
+
+            Assert.IsTrue(result.Validation.IsValid);
+            Assert.IsTrue(result.Healed);
+            Assert.AreEqual(0, state.Resources["medicine"]);
+            Assert.AreEqual(SurvivorActivityState.Idle, state.Survivors[0].State);
+            Assert.AreEqual(state.Survivors[0].MaxHealth, state.Survivors[0].Health);
+            Assert.AreEqual(0, state.Survivors[0].StatusEffects.Count);
+        }
+
+        [Test]
+        public void UseMedicineUseCaseMutatesStore()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Buildings["infirmary"].Level = 1;
+            HealingSystem.ApplyWound(state, config, "survivor_1");
+            var store = new GameStateStore();
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var useCase = new UseMedicineUseCase(store, new StaticConfigProvider(config));
+
+            var result = useCase.ExecuteAsync(new UseMedicineRequest { SurvivorId = "survivor_1" }, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.IsTrue(result.Validation.IsValid);
+            Assert.AreEqual(SurvivorActivityState.Idle, store.State.CurrentValue.Survivors[0].State);
+            Assert.AreEqual(0, store.State.CurrentValue.Resources["medicine"]);
+        }
+
+        [Test]
         public void TickGameUseCaseHealsWoundedSurvivor()
         {
             var config = TestConfigFactory.Create();
@@ -363,6 +620,30 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void DemoCompletionUsesConfiguredAnyConditionAndRecordsEvent()
+        {
+            var config = TestConfigFactory.Create();
+            config.Balance.DemoCompletionRequiresAnyCondition = true;
+            config.Balance.DemoCompletionConditions.Add(new UnlockCondition { Type = GameConditionTypes.ZoneCompletions, Id = "abandoned_store", Value = 1 });
+            config.Balance.DemoCompletionConditions.Add(new UnlockCondition { Type = GameConditionTypes.BuildingLevel, Id = "radio_tower", Value = 2 });
+            var state = GameStateFactory.CreateNew(config, 0);
+
+            Assert.IsFalse(ProgressionSystem.RefreshDemoCompletion(state, config, 100));
+
+            state.Zones["abandoned_store"].Completions = 1;
+            var changed = ProgressionSystem.RefreshDemoCompletion(state, config, 250);
+            var second = ProgressionSystem.RefreshDemoCompletion(state, config, 300);
+
+            Assert.IsTrue(changed);
+            Assert.IsFalse(second);
+            Assert.IsTrue(state.Progress.DemoCompleted);
+            Assert.AreEqual(GameConditionTypes.ZoneCompletions + ":abandoned_store", state.Progress.DemoCompletionId);
+            Assert.AreEqual(250, state.Progress.DemoCompletedAtUnixMs);
+            Assert.AreEqual(1, state.CampEvents.Count);
+            Assert.AreEqual(GameEventIds.DemoCompleted, state.CampEvents[0].EventId);
+        }
+
+        [Test]
         public void OfflineProgressCapsAndCompletesActiveExpeditions()
         {
             var config = TestConfigFactory.Create();
@@ -386,6 +667,28 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void OfflineProgressCompletesEmergencyScavengeAndReportsResources()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.LastSaveAtUnixMs = 0;
+            state.Resources["food"] = 0;
+            state.Resources["water"] = 0;
+            RecoverySystem.StartEmergencyScavenge(state, config, new EmergencyScavengeRequest { NowUnixMs = 0 });
+            var store = new GameStateStore();
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var useCase = new OfflineProgressUseCase(store, new StaticConfigProvider(config));
+
+            var report = useCase.ExecuteAsync(61000, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.IsFalse(store.State.CurrentValue.Recovery.EmergencyScavengeActive);
+            Assert.AreEqual(2, report.ResourcesGained["food"]);
+            Assert.AreEqual(2, report.ResourcesGained["water"]);
+            Assert.AreEqual(18, store.State.CurrentValue.Resources["scrap"]);
+            Assert.AreEqual(GameEventIds.EmergencyScavengeCompleted, store.State.CurrentValue.CampEvents[0].EventId);
+        }
+
+        [Test]
         public void SaveLoadPreservesStateAndFallsBackToBackup()
         {
             var config = TestConfigFactory.Create();
@@ -397,6 +700,17 @@ namespace AshfallCamp.Tests.EditMode
             state.Zones["abandoned_store"].Completions = 2;
             state.Zones["abandoned_store"].Familiarity = 42.5;
             state.Survivors[0].StatusEffects.Add(new StatusEffectState { Id = "sprained_ankle", RemainingSeconds = 120 });
+            state.CampEvents.Add(new CampEventState { Id = "event_1", EventId = GameEventIds.SurvivorJoined, SubjectId = "survivor_1", SubjectName = "Mara", DetailId = "scavenger", AtUnixMs = 25 });
+            state.Recruitment.PendingCandidateIds.Add("elias");
+            state.Recruitment.LastBroadcastAtUnixMs = 25;
+            state.Recovery.EmergencyScavengeActive = true;
+            state.Recovery.EmergencyScavengeRemainingSeconds = 17;
+            state.Recovery.EmergencyScavengeStartedAtUnixMs = 100;
+            state.Recovery.EmergencyScavengeCooldownRemainingSeconds = 12;
+            state.Settings.AutosaveEnabled = false;
+            state.Progress.DemoCompleted = true;
+            state.Progress.DemoCompletionId = GameConditionTypes.BuildingLevel + ":radio_tower";
+            state.Progress.DemoCompletedAtUnixMs = 500;
             result.Expedition.Log.Add(new ExpeditionLogEntry { AtSeconds = 12.5, Message = "Mara found a sealed crate." });
             result.Expedition.FoundItems.Add(new InventoryItemState
             {
@@ -425,8 +739,21 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(ExpeditionStatus.Active, loaded.State.Expeditions[0].Status);
             Assert.AreEqual("sprained_ankle", loaded.State.Survivors[0].StatusEffects[0].Id);
             Assert.AreEqual(120, loaded.State.Survivors[0].StatusEffects[0].RemainingSeconds);
+            Assert.AreEqual(1, loaded.State.CampEvents.Count);
+            Assert.AreEqual(GameEventIds.SurvivorJoined, loaded.State.CampEvents[0].EventId);
+            Assert.AreEqual("Mara", loaded.State.CampEvents[0].SubjectName);
+            Assert.AreEqual("elias", loaded.State.Recruitment.PendingCandidateIds[0]);
+            Assert.AreEqual(25, loaded.State.Recruitment.LastBroadcastAtUnixMs);
+            Assert.IsTrue(loaded.State.Recovery.EmergencyScavengeActive);
+            Assert.AreEqual(17, loaded.State.Recovery.EmergencyScavengeRemainingSeconds);
+            Assert.AreEqual(100, loaded.State.Recovery.EmergencyScavengeStartedAtUnixMs);
+            Assert.AreEqual(12, loaded.State.Recovery.EmergencyScavengeCooldownRemainingSeconds);
+            Assert.IsFalse(loaded.State.Settings.AutosaveEnabled);
             Assert.AreEqual("Mara found a sealed crate.", loaded.State.Expeditions[0].Log[0].Message);
             Assert.AreEqual("found_item_1", loaded.State.Expeditions[0].FoundItems[0].Uid);
+            Assert.IsTrue(loaded.State.Progress.DemoCompleted);
+            Assert.AreEqual(GameConditionTypes.BuildingLevel + ":radio_tower", loaded.State.Progress.DemoCompletionId);
+            Assert.AreEqual(500, loaded.State.Progress.DemoCompletedAtUnixMs);
             Assert.AreEqual(2, loaded.State.Expeditions[0].FoundItems[0].Level);
 
             File.WriteAllText(Path.Combine(folder, "save.json"), "{corrupt");
@@ -527,6 +854,8 @@ namespace AshfallCamp.Tests.EditMode
         private readonly GameState _state;
         private readonly bool _usedBackup;
 
+        public GameState SavedState { get; private set; }
+
         public FakeSaveRepository(GameState state, bool usedBackup = false)
         {
             _state = state;
@@ -542,6 +871,7 @@ namespace AshfallCamp.Tests.EditMode
 
         public UniTask SaveAsync(GameState state, CancellationToken ct)
         {
+            SavedState = state;
             return UniTask.CompletedTask;
         }
     }
@@ -594,12 +924,13 @@ namespace AshfallCamp.Tests.EditMode
             };
 
             config.Policies["balanced"] = new ExpeditionPolicyDefinition { Id = "balanced", Name = "Balanced" };
+            config.Policies["aggressive"] = new ExpeditionPolicyDefinition { Id = "aggressive", Name = "Aggressive", RiskModifier = 1.2, LootModifier = 1.1, DurationModifier = 0.9, PowerModifier = 1.1, NoiseModifier = 1 };
             config.Items["rusty_knife"] = new ItemDefinition { Id = "rusty_knife", Name = "Rusty Knife", Slot = ItemSlot.Weapon, WeaponType = WeaponType.Melee, BaseDamage = 4, AccuracyBonus = 0.02, CritBonus = 0.01, MaxDurability = 80 };
             config.Items["rusty_revolver"] = new ItemDefinition { Id = "rusty_revolver", Name = "Rusty Revolver", Slot = ItemSlot.Weapon, WeaponType = WeaponType.Firearm, BaseDamage = 10, AccuracyBonus = -0.03, CritBonus = 0.04, NoisePerAttack = 3, MaxDurability = 60 };
             config.Enemies["feral_dog"] = new EnemyDefinition { Id = "feral_dog", Name = "Feral Dog", MaxHealth = 14, Armor = 0, Evasion = 0.08, BaseDamage = 3, AttackType = WeaponType.Melee, Accuracy = 0.75, XpReward = 4 };
             config.Zones["abandoned_store"] = Zone("abandoned_store", 45, 1, 0, 5, Array.Empty<UnlockCondition>());
-            config.Zones["dry_suburb"] = Zone("dry_suburb", 90, 1, 1, 8, new[] { new UnlockCondition { Type = "zone_completions", Id = "abandoned_store", Value = 2 } });
-            config.Zones["police_outpost"] = Zone("police_outpost", 120, 1, 1, 8, new[] { new UnlockCondition { Type = "building_level", Id = "workshop", Value = 1 } });
+            config.Zones["dry_suburb"] = Zone("dry_suburb", 90, 1, 1, 8, new[] { new UnlockCondition { Type = GameConditionTypes.ZoneCompletions, Id = "abandoned_store", Value = 2 } });
+            config.Zones["police_outpost"] = Zone("police_outpost", 120, 1, 1, 8, new[] { new UnlockCondition { Type = GameConditionTypes.BuildingLevel, Id = "workshop", Value = 1 } });
             config.Buildings["barracks"] = Building("barracks", true, string.Empty, string.Empty,
                 Level(0, Array.Empty<IntPairData>(), 1, 1, 0, 0),
                 Level(1, new[] { new IntPairData("scrap", 25), new IntPairData("food", 4) }, 2, 1, 0, 0),
@@ -616,6 +947,11 @@ namespace AshfallCamp.Tests.EditMode
             config.Buildings["radio_tower"] = Building("radio_tower", true, string.Empty, string.Empty,
                 Level(0, Array.Empty<IntPairData>(), 0, 0, 0, 0),
                 Level(1, new[] { new IntPairData("scrap", 45), new IntPairData("weapon_parts", 2) }, 0, 0, 0, 0));
+            config.Balance.EmergencyScavengeDurationSeconds = 60;
+            config.Balance.EmergencyScavengeCooldownSeconds = 300;
+            config.Balance.EmergencyScavengeRewards["scrap"] = 3;
+            config.Balance.EmergencyScavengeRewards["food"] = 2;
+            config.Balance.EmergencyScavengeRewards["water"] = 2;
             return config;
         }
 

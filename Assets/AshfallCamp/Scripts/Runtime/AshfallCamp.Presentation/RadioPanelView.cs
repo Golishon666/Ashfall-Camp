@@ -25,8 +25,11 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI emptyBody;
         [SerializeField] private List<CandidateCardBinding> candidateCards = new List<CandidateCardBinding>();
 
+        private Action<RecruitSurvivorViewRequest> _recruitRequested;
         private Action _broadcastRequested;
+        private Action _skipRequested;
         private UnityAction _broadcastClick;
+        private bool _useSkipAction;
 
         public void ConfigureBindings(
             TextMeshProUGUI titleLabel,
@@ -72,11 +75,30 @@ namespace AshfallCamp.Presentation
         private void OnDestroy()
         {
             ClearBroadcastButton();
+            foreach (var card in candidateCards)
+            {
+                if (card != null)
+                {
+                    card.Clear();
+                }
+            }
+        }
+
+        public void SetRecruitHandler(Action<RecruitSurvivorViewRequest> recruitRequested)
+        {
+            _recruitRequested = recruitRequested;
+            WireCandidateCards();
         }
 
         public void SetBroadcastHandler(Action broadcastRequested)
         {
             _broadcastRequested = broadcastRequested;
+            WireBroadcastButton();
+        }
+
+        public void SetSkipHandler(Action skipRequested)
+        {
+            _skipRequested = skipRequested;
             WireBroadcastButton();
         }
 
@@ -98,12 +120,15 @@ namespace AshfallCamp.Presentation
 
             if (broadcastButton != null)
             {
-                broadcastButton.interactable = radio.CanBroadcast && _broadcastRequested != null;
+                _useSkipAction = radio.CanSkipCandidates;
+                broadcastButton.interactable = radio.CanSkipCandidates
+                    ? _skipRequested != null
+                    : radio.CanBroadcast && _broadcastRequested != null;
             }
 
             if (broadcastStatus != null)
             {
-                broadcastStatus.color = radio.CanBroadcast ? catalog.Theme.Sage : catalog.Theme.Rust;
+                broadcastStatus.color = radio.CanBroadcast || radio.CanSkipCandidates ? catalog.Theme.Sage : catalog.Theme.Rust;
             }
 
             var hasCandidates = radio.Candidates.Count > 0;
@@ -121,6 +146,17 @@ namespace AshfallCamp.Presentation
             broadcastButton.onClick.AddListener(_broadcastClick);
         }
 
+        private void WireCandidateCards()
+        {
+            foreach (var card in candidateCards)
+            {
+                if (card != null)
+                {
+                    card.Wire(OnCandidateClicked);
+                }
+            }
+        }
+
         private void ClearBroadcastButton()
         {
             if (broadcastButton != null && _broadcastClick != null)
@@ -133,7 +169,21 @@ namespace AshfallCamp.Presentation
 
         private void OnBroadcastClicked()
         {
+            if (_useSkipAction)
+            {
+                _skipRequested?.Invoke();
+                return;
+            }
+
             _broadcastRequested?.Invoke();
+        }
+
+        private void OnCandidateClicked(string candidateId)
+        {
+            if (!string.IsNullOrWhiteSpace(candidateId))
+            {
+                _recruitRequested?.Invoke(new RecruitSurvivorViewRequest(candidateId));
+            }
         }
 
         [Serializable]
@@ -145,12 +195,26 @@ namespace AshfallCamp.Presentation
             [SerializeField] private TextMeshProUGUI metaLabel;
             [SerializeField] private TextMeshProUGUI skillLabel;
             [SerializeField] private TextMeshProUGUI traitsLabel;
+            [SerializeField] private Button recruitButton;
+            [SerializeField] private TextMeshProUGUI recruitButtonLabel;
+
+            [NonSerialized] private string _candidateId = string.Empty;
+            [NonSerialized] private Action<string> _selected;
+            [NonSerialized] private UnityAction _click;
 
             public CandidateCardBinding()
             {
             }
 
-            public CandidateCardBinding(Image panel, TextMeshProUGUI avatarLabel, TextMeshProUGUI nameLabel, TextMeshProUGUI metaLabel, TextMeshProUGUI skillLabel, TextMeshProUGUI traitsLabel)
+            public CandidateCardBinding(
+                Image panel,
+                TextMeshProUGUI avatarLabel,
+                TextMeshProUGUI nameLabel,
+                TextMeshProUGUI metaLabel,
+                TextMeshProUGUI skillLabel,
+                TextMeshProUGUI traitsLabel,
+                Button recruitButton,
+                TextMeshProUGUI recruitButtonLabel)
             {
                 this.panel = panel;
                 this.avatarLabel = avatarLabel;
@@ -158,11 +222,34 @@ namespace AshfallCamp.Presentation
                 this.metaLabel = metaLabel;
                 this.skillLabel = skillLabel;
                 this.traitsLabel = traitsLabel;
+                this.recruitButton = recruitButton;
+                this.recruitButtonLabel = recruitButtonLabel;
+            }
+
+            public void Wire(Action<string> selected)
+            {
+                Clear();
+                _selected = selected;
+                if (recruitButton == null) return;
+                _click = OnClicked;
+                recruitButton.onClick.AddListener(_click);
+            }
+
+            public void Clear()
+            {
+                if (recruitButton != null && _click != null)
+                {
+                    recruitButton.onClick.RemoveListener(_click);
+                }
+
+                _click = null;
             }
 
             public void Render(CampRadioCandidatePresentation candidate, CampUiCatalogSO catalog)
             {
+                _candidateId = candidate != null ? candidate.CandidateId : string.Empty;
                 UiText.SetActive(panel, candidate != null);
+                if (recruitButton != null) recruitButton.interactable = candidate != null && candidate.CanRecruit && _selected != null;
                 if (candidate == null) return;
 
                 UiText.Set(avatarLabel, candidate.Avatar);
@@ -170,6 +257,7 @@ namespace AshfallCamp.Presentation
                 UiText.Set(metaLabel, candidate.Meta);
                 UiText.Set(skillLabel, candidate.Skill);
                 UiText.Set(traitsLabel, candidate.Traits);
+                UiText.Set(recruitButtonLabel, candidate.RecruitButton);
 
                 if (panel != null)
                 {
@@ -181,6 +269,15 @@ namespace AshfallCamp.Presentation
                 if (metaLabel != null) metaLabel.color = catalog.Theme.MutedInk;
                 if (skillLabel != null) skillLabel.color = catalog.Theme.Teal;
                 if (traitsLabel != null) traitsLabel.color = catalog.Theme.MutedInk;
+                if (recruitButtonLabel != null) recruitButtonLabel.color = catalog.Theme.Paper;
+            }
+
+            private void OnClicked()
+            {
+                if (!string.IsNullOrWhiteSpace(_candidateId))
+                {
+                    _selected?.Invoke(_candidateId);
+                }
             }
         }
     }

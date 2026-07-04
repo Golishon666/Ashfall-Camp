@@ -170,6 +170,7 @@ namespace AshfallCamp.Infrastructure
         public int RecruitmentFoodDivisor = 2;
         public int RecruitmentBaseWater = 2;
         public int RecruitmentWaterDivisor = 3;
+        public int RecruitmentCandidateCount = 2;
         public string WorkshopRequiredBuildingId = "workshop";
         public int WorkshopRequiredBuildingLevel = 1;
         public string WorkshopRepairResourceId = "weapon_parts";
@@ -179,6 +180,14 @@ namespace AshfallCamp.Infrastructure
         public string HealingDefaultWoundId = "cuts";
         public double HealingDefaultWoundDurationSeconds = 300;
         public int HealingHealthOnWounded = 1;
+        public string HealingMedicineResourceId = "medicine";
+        public int HealingMedicineCost = 1;
+        public double HealingMedicineSeconds = 300;
+        public double EmergencyScavengeDurationSeconds = 60;
+        public double EmergencyScavengeCooldownSeconds = 300;
+        public List<IntPairData> EmergencyScavengeRewards = new List<IntPairData>();
+        public bool DemoCompletionRequiresAnyCondition = true;
+        public List<UnlockConditionData> DemoCompletionConditions = new List<UnlockConditionData>();
     }
 
     [Serializable]

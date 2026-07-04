@@ -144,7 +144,21 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("Mara", config.StartingSurvivor.Name);
             Assert.AreEqual("rusty_knife", config.StartingSurvivor.WeaponItemId);
             Assert.GreaterOrEqual(config.RecruitableSurvivors.Count, 6);
+            Assert.GreaterOrEqual(config.Enemies.Count, 6);
+            Assert.GreaterOrEqual(config.Items.Count, 10);
+            Assert.GreaterOrEqual(config.Buildings.Count, 5);
+            Assert.GreaterOrEqual(CountBuildingUpgradeLevels(config), 20);
+            Assert.AreEqual(60, config.Balance.EmergencyScavengeDurationSeconds);
+            Assert.AreEqual(300, config.Balance.EmergencyScavengeCooldownSeconds);
+            Assert.AreEqual(3, config.Balance.EmergencyScavengeRewards["scrap"]);
+            Assert.AreEqual(2, config.Balance.EmergencyScavengeRewards["food"]);
+            Assert.AreEqual(2, config.Balance.EmergencyScavengeRewards["water"]);
             Assert.IsTrue(config.RecruitableSurvivors.ContainsKey("elias"));
+            Assert.IsTrue(config.Buildings.ContainsKey("barracks"));
+            Assert.IsTrue(config.Buildings.ContainsKey("workshop"));
+            Assert.IsTrue(config.Buildings.ContainsKey("water_collector"));
+            Assert.IsTrue(config.Buildings.ContainsKey("infirmary"));
+            Assert.IsTrue(config.Buildings.ContainsKey("radio_tower"));
             Assert.IsTrue(config.Zones.ContainsKey("abandoned_store"));
             Assert.IsTrue(config.Zones.ContainsKey("dry_suburb"));
             Assert.IsTrue(config.Zones.ContainsKey("ruined_clinic"));
@@ -258,6 +272,9 @@ namespace AshfallCamp.Tests.EditMode
 
             database.Balance = ScriptableObject.CreateInstance<BalanceConfigSO>();
             database.Balance.Balance = new BalanceConfigData();
+            database.Balance.Balance.EmergencyScavengeRewards.Add(new IntPairData("scrap", 3));
+            database.Balance.Balance.EmergencyScavengeRewards.Add(new IntPairData("food", 2));
+            database.Balance.Balance.EmergencyScavengeRewards.Add(new IntPairData("water", 2));
             return database;
         }
 
@@ -268,6 +285,23 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(startAmount, resource.StartAmount, id + " start amount");
             Assert.AreEqual(hasCap, resource.HasCap, id + " cap flag");
             Assert.AreEqual(startCap, resource.StartCap, id + " start cap");
+        }
+
+        private static int CountBuildingUpgradeLevels(GameConfigSnapshot config)
+        {
+            var count = 0;
+            foreach (var building in config.Buildings.Values)
+            {
+                for (var i = 0; i < building.Levels.Count; i++)
+                {
+                    if (building.Levels[i].Level > 0)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
         }
 
         private static void DestroyDatabase(GameConfigDatabaseSO database)

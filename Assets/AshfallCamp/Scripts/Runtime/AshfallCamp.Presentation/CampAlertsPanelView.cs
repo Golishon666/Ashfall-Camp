@@ -13,6 +13,16 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private List<AlertBinding> alerts = new List<AlertBinding>();
 
+        private Action _emergencyScavengeRequested;
+
+        private void OnDestroy()
+        {
+            foreach (var binding in alerts)
+            {
+                if (binding != null) binding.ClearActionHandler();
+            }
+        }
+
         public void ConfigureBindings(TextMeshProUGUI titleLabel, IEnumerable<AlertBinding> alertBindings)
         {
             title = titleLabel;
@@ -21,6 +31,11 @@ namespace AshfallCamp.Presentation
             {
                 alerts.AddRange(alertBindings);
             }
+        }
+
+        public void SetEmergencyScavengeHandler(Action emergencyScavengeRequested)
+        {
+            _emergencyScavengeRequested = emergencyScavengeRequested;
         }
 
         public void Render(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
@@ -43,6 +58,7 @@ namespace AshfallCamp.Presentation
                 if (binding.Dot != null) binding.Dot.color = tone;
                 UiText.Set(binding.Title, usesDynamicEntries ? dynamicAlerts[i].Title : catalog.Alerts[i].Title);
                 UiText.Set(binding.Body, usesDynamicEntries ? dynamicAlerts[i].Body : catalog.Alerts[i].Body);
+                binding.SetAction(usesDynamicEntries ? dynamicAlerts[i] : null, _emergencyScavengeRequested);
             }
         }
 
@@ -53,6 +69,11 @@ namespace AshfallCamp.Presentation
             [SerializeField] private Image dot;
             [SerializeField] private TextMeshProUGUI title;
             [SerializeField] private TextMeshProUGUI body;
+            [SerializeField] private Button actionButton;
+            [SerializeField] private TextMeshProUGUI actionButtonLabel;
+
+            private Action _emergencyScavengeRequested;
+            private bool _actionButtonWired;
 
             public AlertBinding()
             {
@@ -70,10 +91,50 @@ namespace AshfallCamp.Presentation
             public Image Dot { get { return dot; } }
             public TextMeshProUGUI Title { get { return title; } }
             public TextMeshProUGUI Body { get { return body; } }
+            public Button ActionButton { get { return actionButton; } }
+            public TextMeshProUGUI ActionButtonLabel { get { return actionButtonLabel; } }
+
+            public void SetAction(CampAlertPresentation presentation, Action emergencyScavengeRequested)
+            {
+                var hasAction = presentation != null && presentation.CanStartEmergencyScavenge;
+                _emergencyScavengeRequested = hasAction ? emergencyScavengeRequested : null;
+                UiText.SetActive(actionButton, hasAction);
+                UiText.Set(actionButtonLabel, hasAction ? presentation.ActionLabel : string.Empty);
+                if (actionButton != null)
+                {
+                    actionButton.interactable = hasAction && emergencyScavengeRequested != null;
+                }
+
+                WireActionButton();
+            }
+
+            public void ClearActionHandler()
+            {
+                if (actionButton != null)
+                {
+                    actionButton.onClick.RemoveListener(OnActionClicked);
+                }
+
+                _actionButtonWired = false;
+                _emergencyScavengeRequested = null;
+            }
 
             public void SetActive(bool active)
             {
                 UiText.SetActive(panel, active);
+            }
+
+            private void WireActionButton()
+            {
+                if (_actionButtonWired || actionButton == null) return;
+                actionButton.onClick.RemoveListener(OnActionClicked);
+                actionButton.onClick.AddListener(OnActionClicked);
+                _actionButtonWired = true;
+            }
+
+            private void OnActionClicked()
+            {
+                _emergencyScavengeRequested?.Invoke();
             }
         }
     }

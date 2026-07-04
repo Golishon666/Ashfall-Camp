@@ -1,6 +1,8 @@
+using System;
 using AshfallCamp.Domain;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace AshfallCamp.Presentation
@@ -20,6 +22,12 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI afterActionWounds;
         [SerializeField] private TextMeshProUGUI afterActionEnemies;
         [SerializeField] private TextMeshProUGUI afterActionEvents;
+        [SerializeField] private Button afterActionSendAgainButton;
+        [SerializeField] private TextMeshProUGUI afterActionSendAgainButtonLabel;
+        [SerializeField] private Image campEventPanel;
+        [SerializeField] private TextMeshProUGUI campEventPanelTitle;
+        [SerializeField] private TextMeshProUGUI campEventTitle;
+        [SerializeField] private TextMeshProUGUI campEventBody;
         [SerializeField] private Image offlinePanel;
         [SerializeField] private TextMeshProUGUI offlineTitle;
         [SerializeField] private TextMeshProUGUI offlineSummary;
@@ -27,6 +35,11 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI offlineCompleted;
         [SerializeField] private TextMeshProUGUI offlineHealing;
         [SerializeField] private TextMeshProUGUI offlineWarnings;
+
+        private Action<ExpeditionLaunchViewRequest> _sendAgainRequested;
+        private UnityAction _sendAgainClick;
+        private ExpeditionLaunchViewRequest _afterActionSendAgainRequest;
+        private bool _afterActionCanSendAgain;
 
         public void ConfigureBindings(
             TextMeshProUGUI titleLabel,
@@ -41,6 +54,12 @@ namespace AshfallCamp.Presentation
             TextMeshProUGUI afterActionStateWounds,
             TextMeshProUGUI afterActionStateEnemies,
             TextMeshProUGUI afterActionStateEvents,
+            Button afterActionStateSendAgainButton,
+            TextMeshProUGUI afterActionStateSendAgainButtonLabel,
+            Image campEventStatePanel,
+            TextMeshProUGUI campEventStatePanelTitle,
+            TextMeshProUGUI campEventStateTitle,
+            TextMeshProUGUI campEventStateBody,
             Image offlineStatePanel,
             TextMeshProUGUI offlineStateTitle,
             TextMeshProUGUI offlineStateSummary,
@@ -61,6 +80,12 @@ namespace AshfallCamp.Presentation
             afterActionWounds = afterActionStateWounds;
             afterActionEnemies = afterActionStateEnemies;
             afterActionEvents = afterActionStateEvents;
+            afterActionSendAgainButton = afterActionStateSendAgainButton;
+            afterActionSendAgainButtonLabel = afterActionStateSendAgainButtonLabel;
+            campEventPanel = campEventStatePanel;
+            campEventPanelTitle = campEventStatePanelTitle;
+            campEventTitle = campEventStateTitle;
+            campEventBody = campEventStateBody;
             offlinePanel = offlineStatePanel;
             offlineTitle = offlineStateTitle;
             offlineSummary = offlineStateSummary;
@@ -68,6 +93,23 @@ namespace AshfallCamp.Presentation
             offlineCompleted = offlineStateCompleted;
             offlineHealing = offlineStateHealing;
             offlineWarnings = offlineStateWarnings;
+            WireSendAgainButton();
+        }
+
+        private void Awake()
+        {
+            WireSendAgainButton();
+        }
+
+        private void OnDestroy()
+        {
+            ClearSendAgainButton();
+        }
+
+        public void SetSendAgainHandler(Action<ExpeditionLaunchViewRequest> sendAgainRequested)
+        {
+            _sendAgainRequested = sendAgainRequested;
+            ApplySendAgainButtonState();
         }
 
         public void Render(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
@@ -90,6 +132,24 @@ namespace AshfallCamp.Presentation
                 UiText.Set(afterActionWounds, report.AfterActionWounds);
                 UiText.Set(afterActionEnemies, report.AfterActionEnemies);
                 UiText.Set(afterActionEvents, report.AfterActionEvents);
+                UiText.Set(afterActionSendAgainButtonLabel, report.AfterActionSendAgainButton);
+                _afterActionSendAgainRequest = report.AfterActionSendAgainRequest;
+                _afterActionCanSendAgain = report.AfterActionCanSendAgain;
+                ApplySendAgainButtonState();
+            }
+            else
+            {
+                _afterActionSendAgainRequest = null;
+                _afterActionCanSendAgain = false;
+                ApplySendAgainButtonState();
+            }
+
+            UiText.SetActive(campEventPanel, report.HasCampEvent);
+            if (report.HasCampEvent)
+            {
+                UiText.Set(campEventPanelTitle, report.CampEventPanelTitle);
+                UiText.Set(campEventTitle, report.CampEventTitle);
+                UiText.Set(campEventBody, report.CampEventBody);
             }
 
             UiText.SetActive(offlinePanel, report.HasOfflineReport);
@@ -102,6 +162,37 @@ namespace AshfallCamp.Presentation
                 UiText.Set(offlineHealing, report.OfflineHealing);
                 UiText.Set(offlineWarnings, report.OfflineWarnings);
             }
+        }
+
+        private void WireSendAgainButton()
+        {
+            if (afterActionSendAgainButton == null || _sendAgainClick != null) return;
+            _sendAgainClick = OnSendAgainClicked;
+            afterActionSendAgainButton.onClick.AddListener(_sendAgainClick);
+        }
+
+        private void ClearSendAgainButton()
+        {
+            if (afterActionSendAgainButton != null && _sendAgainClick != null)
+            {
+                afterActionSendAgainButton.onClick.RemoveListener(_sendAgainClick);
+            }
+
+            _sendAgainClick = null;
+        }
+
+        private void ApplySendAgainButtonState()
+        {
+            if (afterActionSendAgainButton != null)
+            {
+                afterActionSendAgainButton.interactable = _afterActionCanSendAgain && _sendAgainRequested != null && _afterActionSendAgainRequest != null;
+            }
+        }
+
+        private void OnSendAgainClicked()
+        {
+            if (_afterActionSendAgainRequest == null) return;
+            _sendAgainRequested?.Invoke(_afterActionSendAgainRequest);
         }
     }
 }

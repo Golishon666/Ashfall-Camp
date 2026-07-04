@@ -126,9 +126,14 @@ namespace AshfallCamp.Composition
         private readonly IGameConfigProvider _configs;
         private readonly IUpgradeBuildingUseCase _upgradeBuilding;
         private readonly ILaunchExpeditionUseCase _launchExpedition;
+        private readonly IBroadcastRecruitmentUseCase _broadcastRecruitment;
         private readonly IRecruitSurvivorUseCase _recruitSurvivor;
+        private readonly ISkipRecruitmentCandidatesUseCase _skipRecruitmentCandidates;
         private readonly IRepairItemUseCase _repairItem;
         private readonly IEquipItemUseCase _equipItem;
+        private readonly IUseMedicineUseCase _useMedicine;
+        private readonly IStartEmergencyScavengeUseCase _startEmergencyScavenge;
+        private readonly ISetAutosaveUseCase _setAutosave;
         private IDisposable _stateSubscription;
         private double _accumulator;
         private bool _isUpgrading;
@@ -136,6 +141,9 @@ namespace AshfallCamp.Composition
         private bool _isRecruiting;
         private bool _isRepairing;
         private bool _isEquipping;
+        private bool _isUsingMedicine;
+        private bool _isStartingEmergencyScavenge;
+        private bool _isSettingAutosave;
 
         public CampHudPresenter(
             IUiRootView view,
@@ -143,27 +151,42 @@ namespace AshfallCamp.Composition
             IGameConfigProvider configs,
             IUpgradeBuildingUseCase upgradeBuilding,
             ILaunchExpeditionUseCase launchExpedition,
+            IBroadcastRecruitmentUseCase broadcastRecruitment,
             IRecruitSurvivorUseCase recruitSurvivor,
+            ISkipRecruitmentCandidatesUseCase skipRecruitmentCandidates,
             IRepairItemUseCase repairItem,
-            IEquipItemUseCase equipItem)
+            IEquipItemUseCase equipItem,
+            IUseMedicineUseCase useMedicine,
+            IStartEmergencyScavengeUseCase startEmergencyScavenge,
+            ISetAutosaveUseCase setAutosave)
         {
             _view = view;
             _reader = reader;
             _configs = configs;
             _upgradeBuilding = upgradeBuilding;
             _launchExpedition = launchExpedition;
+            _broadcastRecruitment = broadcastRecruitment;
             _recruitSurvivor = recruitSurvivor;
+            _skipRecruitmentCandidates = skipRecruitmentCandidates;
             _repairItem = repairItem;
             _equipItem = equipItem;
+            _useMedicine = useMedicine;
+            _startEmergencyScavenge = startEmergencyScavenge;
+            _setAutosave = setAutosave;
         }
 
         public void Start()
         {
             _view.UpgradeRequested += OnUpgradeRequested;
             _view.ExpeditionLaunchRequested += OnExpeditionLaunchRequested;
+            _view.BroadcastRecruitmentRequested += OnBroadcastRecruitmentRequested;
             _view.RecruitRequested += OnRecruitRequested;
+            _view.RecruitmentCandidatesSkipRequested += OnRecruitmentCandidatesSkipRequested;
             _view.RepairItemRequested += OnRepairItemRequested;
             _view.EquipItemRequested += OnEquipItemRequested;
+            _view.UseMedicineRequested += OnUseMedicineRequested;
+            _view.EmergencyScavengeRequested += OnEmergencyScavengeRequested;
+            _view.AutosaveChanged += OnAutosaveChanged;
             _stateSubscription = _reader.State.Subscribe(_ => RenderCurrent());
             RenderCurrent();
         }
@@ -181,9 +204,14 @@ namespace AshfallCamp.Composition
         {
             _view.UpgradeRequested -= OnUpgradeRequested;
             _view.ExpeditionLaunchRequested -= OnExpeditionLaunchRequested;
+            _view.BroadcastRecruitmentRequested -= OnBroadcastRecruitmentRequested;
             _view.RecruitRequested -= OnRecruitRequested;
+            _view.RecruitmentCandidatesSkipRequested -= OnRecruitmentCandidatesSkipRequested;
             _view.RepairItemRequested -= OnRepairItemRequested;
             _view.EquipItemRequested -= OnEquipItemRequested;
+            _view.UseMedicineRequested -= OnUseMedicineRequested;
+            _view.EmergencyScavengeRequested -= OnEmergencyScavengeRequested;
+            _view.AutosaveChanged -= OnAutosaveChanged;
             _stateSubscription?.Dispose();
         }
 
@@ -199,10 +227,22 @@ namespace AshfallCamp.Composition
             LaunchExpeditionAsync(request).Forget();
         }
 
-        private void OnRecruitRequested()
+        private void OnRecruitRequested(RecruitSurvivorViewRequest request)
+        {
+            if (_isRecruiting || request == null) return;
+            RecruitAsync(request).Forget();
+        }
+
+        private void OnBroadcastRecruitmentRequested()
         {
             if (_isRecruiting) return;
-            RecruitAsync().Forget();
+            BroadcastRecruitmentAsync().Forget();
+        }
+
+        private void OnRecruitmentCandidatesSkipRequested()
+        {
+            if (_isRecruiting) return;
+            SkipRecruitmentCandidatesAsync().Forget();
         }
 
         private void OnRepairItemRequested(RepairItemRequest request)
@@ -215,6 +255,24 @@ namespace AshfallCamp.Composition
         {
             if (_isEquipping || request == null) return;
             EquipItemAsync(request).Forget();
+        }
+
+        private void OnUseMedicineRequested(UseMedicineRequest request)
+        {
+            if (_isUsingMedicine || request == null) return;
+            UseMedicineAsync(request).Forget();
+        }
+
+        private void OnEmergencyScavengeRequested()
+        {
+            if (_isStartingEmergencyScavenge) return;
+            StartEmergencyScavengeAsync().Forget();
+        }
+
+        private void OnAutosaveChanged(bool enabled)
+        {
+            if (_isSettingAutosave) return;
+            SetAutosaveAsync(enabled).Forget();
         }
 
         private async UniTaskVoid UpgradeAsync(string buildingId)
@@ -251,7 +309,9 @@ namespace AshfallCamp.Composition
                 if (_configs.Current == null) return;
 
                 var state = _reader.State.CurrentValue;
-                var survivorIds = SelectIdleSurvivors(state);
+                var survivorIds = request.SurvivorIds.Count > 0
+                    ? new System.Collections.Generic.List<string>(request.SurvivorIds)
+                    : SelectIdleSurvivors(state);
                 if (survivorIds.Count == 0)
                 {
                     Debug.LogWarning("Expedition launch blocked: no idle survivors.");
@@ -266,7 +326,7 @@ namespace AshfallCamp.Composition
                     SurvivorIds = survivorIds,
                     Seed = CreateLaunchSeed(state, now),
                     NowUnixMs = now,
-                    ConfirmWarnings = true
+                    ConfirmWarnings = request.ConfirmWarnings
                 }, CancellationToken.None);
 
                 if (!result.Validation.IsValid)
@@ -289,7 +349,7 @@ namespace AshfallCamp.Composition
             }
         }
 
-        private async UniTaskVoid RecruitAsync()
+        private async UniTaskVoid BroadcastRecruitmentAsync()
         {
             _isRecruiting = true;
             try
@@ -298,9 +358,69 @@ namespace AshfallCamp.Composition
 
                 var state = _reader.State.CurrentValue;
                 var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                var result = await _recruitSurvivor.ExecuteAsync(new RecruitSurvivorRequest
+                var result = await _broadcastRecruitment.ExecuteAsync(new BroadcastRecruitmentRequest
                 {
                     Seed = CreateLaunchSeed(state, now),
+                    NowUnixMs = now
+                }, CancellationToken.None);
+
+                if (!result.Validation.IsValid)
+                {
+                    Debug.LogWarning("Recruitment broadcast blocked: " + string.Join(", ", result.Validation.Errors));
+                }
+
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isRecruiting = false;
+            }
+        }
+
+        private async UniTaskVoid SkipRecruitmentCandidatesAsync()
+        {
+            _isRecruiting = true;
+            try
+            {
+                var result = await _skipRecruitmentCandidates.ExecuteAsync(CancellationToken.None);
+                if (!result.Validation.IsValid)
+                {
+                    Debug.LogWarning("Recruitment skip blocked: " + string.Join(", ", result.Validation.Errors));
+                }
+
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isRecruiting = false;
+            }
+        }
+
+        private async UniTaskVoid RecruitAsync(RecruitSurvivorViewRequest request)
+        {
+            _isRecruiting = true;
+            try
+            {
+                if (_configs.Current == null) return;
+
+                var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                var result = await _recruitSurvivor.ExecuteAsync(new RecruitSurvivorRequest
+                {
+                    CandidateId = request.CandidateId,
                     NowUnixMs = now
                 }, CancellationToken.None);
 
@@ -373,6 +493,83 @@ namespace AshfallCamp.Composition
             finally
             {
                 _isEquipping = false;
+            }
+        }
+
+        private async UniTaskVoid UseMedicineAsync(UseMedicineRequest request)
+        {
+            _isUsingMedicine = true;
+            try
+            {
+                var result = await _useMedicine.ExecuteAsync(request, CancellationToken.None);
+                if (!result.Validation.IsValid)
+                {
+                    Debug.LogWarning("Use medicine blocked: " + string.Join(", ", result.Validation.Errors));
+                }
+
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isUsingMedicine = false;
+            }
+        }
+
+        private async UniTaskVoid StartEmergencyScavengeAsync()
+        {
+            _isStartingEmergencyScavenge = true;
+            try
+            {
+                var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                var result = await _startEmergencyScavenge.ExecuteAsync(new EmergencyScavengeRequest
+                {
+                    NowUnixMs = now
+                }, CancellationToken.None);
+                if (!result.Validation.IsValid)
+                {
+                    Debug.LogWarning("Emergency scavenge blocked: " + string.Join(", ", result.Validation.Errors));
+                }
+
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isStartingEmergencyScavenge = false;
+            }
+        }
+
+        private async UniTaskVoid SetAutosaveAsync(bool enabled)
+        {
+            _isSettingAutosave = true;
+            try
+            {
+                await _setAutosave.ExecuteAsync(enabled, CancellationToken.None);
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isSettingAutosave = false;
             }
         }
 

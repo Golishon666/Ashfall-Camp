@@ -38,6 +38,16 @@ namespace AshfallCamp.Application
         UniTask<RecruitSurvivorResult> ExecuteAsync(RecruitSurvivorRequest request, CancellationToken ct);
     }
 
+    public interface IBroadcastRecruitmentUseCase
+    {
+        UniTask<BroadcastRecruitmentResult> ExecuteAsync(BroadcastRecruitmentRequest request, CancellationToken ct);
+    }
+
+    public interface ISkipRecruitmentCandidatesUseCase
+    {
+        UniTask<SkipRecruitmentCandidatesResult> ExecuteAsync(CancellationToken ct);
+    }
+
     public interface IRepairItemUseCase
     {
         UniTask<RepairItemResult> ExecuteAsync(RepairItemRequest request, CancellationToken ct);
@@ -46,6 +56,21 @@ namespace AshfallCamp.Application
     public interface IEquipItemUseCase
     {
         UniTask<EquipItemResult> ExecuteAsync(EquipItemRequest request, CancellationToken ct);
+    }
+
+    public interface IUseMedicineUseCase
+    {
+        UniTask<UseMedicineResult> ExecuteAsync(UseMedicineRequest request, CancellationToken ct);
+    }
+
+    public interface IStartEmergencyScavengeUseCase
+    {
+        UniTask<EmergencyScavengeResult> ExecuteAsync(EmergencyScavengeRequest request, CancellationToken ct);
+    }
+
+    public interface ISetAutosaveUseCase
+    {
+        UniTask<SetAutosaveResult> ExecuteAsync(bool enabled, CancellationToken ct);
     }
 
     public interface ITickGameUseCase
@@ -95,6 +120,11 @@ namespace AshfallCamp.Application
     {
         public GameState State;
         public bool UsedBackup;
+    }
+
+    public sealed class SetAutosaveResult
+    {
+        public bool AutosaveEnabled;
     }
 
     public sealed class GameStateStore : IGameStateReader, IGameStateWriter, IDisposable
@@ -202,6 +232,59 @@ namespace AshfallCamp.Application
         }
     }
 
+    public sealed class BroadcastRecruitmentUseCase : IBroadcastRecruitmentUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private readonly IGameConfigProvider _configs;
+        private BroadcastRecruitmentResult _lastResult;
+
+        public BroadcastRecruitmentUseCase(IGameStateWriter writer, IGameConfigProvider configs)
+        {
+            _writer = writer;
+            _configs = configs;
+        }
+
+        public async UniTask<BroadcastRecruitmentResult> ExecuteAsync(BroadcastRecruitmentRequest request, CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            if (_configs.Current == null)
+            {
+                await _configs.LoadAsync(ct);
+            }
+
+            _lastResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _lastResult = RecruitmentSystem.Broadcast(state, _configs.Current, request);
+                return state;
+            }, ct);
+            return _lastResult;
+        }
+    }
+
+    public sealed class SkipRecruitmentCandidatesUseCase : ISkipRecruitmentCandidatesUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private SkipRecruitmentCandidatesResult _lastResult;
+
+        public SkipRecruitmentCandidatesUseCase(IGameStateWriter writer)
+        {
+            _writer = writer;
+        }
+
+        public async UniTask<SkipRecruitmentCandidatesResult> ExecuteAsync(CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            _lastResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _lastResult = RecruitmentSystem.SkipCandidates(state);
+                return state;
+            }, ct);
+            return _lastResult;
+        }
+    }
+
     public sealed class RecruitSurvivorUseCase : IRecruitSurvivorUseCase
     {
         private readonly IGameStateWriter _writer;
@@ -292,6 +375,103 @@ namespace AshfallCamp.Application
         }
     }
 
+    public sealed class UseMedicineUseCase : IUseMedicineUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private readonly IGameConfigProvider _configs;
+        private UseMedicineResult _lastResult;
+
+        public UseMedicineUseCase(IGameStateWriter writer, IGameConfigProvider configs)
+        {
+            _writer = writer;
+            _configs = configs;
+        }
+
+        public async UniTask<UseMedicineResult> ExecuteAsync(UseMedicineRequest request, CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            if (_configs.Current == null)
+            {
+                await _configs.LoadAsync(ct);
+            }
+
+            _lastResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _lastResult = HealingSystem.UseMedicine(state, _configs.Current, request);
+                return state;
+            }, ct);
+            return _lastResult;
+        }
+    }
+
+    public sealed class StartEmergencyScavengeUseCase : IStartEmergencyScavengeUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private readonly IGameConfigProvider _configs;
+        private EmergencyScavengeResult _lastResult;
+
+        public StartEmergencyScavengeUseCase(IGameStateWriter writer, IGameConfigProvider configs)
+        {
+            _writer = writer;
+            _configs = configs;
+        }
+
+        public async UniTask<EmergencyScavengeResult> ExecuteAsync(EmergencyScavengeRequest request, CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            if (_configs.Current == null)
+            {
+                await _configs.LoadAsync(ct);
+            }
+
+            _lastResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _lastResult = RecoverySystem.StartEmergencyScavenge(state, _configs.Current, request);
+                return state;
+            }, ct);
+            return _lastResult;
+        }
+    }
+
+    public sealed class SetAutosaveUseCase : ISetAutosaveUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private readonly ISaveRepository _repository;
+        private GameState _snapshot;
+
+        public SetAutosaveUseCase(IGameStateWriter writer, ISaveRepository repository)
+        {
+            _writer = writer;
+            _repository = repository;
+        }
+
+        public async UniTask<SetAutosaveResult> ExecuteAsync(bool enabled, CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            _snapshot = null;
+            await _writer.MutateAsync(state =>
+            {
+                if (state.Settings == null)
+                {
+                    state.Settings = new GameSettings();
+                }
+
+                state.Settings.AutosaveEnabled = enabled;
+                _snapshot = state;
+                return state;
+            }, ct);
+
+            if (_snapshot != null)
+            {
+                await _repository.SaveAsync(_snapshot, ct);
+            }
+
+            return new SetAutosaveResult { AutosaveEnabled = enabled };
+        }
+    }
+
     public sealed class TickGameUseCase : ITickGameUseCase
     {
         private readonly IGameStateWriter _writer;
@@ -318,6 +498,7 @@ namespace AshfallCamp.Application
                 BuildingSystem.TickProduction(state, _configs.Current, dt);
                 ExpeditionSimulator.TickAll(state, _configs.Current, dt);
                 HealingSystem.Tick(state, _configs.Current, dt);
+                RecoverySystem.Tick(state, _configs.Current, dt);
                 return state;
             }, ct);
         }
@@ -360,6 +541,7 @@ namespace AshfallCamp.Application
                     BuildingSystem.TickProduction(state, _configs.Current, dt);
                     ExpeditionSimulator.TickAll(state, _configs.Current, dt);
                     HealingSystem.Tick(state, _configs.Current, dt);
+                    RecoverySystem.Tick(state, _configs.Current, dt);
                     remaining -= dt;
                 }
 
@@ -478,6 +660,7 @@ namespace AshfallCamp.Application
 
             BuildingSystem.ApplyAllBuildingEffects(loaded, config);
             UnlockSystem.RefreshZoneUnlocks(loaded, config);
+            ProgressionSystem.RefreshDemoCompletion(loaded, config, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
             result.State = loaded;
             await _writer.MutateAsync(_ => loaded, ct);
             return result;
@@ -515,6 +698,8 @@ namespace AshfallCamp.Application
             if (state.Zones == null) state.Zones = new Dictionary<string, ZoneState>(StringComparer.Ordinal);
             if (state.Upgrades == null) state.Upgrades = new Dictionary<string, UpgradeState>(StringComparer.Ordinal);
             if (state.Expeditions == null) state.Expeditions = new List<ExpeditionState>();
+            if (state.Recovery == null) state.Recovery = new RecoveryActionState();
+            if (state.Progress == null) state.Progress = new GameProgressState();
             if (state.Settings == null) state.Settings = new GameSettings();
             if (state.Statistics == null) state.Statistics = new GameStatistics();
         }

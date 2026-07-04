@@ -35,9 +35,14 @@ namespace AshfallCamp.Composition
             builder.Register<SystemUnixTimeProvider>(Lifetime.Singleton).As<IUnixTimeProvider>();
             builder.Register<LaunchExpeditionUseCase>(Lifetime.Singleton).As<ILaunchExpeditionUseCase>();
             builder.Register<UpgradeBuildingUseCase>(Lifetime.Singleton).As<IUpgradeBuildingUseCase>();
+            builder.Register<BroadcastRecruitmentUseCase>(Lifetime.Singleton).As<IBroadcastRecruitmentUseCase>();
             builder.Register<RecruitSurvivorUseCase>(Lifetime.Singleton).As<IRecruitSurvivorUseCase>();
+            builder.Register<SkipRecruitmentCandidatesUseCase>(Lifetime.Singleton).As<ISkipRecruitmentCandidatesUseCase>();
             builder.Register<RepairItemUseCase>(Lifetime.Singleton).As<IRepairItemUseCase>();
             builder.Register<EquipItemUseCase>(Lifetime.Singleton).As<IEquipItemUseCase>();
+            builder.Register<UseMedicineUseCase>(Lifetime.Singleton).As<IUseMedicineUseCase>();
+            builder.Register<StartEmergencyScavengeUseCase>(Lifetime.Singleton).As<IStartEmergencyScavengeUseCase>();
+            builder.Register<SetAutosaveUseCase>(Lifetime.Singleton).As<ISetAutosaveUseCase>();
             builder.Register<TickGameUseCase>(Lifetime.Singleton).As<ITickGameUseCase>();
             builder.Register<OfflineProgressUseCase>(Lifetime.Singleton).As<IOfflineProgressUseCase>();
             builder.Register<SaveLoadUseCase>(Lifetime.Singleton).As<ISaveLoadUseCase>();

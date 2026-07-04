@@ -24,8 +24,13 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI detailWeapon;
         [SerializeField] private TextMeshProUGUI detailTreatment;
         [SerializeField] private TextMeshProUGUI detailStats;
+        [SerializeField] private TextMeshProUGUI detailMedicineCost;
+        [SerializeField] private Button useMedicineButton;
+        [SerializeField] private TextMeshProUGUI useMedicineButtonLabel;
 
         private string _selectedSurvivorId = string.Empty;
+        private Action<UseMedicineRequest> _useMedicineRequested;
+        private UnityAction _useMedicineClick;
 
         public void ConfigureBindings(
             TextMeshProUGUI titleLabel,
@@ -40,7 +45,10 @@ namespace AshfallCamp.Presentation
             TextMeshProUGUI selectedDetailTraits,
             TextMeshProUGUI selectedDetailWeapon,
             TextMeshProUGUI selectedDetailStats,
-            TextMeshProUGUI selectedDetailTreatment = null)
+            TextMeshProUGUI selectedDetailTreatment = null,
+            TextMeshProUGUI selectedDetailMedicineCost = null,
+            Button selectedUseMedicineButton = null,
+            TextMeshProUGUI selectedUseMedicineButtonLabel = null)
         {
             title = titleLabel;
             countLabel = survivorCountLabel;
@@ -63,13 +71,30 @@ namespace AshfallCamp.Presentation
                 detailTreatment = selectedDetailTreatment;
             }
 
+            if (selectedDetailMedicineCost != null)
+            {
+                detailMedicineCost = selectedDetailMedicineCost;
+            }
+
+            if (selectedUseMedicineButton != null)
+            {
+                useMedicineButton = selectedUseMedicineButton;
+            }
+
+            if (selectedUseMedicineButtonLabel != null)
+            {
+                useMedicineButtonLabel = selectedUseMedicineButtonLabel;
+            }
+
             detailStats = selectedDetailStats;
             WireCards();
+            WireUseMedicineButton();
         }
 
         private void Awake()
         {
             WireCards();
+            WireUseMedicineButton();
         }
 
         private void OnDestroy()
@@ -81,6 +106,14 @@ namespace AshfallCamp.Presentation
                     card.Clear();
                 }
             }
+
+            ClearUseMedicineButton();
+        }
+
+        public void SetUseMedicineHandler(Action<UseMedicineRequest> useMedicineRequested)
+        {
+            _useMedicineRequested = useMedicineRequested;
+            WireUseMedicineButton();
         }
 
         public void Render(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
@@ -157,6 +190,39 @@ namespace AshfallCamp.Presentation
             UiText.Set(detailWeapon, detail.Weapon);
             UiText.Set(detailTreatment, detail.Treatment);
             UiText.Set(detailStats, detail.Stats);
+            UiText.Set(detailMedicineCost, detail.MedicineCost);
+            UiText.Set(useMedicineButtonLabel, detail.MedicineButton);
+            UiText.SetActive(detailMedicineCost, detail.ShowMedicineAction);
+            if (useMedicineButton != null)
+            {
+                UiText.SetActive(useMedicineButton, detail.ShowMedicineAction);
+                useMedicineButton.interactable = detail.ShowMedicineAction && detail.CanUseMedicine && _useMedicineRequested != null;
+            }
+        }
+
+        private void WireUseMedicineButton()
+        {
+            if (useMedicineButton == null || _useMedicineClick != null) return;
+            _useMedicineClick = OnUseMedicineClicked;
+            useMedicineButton.onClick.AddListener(_useMedicineClick);
+        }
+
+        private void ClearUseMedicineButton()
+        {
+            if (useMedicineButton != null && _useMedicineClick != null)
+            {
+                useMedicineButton.onClick.RemoveListener(_useMedicineClick);
+            }
+
+            _useMedicineClick = null;
+        }
+
+        private void OnUseMedicineClicked()
+        {
+            if (!string.IsNullOrWhiteSpace(_selectedSurvivorId))
+            {
+                _useMedicineRequested?.Invoke(new UseMedicineRequest { SurvivorId = _selectedSurvivorId });
+            }
         }
 
         [Serializable]

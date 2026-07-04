@@ -265,6 +265,122 @@ namespace AshfallCamp.Domain
         }
     }
 
+    public static class RecoverySystem
+    {
+        public static ValidationResult ValidateEmergencyScavenge(GameState state, GameConfigSnapshot config, EmergencyScavengeRequest request)
+        {
+            var result = new ValidationResult();
+            request = request ?? new EmergencyScavengeRequest();
+            if (state == null || config == null || state.Recovery == null)
+            {
+                result.Errors.Add("Recovery state is missing.");
+                return result;
+            }
+
+            if (state.Recovery.EmergencyScavengeActive)
+            {
+                result.Errors.Add("Emergency scavenge is already active.");
+            }
+
+            if (state.Recovery.EmergencyScavengeCooldownRemainingSeconds > 0)
+            {
+                result.Errors.Add("Emergency scavenge is cooling down.");
+            }
+
+            if (config.Balance.EmergencyScavengeRewards.Count == 0)
+            {
+                result.Errors.Add("Emergency scavenge has no rewards.");
+            }
+
+            return result;
+        }
+
+        public static EmergencyScavengeResult StartEmergencyScavenge(GameState state, GameConfigSnapshot config, EmergencyScavengeRequest request)
+        {
+            request = request ?? new EmergencyScavengeRequest();
+            var result = new EmergencyScavengeResult
+            {
+                Validation = ValidateEmergencyScavenge(state, config, request),
+                DurationSeconds = config != null ? Math.Max(1, config.Balance.EmergencyScavengeDurationSeconds) : 0
+            };
+
+            if (config != null)
+            {
+                result.Rewards = CalculateEmergencyScavengeRewards(config);
+            }
+
+            if (!result.Validation.IsValid)
+            {
+                return result;
+            }
+
+            state.Recovery.EmergencyScavengeActive = true;
+            state.Recovery.EmergencyScavengeStartedAtUnixMs = Math.Max(0, request.NowUnixMs);
+            state.Recovery.EmergencyScavengeRemainingSeconds = result.DurationSeconds;
+            result.Started = true;
+            return result;
+        }
+
+        public static void Tick(GameState state, GameConfigSnapshot config, double deltaSeconds)
+        {
+            if (state == null || config == null || state.Recovery == null) return;
+            if (deltaSeconds <= 0) return;
+
+            if (!state.Recovery.EmergencyScavengeActive)
+            {
+                state.Recovery.EmergencyScavengeCooldownRemainingSeconds = Math.Max(0, state.Recovery.EmergencyScavengeCooldownRemainingSeconds - deltaSeconds);
+                return;
+            }
+
+            state.Recovery.EmergencyScavengeRemainingSeconds = Math.Max(0, state.Recovery.EmergencyScavengeRemainingSeconds - deltaSeconds);
+            if (state.Recovery.EmergencyScavengeRemainingSeconds > 0) return;
+
+            CompleteEmergencyScavenge(state, config);
+        }
+
+        public static Dictionary<string, int> CalculateEmergencyScavengeRewards(GameConfigSnapshot config)
+        {
+            var rewards = new Dictionary<string, int>(StringComparer.Ordinal);
+            if (config == null) return rewards;
+            foreach (var pair in config.Balance.EmergencyScavengeRewards)
+            {
+                if (!string.IsNullOrWhiteSpace(pair.Key) && pair.Value > 0)
+                {
+                    rewards[pair.Key] = pair.Value;
+                }
+            }
+
+            return rewards;
+        }
+
+        private static void CompleteEmergencyScavenge(GameState state, GameConfigSnapshot config)
+        {
+            state.Recovery.EmergencyScavengeActive = false;
+            state.Recovery.EmergencyScavengeRemainingSeconds = 0;
+
+            foreach (var pair in config.Balance.EmergencyScavengeRewards)
+            {
+                ResourceSystem.Add(state, pair.Key, pair.Value);
+            }
+
+            var completedAt = state.Recovery.EmergencyScavengeStartedAtUnixMs + SecondsToMilliseconds(config.Balance.EmergencyScavengeDurationSeconds);
+            state.Recovery.EmergencyScavengeCooldownRemainingSeconds = Math.Max(0, config.Balance.EmergencyScavengeCooldownSeconds);
+            state.CampEvents.Add(new CampEventState
+            {
+                Id = "event_" + state.NextId++,
+                EventId = GameEventIds.EmergencyScavengeCompleted,
+                SubjectId = GameEventIds.EmergencyScavengeCompleted,
+                SubjectName = GameEventIds.EmergencyScavengeCompleted,
+                AtUnixMs = completedAt
+            });
+        }
+
+        private static long SecondsToMilliseconds(double seconds)
+        {
+            return (long)Math.Round(Math.Max(0, seconds) * 1000.0);
+        }
+    }
+
     public static class RecruitmentSystem
     {
         public static ValidationResult ValidateBroadcast(GameState state, GameConfigSnapshot config)
@@ -286,6 +402,11 @@ namespace AshfallCamp.Domain
                 result.Errors.Add("Radio tower is not ready.");
             }
 
+            if (HasPendingCandidates(state))
+            {
+                result.Errors.Add("Resolve current survivor signals first.");
+            }
+
             if (CountAvailableCandidates(state, config) == 0)
             {
                 result.Errors.Add("No survivor signals available.");
@@ -299,27 +420,128 @@ namespace AshfallCamp.Domain
             return result;
         }
 
-        public static RecruitSurvivorResult Recruit(GameState state, GameConfigSnapshot config, RecruitSurvivorRequest request)
+        public static ValidationResult ValidateRecruitSelection(GameState state, GameConfigSnapshot config, string candidateId)
         {
+            var result = new ValidationResult();
+            if (state == null || config == null)
+            {
+                result.Errors.Add("Recruitment state is missing.");
+                return result;
+            }
+
+            if (state.Survivors.Count >= state.SurvivorCap)
+            {
+                result.Errors.Add("Survivor cap reached.");
+            }
+
+            if (!HasRequiredBuilding(state, config))
+            {
+                result.Errors.Add("Radio tower is not ready.");
+            }
+
+            if (string.IsNullOrWhiteSpace(candidateId))
+            {
+                result.Errors.Add("Select a survivor signal.");
+                return result;
+            }
+
+            var recruitment = EnsureRecruitmentState(state);
+            if (!recruitment.PendingCandidateIds.Contains(candidateId))
+            {
+                result.Errors.Add("Selected survivor signal is unavailable.");
+                return result;
+            }
+
+            RecruitableSurvivorDefinition candidate;
+            if (!config.RecruitableSurvivors.TryGetValue(candidateId, out candidate) || IsAlreadyRecruited(state, candidate))
+            {
+                result.Errors.Add("Selected survivor signal is unavailable.");
+            }
+
+            return result;
+        }
+
+        public static BroadcastRecruitmentResult Broadcast(GameState state, GameConfigSnapshot config, BroadcastRecruitmentRequest request)
+        {
+            request = request ?? new BroadcastRecruitmentRequest();
             var validation = ValidateBroadcast(state, config);
-            var result = new RecruitSurvivorResult
+            var result = new BroadcastRecruitmentResult
             {
                 Validation = validation,
                 Cost = CalculateCost(state, config)
             };
+
             if (!validation.IsValid)
             {
                 return result;
             }
 
-            var candidate = PickCandidate(state, config, request.Seed);
-            if (candidate == null)
+            var candidates = PickCandidates(state, config, request.Seed, config.Balance.RecruitmentCandidateCount);
+            if (candidates.Count == 0)
             {
                 result.Validation.Errors.Add("No survivor signals available.");
                 return result;
             }
 
             ResourceSystem.TrySpend(state, result.Cost);
+            var recruitment = EnsureRecruitmentState(state);
+            recruitment.PendingCandidateIds.Clear();
+            recruitment.LastBroadcastAtUnixMs = request.NowUnixMs;
+            foreach (var candidate in candidates)
+            {
+                recruitment.PendingCandidateIds.Add(candidate.Id);
+                result.CandidateIds.Add(candidate.Id);
+            }
+
+            return result;
+        }
+
+        public static SkipRecruitmentCandidatesResult SkipCandidates(GameState state)
+        {
+            var result = new SkipRecruitmentCandidatesResult();
+            if (state == null)
+            {
+                result.Validation.Errors.Add("Recruitment state is missing.");
+                return result;
+            }
+
+            var recruitment = EnsureRecruitmentState(state);
+            if (recruitment.PendingCandidateIds.Count == 0)
+            {
+                result.Validation.Errors.Add("No survivor signals available.");
+                return result;
+            }
+
+            result.SkippedCandidateIds.AddRange(recruitment.PendingCandidateIds);
+            recruitment.PendingCandidateIds.Clear();
+            return result;
+        }
+
+        public static RecruitSurvivorResult Recruit(GameState state, GameConfigSnapshot config, RecruitSurvivorRequest request)
+        {
+            request = request ?? new RecruitSurvivorRequest();
+            var validation = ValidateRecruitSelection(state, config, request.CandidateId);
+            var result = new RecruitSurvivorResult
+            {
+                Validation = validation
+            };
+
+            RecruitableSurvivorDefinition candidate = null;
+            if (state != null && config != null)
+            {
+                candidate = ResolveCandidate(state, config, request.CandidateId);
+            }
+
+            if (!validation.IsValid)
+            {
+                return result;
+            }
+
+            if (candidate == null)
+            {
+                return result;
+            }
+
             var weapon = GameStateFactory.CreateItemState(candidate.WeaponItemId, config, "item_" + state.NextId++);
             var survivor = GameStateFactory.CreateSurvivorState(
                 "survivor_" + state.NextId++,
@@ -334,6 +556,8 @@ namespace AshfallCamp.Domain
             state.Inventory.Add(weapon);
             state.Survivors.Add(survivor);
             state.Statistics.SurvivorsRecruited++;
+            AddRecruitmentEvent(state, survivor, request);
+            EnsureRecruitmentState(state).PendingCandidateIds.Clear();
 
             result.Survivor = survivor;
             result.Weapon = weapon;
@@ -355,13 +579,31 @@ namespace AshfallCamp.Domain
 
         public static int CountAvailableCandidates(GameState state, GameConfigSnapshot config)
         {
+            if (state == null || config == null) return 0;
             var count = 0;
             foreach (var candidate in config.RecruitableSurvivors.Values)
             {
-                if (!IsAlreadyRecruited(state, candidate)) count++;
+                if (!IsAlreadyRecruited(state, candidate) && !IsPendingCandidate(state, candidate.Id)) count++;
             }
 
             return count;
+        }
+
+        public static List<string> GetPendingCandidateIds(GameState state)
+        {
+            var result = new List<string>();
+            if (state == null) return result;
+
+            result.AddRange(EnsureRecruitmentState(state).PendingCandidateIds);
+            return result;
+        }
+
+        public static bool HasPendingCandidates(GameState state)
+        {
+            return state != null &&
+                   state.Recruitment != null &&
+                   state.Recruitment.PendingCandidateIds != null &&
+                   state.Recruitment.PendingCandidateIds.Count > 0;
         }
 
         private static void AddCost(Dictionary<string, int> cost, string resourceId, int amount)
@@ -381,24 +623,64 @@ namespace AshfallCamp.Domain
                    building.Level >= config.Balance.RecruitmentRequiredBuildingLevel;
         }
 
-        private static RecruitableSurvivorDefinition PickCandidate(GameState state, GameConfigSnapshot config, uint seed)
+        private static List<RecruitableSurvivorDefinition> PickCandidates(GameState state, GameConfigSnapshot config, uint seed, int count)
         {
             var candidates = new List<RecruitableSurvivorDefinition>();
             foreach (var candidate in config.RecruitableSurvivors.Values)
             {
-                if (!IsAlreadyRecruited(state, candidate))
+                if (!IsAlreadyRecruited(state, candidate) && !IsPendingCandidate(state, candidate.Id))
                 {
                     candidates.Add(candidate);
                 }
             }
 
-            if (candidates.Count == 0) return null;
+            candidates.Sort((left, right) => string.CompareOrdinal(left.Id, right.Id));
+            var selected = new List<RecruitableSurvivorDefinition>();
+            if (candidates.Count == 0) return selected;
+
             var rng = new SeededRandom(seed == 0 ? (uint)Math.Max(1, state.NextId) * 2654435761u : seed);
-            return candidates[rng.RangeInclusive(0, candidates.Count - 1)];
+            var targetCount = Math.Min(Math.Max(1, count), candidates.Count);
+            while (selected.Count < targetCount)
+            {
+                var index = rng.RangeInclusive(0, candidates.Count - 1);
+                selected.Add(candidates[index]);
+                candidates.RemoveAt(index);
+            }
+
+            return selected;
+        }
+
+        private static RecruitableSurvivorDefinition ResolveCandidate(GameState state, GameConfigSnapshot config, string candidateId)
+        {
+            if (string.IsNullOrWhiteSpace(candidateId)) return null;
+            if (!EnsureRecruitmentState(state).PendingCandidateIds.Contains(candidateId)) return null;
+
+            RecruitableSurvivorDefinition candidate;
+            if (!config.RecruitableSurvivors.TryGetValue(candidateId, out candidate)) return null;
+            return IsAlreadyRecruited(state, candidate) ? null : candidate;
+        }
+
+        private static void AddRecruitmentEvent(GameState state, SurvivorState survivor, RecruitSurvivorRequest request)
+        {
+            state.CampEvents.Add(new CampEventState
+            {
+                Id = "event_" + state.NextId++,
+                EventId = GameEventIds.SurvivorJoined,
+                SubjectId = survivor.Id,
+                SubjectName = survivor.Name,
+                DetailId = survivor.BackgroundId,
+                AtUnixMs = request.NowUnixMs
+            });
+
+            while (state.CampEvents.Count > 50)
+            {
+                state.CampEvents.RemoveAt(0);
+            }
         }
 
         private static bool IsAlreadyRecruited(GameState state, RecruitableSurvivorDefinition candidate)
         {
+            if (state == null || candidate == null) return false;
             foreach (var survivor in state.Survivors)
             {
                 if (string.Equals(survivor.Name, candidate.Name, StringComparison.Ordinal))
@@ -408,6 +690,30 @@ namespace AshfallCamp.Domain
             }
 
             return false;
+        }
+
+        private static bool IsPendingCandidate(GameState state, string candidateId)
+        {
+            return !string.IsNullOrWhiteSpace(candidateId) &&
+                   state != null &&
+                   state.Recruitment != null &&
+                   state.Recruitment.PendingCandidateIds != null &&
+                   state.Recruitment.PendingCandidateIds.Contains(candidateId);
+        }
+
+        private static RecruitmentState EnsureRecruitmentState(GameState state)
+        {
+            if (state.Recruitment == null)
+            {
+                state.Recruitment = new RecruitmentState();
+            }
+
+            if (state.Recruitment.PendingCandidateIds == null)
+            {
+                state.Recruitment.PendingCandidateIds = new List<string>();
+            }
+
+            return state.Recruitment;
         }
     }
 
@@ -710,6 +1016,7 @@ namespace AshfallCamp.Domain
             building.Level = nextLevel.Level;
             ApplyAllBuildingEffects(state, config);
             UnlockSystem.RefreshZoneUnlocks(state, config);
+            ProgressionSystem.RefreshDemoCompletion(state, config);
             result.Building = building;
             return result;
         }
@@ -840,12 +1147,12 @@ namespace AshfallCamp.Domain
                 var unlocked = true;
                 foreach (var condition in zone.UnlockConditions)
                 {
-                    if (condition.Type == "zone_completions")
+                    if (condition.Type == GameConditionTypes.ZoneCompletions)
                     {
                         ZoneState requiredZone;
                         if (!state.Zones.TryGetValue(condition.Id, out requiredZone) || requiredZone.Completions < condition.Value) unlocked = false;
                     }
-                    else if (condition.Type == "building_level")
+                    else if (condition.Type == GameConditionTypes.BuildingLevel)
                     {
                         BuildingState building;
                         if (!state.Buildings.TryGetValue(condition.Id, out building) || building.Level < condition.Value) unlocked = false;
@@ -861,6 +1168,120 @@ namespace AshfallCamp.Domain
                     zoneState.IsUnlocked = true;
                 }
             }
+        }
+    }
+
+    public static class ProgressionSystem
+    {
+        public static bool RefreshDemoCompletion(GameState state, GameConfigSnapshot config, long nowUnixMs = 0)
+        {
+            if (state == null || config == null || config.Balance == null) return false;
+            if (state.Progress == null) state.Progress = new GameProgressState();
+            if (state.Progress.DemoCompleted) return false;
+            if (config.Balance.DemoCompletionConditions == null || config.Balance.DemoCompletionConditions.Count == 0) return false;
+
+            UnlockCondition completedCondition;
+            if (!AreCompletionConditionsMet(state, config.Balance, out completedCondition)) return false;
+
+            state.Progress.DemoCompleted = true;
+            state.Progress.DemoCompletionId = FormatCompletionId(completedCondition);
+            state.Progress.DemoCompletedAtUnixMs = Math.Max(0, nowUnixMs);
+            AddDemoCompletedEvent(state, state.Progress.DemoCompletionId, nowUnixMs);
+            return true;
+        }
+
+        private static bool AreCompletionConditionsMet(GameState state, BalanceDefinition balance, out UnlockCondition completedCondition)
+        {
+            completedCondition = null;
+            if (balance.DemoCompletionRequiresAnyCondition)
+            {
+                foreach (var condition in balance.DemoCompletionConditions)
+                {
+                    if (!IsConditionMet(state, condition)) continue;
+                    completedCondition = condition;
+                    return true;
+                }
+
+                return false;
+            }
+
+            foreach (var condition in balance.DemoCompletionConditions)
+            {
+                if (IsConditionMet(state, condition))
+                {
+                    completedCondition = condition;
+                    continue;
+                }
+
+                completedCondition = condition;
+                return false;
+            }
+
+            return completedCondition != null;
+        }
+
+        private static bool IsConditionMet(GameState state, UnlockCondition condition)
+        {
+            if (state == null || condition == null || string.IsNullOrWhiteSpace(condition.Type)) return false;
+            if (string.Equals(condition.Type, GameConditionTypes.ZoneCompletions, StringComparison.Ordinal))
+            {
+                ZoneState zone;
+                return state.Zones.TryGetValue(condition.Id, out zone) && zone.Completions >= Math.Max(1, condition.Value);
+            }
+
+            if (string.Equals(condition.Type, GameConditionTypes.ZoneUnlocked, StringComparison.Ordinal))
+            {
+                ZoneState zone;
+                return state.Zones.TryGetValue(condition.Id, out zone) && zone.IsUnlocked;
+            }
+
+            if (string.Equals(condition.Type, GameConditionTypes.BuildingLevel, StringComparison.Ordinal))
+            {
+                BuildingState building;
+                return state.Buildings.TryGetValue(condition.Id, out building) && building.Level >= Math.Max(1, condition.Value);
+            }
+
+            if (string.Equals(condition.Type, GameConditionTypes.SurvivorCount, StringComparison.Ordinal))
+            {
+                return state.Survivors.Count >= Math.Max(1, condition.Value);
+            }
+
+            if (string.Equals(condition.Type, GameConditionTypes.ResourceAmount, StringComparison.Ordinal))
+            {
+                int amount;
+                return state.Resources.TryGetValue(condition.Id, out amount) && amount >= Math.Max(1, condition.Value);
+            }
+
+            if (string.Equals(condition.Type, GameConditionTypes.ExpeditionsCompleted, StringComparison.Ordinal))
+            {
+                return state.Statistics.ExpeditionsCompleted >= Math.Max(1, condition.Value);
+            }
+
+            return false;
+        }
+
+        private static string FormatCompletionId(UnlockCondition condition)
+        {
+            if (condition == null) return string.Empty;
+            return condition.Type + ":" + condition.Id;
+        }
+
+        private static void AddDemoCompletedEvent(GameState state, string completionId, long nowUnixMs)
+        {
+            foreach (var campEvent in state.CampEvents)
+            {
+                if (campEvent != null && string.Equals(campEvent.EventId, GameEventIds.DemoCompleted, StringComparison.Ordinal)) return;
+            }
+
+            state.CampEvents.Add(new CampEventState
+            {
+                Id = "event_" + state.NextId++,
+                EventId = GameEventIds.DemoCompleted,
+                SubjectId = completionId ?? string.Empty,
+                SubjectName = completionId ?? string.Empty,
+                DetailId = completionId ?? string.Empty,
+                AtUnixMs = Math.Max(0, nowUnixMs)
+            });
         }
     }
 
@@ -1232,11 +1653,88 @@ namespace AshfallCamp.Domain
                 wound.RemainingSeconds = Math.Max(0, wound.RemainingSeconds - dt);
                 if (wound.RemainingSeconds <= 0)
                 {
-                    RemoveWoundEffect(survivor, config.Balance.HealingDefaultWoundId);
-                    survivor.Health = Math.Max(1, survivor.MaxHealth);
-                    survivor.State = SurvivorActivityState.Idle;
+                    CompleteWoundTreatment(survivor, config);
                 }
             }
+        }
+
+        public static ValidationResult ValidateUseMedicine(GameState state, GameConfigSnapshot config, UseMedicineRequest request)
+        {
+            var result = new ValidationResult();
+            if (state == null || config == null || request == null)
+            {
+                result.Errors.Add("Healing state is missing.");
+                return result;
+            }
+
+            if (!IsHealingUnlocked(state, config))
+            {
+                result.Errors.Add("Infirmary is not ready.");
+            }
+
+            var survivor = ExpeditionValidator.FindSurvivor(state, request.SurvivorId);
+            if (survivor == null)
+            {
+                result.Errors.Add("Survivor is missing.");
+                return result;
+            }
+
+            if (survivor.State != SurvivorActivityState.Wounded || FindStatusEffect(survivor, config.Balance.HealingDefaultWoundId) == null)
+            {
+                result.Errors.Add("Survivor has no treatable wound.");
+            }
+
+            if (!ResourceSystem.CanSpend(state, CalculateMedicineCost(config)))
+            {
+                result.Errors.Add("Not enough medicine.");
+            }
+
+            return result;
+        }
+
+        public static UseMedicineResult UseMedicine(GameState state, GameConfigSnapshot config, UseMedicineRequest request)
+        {
+            var result = new UseMedicineResult
+            {
+                Validation = ValidateUseMedicine(state, config, request),
+                Cost = CalculateMedicineCost(config)
+            };
+
+            if (!result.Validation.IsValid)
+            {
+                return result;
+            }
+
+            var survivor = ExpeditionValidator.FindSurvivor(state, request.SurvivorId);
+            var wound = FindStatusEffect(survivor, config.Balance.HealingDefaultWoundId);
+            if (survivor == null || wound == null)
+            {
+                result.Validation.Errors.Add("Survivor has no treatable wound.");
+                return result;
+            }
+
+            ResourceSystem.TrySpend(state, result.Cost);
+            wound.RemainingSeconds = Math.Max(0, wound.RemainingSeconds - Math.Max(0, config.Balance.HealingMedicineSeconds));
+            if (wound.RemainingSeconds <= 0)
+            {
+                CompleteWoundTreatment(survivor, config);
+                result.Healed = true;
+            }
+
+            result.Survivor = survivor;
+            return result;
+        }
+
+        public static Dictionary<string, int> CalculateMedicineCost(GameConfigSnapshot config)
+        {
+            var cost = new Dictionary<string, int>(StringComparer.Ordinal);
+            if (config == null) return cost;
+            if (!string.IsNullOrWhiteSpace(config.Balance.HealingMedicineResourceId) && config.Balance.HealingMedicineCost > 0)
+            {
+                cost[config.Balance.HealingMedicineResourceId] = config.Balance.HealingMedicineCost;
+            }
+
+            return cost;
         }
 
         public static bool IsHealingUnlocked(GameState state, GameConfigSnapshot config)
@@ -1284,6 +1782,13 @@ namespace AshfallCamp.Domain
             }
 
             return null;
+        }
+
+        private static void CompleteWoundTreatment(SurvivorState survivor, GameConfigSnapshot config)
+        {
+            RemoveWoundEffect(survivor, config.Balance.HealingDefaultWoundId);
+            survivor.Health = Math.Max(1, survivor.MaxHealth);
+            survivor.State = SurvivorActivityState.Idle;
         }
 
         private static void RemoveWoundEffect(SurvivorState survivor, string effectId)
@@ -1430,6 +1935,7 @@ namespace AshfallCamp.Domain
 
             UnlockSystem.RefreshZoneUnlocks(state, config);
             state.Statistics.ExpeditionsCompleted++;
+            ProgressionSystem.RefreshDemoCompletion(state, config);
         }
 
         private static void Fail(GameState state, GameConfigSnapshot config, ExpeditionState expedition)
