@@ -13,6 +13,8 @@ namespace AshfallCamp.Tests.EditMode
             var config = TestConfigFactory.Create();
             var state = GameStateFactory.CreateNew(config, 0);
             var catalog = CreateCatalog();
+            var portrait = new Texture2D(1, 1);
+            catalog.SurvivorPortraits.Add(new SurvivorPortraitUiEntry { Id = "survivor_1", Portrait = portrait });
 
             var cards = CampDashboardTextFormatter.BuildSurvivorCards(state, catalog);
             var detail = CampDashboardTextFormatter.BuildSurvivorDetail(state.Survivors[0], state, config, catalog);
@@ -21,9 +23,11 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("survivor_1", cards[0].SurvivorId);
             Assert.AreEqual("Mara", cards[0].Name);
             Assert.AreEqual("M", cards[0].Avatar);
+            Assert.AreSame(portrait, cards[0].Portrait);
             Assert.AreEqual("Idle * 1", cards[0].State);
             Assert.AreEqual("SCAV 7", cards[0].Skill);
             Assert.AreEqual("Mara L1", detail.Title);
+            Assert.AreSame(portrait, detail.Portrait);
             Assert.That(detail.Background, Does.Contain("Scavenger"));
             Assert.That(detail.Traits, Does.Contain("Careful"));
             Assert.That(detail.Weapon, Does.Contain("Rusty Knife"));
@@ -33,6 +37,33 @@ namespace AshfallCamp.Tests.EditMode
             Assert.That(detail.Stats, Does.Contain("HP 30/30"));
 
             Object.DestroyImmediate(catalog);
+            Object.DestroyImmediate(portrait);
+        }
+
+        [Test]
+        public void SurvivorPortraitFallsBackToBackgroundThenDefault()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            var catalog = CreateCatalog();
+            var backgroundPortrait = new Texture2D(1, 1);
+            var defaultPortrait = new Texture2D(1, 1);
+            catalog.DefaultSurvivorPortraitId = "default";
+            catalog.SurvivorPortraits.Add(new SurvivorPortraitUiEntry { Id = "default", Portrait = defaultPortrait });
+            catalog.SurvivorPortraits.Add(new SurvivorPortraitUiEntry { Id = "scavenger", Portrait = backgroundPortrait });
+
+            var cards = CampDashboardTextFormatter.BuildSurvivorCards(state, catalog);
+
+            Assert.AreSame(backgroundPortrait, cards[0].Portrait);
+
+            state.Survivors[0].BackgroundId = "unknown_background";
+            cards = CampDashboardTextFormatter.BuildSurvivorCards(state, catalog);
+
+            Assert.AreSame(defaultPortrait, cards[0].Portrait);
+
+            Object.DestroyImmediate(catalog);
+            Object.DestroyImmediate(backgroundPortrait);
+            Object.DestroyImmediate(defaultPortrait);
         }
 
         [Test]

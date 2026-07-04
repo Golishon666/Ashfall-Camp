@@ -8,6 +8,8 @@
     "AshfallCamp.Composition",
     "AshfallCamp.Presentation",
     "UniTask",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner"
   ],

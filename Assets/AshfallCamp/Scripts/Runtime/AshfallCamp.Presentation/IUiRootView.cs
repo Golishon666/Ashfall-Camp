@@ -18,7 +18,10 @@ namespace AshfallCamp.Presentation
         event Action<UseMedicineRequest> UseMedicineRequested;
         event Action EmergencyScavengeRequested;
         event Action<bool> AutosaveChanged;
+        event Action ManualSaveRequested;
         void Render(GameState state, GameConfigSnapshot config);
+        void OpenReports();
+        void ShowToast(CampToastRequest request);
     }
 
     public sealed class ExpeditionLaunchViewRequest
@@ -62,6 +65,71 @@ namespace AshfallCamp.Presentation
         public RecruitSurvivorViewRequest(string candidateId)
         {
             CandidateId = candidateId ?? string.Empty;
+        }
+    }
+
+    public sealed class CampToastRequest
+    {
+        public readonly string Id;
+        public readonly List<string> Args = new List<string>();
+
+        public CampToastRequest(string id, params string[] args)
+        {
+            Id = id ?? string.Empty;
+            if (args == null) return;
+
+            foreach (var arg in args)
+            {
+                Args.Add(arg ?? string.Empty);
+            }
+        }
+    }
+
+    public static class CampToastIds
+    {
+        public const string ActionBlocked = "action_blocked";
+        public const string NoIdleSurvivors = "no_idle_survivors";
+        public const string BuildingUpgraded = "building_upgraded";
+        public const string ExpeditionLaunched = "expedition_launched";
+        public const string ExpeditionCompleted = "expedition_completed";
+        public const string ExpeditionFailed = "expedition_failed";
+        public const string OfflineReportReady = "offline_report_ready";
+        public const string RecruitmentBroadcast = "recruitment_broadcast";
+        public const string RecruitmentSkipped = "recruitment_skipped";
+        public const string SurvivorRecruited = "survivor_recruited";
+        public const string ItemRepaired = "item_repaired";
+        public const string ItemEquipped = "item_equipped";
+        public const string MedicineUsed = "medicine_used";
+        public const string EmergencyScavengeStarted = "emergency_scavenge_started";
+        public const string AutosaveEnabled = "autosave_enabled";
+        public const string AutosaveDisabled = "autosave_disabled";
+        public const string ManualSaved = "manual_saved";
+
+        public static string[] Required
+        {
+            get
+            {
+                return new[]
+                {
+                    ActionBlocked,
+                    NoIdleSurvivors,
+                    BuildingUpgraded,
+                    ExpeditionLaunched,
+                    ExpeditionCompleted,
+                    ExpeditionFailed,
+                    OfflineReportReady,
+                    RecruitmentBroadcast,
+                    RecruitmentSkipped,
+                    SurvivorRecruited,
+                    ItemRepaired,
+                    ItemEquipped,
+                    MedicineUsed,
+                    EmergencyScavengeStarted,
+                    AutosaveEnabled,
+                    AutosaveDisabled,
+                    ManualSaved
+                };
+            }
         }
     }
 }

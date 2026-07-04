@@ -12,8 +12,10 @@ namespace AshfallCamp.Presentation
     public sealed class RadioPanelView : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI title;
+        [SerializeField] private RawImage intelPanelArtwork;
         [SerializeField] private TextMeshProUGUI intelTitle;
         [SerializeField] private TextMeshProUGUI intelBody;
+        [SerializeField] private RawImage broadcastPanelArtwork;
         [SerializeField] private TextMeshProUGUI broadcastTitle;
         [SerializeField] private TextMeshProUGUI broadcastCost;
         [SerializeField] private TextMeshProUGUI broadcastStatus;
@@ -21,6 +23,7 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI broadcastButtonLabel;
         [SerializeField] private TextMeshProUGUI candidateListTitle;
         [SerializeField] private Image emptyPanel;
+        [SerializeField] private RawImage emptyPanelArtwork;
         [SerializeField] private TextMeshProUGUI emptyTitle;
         [SerializeField] private TextMeshProUGUI emptyBody;
         [SerializeField] private List<CandidateCardBinding> candidateCards = new List<CandidateCardBinding>();
@@ -44,11 +47,24 @@ namespace AshfallCamp.Presentation
             Image emptyStatePanel,
             TextMeshProUGUI emptyStateTitle,
             TextMeshProUGUI emptyStateBody,
-            IEnumerable<CandidateCardBinding> cards)
+            IEnumerable<CandidateCardBinding> cards,
+            RawImage intelArtwork = null,
+            RawImage broadcastArtwork = null,
+            RawImage emptyStateArtwork = null)
         {
             title = titleLabel;
+            if (intelArtwork != null)
+            {
+                intelPanelArtwork = intelArtwork;
+            }
+
             intelTitle = intelTitleLabel;
             intelBody = intelBodyLabel;
+            if (broadcastArtwork != null)
+            {
+                broadcastPanelArtwork = broadcastArtwork;
+            }
+
             broadcastTitle = broadcastTitleLabel;
             broadcastCost = broadcastCostLabel;
             broadcastStatus = broadcastStatusLabel;
@@ -56,6 +72,11 @@ namespace AshfallCamp.Presentation
             broadcastButtonLabel = broadcastActionLabel;
             candidateListTitle = candidatesTitleLabel;
             emptyPanel = emptyStatePanel;
+            if (emptyStateArtwork != null)
+            {
+                emptyPanelArtwork = emptyStateArtwork;
+            }
+
             emptyTitle = emptyStateTitle;
             emptyBody = emptyStateBody;
             candidateCards.Clear();
@@ -107,6 +128,8 @@ namespace AshfallCamp.Presentation
             if (state == null || config == null || catalog == null) return;
 
             var radio = CampDashboardTextFormatter.BuildRadioScreen(state, config, catalog);
+            ApplyArtwork(intelPanelArtwork, catalog.RadioIntelPanelTexture);
+            ApplyArtwork(broadcastPanelArtwork, catalog.RadioBroadcastPanelTexture);
             UiText.Set(title, radio.Title);
             UiText.Set(intelTitle, radio.IntelTitle);
             UiText.Set(intelBody, radio.IntelBody);
@@ -133,6 +156,7 @@ namespace AshfallCamp.Presentation
 
             var hasCandidates = radio.Candidates.Count > 0;
             UiText.SetActive(emptyPanel, !hasCandidates);
+            ApplyArtwork(emptyPanelArtwork, hasCandidates ? null : catalog.RadioEmptyPanelTexture);
             for (var i = 0; i < candidateCards.Count; i++)
             {
                 candidateCards[i].Render(i < radio.Candidates.Count ? radio.Candidates[i] : null, catalog);
@@ -190,6 +214,8 @@ namespace AshfallCamp.Presentation
         public sealed class CandidateCardBinding
         {
             [SerializeField] private Image panel;
+            [SerializeField] private RawImage cardArtwork;
+            [SerializeField] private RawImage portrait;
             [SerializeField] private TextMeshProUGUI avatarLabel;
             [SerializeField] private TextMeshProUGUI nameLabel;
             [SerializeField] private TextMeshProUGUI metaLabel;
@@ -215,8 +241,23 @@ namespace AshfallCamp.Presentation
                 TextMeshProUGUI traitsLabel,
                 Button recruitButton,
                 TextMeshProUGUI recruitButtonLabel)
+                : this(panel, null, avatarLabel, nameLabel, metaLabel, skillLabel, traitsLabel, recruitButton, recruitButtonLabel)
+            {
+            }
+
+            public CandidateCardBinding(
+                Image panel,
+                RawImage portrait,
+                TextMeshProUGUI avatarLabel,
+                TextMeshProUGUI nameLabel,
+                TextMeshProUGUI metaLabel,
+                TextMeshProUGUI skillLabel,
+                TextMeshProUGUI traitsLabel,
+                Button recruitButton,
+                TextMeshProUGUI recruitButtonLabel)
             {
                 this.panel = panel;
+                this.portrait = portrait;
                 this.avatarLabel = avatarLabel;
                 this.nameLabel = nameLabel;
                 this.metaLabel = metaLabel;
@@ -250,8 +291,15 @@ namespace AshfallCamp.Presentation
                 _candidateId = candidate != null ? candidate.CandidateId : string.Empty;
                 UiText.SetActive(panel, candidate != null);
                 if (recruitButton != null) recruitButton.interactable = candidate != null && candidate.CanRecruit && _selected != null;
-                if (candidate == null) return;
+                if (candidate == null)
+                {
+                    ApplyArtwork(cardArtwork, null);
+                    return;
+                }
 
+                ApplyArtwork(cardArtwork, catalog.RadioCandidateCardTexture);
+                var hasPortrait = ApplyPortrait(portrait, candidate.Portrait);
+                UiText.SetActive(avatarLabel, !hasPortrait);
                 UiText.Set(avatarLabel, candidate.Avatar);
                 UiText.Set(nameLabel, candidate.Name);
                 UiText.Set(metaLabel, candidate.Meta);
@@ -261,7 +309,7 @@ namespace AshfallCamp.Presentation
 
                 if (panel != null)
                 {
-                    panel.color = new Color(catalog.Theme.PaperDark.r, catalog.Theme.PaperDark.g, catalog.Theme.PaperDark.b, 0.68f);
+                    panel.color = catalog.Theme.WithAlpha(catalog.Theme.PaperDark, catalog.Theme.RadioCandidatePanelAlpha);
                 }
 
                 if (avatarLabel != null) avatarLabel.color = catalog.Theme.Paper;
@@ -279,6 +327,36 @@ namespace AshfallCamp.Presentation
                     _selected?.Invoke(_candidateId);
                 }
             }
+
+            private static bool ApplyPortrait(RawImage target, Texture2D texture)
+            {
+                if (target == null) return false;
+
+                var hasPortrait = texture != null;
+                target.gameObject.SetActive(hasPortrait);
+                if (hasPortrait)
+                {
+                    target.texture = texture;
+                    target.color = Color.white;
+                }
+
+                return hasPortrait;
+            }
+        }
+
+        private static bool ApplyArtwork(RawImage target, Texture2D texture)
+        {
+            if (target == null) return false;
+
+            var hasTexture = texture != null;
+            target.gameObject.SetActive(hasTexture);
+            if (hasTexture)
+            {
+                target.texture = texture;
+                target.color = Color.white;
+            }
+
+            return hasTexture;
         }
     }
 }

@@ -38,10 +38,15 @@ namespace AshfallCamp.Presentation
                 if (!_lookup.TryGetValue(entry.Id, out binding)) continue;
 
                 UiText.Set(binding.Label, entry.Label);
-                if (binding.Icon != null && entry.Icon != null)
+                if (binding.Icon != null)
                 {
-                    binding.Icon.texture = entry.Icon;
-                    binding.Icon.color = Color.white;
+                    var hasIcon = entry.Icon != null;
+                    binding.Icon.gameObject.SetActive(hasIcon);
+                    if (hasIcon)
+                    {
+                        binding.Icon.texture = entry.Icon;
+                        binding.Icon.color = Color.white;
+                    }
                 }
 
                 UiText.Set(binding.Value, FormatResourceValue(state, config, entry));

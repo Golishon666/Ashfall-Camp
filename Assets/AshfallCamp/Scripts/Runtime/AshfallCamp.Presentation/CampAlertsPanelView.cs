@@ -53,7 +53,8 @@ namespace AshfallCamp.Presentation
                 if (!hasEntry) continue;
 
                 var tone = usesDynamicEntries ? dynamicAlerts[i].ToneColor : catalog.Alerts[i].ToneColor;
-                var panelColor = new Color(tone.r, tone.g, tone.b, 0.08f);
+                var panelColor = catalog.Theme.WithAlpha(tone, catalog.Theme.AlertPanelAlpha);
+                binding.ApplyArtwork(catalog.CampAlertCardTexture);
                 if (binding.Panel != null) binding.Panel.color = panelColor;
                 if (binding.Dot != null) binding.Dot.color = tone;
                 UiText.Set(binding.Title, usesDynamicEntries ? dynamicAlerts[i].Title : catalog.Alerts[i].Title);
@@ -66,6 +67,7 @@ namespace AshfallCamp.Presentation
         public sealed class AlertBinding
         {
             [SerializeField] private Image panel;
+            [SerializeField] private RawImage cardArtwork;
             [SerializeField] private Image dot;
             [SerializeField] private TextMeshProUGUI title;
             [SerializeField] private TextMeshProUGUI body;
@@ -93,6 +95,18 @@ namespace AshfallCamp.Presentation
             public TextMeshProUGUI Body { get { return body; } }
             public Button ActionButton { get { return actionButton; } }
             public TextMeshProUGUI ActionButtonLabel { get { return actionButtonLabel; } }
+
+            public void ApplyArtwork(Texture2D texture)
+            {
+                if (cardArtwork == null) return;
+
+                var hasTexture = texture != null;
+                cardArtwork.gameObject.SetActive(hasTexture);
+                if (!hasTexture) return;
+
+                cardArtwork.texture = texture;
+                cardArtwork.color = Color.white;
+            }
 
             public void SetAction(CampAlertPresentation presentation, Action emergencyScavengeRequested)
             {

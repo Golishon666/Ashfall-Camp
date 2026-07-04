@@ -46,6 +46,11 @@ namespace AshfallCamp.Composition
             builder.Register<TickGameUseCase>(Lifetime.Singleton).As<ITickGameUseCase>();
             builder.Register<OfflineProgressUseCase>(Lifetime.Singleton).As<IOfflineProgressUseCase>();
             builder.Register<SaveLoadUseCase>(Lifetime.Singleton).As<ISaveLoadUseCase>();
+            var lifecycleSaveAdapter = GetComponent<ApplicationLifecycleSaveAdapter>();
+            if (lifecycleSaveAdapter != null)
+            {
+                builder.RegisterBuildCallback(container => lifecycleSaveAdapter.Construct(container.Resolve<ISaveLoadUseCase>()));
+            }
 
             builder.RegisterEntryPoint<GameBootstrapper>();
             builder.RegisterEntryPoint<GameClockLoop>();

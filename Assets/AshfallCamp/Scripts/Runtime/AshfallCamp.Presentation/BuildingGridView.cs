@@ -96,7 +96,7 @@ namespace AshfallCamp.Presentation
                 {
                     binding.Panel.color = entry.IsActive
                         ? catalog.Theme.Teal
-                        : new Color(catalog.Theme.PaperDark.r, catalog.Theme.PaperDark.g, catalog.Theme.PaperDark.b, 0.55f);
+                        : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, catalog.Theme.BuildingFilterInactivePanelAlpha);
                 }
 
                 if (binding.Label != null)

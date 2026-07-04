@@ -52,12 +52,23 @@ namespace AshfallCamp.Presentation
                 {
                     binding.Panel.color = isActive
                         ? catalog.Theme.Teal
-                        : new Color(catalog.Theme.PaperDark.r, catalog.Theme.PaperDark.g, catalog.Theme.PaperDark.b, 0.38f);
+                        : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, catalog.Theme.NavInactivePanelAlpha);
                 }
 
                 if (binding.Label != null)
                 {
                     binding.Label.color = isActive ? catalog.Theme.Paper : catalog.Theme.Ink;
+                }
+
+                if (binding.Icon != null)
+                {
+                    var hasIcon = entry.Icon != null;
+                    binding.Icon.gameObject.SetActive(hasIcon);
+                    if (hasIcon)
+                    {
+                        binding.Icon.texture = entry.Icon;
+                        binding.Icon.color = isActive ? catalog.Theme.Paper : catalog.Theme.Ink;
+                    }
                 }
 
                 if (binding.Button != null)
@@ -98,6 +109,7 @@ namespace AshfallCamp.Presentation
             [SerializeField] private string id;
             [SerializeField] private Image panel;
             [SerializeField] private Button button;
+            [SerializeField] private RawImage icon;
             [SerializeField] private TextMeshProUGUI label;
 
             [NonSerialized] private UnityAction _cachedClick;
@@ -108,16 +120,23 @@ namespace AshfallCamp.Presentation
             }
 
             public NavBinding(string id, Image panel, Button button, TextMeshProUGUI label)
+                : this(id, panel, button, null, label)
+            {
+            }
+
+            public NavBinding(string id, Image panel, Button button, RawImage icon, TextMeshProUGUI label)
             {
                 this.id = id;
                 this.panel = panel;
                 this.button = button;
+                this.icon = icon;
                 this.label = label;
             }
 
             public string Id { get { return id; } }
             public Image Panel { get { return panel; } }
             public Button Button { get { return button; } }
+            public RawImage Icon { get { return icon; } }
             public TextMeshProUGUI Label { get { return label; } }
 
             public void Wire(Action<string> selectionRequested)

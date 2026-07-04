@@ -22,6 +22,7 @@ MonoBehaviour:
     WaterModifier: 1
     PowerModifier: 0.95
     NoiseModifier: -1
+    DurabilityModifier: -1
   - Id: balanced
     Name: Balanced
     RiskModifier: 1
@@ -31,6 +32,7 @@ MonoBehaviour:
     WaterModifier: 1
     PowerModifier: 1
     NoiseModifier: 0
+    DurabilityModifier: 0
   - Id: aggressive
     Name: Aggressive
     RiskModifier: 1.2
@@ -40,6 +42,7 @@ MonoBehaviour:
     WaterModifier: 1
     PowerModifier: 1.1
     NoiseModifier: 1
+    DurabilityModifier: 1
   - Id: loot_focused
     Name: Loot Focused
     RiskModifier: 1.15
@@ -49,6 +52,7 @@ MonoBehaviour:
     WaterModifier: 1
     PowerModifier: 0.95
     NoiseModifier: 1
+    DurabilityModifier: 1
   - Id: ammo_saving
     Name: Ammo Saving
     RiskModifier: 0.9
@@ -58,3 +62,4 @@ MonoBehaviour:
     WaterModifier: 1
     PowerModifier: 0.9
     NoiseModifier: -2
+    DurabilityModifier: -1

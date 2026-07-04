@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using AshfallCamp.Domain;
 using AshfallCamp.Presentation;
+using TMPro;
 using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace AshfallCamp.Tests.EditMode
 {
@@ -74,6 +77,9 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("Every 30s", enabled.AutosaveBody);
             Assert.AreEqual("On", enabled.AutosaveState);
             Assert.AreEqual("Autosave toggle", enabled.AutosaveToggleLabel);
+            Assert.AreEqual("Manual save", enabled.ManualSaveTitle);
+            Assert.AreEqual("Writes now", enabled.ManualSaveBody);
+            Assert.AreEqual("Save now", enabled.ManualSaveButton);
             Assert.IsTrue(enabled.AutosaveEnabled);
 
             Assert.AreEqual("Off body", disabled.AutosaveBody);
@@ -81,6 +87,589 @@ namespace AshfallCamp.Tests.EditMode
             Assert.IsFalse(disabled.AutosaveEnabled);
 
             Object.DestroyImmediate(catalog);
+        }
+
+        [Test]
+        public void SettingsPanelRaisesManualSaveRequest()
+        {
+            var root = new GameObject("SettingsPanel");
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            var catalog = CreateCatalog();
+
+            try
+            {
+                var view = root.AddComponent<SettingsPanelView>();
+                var title = CreateText("Title", root.transform);
+                var autosaveTitle = CreateText("AutosaveTitle", root.transform);
+                var autosaveBody = CreateText("AutosaveBody", root.transform);
+                var autosaveState = CreateText("AutosaveState", root.transform);
+                var autosaveToggle = CreateToggle("AutosaveToggle", root.transform);
+                var autosaveToggleLabel = CreateText("AutosaveToggleLabel", root.transform);
+                var manualSaveTitle = CreateText("ManualSaveTitle", root.transform);
+                var manualSaveBody = CreateText("ManualSaveBody", root.transform);
+                var manualSaveButton = CreateButton("ManualSaveButton", root.transform);
+                var manualSaveButtonLabel = CreateText("ManualSaveButtonLabel", manualSaveButton.transform);
+                var saveRequested = false;
+
+                view.ConfigureBindings(
+                    title,
+                    autosaveTitle,
+                    autosaveBody,
+                    autosaveState,
+                    autosaveToggle,
+                    autosaveToggleLabel,
+                    manualSaveTitle,
+                    manualSaveBody,
+                    manualSaveButton,
+                    manualSaveButtonLabel);
+                view.SetManualSaveHandler(() => saveRequested = true);
+
+                view.Render(state, config, catalog);
+                manualSaveButton.onClick.Invoke();
+
+                Assert.AreEqual("Manual save", manualSaveTitle.text);
+                Assert.AreEqual("Writes now", manualSaveBody.text);
+                Assert.AreEqual("Save now", manualSaveButtonLabel.text);
+                Assert.IsTrue(manualSaveButton.interactable);
+                Assert.IsTrue(saveRequested);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void ToastPanelFormatsCatalogMessageAndAppliesAccent()
+        {
+            var root = new GameObject("ToastPanel", typeof(RectTransform), typeof(CanvasGroup));
+            var catalog = ScriptableObject.CreateInstance<CampUiCatalogSO>();
+
+            try
+            {
+                var group = root.GetComponent<CanvasGroup>();
+                var accent = CreateImage("Accent", root.transform);
+                var title = CreateText("ToastTitle", root.transform);
+                var body = CreateText("ToastBody", root.transform);
+                var tone = new Color(0.2f, 0.4f, 0.6f, 1f);
+
+                catalog.Toast.Enabled = false;
+                catalog.ToastMessages.Add(new CampToastUiEntry
+                {
+                    Id = CampToastIds.ManualSaved,
+                    TitleFormat = "Saved {0}",
+                    BodyFormat = "Body {0}",
+                    ToneColor = tone
+                });
+
+                var view = root.AddComponent<ToastPanelView>();
+                view.ConfigureBindings(group, accent, title, body);
+
+                view.Show(new CampToastRequest(CampToastIds.ManualSaved, "Now"), catalog);
+
+                Assert.IsTrue(root.activeSelf);
+                Assert.AreEqual(1f, group.alpha);
+                Assert.AreEqual("Saved Now", title.text);
+                Assert.AreEqual("Body Now", body.text);
+                Assert.AreEqual(tone, accent.color);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void ProductionCatalogRoutesSettingsThroughBottomNavigation()
+        {
+            var catalog = AssetDatabase.LoadAssetAtPath<CampUiCatalogSO>("Assets/AshfallCamp/UI/CampUiCatalog.asset");
+
+            Assert.IsNotNull(catalog);
+
+            var settingsInNav = false;
+            foreach (var item in catalog.NavItems)
+            {
+                if (item != null && item.Id == "settings")
+                {
+                    settingsInNav = true;
+                    break;
+                }
+            }
+
+            var settingsInBuildingFilters = false;
+            foreach (var item in catalog.BuildingFilters)
+            {
+                if (item != null && item.Id == "settings")
+                {
+                    settingsInBuildingFilters = true;
+                    break;
+                }
+            }
+
+            Assert.IsTrue(settingsInNav);
+            Assert.IsFalse(settingsInBuildingFilters);
+        }
+
+        [Test]
+        public void BottomNavInactivePanelAlphaComesFromCatalogTheme()
+        {
+            var root = new GameObject("BottomNav");
+            var activePanel = new GameObject("ActivePanel", typeof(RectTransform), typeof(Image));
+            var inactivePanel = new GameObject("InactivePanel", typeof(RectTransform), typeof(Image));
+            var activeButton = activePanel.AddComponent<Button>();
+            var inactiveButton = inactivePanel.AddComponent<Button>();
+            var activeLabel = CreateText("ActiveLabel", activePanel.transform);
+            var inactiveLabel = CreateText("InactiveLabel", inactivePanel.transform);
+            var catalog = ScriptableObject.CreateInstance<CampUiCatalogSO>();
+
+            try
+            {
+                activePanel.transform.SetParent(root.transform, false);
+                inactivePanel.transform.SetParent(root.transform, false);
+
+                catalog.Theme.Teal = new Color(0.1f, 0.2f, 0.3f, 1f);
+                catalog.Theme.Paper = new Color(0.9f, 0.8f, 0.7f, 1f);
+                catalog.Theme.Ink = new Color(0.2f, 0.1f, 0.05f, 1f);
+                catalog.Theme.PaperDark = new Color(0.4f, 0.35f, 0.3f, 1f);
+                catalog.Theme.NavInactivePanelAlpha = 0.27f;
+                catalog.NavItems.Add(new NavUiEntry { Id = "active", Label = "ACTIVE", IsActive = true });
+                catalog.NavItems.Add(new NavUiEntry { Id = "inactive", Label = "INACTIVE" });
+
+                var view = root.AddComponent<BottomNavView>();
+                view.ConfigureBindings(new[]
+                {
+                    new BottomNavView.NavBinding("active", activePanel.GetComponent<Image>(), activeButton, activeLabel),
+                    new BottomNavView.NavBinding("inactive", inactivePanel.GetComponent<Image>(), inactiveButton, inactiveLabel)
+                });
+
+                view.Render(catalog, "active");
+
+                Assert.AreEqual("ACTIVE", activeLabel.text);
+                Assert.AreEqual("INACTIVE", inactiveLabel.text);
+                Assert.AreEqual(catalog.Theme.Teal, activePanel.GetComponent<Image>().color);
+                Assert.AreEqual(catalog.Theme.PaperDark.r, inactivePanel.GetComponent<Image>().color.r);
+                Assert.AreEqual(catalog.Theme.PaperDark.g, inactivePanel.GetComponent<Image>().color.g);
+                Assert.AreEqual(catalog.Theme.PaperDark.b, inactivePanel.GetComponent<Image>().color.b);
+                Assert.AreEqual(0.27f, inactivePanel.GetComponent<Image>().color.a);
+                Assert.IsFalse(activeButton.interactable);
+                Assert.IsTrue(inactiveButton.interactable);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void BuildingFilterInactivePanelAlphaComesFromCatalogTheme()
+        {
+            var root = new GameObject("BuildingGrid");
+            var activePanel = new GameObject("ActiveFilter", typeof(RectTransform), typeof(Image));
+            var inactivePanel = new GameObject("InactiveFilter", typeof(RectTransform), typeof(Image));
+            var title = CreateText("Title", root.transform);
+            var activeLabel = CreateText("ActiveFilterLabel", activePanel.transform);
+            var inactiveLabel = CreateText("InactiveFilterLabel", inactivePanel.transform);
+            var catalog = ScriptableObject.CreateInstance<CampUiCatalogSO>();
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+
+            try
+            {
+                activePanel.transform.SetParent(root.transform, false);
+                inactivePanel.transform.SetParent(root.transform, false);
+
+                catalog.BuildingScreenTitle = "BUILDINGS";
+                catalog.Theme.Teal = new Color(0.1f, 0.2f, 0.3f, 1f);
+                catalog.Theme.Paper = new Color(0.9f, 0.8f, 0.7f, 1f);
+                catalog.Theme.Ink = new Color(0.2f, 0.1f, 0.05f, 1f);
+                catalog.Theme.PaperDark = new Color(0.4f, 0.35f, 0.3f, 1f);
+                catalog.Theme.BuildingFilterInactivePanelAlpha = 0.42f;
+                catalog.BuildingFilters.Add(new FilterUiEntry { Id = "all", Label = "ALL", IsActive = true });
+                catalog.BuildingFilters.Add(new FilterUiEntry { Id = "support", Label = "SUPPORT" });
+
+                var view = root.AddComponent<BuildingGridView>();
+                view.ConfigureBindings(
+                    title,
+                    new[]
+                    {
+                        new BuildingGridView.FilterBinding("all", activePanel.GetComponent<Image>(), activeLabel),
+                        new BuildingGridView.FilterBinding("support", inactivePanel.GetComponent<Image>(), inactiveLabel)
+                    },
+                    new BuildingCardView[0]);
+
+                view.Render(state, config, catalog);
+
+                Assert.AreEqual("BUILDINGS", title.text);
+                Assert.AreEqual("ALL", activeLabel.text);
+                Assert.AreEqual("SUPPORT", inactiveLabel.text);
+                Assert.AreEqual(catalog.Theme.Teal, activePanel.GetComponent<Image>().color);
+                Assert.AreEqual(catalog.Theme.PaperDark.r, inactivePanel.GetComponent<Image>().color.r);
+                Assert.AreEqual(catalog.Theme.PaperDark.g, inactivePanel.GetComponent<Image>().color.g);
+                Assert.AreEqual(catalog.Theme.PaperDark.b, inactivePanel.GetComponent<Image>().color.b);
+                Assert.AreEqual(0.42f, inactivePanel.GetComponent<Image>().color.a);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void AlertPanelAlphaComesFromCatalogTheme()
+        {
+            var root = new GameObject("Alerts");
+            var panel = CreateImage("Panel", root.transform);
+            var dot = CreateImage("Dot", root.transform);
+            var title = CreateText("Title", root.transform);
+            var alertTitle = CreateText("AlertTitle", root.transform);
+            var alertBody = CreateText("AlertBody", root.transform);
+            var catalog = ScriptableObject.CreateInstance<CampUiCatalogSO>();
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+
+            try
+            {
+                catalog.RecentAlertsTitle = "ALERTS";
+                catalog.Theme.AlertPanelAlpha = 0.19f;
+                catalog.Alerts.Add(new AlertUiEntry
+                {
+                    Title = "Static",
+                    Body = "Ready",
+                    ToneColor = new Color(0.2f, 0.3f, 0.4f, 1f)
+                });
+
+                var view = root.AddComponent<CampAlertsPanelView>();
+                view.ConfigureBindings(title, new[]
+                {
+                    new CampAlertsPanelView.AlertBinding(panel, dot, alertTitle, alertBody)
+                });
+
+                view.Render(state, config, catalog);
+
+                Assert.AreEqual("ALERTS", title.text);
+                Assert.AreEqual(0.19f, panel.color.a, 0.0001f);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void ExpeditionCardAlphasComeFromCatalogTheme()
+        {
+            var root = new GameObject("ExpeditionBindings");
+            var routeButton = CreateButton("Route", root.transform);
+            var squadButton = CreateButton("Squad", root.transform);
+            var policyButton = CreateButton("Policy", root.transform);
+            var catalog = ScriptableObject.CreateInstance<CampUiCatalogSO>();
+
+            try
+            {
+                catalog.Theme.Teal = new Color(0.1f, 0.2f, 0.3f, 1f);
+                catalog.Theme.Amber = new Color(0.7f, 0.5f, 0.2f, 1f);
+                catalog.Theme.PaperDark = new Color(0.4f, 0.35f, 0.3f, 1f);
+                catalog.Theme.ExpeditionRouteSelectedPanelAlpha = 0.21f;
+                catalog.Theme.ExpeditionRouteAvailablePanelAlpha = 0.22f;
+                catalog.Theme.ExpeditionRouteBlockedPanelAlpha = 0.23f;
+                catalog.Theme.ExpeditionSquadSelectedPanelAlpha = 0.31f;
+                catalog.Theme.ExpeditionSquadAvailablePanelAlpha = 0.32f;
+                catalog.Theme.ExpeditionSquadBlockedPanelAlpha = 0.33f;
+                catalog.Theme.ExpeditionPolicySelectedPanelAlpha = 0.41f;
+                catalog.Theme.ExpeditionPolicyInactivePanelAlpha = 0.42f;
+
+                var route = new ExpeditionsPanelView.RouteCardBinding(
+                    routeButton.GetComponent<Image>(),
+                    routeButton,
+                    CreateText("RouteTitle", routeButton.transform),
+                    CreateText("RouteSubtitle", routeButton.transform),
+                    CreateText("RouteStatus", routeButton.transform));
+                route.Render(new CampExpeditionRoutePresentation("zone", "Zone", "Open", "Ready", true, true, true), catalog);
+                Assert.AreEqual(0.21f, routeButton.GetComponent<Image>().color.a, 0.0001f);
+                route.Render(new CampExpeditionRoutePresentation("zone", "Zone", "Open", "Ready", true, true, false), catalog);
+                Assert.AreEqual(0.22f, routeButton.GetComponent<Image>().color.a, 0.0001f);
+                route.Render(new CampExpeditionRoutePresentation("zone", "Zone", "Locked", "No", false, false, false), catalog);
+                Assert.AreEqual(0.23f, routeButton.GetComponent<Image>().color.a, 0.0001f);
+
+                var mapNodeLabel = CreateText("MapNodeLabel", routeButton.transform);
+                var mapNode = new ExpeditionsPanelView.RouteMapNodeBinding(
+                    routeButton.GetComponent<Image>(),
+                    routeButton,
+                    mapNodeLabel);
+                mapNode.Render(new CampExpeditionRoutePresentation("store", "Store", "Open", "Ready", true, true, true), catalog);
+                Assert.AreEqual("Store", mapNodeLabel.text);
+                Assert.AreEqual(0.21f, routeButton.GetComponent<Image>().color.a, 0.0001f);
+                Assert.IsFalse(routeButton.interactable);
+                mapNode.Render(new CampExpeditionRoutePresentation("clinic", "Clinic", "Locked", "No", false, false, false), catalog);
+                Assert.AreEqual(0.23f, routeButton.GetComponent<Image>().color.a, 0.0001f);
+                Assert.IsFalse(routeButton.interactable);
+
+                var squad = new ExpeditionsPanelView.SquadMemberBinding(
+                    squadButton.GetComponent<Image>(),
+                    squadButton,
+                    CreateText("SquadTitle", squadButton.transform),
+                    CreateText("SquadMeta", squadButton.transform));
+                squad.Render(new CampExpeditionSquadMemberPresentation("survivor", "Mara", "Ready", true, true), catalog);
+                Assert.AreEqual(0.31f, squadButton.GetComponent<Image>().color.a, 0.0001f);
+                squad.Render(new CampExpeditionSquadMemberPresentation("survivor", "Mara", "Ready", false, true), catalog);
+                Assert.AreEqual(0.32f, squadButton.GetComponent<Image>().color.a, 0.0001f);
+                squad.Render(new CampExpeditionSquadMemberPresentation("survivor", "Mara", "Busy", false, false), catalog);
+                Assert.AreEqual(0.33f, squadButton.GetComponent<Image>().color.a, 0.0001f);
+
+                var policy = new ExpeditionsPanelView.PolicyBinding(
+                    policyButton.GetComponent<Image>(),
+                    policyButton,
+                    CreateText("PolicyTitle", policyButton.transform),
+                    CreateText("PolicyDetails", policyButton.transform));
+                policy.Render(new CampExpeditionPolicyPresentation("balanced", "Balanced", "Safe", true, true), catalog);
+                Assert.AreEqual(0.41f, policyButton.GetComponent<Image>().color.a, 0.0001f);
+                policy.Render(new CampExpeditionPolicyPresentation("balanced", "Balanced", "Safe", false, true), catalog);
+                Assert.AreEqual(0.42f, policyButton.GetComponent<Image>().color.a, 0.0001f);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void RepeatedCardAlphasComeFromCatalogTheme()
+        {
+            var root = new GameObject("RepeatedBindings");
+            var survivorButton = CreateButton("Survivor", root.transform);
+            var radioButton = CreateButton("Radio", root.transform);
+            var workshopPanel = CreateImage("Workshop", root.transform);
+            var workshopRepairButton = CreateButton("Repair", root.transform);
+            var workshopEquipButton = CreateButton("Equip", root.transform);
+            var catalog = ScriptableObject.CreateInstance<CampUiCatalogSO>();
+
+            try
+            {
+                catalog.Theme.Teal = new Color(0.1f, 0.2f, 0.3f, 1f);
+                catalog.Theme.PaperDark = new Color(0.4f, 0.35f, 0.3f, 1f);
+                catalog.Theme.SurvivorSelectedPanelAlpha = 0.51f;
+                catalog.Theme.SurvivorInactivePanelAlpha = 0.52f;
+                catalog.Theme.RadioCandidatePanelAlpha = 0.61f;
+                catalog.Theme.WorkshopItemPanelAlpha = 0.71f;
+                catalog.WorkshopItemDurabilityFormat = "{0}/{1}";
+                catalog.WorkshopRepairButton = "Repair";
+                catalog.WorkshopEquipButton = "Equip";
+
+                var survivor = new SurvivorsPanelView.SurvivorCardBinding(
+                    survivorButton.GetComponent<Image>(),
+                    survivorButton,
+                    CreateText("SurvivorAvatar", survivorButton.transform),
+                    CreateText("SurvivorName", survivorButton.transform),
+                    CreateText("SurvivorState", survivorButton.transform),
+                    CreateText("SurvivorSkill", survivorButton.transform));
+                survivor.Render(new CampSurvivorCardPresentation("survivor", "Mara", "M", "Idle", "Scav"), catalog, true);
+                Assert.AreEqual(0.51f, survivorButton.GetComponent<Image>().color.a, 0.0001f);
+                survivor.Render(new CampSurvivorCardPresentation("survivor", "Mara", "M", "Idle", "Scav"), catalog, false);
+                Assert.AreEqual(0.52f, survivorButton.GetComponent<Image>().color.a, 0.0001f);
+
+                var radio = new RadioPanelView.CandidateCardBinding(
+                    radioButton.GetComponent<Image>(),
+                    CreateText("Avatar", radioButton.transform),
+                    CreateText("Name", radioButton.transform),
+                    CreateText("Meta", radioButton.transform),
+                    CreateText("Skill", radioButton.transform),
+                    CreateText("Traits", radioButton.transform),
+                    radioButton,
+                    CreateText("Recruit", radioButton.transform));
+                radio.Render(new CampRadioCandidatePresentation("candidate", "Elias", "E", "Scout", "Surv", "Calm", "Recruit", true), catalog);
+                Assert.AreEqual(0.61f, radioButton.GetComponent<Image>().color.a, 0.0001f);
+
+                var workshop = new WorkshopPanelView.WorkshopItemBinding(
+                    workshopPanel,
+                    CreateText("ItemName", root.transform),
+                    CreateText("Durability", root.transform),
+                    CreateText("Equipped", root.transform),
+                    CreateText("Broken", root.transform),
+                    CreateText("RepairCost", root.transform),
+                    workshopRepairButton,
+                    CreateText("RepairLabel", workshopRepairButton.transform),
+                    workshopEquipButton,
+                    CreateText("EquipLabel", workshopEquipButton.transform));
+                workshop.Render(new CampWorkshopItemPresentation("item", "Knife", 2, 4, "Equipped", string.Empty, "Scrap x1", true, true), catalog, "survivor");
+                Assert.AreEqual(0.71f, workshopPanel.color.a, 0.0001f);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void WorkshopItemUsesCatalogTileArtworkAndKeepsFallback()
+        {
+            var root = new GameObject("WorkshopTileBinding");
+            var panel = CreateImage("WorkshopItem", root.transform);
+            var tileArtwork = CreateRawImage("WorkshopTileArtwork", panel.transform);
+            var repairButton = CreateButton("Repair", panel.transform);
+            var equipButton = CreateButton("Equip", panel.transform);
+            var catalog = ScriptableObject.CreateInstance<CampUiCatalogSO>();
+            var texture = new Texture2D(1, 1);
+
+            try
+            {
+                catalog.WorkshopItemTileTexture = texture;
+                catalog.WorkshopItemDurabilityFormat = "{0}/{1}";
+                catalog.WorkshopRepairButton = "Repair";
+                catalog.WorkshopEquipButton = "Equip";
+
+                var item = new WorkshopPanelView.WorkshopItemBinding(
+                    panel,
+                    tileArtwork,
+                    CreateText("ItemName", panel.transform),
+                    CreateText("Durability", panel.transform),
+                    CreateText("Equipped", panel.transform),
+                    CreateText("Broken", panel.transform),
+                    CreateText("RepairCost", panel.transform),
+                    repairButton,
+                    CreateText("RepairLabel", repairButton.transform),
+                    equipButton,
+                    CreateText("EquipLabel", equipButton.transform));
+
+                item.Render(new CampWorkshopItemPresentation("item", "Knife", 2, 4, "Equipped", string.Empty, "Scrap x1", true, true), catalog, "survivor");
+
+                Assert.AreSame(texture, tileArtwork.texture);
+                Assert.IsTrue(tileArtwork.gameObject.activeSelf);
+
+                catalog.WorkshopItemTileTexture = null;
+                item.Render(new CampWorkshopItemPresentation("item", "Knife", 2, 4, "Equipped", string.Empty, "Scrap x1", true, true), catalog, "survivor");
+
+                Assert.IsFalse(tileArtwork.gameObject.activeSelf);
+            }
+            finally
+            {
+                Object.DestroyImmediate(texture);
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void SurvivorCardUsesCatalogPortraitAndKeepsAvatarFallback()
+        {
+            var root = new GameObject("SurvivorPortraitBinding");
+            var survivorButton = CreateButton("Survivor", root.transform);
+            var portrait = CreateRawImage("SurvivorPortrait", survivorButton.transform);
+            var avatar = CreateText("SurvivorAvatar", survivorButton.transform);
+            var catalog = ScriptableObject.CreateInstance<CampUiCatalogSO>();
+            var texture = new Texture2D(1, 1);
+
+            try
+            {
+                var survivor = new SurvivorsPanelView.SurvivorCardBinding(
+                    survivorButton.GetComponent<Image>(),
+                    survivorButton,
+                    portrait,
+                    avatar,
+                    CreateText("SurvivorName", survivorButton.transform),
+                    CreateText("SurvivorState", survivorButton.transform),
+                    CreateText("SurvivorSkill", survivorButton.transform));
+
+                survivor.Render(new CampSurvivorCardPresentation("survivor", "Mara", "M", "Idle", "Scav", texture), catalog, false);
+
+                Assert.IsTrue(portrait.gameObject.activeSelf);
+                Assert.AreSame(texture, portrait.texture);
+                Assert.IsFalse(avatar.gameObject.activeSelf);
+
+                survivor.Render(new CampSurvivorCardPresentation("survivor", "Mara", "M", "Idle", "Scav"), catalog, false);
+
+                Assert.IsFalse(portrait.gameObject.activeSelf);
+                Assert.IsTrue(avatar.gameObject.activeSelf);
+                Assert.AreEqual("M", avatar.text);
+            }
+            finally
+            {
+                Object.DestroyImmediate(texture);
+                Object.DestroyImmediate(catalog);
+                Object.DestroyImmediate(root);
+            }
+        }
+
+        [Test]
+        public void RadioCandidateUsesCatalogPortraitAndKeepsAvatarFallback()
+        {
+            var root = new GameObject("RadioCandidatePortraitBinding");
+            var cardPanel = CreateImage("RadioCandidate", root.transform);
+            var recruitButton = CreateButton("Recruit", root.transform);
+            var portrait = CreateRawImage("RadioCandidatePortrait", cardPanel.transform);
+            var avatar = CreateText("RadioCandidateAvatar", cardPanel.transform);
+            var catalog = ScriptableObject.CreateInstance<CampUiCatalogSO>();
+            var texture = new Texture2D(1, 1);
+
+            try
+            {
+                var candidate = new RadioPanelView.CandidateCardBinding(
+                    cardPanel,
+                    portrait,
+                    avatar,
+                    CreateText("RadioCandidateName", cardPanel.transform),
+                    CreateText("RadioCandidateMeta", cardPanel.transform),
+                    CreateText("RadioCandidateSkill", cardPanel.transform),
+                    CreateText("RadioCandidateTraits", cardPanel.transform),
+                    recruitButton,
+                    CreateText("RecruitLabel", recruitButton.transform));
+
+                candidate.Render(new CampRadioCandidatePresentation("elias", "Elias", "E", "Ex-Cop", "FIRE 7", "Traits Brave", "Recruit", true, texture), catalog);
+
+                Assert.IsTrue(portrait.gameObject.activeSelf);
+                Assert.AreSame(texture, portrait.texture);
+                Assert.IsFalse(avatar.gameObject.activeSelf);
+
+                candidate.Render(new CampRadioCandidatePresentation("elias", "Elias", "E", "Ex-Cop", "FIRE 7", "Traits Brave", "Recruit", true), catalog);
+
+                Assert.IsFalse(portrait.gameObject.activeSelf);
+                Assert.IsTrue(avatar.gameObject.activeSelf);
+                Assert.AreEqual("E", avatar.text);
+            }
+            finally
+            {
+                Object.DestroyImmediate(texture);
+                Object.DestroyImmediate(catalog);
+                Object.DestroyImmediate(root);
+            }
+        }
+
+        [Test]
+        public void ScreenBindingAppliesCanvasGroupVisibilityState()
+        {
+            var root = new GameObject("ScreenRoot");
+
+            try
+            {
+                var group = root.AddComponent<CanvasGroup>();
+                var binding = new CampDashboardView.ScreenBinding("screen", new[] { root }, new[] { group });
+                var transition = new CampUiScreenTransition { Enabled = false };
+
+                binding.SetActive(false, transition, true);
+
+                Assert.IsFalse(root.activeSelf);
+                Assert.AreEqual(0, group.alpha);
+                Assert.IsFalse(group.interactable);
+                Assert.IsFalse(group.blocksRaycasts);
+
+                binding.SetActive(true, transition, true);
+
+                Assert.IsTrue(root.activeSelf);
+                Assert.AreEqual(1, group.alpha);
+                Assert.IsTrue(group.interactable);
+                Assert.IsTrue(group.blocksRaycasts);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+            }
         }
 
         [Test]
@@ -247,6 +836,8 @@ namespace AshfallCamp.Tests.EditMode
             var config = TestConfigFactory.Create();
             var state = GameStateFactory.CreateNew(config, 0);
             var catalog = CreateCatalog();
+            var portrait = new Texture2D(1, 1);
+            catalog.SurvivorPortraits.Add(new SurvivorPortraitUiEntry { Id = "elias", Portrait = portrait });
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
@@ -280,6 +871,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("elias", pending.Candidates[0].CandidateId);
             Assert.AreEqual("Elias", pending.Candidates[0].Name);
             Assert.AreEqual("E", pending.Candidates[0].Avatar);
+            Assert.AreSame(portrait, pending.Candidates[0].Portrait);
             Assert.AreEqual("Scavenger/Rusty Knife", pending.Candidates[0].Meta);
             Assert.AreEqual("scavenging 1", pending.Candidates[0].Skill);
             Assert.AreEqual("Traits Careful", pending.Candidates[0].Traits);
@@ -295,6 +887,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.That(afterRecruit.BroadcastStatus, Does.Contain("Blocked"));
 
             Object.DestroyImmediate(catalog);
+            Object.DestroyImmediate(portrait);
         }
 
         [Test]
@@ -443,6 +1036,7 @@ namespace AshfallCamp.Tests.EditMode
                 SurvivorIds = new List<string> { "survivor_1" }
             });
             launched.Expedition.ElapsedSeconds = 125;
+            state.Inventory[0].Durability = 1;
             launched.Expedition.AccumulatedLoot["scrap"] = 8;
             launched.Expedition.EnemiesDefeated["feral_dog"] = 1;
             launched.Expedition.WoundedSurvivorIds.Add("survivor_1");
@@ -450,6 +1044,7 @@ namespace AshfallCamp.Tests.EditMode
             ExpeditionSimulator.Complete(state, config, launched.Expedition);
             state.LastOfflineReport = new OfflineProgressReport { AppliedSeconds = 120 };
             state.LastOfflineReport.ResourcesGained["food"] = 3;
+            state.LastOfflineReport.ResourcesSpent["water"] = 2;
             state.LastOfflineReport.CompletedExpeditionIds.Add(launched.Expedition.Id);
             state.LastOfflineReport.WoundedSurvivorIds.Add("survivor_1");
             state.LastOfflineReport.HealedSurvivorIds.Add("survivor_1");
@@ -463,6 +1058,10 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("XP 9", reports.AfterActionXp);
             Assert.AreEqual("Wounds Mara", reports.AfterActionWounds);
             Assert.AreEqual("Enemies Feral Dog x1", reports.AfterActionEnemies);
+            Assert.That(reports.AfterActionEvents, Does.Contain("Skill XP Survival x3"));
+            Assert.That(reports.AfterActionEvents, Does.Contain("Gear Rusty Knife -1"));
+            Assert.That(reports.AfterActionEvents, Does.Contain("Broken Rusty Knife"));
+            Assert.That(reports.AfterActionEvents, Does.Contain("Progress Abandoned Store x1"));
             Assert.That(reports.AfterActionEvents, Does.Contain("Mara opened a cache."));
             Assert.AreEqual("Again", reports.AfterActionSendAgainButton);
             Assert.IsFalse(reports.AfterActionCanSendAgain);
@@ -471,10 +1070,40 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("balanced", reports.AfterActionSendAgainRequest.PolicyId);
             CollectionAssert.AreEqual(new[] { "survivor_1" }, reports.AfterActionSendAgainRequest.SurvivorIds);
             Assert.AreEqual("Offline 2", reports.OfflineSummary);
-            Assert.AreEqual("Resources Food x3", reports.OfflineResources);
+            Assert.AreEqual("Resources Food x3, Spent Water x2", reports.OfflineResources);
             Assert.AreEqual("Completed abandoned_store", reports.OfflineCompleted);
             Assert.AreEqual("Healing Mara", reports.OfflineHealing);
             Assert.AreEqual("Warnings Mara", reports.OfflineWarnings);
+
+            Object.DestroyImmediate(catalog);
+        }
+
+        [Test]
+        public void AfterActionDetailsShowUnlockAndDemoProgress()
+        {
+            var config = TestConfigFactory.Create();
+            config.Balance.DemoCompletionConditions.Clear();
+            config.Balance.DemoCompletionConditions.Add(new UnlockCondition { Type = GameConditionTypes.ZoneCompletions, Id = "abandoned_store", Value = 2 });
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Zones["abandoned_store"].Completions = 1;
+            var catalog = CreateCatalog();
+            var launched = ExpeditionLauncher.Launch(state, config, new LaunchExpeditionRequest
+            {
+                ZoneId = "abandoned_store",
+                PolicyId = "balanced",
+                Seed = 123,
+                NowUnixMs = 1000,
+                ConfirmWarnings = true,
+                SurvivorIds = new List<string> { "survivor_1" }
+            });
+
+            ExpeditionSimulator.Complete(state, config, launched.Expedition);
+
+            var reports = CampDashboardTextFormatter.BuildReports(state, config, catalog);
+
+            Assert.That(reports.AfterActionEvents, Does.Contain("Progress Abandoned Store x2"));
+            Assert.That(reports.AfterActionEvents, Does.Contain("Unlocked Dry Suburb"));
+            Assert.That(reports.AfterActionEvents, Does.Contain("Demo Abandoned Store"));
 
             Object.DestroyImmediate(catalog);
         }
@@ -515,6 +1144,45 @@ namespace AshfallCamp.Tests.EditMode
             var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1, NowUnixMs = nowUnixMs });
             Assert.IsTrue(broadcast.Validation.IsValid);
             return RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = candidateId, NowUnixMs = nowUnixMs });
+        }
+
+        private static TextMeshProUGUI CreateText(string name, Transform parent)
+        {
+            var go = new GameObject(name, typeof(RectTransform));
+            go.transform.SetParent(parent, false);
+            return go.AddComponent<TextMeshProUGUI>();
+        }
+
+        private static Toggle CreateToggle(string name, Transform parent)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(Image));
+            go.transform.SetParent(parent, false);
+            var toggle = go.AddComponent<Toggle>();
+            toggle.targetGraphic = go.GetComponent<Image>();
+            return toggle;
+        }
+
+        private static Button CreateButton(string name, Transform parent)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(Image));
+            go.transform.SetParent(parent, false);
+            var button = go.AddComponent<Button>();
+            button.targetGraphic = go.GetComponent<Image>();
+            return button;
+        }
+
+        private static Image CreateImage(string name, Transform parent)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(Image));
+            go.transform.SetParent(parent, false);
+            return go.GetComponent<Image>();
+        }
+
+        private static RawImage CreateRawImage(string name, Transform parent)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(RawImage));
+            go.transform.SetParent(parent, false);
+            return go.GetComponent<RawImage>();
         }
 
         private static CampUiCatalogSO CreateCatalog()
@@ -617,10 +1285,18 @@ namespace AshfallCamp.Tests.EditMode
             catalog.AfterActionWoundsFormat = "Wounds {0}";
             catalog.AfterActionEnemiesFormat = "Enemies {0}";
             catalog.AfterActionEventsFormat = "Events {0}";
+            catalog.AfterActionSkillXpFormat = "Skill XP {0}";
+            catalog.AfterActionDurabilityFormat = "Gear {0}";
+            catalog.AfterActionDurabilityItemFormat = "{0} -{1}";
+            catalog.AfterActionBrokenItemsFormat = "Broken {0}";
+            catalog.AfterActionProgressFormat = "Progress {0}";
+            catalog.AfterActionUnlockedFormat = "Unlocked {0}";
+            catalog.AfterActionDemoProgressFormat = "Demo {0}";
             catalog.AfterActionSendAgainButton = "Again";
             catalog.OfflineReportPanelTitle = "Offline";
             catalog.OfflineReportSummaryFormat = "Offline {0}";
             catalog.OfflineReportResourcesFormat = "Resources {0}";
+            catalog.OfflineReportResourcesSpentFormat = "Spent {0}";
             catalog.OfflineReportCompletedFormat = "Completed {0}";
             catalog.OfflineReportHealingFormat = "Healing {0}";
             catalog.OfflineReportWarningsFormat = "Warnings {0}";
@@ -631,9 +1307,13 @@ namespace AshfallCamp.Tests.EditMode
             catalog.SettingsAutosaveEnabledLabel = "On";
             catalog.SettingsAutosaveDisabledLabel = "Off";
             catalog.SettingsAutosaveToggleLabel = "Autosave toggle";
+            catalog.SettingsManualSaveTitle = "Manual save";
+            catalog.SettingsManualSaveBody = "Writes now";
+            catalog.SettingsManualSaveButton = "Save now";
             catalog.ReportNoneLabel = "None";
             catalog.ReportListSeparator = ", ";
             catalog.ReportCountFormat = "{0} x{1}";
+            catalog.SurvivorSkillLabels.Add(new SurvivorSkillUiEntry { Id = "survival", Label = "Survival" });
             catalog.NextGoalCompleteTitle = "Done";
             catalog.NextGoalCompleteBody = "Complete";
             catalog.NextGoalProgressFormat = "{0}/{1}";

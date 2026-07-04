@@ -12,9 +12,11 @@ namespace AshfallCamp.Presentation
     {
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private Image emptyPanel;
+        [SerializeField] private RawImage emptyPanelArtwork;
         [SerializeField] private TextMeshProUGUI emptyTitle;
         [SerializeField] private TextMeshProUGUI emptyBody;
         [SerializeField] private Image afterActionPanel;
+        [SerializeField] private RawImage afterActionPanelArtwork;
         [SerializeField] private TextMeshProUGUI afterActionTitle;
         [SerializeField] private TextMeshProUGUI afterActionOutcome;
         [SerializeField] private TextMeshProUGUI afterActionLoot;
@@ -25,10 +27,12 @@ namespace AshfallCamp.Presentation
         [SerializeField] private Button afterActionSendAgainButton;
         [SerializeField] private TextMeshProUGUI afterActionSendAgainButtonLabel;
         [SerializeField] private Image campEventPanel;
+        [SerializeField] private RawImage campEventPanelArtwork;
         [SerializeField] private TextMeshProUGUI campEventPanelTitle;
         [SerializeField] private TextMeshProUGUI campEventTitle;
         [SerializeField] private TextMeshProUGUI campEventBody;
         [SerializeField] private Image offlinePanel;
+        [SerializeField] private RawImage offlinePanelArtwork;
         [SerializeField] private TextMeshProUGUI offlineTitle;
         [SerializeField] private TextMeshProUGUI offlineSummary;
         [SerializeField] private TextMeshProUGUI offlineResources;
@@ -68,11 +72,76 @@ namespace AshfallCamp.Presentation
             TextMeshProUGUI offlineStateHealing,
             TextMeshProUGUI offlineStateWarnings)
         {
+            ConfigureBindings(
+                titleLabel,
+                emptyStatePanel,
+                emptyStateTitle,
+                emptyStateBody,
+                afterActionStatePanel,
+                afterActionStateTitle,
+                afterActionStateOutcome,
+                afterActionStateLoot,
+                afterActionStateXp,
+                afterActionStateWounds,
+                afterActionStateEnemies,
+                afterActionStateEvents,
+                afterActionStateSendAgainButton,
+                afterActionStateSendAgainButtonLabel,
+                campEventStatePanel,
+                campEventStatePanelTitle,
+                campEventStateTitle,
+                campEventStateBody,
+                offlineStatePanel,
+                offlineStateTitle,
+                offlineStateSummary,
+                offlineStateResources,
+                offlineStateCompleted,
+                offlineStateHealing,
+                offlineStateWarnings,
+                null,
+                null,
+                null,
+                null);
+        }
+
+        public void ConfigureBindings(
+            TextMeshProUGUI titleLabel,
+            Image emptyStatePanel,
+            TextMeshProUGUI emptyStateTitle,
+            TextMeshProUGUI emptyStateBody,
+            Image afterActionStatePanel,
+            TextMeshProUGUI afterActionStateTitle,
+            TextMeshProUGUI afterActionStateOutcome,
+            TextMeshProUGUI afterActionStateLoot,
+            TextMeshProUGUI afterActionStateXp,
+            TextMeshProUGUI afterActionStateWounds,
+            TextMeshProUGUI afterActionStateEnemies,
+            TextMeshProUGUI afterActionStateEvents,
+            Button afterActionStateSendAgainButton,
+            TextMeshProUGUI afterActionStateSendAgainButtonLabel,
+            Image campEventStatePanel,
+            TextMeshProUGUI campEventStatePanelTitle,
+            TextMeshProUGUI campEventStateTitle,
+            TextMeshProUGUI campEventStateBody,
+            Image offlineStatePanel,
+            TextMeshProUGUI offlineStateTitle,
+            TextMeshProUGUI offlineStateSummary,
+            TextMeshProUGUI offlineStateResources,
+            TextMeshProUGUI offlineStateCompleted,
+            TextMeshProUGUI offlineStateHealing,
+            TextMeshProUGUI offlineStateWarnings,
+            RawImage emptyStateArtwork,
+            RawImage afterActionStateArtwork,
+            RawImage campEventStateArtwork,
+            RawImage offlineStateArtwork)
+        {
             title = titleLabel;
             emptyPanel = emptyStatePanel;
+            emptyPanelArtwork = emptyStateArtwork;
             emptyTitle = emptyStateTitle;
             emptyBody = emptyStateBody;
             afterActionPanel = afterActionStatePanel;
+            afterActionPanelArtwork = afterActionStateArtwork;
             afterActionTitle = afterActionStateTitle;
             afterActionOutcome = afterActionStateOutcome;
             afterActionLoot = afterActionStateLoot;
@@ -83,10 +152,12 @@ namespace AshfallCamp.Presentation
             afterActionSendAgainButton = afterActionStateSendAgainButton;
             afterActionSendAgainButtonLabel = afterActionStateSendAgainButtonLabel;
             campEventPanel = campEventStatePanel;
+            campEventPanelArtwork = campEventStateArtwork;
             campEventPanelTitle = campEventStatePanelTitle;
             campEventTitle = campEventStateTitle;
             campEventBody = campEventStateBody;
             offlinePanel = offlineStatePanel;
+            offlinePanelArtwork = offlineStateArtwork;
             offlineTitle = offlineStateTitle;
             offlineSummary = offlineStateSummary;
             offlineResources = offlineStateResources;
@@ -109,6 +180,7 @@ namespace AshfallCamp.Presentation
         public void SetSendAgainHandler(Action<ExpeditionLaunchViewRequest> sendAgainRequested)
         {
             _sendAgainRequested = sendAgainRequested;
+            WireSendAgainButton();
             ApplySendAgainButtonState();
         }
 
@@ -118,6 +190,10 @@ namespace AshfallCamp.Presentation
 
             var report = CampDashboardTextFormatter.BuildReports(state, config, catalog);
             UiText.Set(title, report.Title);
+            ApplyArtwork(emptyPanelArtwork, catalog.ReportsEmptyPanelTexture);
+            ApplyArtwork(afterActionPanelArtwork, catalog.ReportsAfterActionPanelTexture);
+            ApplyArtwork(campEventPanelArtwork, catalog.ReportsCampEventPanelTexture);
+            ApplyArtwork(offlinePanelArtwork, catalog.ReportsOfflinePanelTexture);
             UiText.SetActive(emptyPanel, !report.HasAnyReport);
             UiText.Set(emptyTitle, report.EmptyTitle);
             UiText.Set(emptyBody, report.EmptyBody);
@@ -193,6 +269,18 @@ namespace AshfallCamp.Presentation
         {
             if (_afterActionSendAgainRequest == null) return;
             _sendAgainRequested?.Invoke(_afterActionSendAgainRequest);
+        }
+
+        private static void ApplyArtwork(RawImage target, Texture2D texture)
+        {
+            if (target == null) return;
+            var hasTexture = texture != null;
+            target.gameObject.SetActive(hasTexture);
+            if (hasTexture)
+            {
+                target.texture = texture;
+                target.color = Color.white;
+            }
         }
     }
 }

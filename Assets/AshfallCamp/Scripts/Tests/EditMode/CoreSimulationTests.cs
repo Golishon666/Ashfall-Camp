@@ -26,6 +26,53 @@ namespace AshfallCamp.Tests.EditMode
 
             ResourceSystem.Add(state, "scrap", 999);
             Assert.AreEqual(1014, state.Resources["scrap"]);
+
+            Assert.IsTrue(ResourceSystem.TrySpend(state, new Dictionary<string, int> { { "scrap", 14 } }));
+            Assert.AreEqual(1000, state.Resources["scrap"]);
+            Assert.AreEqual(14, state.Statistics.TotalResourcesSpent["scrap"]);
+        }
+
+        [Test]
+        public void CampUpkeepSpendsSuppliesAndPenalizesShortage()
+        {
+            var config = TestConfigFactory.Create();
+            config.Balance.CampUpkeepIntervalSeconds = 60;
+            config.Balance.CampUpkeepFoodPerSurvivor = 1;
+            config.Balance.CampUpkeepWaterPerSurvivor = 1;
+            config.Balance.CampUpkeepShortageMoralePenalty = 4;
+            config.Balance.CampUpkeepShortageFatigue = 2;
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["food"] = 1;
+            state.Resources["water"] = 0;
+            state.Survivors[0].Morale = 50;
+            state.Survivors[0].Fatigue = 0;
+
+            CampUpkeepSystem.Tick(state, config, 60);
+
+            Assert.AreEqual(0, state.Resources["food"]);
+            Assert.AreEqual(0, state.Resources["water"]);
+            Assert.AreEqual(1, state.Statistics.TotalResourcesSpent["food"]);
+            Assert.IsFalse(state.Statistics.TotalResourcesSpent.ContainsKey("water"));
+            Assert.AreEqual(46, state.Survivors[0].Morale);
+            Assert.AreEqual(2, state.Survivors[0].Fatigue);
+            Assert.AreEqual(0, state.CampUpkeepAccumulatorSeconds);
+        }
+
+        [Test]
+        public void CampUpkeepIgnoresSurvivorsAwayFromCamp()
+        {
+            var config = TestConfigFactory.Create();
+            config.Balance.CampUpkeepIntervalSeconds = 60;
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["food"] = 1;
+            state.Resources["water"] = 1;
+            state.Survivors[0].State = SurvivorActivityState.OnExpedition;
+
+            CampUpkeepSystem.Tick(state, config, 60);
+
+            Assert.AreEqual(1, state.Resources["food"]);
+            Assert.AreEqual(1, state.Resources["water"]);
+            Assert.AreEqual(0, state.Statistics.TotalResourcesSpent.Count);
         }
 
         [Test]
@@ -420,6 +467,37 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void ExpeditionCompletionDamagesEquippedItemsAndBrokenItemsStopContributingPower()
+        {
+            var config = TestConfigFactory.Create();
+            config.Zones["abandoned_store"].DurabilityPressure = 2;
+            config.Policies["aggressive"].DurabilityModifier = 1;
+            config.Traits["clumsy"] = new TraitDefinition
+            {
+                Id = "clumsy",
+                Name = "Clumsy",
+                StatModifiers = new Dictionary<string, int> { { config.Balance.DurabilityTraitModifierId, 2 } }
+            };
+            var state = GameStateFactory.CreateNew(config, 0);
+            var equipped = state.Inventory[0];
+            equipped.Durability = 4;
+            state.Survivors[0].TraitIds.Add("clumsy");
+            var stored = new InventoryItemState { Uid = "item_stored", ItemId = "rusty_revolver", Durability = 60, MaxDurability = 60 };
+            state.Inventory.Add(stored);
+            var request = Request("abandoned_store", 123);
+            request.PolicyId = "aggressive";
+            var result = ExpeditionLauncher.Launch(state, config, request);
+
+            ExpeditionSimulator.Complete(state, config, result.Expedition);
+
+            Assert.AreEqual(0, equipped.Durability);
+            Assert.AreEqual(60, stored.Durability);
+            Assert.AreEqual(4, result.Expedition.EquipmentDurabilityLost[equipped.Uid]);
+            Assert.AreEqual(equipped.Uid, result.Expedition.BrokenItemUids[0]);
+            Assert.IsNull(SquadPowerSystem.GetEquippedItem(state, config, equipped.Uid));
+        }
+
+        [Test]
         public void RepairItemUseCaseMutatesStore()
         {
             var config = TestConfigFactory.Create();
@@ -546,6 +624,22 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void TickGameUseCaseReportsCompletedExpeditions()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            var launched = ExpeditionLauncher.Launch(state, config, Request("abandoned_store", 123));
+            var store = new GameStateStore();
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var useCase = new TickGameUseCase(store, new StaticConfigProvider(config));
+
+            var result = useCase.ExecuteAsync(9999, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.Contains(launched.Expedition.Id, result.FinishedExpeditionIds);
+            Assert.AreNotEqual(ExpeditionStatus.Active, store.State.CurrentValue.Expeditions[0].Status);
+        }
+
+        [Test]
         public void OfflineProgressReportsHealedSurvivors()
         {
             var config = TestConfigFactory.Create();
@@ -561,6 +655,31 @@ namespace AshfallCamp.Tests.EditMode
 
             Assert.Contains("survivor_1", report.HealedSurvivorIds);
             Assert.AreEqual(SurvivorActivityState.Idle, store.State.CurrentValue.Survivors[0].State);
+        }
+
+        [Test]
+        public void OfflineProgressAppliesCampUpkeepAndReportsSpentResources()
+        {
+            var config = TestConfigFactory.Create();
+            config.Balance.CampUpkeepIntervalSeconds = 60;
+            config.Balance.CampUpkeepFoodPerSurvivor = 2;
+            config.Balance.CampUpkeepWaterPerSurvivor = 1;
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.LastSaveAtUnixMs = 0;
+            state.Resources["food"] = 4;
+            state.Resources["water"] = 2;
+            var store = new GameStateStore();
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var useCase = new OfflineProgressUseCase(store, new StaticConfigProvider(config));
+
+            var report = useCase.ExecuteAsync(120000, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.AreEqual(120, report.AppliedSeconds);
+            Assert.AreEqual(4, report.ResourcesSpent["food"]);
+            Assert.AreEqual(2, report.ResourcesSpent["water"]);
+            Assert.AreEqual(0, store.State.CurrentValue.Resources["food"]);
+            Assert.AreEqual(0, store.State.CurrentValue.Resources["water"]);
+            Assert.AreSame(report, store.State.CurrentValue.LastOfflineReport);
         }
 
         [Test]
@@ -615,8 +734,36 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(23, state.Resources["scrap"]);
             Assert.AreEqual(SurvivorActivityState.Idle, state.Survivors[0].State);
             Assert.Greater(state.Survivors[0].Xp, 0);
+            Assert.Greater(state.Survivors[0].SkillXp[config.Balance.ExpeditionCompletionSkillId], 0);
             Assert.AreEqual(1, state.Zones["abandoned_store"].Completions);
             Assert.Greater(state.Zones["abandoned_store"].Familiarity, 0);
+        }
+
+        [Test]
+        public void ExpeditionCompletionUsesConfiguredXpAndSkillLevelRules()
+        {
+            var config = TestConfigFactory.Create();
+            config.Balance.ExpeditionCompletionXp = 8;
+            config.Balance.ExpeditionCompletionSkillId = "survival";
+            config.Balance.ExpeditionCompletionSkillXp = 10;
+            config.Balance.SurvivorXpThresholdBase = 4;
+            config.Balance.SurvivorXpThresholdExponent = 1;
+            config.Balance.SkillXpThresholdBase = 2;
+            config.Balance.SkillXpThresholdExponent = 1;
+            var state = GameStateFactory.CreateNew(config, 0);
+            var survivor = state.Survivors[0];
+            var initialLevel = survivor.Level;
+            var initialHealth = survivor.MaxHealth;
+            var initialSurvival = survivor.Skills["survival"];
+            var result = ExpeditionLauncher.Launch(state, config, Request("abandoned_store", 123));
+
+            ExpeditionSimulator.Complete(state, config, result.Expedition);
+
+            Assert.AreEqual(initialLevel + 1, survivor.Level);
+            Assert.AreEqual(4, survivor.Xp);
+            Assert.AreEqual(initialHealth + config.Balance.SurvivorHealthPerLevel, survivor.MaxHealth);
+            Assert.AreEqual(initialSurvival + 1, survivor.Skills["survival"]);
+            Assert.AreEqual(2, survivor.SkillXp["survival"]);
         }
 
         [Test]
@@ -695,6 +842,7 @@ namespace AshfallCamp.Tests.EditMode
             var state = GameStateFactory.CreateNew(config, 0);
             var result = ExpeditionLauncher.Launch(state, config, Request("abandoned_store", 321));
             state.Resources["scrap"] = 37;
+            state.CampUpkeepAccumulatorSeconds = 42;
             state.Inventory[0].Durability = 44;
             state.Buildings["workshop"].Level = 1;
             state.Zones["abandoned_store"].Completions = 2;
@@ -707,11 +855,20 @@ namespace AshfallCamp.Tests.EditMode
             state.Recovery.EmergencyScavengeRemainingSeconds = 17;
             state.Recovery.EmergencyScavengeStartedAtUnixMs = 100;
             state.Recovery.EmergencyScavengeCooldownRemainingSeconds = 12;
+            state.LastOfflineReport = new OfflineProgressReport { AppliedSeconds = 120, WasPresented = true };
+            state.LastOfflineReport.ResourcesGained["food"] = 3;
+            state.LastOfflineReport.ResourcesSpent["water"] = 2;
+            state.LastOfflineReport.CompletedExpeditionIds.Add(result.Expedition.Id);
+            state.LastOfflineReport.WoundedSurvivorIds.Add(state.Survivors[0].Id);
+            state.LastOfflineReport.HealedSurvivorIds.Add(state.Survivors[0].Id);
+            state.Statistics.TotalResourcesSpent["water"] = 2;
             state.Settings.AutosaveEnabled = false;
             state.Progress.DemoCompleted = true;
             state.Progress.DemoCompletionId = GameConditionTypes.BuildingLevel + ":radio_tower";
             state.Progress.DemoCompletedAtUnixMs = 500;
             result.Expedition.Log.Add(new ExpeditionLogEntry { AtSeconds = 12.5, Message = "Mara found a sealed crate." });
+            result.Expedition.EquipmentDurabilityLost[state.Inventory[0].Uid] = 3;
+            result.Expedition.BrokenItemUids.Add(state.Inventory[0].Uid);
             result.Expedition.FoundItems.Add(new InventoryItemState
             {
                 Uid = "found_item_1",
@@ -730,6 +887,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.IsFalse(loaded.UsedBackup);
             Assert.AreEqual(37, loaded.State.Resources["scrap"]);
             Assert.AreEqual(7, loaded.State.Resources["food"]);
+            Assert.AreEqual(42, loaded.State.CampUpkeepAccumulatorSeconds);
             Assert.AreEqual("rusty_knife", loaded.State.Inventory[0].ItemId);
             Assert.AreEqual(44, loaded.State.Inventory[0].Durability);
             Assert.AreEqual(1, loaded.State.Buildings["workshop"].Level);
@@ -748,12 +906,23 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(17, loaded.State.Recovery.EmergencyScavengeRemainingSeconds);
             Assert.AreEqual(100, loaded.State.Recovery.EmergencyScavengeStartedAtUnixMs);
             Assert.AreEqual(12, loaded.State.Recovery.EmergencyScavengeCooldownRemainingSeconds);
+            Assert.NotNull(loaded.State.LastOfflineReport);
+            Assert.AreEqual(120, loaded.State.LastOfflineReport.AppliedSeconds);
+            Assert.IsTrue(loaded.State.LastOfflineReport.WasPresented);
+            Assert.AreEqual(3, loaded.State.LastOfflineReport.ResourcesGained["food"]);
+            Assert.AreEqual(2, loaded.State.LastOfflineReport.ResourcesSpent["water"]);
+            Assert.AreEqual(result.Expedition.Id, loaded.State.LastOfflineReport.CompletedExpeditionIds[0]);
+            Assert.AreEqual(state.Survivors[0].Id, loaded.State.LastOfflineReport.WoundedSurvivorIds[0]);
+            Assert.AreEqual(state.Survivors[0].Id, loaded.State.LastOfflineReport.HealedSurvivorIds[0]);
             Assert.IsFalse(loaded.State.Settings.AutosaveEnabled);
             Assert.AreEqual("Mara found a sealed crate.", loaded.State.Expeditions[0].Log[0].Message);
+            Assert.AreEqual(3, loaded.State.Expeditions[0].EquipmentDurabilityLost[state.Inventory[0].Uid]);
+            Assert.AreEqual(state.Inventory[0].Uid, loaded.State.Expeditions[0].BrokenItemUids[0]);
             Assert.AreEqual("found_item_1", loaded.State.Expeditions[0].FoundItems[0].Uid);
             Assert.IsTrue(loaded.State.Progress.DemoCompleted);
             Assert.AreEqual(GameConditionTypes.BuildingLevel + ":radio_tower", loaded.State.Progress.DemoCompletionId);
             Assert.AreEqual(500, loaded.State.Progress.DemoCompletedAtUnixMs);
+            Assert.AreEqual(2, loaded.State.Statistics.TotalResourcesSpent["water"]);
             Assert.AreEqual(2, loaded.State.Expeditions[0].FoundItems[0].Level);
 
             File.WriteAllText(Path.Combine(folder, "save.json"), "{corrupt");
@@ -924,7 +1093,7 @@ namespace AshfallCamp.Tests.EditMode
             };
 
             config.Policies["balanced"] = new ExpeditionPolicyDefinition { Id = "balanced", Name = "Balanced" };
-            config.Policies["aggressive"] = new ExpeditionPolicyDefinition { Id = "aggressive", Name = "Aggressive", RiskModifier = 1.2, LootModifier = 1.1, DurationModifier = 0.9, PowerModifier = 1.1, NoiseModifier = 1 };
+            config.Policies["aggressive"] = new ExpeditionPolicyDefinition { Id = "aggressive", Name = "Aggressive", RiskModifier = 1.2, LootModifier = 1.1, DurationModifier = 0.9, PowerModifier = 1.1, NoiseModifier = 1, DurabilityModifier = 1 };
             config.Items["rusty_knife"] = new ItemDefinition { Id = "rusty_knife", Name = "Rusty Knife", Slot = ItemSlot.Weapon, WeaponType = WeaponType.Melee, BaseDamage = 4, AccuracyBonus = 0.02, CritBonus = 0.01, MaxDurability = 80 };
             config.Items["rusty_revolver"] = new ItemDefinition { Id = "rusty_revolver", Name = "Rusty Revolver", Slot = ItemSlot.Weapon, WeaponType = WeaponType.Firearm, BaseDamage = 10, AccuracyBonus = -0.03, CritBonus = 0.04, NoisePerAttack = 3, MaxDurability = 60 };
             config.Enemies["feral_dog"] = new EnemyDefinition { Id = "feral_dog", Name = "Feral Dog", MaxHealth = 14, Armor = 0, Evasion = 0.08, BaseDamage = 3, AttackType = WeaponType.Melee, Accuracy = 0.75, XpReward = 4 };
@@ -967,7 +1136,8 @@ namespace AshfallCamp.Tests.EditMode
                 MaxDurationSeconds = duration * 2,
                 FoodCostPerSurvivor = food,
                 WaterCostPerSurvivor = water,
-                RecommendedPower = power
+                RecommendedPower = power,
+                DurabilityPressure = 1
             };
             zone.EnemyTable.Add(new WeightedEntry { Id = "feral_dog", Weight = 100 });
             zone.LootTable.Add(new LootTableEntry { ResourceId = "scrap", Min = 4, Max = 10, Weight = 100 });

@@ -75,7 +75,7 @@ namespace AshfallCamp.Application
 
     public interface ITickGameUseCase
     {
-        UniTask ExecuteAsync(double deltaSeconds, CancellationToken ct);
+        UniTask<TickGameResult> ExecuteAsync(double deltaSeconds, CancellationToken ct);
     }
 
     public interface IOfflineProgressUseCase
@@ -125,6 +125,17 @@ namespace AshfallCamp.Application
     public sealed class SetAutosaveResult
     {
         public bool AutosaveEnabled;
+    }
+
+    public sealed class TickGameResult
+    {
+        public List<string> CompletedExpeditionIds = new List<string>();
+        public List<string> FinishedExpeditionIds = new List<string>();
+
+        public bool HasCriticalProgress
+        {
+            get { return FinishedExpeditionIds.Count > 0; }
+        }
     }
 
     public sealed class GameStateStore : IGameStateReader, IGameStateWriter, IDisposable
@@ -483,7 +494,7 @@ namespace AshfallCamp.Application
             _configs = configs;
         }
 
-        public async UniTask ExecuteAsync(double deltaSeconds, CancellationToken ct)
+        public async UniTask<TickGameResult> ExecuteAsync(double deltaSeconds, CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();
             if (_configs.Current == null)
@@ -491,16 +502,55 @@ namespace AshfallCamp.Application
                 await _configs.LoadAsync(ct);
             }
 
+            var result = new TickGameResult();
             await _writer.MutateAsync(state =>
             {
                 var dt = Math.Max(0, deltaSeconds);
+                var activeBefore = ActiveExpeditionIds(state);
                 state.TotalPlayTimeSeconds += dt;
+                CampUpkeepSystem.Tick(state, _configs.Current, dt);
                 BuildingSystem.TickProduction(state, _configs.Current, dt);
                 ExpeditionSimulator.TickAll(state, _configs.Current, dt);
                 HealingSystem.Tick(state, _configs.Current, dt);
                 RecoverySystem.Tick(state, _configs.Current, dt);
+                FillCompletedExpeditions(activeBefore, state, result.CompletedExpeditionIds);
+                FillFinishedExpeditions(activeBefore, state, result.FinishedExpeditionIds);
                 return state;
             }, ct);
+            return result;
+        }
+
+        private static HashSet<string> ActiveExpeditionIds(GameState state)
+        {
+            var result = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var expedition in state.Expeditions)
+            {
+                if (expedition.Status == ExpeditionStatus.Active) result.Add(expedition.Id);
+            }
+
+            return result;
+        }
+
+        private static void FillCompletedExpeditions(HashSet<string> activeBefore, GameState state, List<string> output)
+        {
+            foreach (var expedition in state.Expeditions)
+            {
+                if (activeBefore.Contains(expedition.Id) && expedition.Status == ExpeditionStatus.Completed)
+                {
+                    output.Add(expedition.Id);
+                }
+            }
+        }
+
+        private static void FillFinishedExpeditions(HashSet<string> activeBefore, GameState state, List<string> output)
+        {
+            foreach (var expedition in state.Expeditions)
+            {
+                if (activeBefore.Contains(expedition.Id) && expedition.Status != ExpeditionStatus.Active && expedition.Status != ExpeditionStatus.Returning)
+                {
+                    output.Add(expedition.Id);
+                }
+            }
         }
     }
 
@@ -528,6 +578,7 @@ namespace AshfallCamp.Application
             await _writer.MutateAsync(state =>
             {
                 var beforeResources = CopyResources(state.Resources);
+                var beforeSpent = CopyResources(state.Statistics.TotalResourcesSpent);
                 var activeBefore = ActiveExpeditionIds(state);
                 var woundedBefore = WoundedSurvivorIds(state);
                 var elapsedMs = Math.Max(0, nowUnixMs - state.LastSaveAtUnixMs);
@@ -538,6 +589,7 @@ namespace AshfallCamp.Application
                 {
                     var dt = Math.Min(10, remaining);
                     state.TotalPlayTimeSeconds += dt;
+                    CampUpkeepSystem.Tick(state, _configs.Current, dt);
                     BuildingSystem.TickProduction(state, _configs.Current, dt);
                     ExpeditionSimulator.TickAll(state, _configs.Current, dt);
                     HealingSystem.Tick(state, _configs.Current, dt);
@@ -547,6 +599,7 @@ namespace AshfallCamp.Application
 
                 state.LastSaveAtUnixMs = nowUnixMs;
                 FillResourceDelta(beforeResources, state.Resources, _report.ResourcesGained);
+                FillResourceDelta(beforeSpent, state.Statistics.TotalResourcesSpent, _report.ResourcesSpent);
                 FillCompletedExpeditions(activeBefore, state, _report.CompletedExpeditionIds);
                 FillWounded(state, _report.WoundedSurvivorIds);
                 FillHealed(woundedBefore, state, _report.HealedSurvivorIds);
@@ -558,6 +611,7 @@ namespace AshfallCamp.Application
 
         private static Dictionary<string, int> CopyResources(Dictionary<string, int> resources)
         {
+            if (resources == null) return new Dictionary<string, int>(StringComparer.Ordinal);
             return new Dictionary<string, int>(resources, StringComparer.Ordinal);
         }
 

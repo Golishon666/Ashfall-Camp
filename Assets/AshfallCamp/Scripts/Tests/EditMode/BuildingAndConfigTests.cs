@@ -153,6 +153,26 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(3, config.Balance.EmergencyScavengeRewards["scrap"]);
             Assert.AreEqual(2, config.Balance.EmergencyScavengeRewards["food"]);
             Assert.AreEqual(2, config.Balance.EmergencyScavengeRewards["water"]);
+            Assert.AreEqual(5, config.Balance.ExpeditionCompletionXp);
+            Assert.AreEqual("survival", config.Balance.ExpeditionCompletionSkillId);
+            Assert.AreEqual(3, config.Balance.ExpeditionCompletionSkillXp);
+            Assert.AreEqual(300, config.Balance.CampUpkeepIntervalSeconds);
+            Assert.AreEqual("food", config.Balance.CampUpkeepFoodResourceId);
+            Assert.AreEqual(1, config.Balance.CampUpkeepFoodPerSurvivor);
+            Assert.AreEqual("water", config.Balance.CampUpkeepWaterResourceId);
+            Assert.AreEqual(1, config.Balance.CampUpkeepWaterPerSurvivor);
+            Assert.AreEqual(4, config.Balance.CampUpkeepShortageMoralePenalty);
+            Assert.AreEqual(2, config.Balance.CampUpkeepShortageFatigue);
+            Assert.AreEqual(50, config.Balance.SurvivorXpThresholdBase);
+            Assert.AreEqual(1.55, config.Balance.SurvivorXpThresholdExponent);
+            Assert.AreEqual(20, config.Balance.SkillXpThresholdBase);
+            Assert.AreEqual(1.35, config.Balance.SkillXpThresholdExponent);
+            Assert.AreEqual("durability_loss", config.Balance.DurabilityTraitModifierId);
+            Assert.AreEqual(1, config.Zones["abandoned_store"].DurabilityPressure);
+            Assert.AreEqual(4, config.Zones["mutant_tunnel"].DurabilityPressure);
+            Assert.AreEqual(-1, config.Policies["cautious"].DurabilityModifier);
+            Assert.AreEqual(1, config.Policies["aggressive"].DurabilityModifier);
+            Assert.AreEqual(1, config.Traits["clumsy"].StatModifiers["durability_loss"]);
             Assert.IsTrue(config.RecruitableSurvivors.ContainsKey("elias"));
             Assert.IsTrue(config.Buildings.ContainsKey("barracks"));
             Assert.IsTrue(config.Buildings.ContainsKey("workshop"));
@@ -164,6 +184,42 @@ namespace AshfallCamp.Tests.EditMode
             Assert.IsTrue(config.Zones.ContainsKey("ruined_clinic"));
             Assert.IsTrue(config.Zones.ContainsKey("police_outpost"));
             Assert.IsTrue(config.Zones.ContainsKey("mutant_tunnel"));
+        }
+
+        [Test]
+        public void ScriptableObjectConfigValidationRejectsUnknownProgressionSkill()
+        {
+            var database = CreateValidDatabase();
+            database.Balance.Balance.ExpeditionCompletionSkillId = "ghost_skill";
+
+            var ex = Assert.Throws<InvalidOperationException>(() => new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult());
+
+            StringAssert.Contains("unknown skill", ex.Message);
+            DestroyDatabase(database);
+        }
+
+        [Test]
+        public void ScriptableObjectConfigValidationRejectsNegativeDurabilityPressure()
+        {
+            var database = CreateValidDatabase();
+            database.Zones.Zones[0].DurabilityPressure = -1;
+
+            var ex = Assert.Throws<InvalidOperationException>(() => new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult());
+
+            StringAssert.Contains("durability pressure", ex.Message);
+            DestroyDatabase(database);
+        }
+
+        [Test]
+        public void ScriptableObjectConfigValidationRejectsUnknownCampUpkeepResource()
+        {
+            var database = CreateValidDatabase();
+            database.Balance.Balance.CampUpkeepFoodResourceId = "ghost_food";
+
+            var ex = Assert.Throws<InvalidOperationException>(() => new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult());
+
+            StringAssert.Contains("Camp upkeep references unknown resource", ex.Message);
+            DestroyDatabase(database);
         }
 
         private static GameConfigDatabaseSO CreateValidDatabase()
@@ -183,7 +239,7 @@ namespace AshfallCamp.Tests.EditMode
                 BackgroundId = "scavenger",
                 TraitIds = new List<string> { "careful" },
                 WeaponItemId = "rusty_knife",
-                Skills = new List<IntPairData> { new IntPairData("scavenging", 4), new IntPairData("melee", 1) }
+                Skills = new List<IntPairData> { new IntPairData("scavenging", 4), new IntPairData("melee", 1), new IntPairData("survival", 2) }
             };
             database.Survivors.RecruitableSurvivors.Add(new RecruitableSurvivorConfigData
             {

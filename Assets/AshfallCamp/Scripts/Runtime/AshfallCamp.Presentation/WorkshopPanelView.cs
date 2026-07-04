@@ -14,6 +14,7 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI status;
         [SerializeField] private Image emptyPanel;
+        [SerializeField] private RawImage emptyPanelArtwork;
         [SerializeField] private TextMeshProUGUI emptyTitle;
         [SerializeField] private TextMeshProUGUI emptyBody;
         [SerializeField] private List<WorkshopItemBinding> items = new List<WorkshopItemBinding>();
@@ -29,9 +30,29 @@ namespace AshfallCamp.Presentation
             TextMeshProUGUI emptyStateBody,
             IEnumerable<WorkshopItemBinding> itemBindings)
         {
+            ConfigureBindings(
+                titleLabel,
+                statusLabel,
+                emptyStatePanel,
+                emptyStateTitle,
+                emptyStateBody,
+                itemBindings,
+                null);
+        }
+
+        public void ConfigureBindings(
+            TextMeshProUGUI titleLabel,
+            TextMeshProUGUI statusLabel,
+            Image emptyStatePanel,
+            TextMeshProUGUI emptyStateTitle,
+            TextMeshProUGUI emptyStateBody,
+            IEnumerable<WorkshopItemBinding> itemBindings,
+            RawImage emptyStateArtwork)
+        {
             title = titleLabel;
             status = statusLabel;
             emptyPanel = emptyStatePanel;
+            emptyPanelArtwork = emptyStateArtwork;
             emptyTitle = emptyStateTitle;
             emptyBody = emptyStateBody;
 
@@ -79,6 +100,7 @@ namespace AshfallCamp.Presentation
             var targetSurvivorId = ResolveTargetSurvivorId(state);
             UiText.Set(title, catalog.WorkshopScreenTitle);
             UiText.Set(status, CampDashboardTextFormatter.FormatWorkshopStatus(state, config, catalog, targetSurvivorId));
+            ApplyArtwork(emptyPanelArtwork, catalog.WorkshopEmptyPanelTexture);
             UiText.SetActive(emptyPanel, state.Inventory.Count == 0);
             UiText.Set(emptyTitle, catalog.WorkshopEmptyTitle);
             UiText.Set(emptyBody, catalog.WorkshopEmptyBody);
@@ -115,10 +137,25 @@ namespace AshfallCamp.Presentation
             return state.Survivors.Count > 0 ? state.Survivors[0].Id : string.Empty;
         }
 
+        private static bool ApplyArtwork(RawImage target, Texture2D texture)
+        {
+            if (target == null) return false;
+            var hasTexture = texture != null;
+            target.gameObject.SetActive(hasTexture);
+            if (hasTexture)
+            {
+                target.texture = texture;
+                target.color = Color.white;
+            }
+
+            return hasTexture;
+        }
+
         [Serializable]
         public sealed class WorkshopItemBinding
         {
             [SerializeField] private Image panel;
+            [SerializeField] private RawImage tileArtwork;
             [SerializeField] private TextMeshProUGUI nameLabel;
             [SerializeField] private TextMeshProUGUI durabilityLabel;
             [SerializeField] private TextMeshProUGUI equippedLabel;
@@ -151,8 +188,25 @@ namespace AshfallCamp.Presentation
                 TextMeshProUGUI repairButtonLabel,
                 Button equipButton,
                 TextMeshProUGUI equipButtonLabel)
+                : this(panel, null, nameLabel, durabilityLabel, equippedLabel, brokenLabel, repairCostLabel, repairButton, repairButtonLabel, equipButton, equipButtonLabel)
+            {
+            }
+
+            public WorkshopItemBinding(
+                Image panel,
+                RawImage tileArtwork,
+                TextMeshProUGUI nameLabel,
+                TextMeshProUGUI durabilityLabel,
+                TextMeshProUGUI equippedLabel,
+                TextMeshProUGUI brokenLabel,
+                TextMeshProUGUI repairCostLabel,
+                Button repairButton,
+                TextMeshProUGUI repairButtonLabel,
+                Button equipButton,
+                TextMeshProUGUI equipButtonLabel)
             {
                 this.panel = panel;
+                this.tileArtwork = tileArtwork;
                 this.nameLabel = nameLabel;
                 this.durabilityLabel = durabilityLabel;
                 this.equippedLabel = equippedLabel;
@@ -213,10 +267,11 @@ namespace AshfallCamp.Presentation
                 UiText.Set(repairCostLabel, item.RepairCost);
                 UiText.Set(repairButtonLabel, catalog.WorkshopRepairButton);
                 UiText.Set(equipButtonLabel, catalog.WorkshopEquipButton);
+                ApplyArtwork(tileArtwork, catalog.WorkshopItemTileTexture);
 
                 if (panel != null)
                 {
-                    panel.color = new Color(catalog.Theme.PaperDark.r, catalog.Theme.PaperDark.g, catalog.Theme.PaperDark.b, 0.74f);
+                    panel.color = catalog.Theme.WithAlpha(catalog.Theme.PaperDark, catalog.Theme.WorkshopItemPanelAlpha);
                 }
 
                 if (nameLabel != null) nameLabel.color = catalog.Theme.Ink;

@@ -33,6 +33,23 @@ MonoBehaviour:
     RecruitmentWaterResourceId: water
     ExpeditionFoodResourceId: food
     ExpeditionWaterResourceId: water
+    ExpeditionCompletionXp: 5
+    ExpeditionCompletionSkillId: survival
+    ExpeditionCompletionSkillXp: 3
+    CampUpkeepIntervalSeconds: 300
+    CampUpkeepFoodResourceId: food
+    CampUpkeepFoodPerSurvivor: 1
+    CampUpkeepWaterResourceId: water
+    CampUpkeepWaterPerSurvivor: 1
+    CampUpkeepShortageMoralePenalty: 4
+    CampUpkeepShortageFatigue: 2
+    SurvivorXpThresholdBase: 50
+    SurvivorXpThresholdExponent: 1.55
+    SurvivorMaxLevel: 50
+    SurvivorHealthPerLevel: 2
+    SkillXpThresholdBase: 20
+    SkillXpThresholdExponent: 1.35
+    SkillMaxLevel: 50
     RecruitmentBaseScrap: 20
     RecruitmentScrapExponent: 1.25
     RecruitmentBaseFood: 2
@@ -44,6 +61,7 @@ MonoBehaviour:
     WorkshopRequiredBuildingLevel: 1
     WorkshopRepairResourceId: weapon_parts
     WorkshopRepairDurabilityBlock: 10
+    DurabilityTraitModifierId: durability_loss
     HealingRequiredBuildingId: infirmary
     HealingRequiredBuildingLevel: 1
     HealingDefaultWoundId: cuts

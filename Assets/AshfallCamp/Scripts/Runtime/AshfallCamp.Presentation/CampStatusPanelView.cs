@@ -8,6 +8,7 @@ namespace AshfallCamp.Presentation
     [DisallowMultipleComponent]
     public sealed class CampStatusPanelView : MonoBehaviour
     {
+        [SerializeField] private RawImage panelArtwork;
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI label;
         [SerializeField] private TextMeshProUGUI body;
@@ -35,8 +36,10 @@ namespace AshfallCamp.Presentation
             TextMeshProUGUI suppliesValueText,
             Image moraleFillImage,
             Image safetyFillImage,
-            Image suppliesFillImage)
+            Image suppliesFillImage,
+            RawImage statusPanelArtwork = null)
         {
+            panelArtwork = statusPanelArtwork;
             title = statusTitle;
             label = statusLabel;
             body = statusBody;
@@ -58,6 +61,7 @@ namespace AshfallCamp.Presentation
 
             var status = CampDashboardTextFormatter.BuildStatus(state, config, catalog);
 
+            ApplyArtwork(panelArtwork, catalog.CampStatusPanelTexture);
             UiText.Set(title, catalog.CampStatusTitle);
             UiText.Set(label, status.Label);
             UiText.Set(body, status.Body);
@@ -94,6 +98,18 @@ namespace AshfallCamp.Presentation
             }
 
             return catalog.Theme.Teal;
+        }
+
+        private static void ApplyArtwork(RawImage target, Texture2D texture)
+        {
+            if (target == null) return;
+
+            var hasTexture = texture != null;
+            target.gameObject.SetActive(hasTexture);
+            if (!hasTexture) return;
+
+            target.texture = texture;
+            target.color = Color.white;
         }
     }
 }

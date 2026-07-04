@@ -14,10 +14,12 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI countLabel;
         [SerializeField] private Image emptyPanel;
+        [SerializeField] private RawImage emptyPanelArtwork;
         [SerializeField] private TextMeshProUGUI emptyTitle;
         [SerializeField] private TextMeshProUGUI emptyBody;
         [SerializeField] private List<SurvivorCardBinding> cards = new List<SurvivorCardBinding>();
         [SerializeField] private Image detailPanel;
+        [SerializeField] private RawImage detailPanelArtwork;
         [SerializeField] private TextMeshProUGUI detailTitle;
         [SerializeField] private TextMeshProUGUI detailBackground;
         [SerializeField] private TextMeshProUGUI detailTraits;
@@ -25,6 +27,7 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI detailTreatment;
         [SerializeField] private TextMeshProUGUI detailStats;
         [SerializeField] private TextMeshProUGUI detailMedicineCost;
+        [SerializeField] private RawImage detailPortrait;
         [SerializeField] private Button useMedicineButton;
         [SerializeField] private TextMeshProUGUI useMedicineButtonLabel;
 
@@ -47,12 +50,20 @@ namespace AshfallCamp.Presentation
             TextMeshProUGUI selectedDetailStats,
             TextMeshProUGUI selectedDetailTreatment = null,
             TextMeshProUGUI selectedDetailMedicineCost = null,
+            RawImage selectedDetailPortrait = null,
             Button selectedUseMedicineButton = null,
-            TextMeshProUGUI selectedUseMedicineButtonLabel = null)
+            TextMeshProUGUI selectedUseMedicineButtonLabel = null,
+            RawImage emptyStateArtwork = null,
+            RawImage selectedDetailArtwork = null)
         {
             title = titleLabel;
             countLabel = survivorCountLabel;
             emptyPanel = emptyStatePanel;
+            if (emptyStateArtwork != null)
+            {
+                emptyPanelArtwork = emptyStateArtwork;
+            }
+
             emptyTitle = emptyStateTitle;
             emptyBody = emptyStateBody;
             cards.Clear();
@@ -62,6 +73,11 @@ namespace AshfallCamp.Presentation
             }
 
             detailPanel = selectedDetailPanel;
+            if (selectedDetailArtwork != null)
+            {
+                detailPanelArtwork = selectedDetailArtwork;
+            }
+
             detailTitle = selectedDetailTitle;
             detailBackground = selectedDetailBackground;
             detailTraits = selectedDetailTraits;
@@ -74,6 +90,11 @@ namespace AshfallCamp.Presentation
             if (selectedDetailMedicineCost != null)
             {
                 detailMedicineCost = selectedDetailMedicineCost;
+            }
+
+            if (selectedDetailPortrait != null)
+            {
+                detailPortrait = selectedDetailPortrait;
             }
 
             if (selectedUseMedicineButton != null)
@@ -125,6 +146,7 @@ namespace AshfallCamp.Presentation
 
             var hasSurvivors = state.Survivors.Count > 0;
             UiText.SetActive(emptyPanel, !hasSurvivors);
+            ApplyArtwork(emptyPanelArtwork, hasSurvivors ? null : catalog.SurvivorsEmptyPanelTexture);
             UiText.Set(emptyTitle, catalog.SurvivorEmptyTitle);
             UiText.Set(emptyBody, catalog.SurvivorEmptyBody);
 
@@ -181,6 +203,7 @@ namespace AshfallCamp.Presentation
         private void RenderDetail(SurvivorState survivor, GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
         {
             UiText.SetActive(detailPanel, survivor != null);
+            ApplyArtwork(detailPanelArtwork, survivor != null ? catalog.SurvivorDetailPanelTexture : null);
             if (survivor == null) return;
 
             var detail = CampDashboardTextFormatter.BuildSurvivorDetail(survivor, state, config, catalog);
@@ -192,6 +215,7 @@ namespace AshfallCamp.Presentation
             UiText.Set(detailStats, detail.Stats);
             UiText.Set(detailMedicineCost, detail.MedicineCost);
             UiText.Set(useMedicineButtonLabel, detail.MedicineButton);
+            ApplyPortrait(detailPortrait, detail.Portrait);
             UiText.SetActive(detailMedicineCost, detail.ShowMedicineAction);
             if (useMedicineButton != null)
             {
@@ -229,7 +253,9 @@ namespace AshfallCamp.Presentation
         public sealed class SurvivorCardBinding
         {
             [SerializeField] private Image panel;
+            [SerializeField] private RawImage cardArtwork;
             [SerializeField] private Button button;
+            [SerializeField] private RawImage portrait;
             [SerializeField] private TextMeshProUGUI avatarLabel;
             [SerializeField] private TextMeshProUGUI nameLabel;
             [SerializeField] private TextMeshProUGUI stateLabel;
@@ -244,9 +270,15 @@ namespace AshfallCamp.Presentation
             }
 
             public SurvivorCardBinding(Image panel, Button button, TextMeshProUGUI avatarLabel, TextMeshProUGUI nameLabel, TextMeshProUGUI stateLabel, TextMeshProUGUI skillLabel)
+                : this(panel, button, null, avatarLabel, nameLabel, stateLabel, skillLabel)
+            {
+            }
+
+            public SurvivorCardBinding(Image panel, Button button, RawImage portrait, TextMeshProUGUI avatarLabel, TextMeshProUGUI nameLabel, TextMeshProUGUI stateLabel, TextMeshProUGUI skillLabel)
             {
                 this.panel = panel;
                 this.button = button;
+                this.portrait = portrait;
                 this.avatarLabel = avatarLabel;
                 this.nameLabel = nameLabel;
                 this.stateLabel = stateLabel;
@@ -276,16 +308,23 @@ namespace AshfallCamp.Presentation
             {
                 _survivorId = survivor != null ? survivor.SurvivorId : string.Empty;
                 UiText.SetActive(panel, survivor != null);
-                if (survivor == null) return;
+                if (survivor == null)
+                {
+                    ApplyArtwork(cardArtwork, null);
+                    return;
+                }
 
+                ApplyArtwork(cardArtwork, catalog.SurvivorRosterCardTexture);
                 if (panel != null)
                 {
                     panel.color = isSelected
-                        ? new Color(catalog.Theme.Teal.r, catalog.Theme.Teal.g, catalog.Theme.Teal.b, 0.86f)
-                        : new Color(catalog.Theme.PaperDark.r, catalog.Theme.PaperDark.g, catalog.Theme.PaperDark.b, 0.64f);
+                        ? catalog.Theme.WithAlpha(catalog.Theme.Teal, catalog.Theme.SurvivorSelectedPanelAlpha)
+                        : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, catalog.Theme.SurvivorInactivePanelAlpha);
                 }
 
                 var textColor = isSelected ? catalog.Theme.Paper : catalog.Theme.Ink;
+                var hasPortrait = ApplyPortrait(portrait, survivor.Portrait);
+                UiText.SetActive(avatarLabel, !hasPortrait);
                 UiText.Set(avatarLabel, survivor.Avatar);
                 UiText.Set(nameLabel, survivor.Name);
                 UiText.Set(stateLabel, survivor.State);
@@ -304,6 +343,36 @@ namespace AshfallCamp.Presentation
                     _selected?.Invoke(_survivorId);
                 }
             }
+        }
+
+        private static bool ApplyPortrait(RawImage target, Texture2D portrait)
+        {
+            if (target == null) return false;
+
+            var hasPortrait = portrait != null;
+            target.gameObject.SetActive(hasPortrait);
+            if (hasPortrait)
+            {
+                target.texture = portrait;
+                target.color = Color.white;
+            }
+
+            return hasPortrait;
+        }
+
+        private static bool ApplyArtwork(RawImage target, Texture2D texture)
+        {
+            if (target == null) return false;
+
+            var hasTexture = texture != null;
+            target.gameObject.SetActive(hasTexture);
+            if (hasTexture)
+            {
+                target.texture = texture;
+                target.color = Color.white;
+            }
+
+            return hasTexture;
         }
     }
 }

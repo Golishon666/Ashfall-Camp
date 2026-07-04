@@ -12,12 +12,14 @@ namespace AshfallCamp.Presentation
     public sealed class ExpeditionsPanelView : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI title;
+        [SerializeField] private List<RouteMapNodeBinding> mapNodes = new List<RouteMapNodeBinding>();
         [SerializeField] private List<RouteCardBinding> routeCards = new List<RouteCardBinding>();
         [SerializeField] private TextMeshProUGUI squadTitle;
         [SerializeField] private List<SquadMemberBinding> squadMembers = new List<SquadMemberBinding>();
         [SerializeField] private TextMeshProUGUI policyTitle;
         [SerializeField] private List<PolicyBinding> policies = new List<PolicyBinding>();
         [SerializeField] private Image detailPanel;
+        [SerializeField] private RawImage detailPanelArtwork;
         [SerializeField] private TextMeshProUGUI detailTitle;
         [SerializeField] private TextMeshProUGUI detailStats;
         [SerializeField] private TextMeshProUGUI detailLoot;
@@ -26,6 +28,7 @@ namespace AshfallCamp.Presentation
         [SerializeField] private Button launchButton;
         [SerializeField] private TextMeshProUGUI launchButtonLabel;
         [SerializeField] private Image monitorPanel;
+        [SerializeField] private RawImage monitorPanelArtwork;
         [SerializeField] private TextMeshProUGUI monitorTitle;
         [SerializeField] private TextMeshProUGUI monitorHeader;
         [SerializeField] private TextMeshProUGUI monitorProgress;
@@ -47,6 +50,7 @@ namespace AshfallCamp.Presentation
 
         public void ConfigureBindings(
             TextMeshProUGUI titleLabel,
+            IEnumerable<RouteMapNodeBinding> routeMapNodes,
             IEnumerable<RouteCardBinding> routes,
             TextMeshProUGUI expeditionSquadTitle,
             IEnumerable<SquadMemberBinding> expeditionSquadMembers,
@@ -68,7 +72,66 @@ namespace AshfallCamp.Presentation
             TextMeshProUGUI activeMonitorNoise,
             TextMeshProUGUI activeMonitorLog)
         {
+            ConfigureBindings(
+                titleLabel,
+                routeMapNodes,
+                routes,
+                expeditionSquadTitle,
+                expeditionSquadMembers,
+                expeditionPolicyTitle,
+                expeditionPolicies,
+                selectedDetailPanel,
+                selectedDetailTitle,
+                selectedDetailStats,
+                selectedDetailLoot,
+                selectedDetailEnemies,
+                selectedDetailWarnings,
+                launchActionButton,
+                launchActionLabel,
+                activeMonitorPanel,
+                activeMonitorTitle,
+                activeMonitorHeader,
+                activeMonitorProgress,
+                activeMonitorLoot,
+                activeMonitorNoise,
+                activeMonitorLog,
+                null,
+                null);
+        }
+
+        public void ConfigureBindings(
+            TextMeshProUGUI titleLabel,
+            IEnumerable<RouteMapNodeBinding> routeMapNodes,
+            IEnumerable<RouteCardBinding> routes,
+            TextMeshProUGUI expeditionSquadTitle,
+            IEnumerable<SquadMemberBinding> expeditionSquadMembers,
+            TextMeshProUGUI expeditionPolicyTitle,
+            IEnumerable<PolicyBinding> expeditionPolicies,
+            Image selectedDetailPanel,
+            TextMeshProUGUI selectedDetailTitle,
+            TextMeshProUGUI selectedDetailStats,
+            TextMeshProUGUI selectedDetailLoot,
+            TextMeshProUGUI selectedDetailEnemies,
+            TextMeshProUGUI selectedDetailWarnings,
+            Button launchActionButton,
+            TextMeshProUGUI launchActionLabel,
+            Image activeMonitorPanel,
+            TextMeshProUGUI activeMonitorTitle,
+            TextMeshProUGUI activeMonitorHeader,
+            TextMeshProUGUI activeMonitorProgress,
+            TextMeshProUGUI activeMonitorLoot,
+            TextMeshProUGUI activeMonitorNoise,
+            TextMeshProUGUI activeMonitorLog,
+            RawImage selectedDetailArtwork,
+            RawImage activeMonitorArtwork)
+        {
             title = titleLabel;
+            mapNodes.Clear();
+            if (routeMapNodes != null)
+            {
+                mapNodes.AddRange(routeMapNodes);
+            }
+
             routeCards.Clear();
             if (routes != null)
             {
@@ -90,6 +153,7 @@ namespace AshfallCamp.Presentation
             }
 
             detailPanel = selectedDetailPanel;
+            detailPanelArtwork = selectedDetailArtwork;
             detailTitle = selectedDetailTitle;
             detailStats = selectedDetailStats;
             detailLoot = selectedDetailLoot;
@@ -98,6 +162,7 @@ namespace AshfallCamp.Presentation
             launchButton = launchActionButton;
             launchButtonLabel = launchActionLabel;
             monitorPanel = activeMonitorPanel;
+            monitorPanelArtwork = activeMonitorArtwork;
             monitorTitle = activeMonitorTitle;
             monitorHeader = activeMonitorHeader;
             monitorProgress = activeMonitorProgress;
@@ -120,6 +185,14 @@ namespace AshfallCamp.Presentation
                 if (card != null)
                 {
                     card.Clear();
+                }
+            }
+
+            foreach (var node in mapNodes)
+            {
+                if (node != null)
+                {
+                    node.Clear();
                 }
             }
 
@@ -174,10 +247,19 @@ namespace AshfallCamp.Presentation
                 routeCards[i].Render(i < screen.Routes.Count ? screen.Routes[i] : null, catalog);
             }
 
+            RenderMapNodes(screen, catalog);
             RenderSquad(screen, catalog);
             RenderPolicies(screen, catalog);
             RenderDetail(screen.Selected, catalog);
-            RenderMonitor(screen.Monitor);
+            RenderMonitor(screen.Monitor, catalog);
+        }
+
+        private void RenderMapNodes(CampExpeditionScreenPresentation screen, CampUiCatalogSO catalog)
+        {
+            for (var i = 0; i < mapNodes.Count; i++)
+            {
+                mapNodes[i].Render(i < screen.Routes.Count ? screen.Routes[i] : null, catalog);
+            }
         }
 
         private void RenderSquad(CampExpeditionScreenPresentation screen, CampUiCatalogSO catalog)
@@ -208,6 +290,7 @@ namespace AshfallCamp.Presentation
             UiText.SetActive(detailPanel, detail != null && !string.IsNullOrWhiteSpace(detail.ZoneId));
             if (detail == null || string.IsNullOrWhiteSpace(detail.ZoneId)) return;
 
+            ApplyArtwork(detailPanelArtwork, catalog.ExpeditionDetailPanelTexture);
             _selectedPolicyId = detail.PolicyId;
             UiText.Set(detailTitle, detail.Title);
             UiText.Set(detailStats, detail.Details);
@@ -218,7 +301,7 @@ namespace AshfallCamp.Presentation
 
             if (detailPanel != null)
             {
-                detailPanel.color = new Color(catalog.Theme.Paper.r, catalog.Theme.Paper.g, catalog.Theme.Paper.b, 0.86f);
+                detailPanel.color = catalog.Theme.WithAlpha(catalog.Theme.Paper, catalog.Theme.ExpeditionDetailPanelAlpha);
             }
 
             if (detailTitle != null) detailTitle.color = catalog.Theme.Ink;
@@ -230,17 +313,32 @@ namespace AshfallCamp.Presentation
             if (launchButton != null) launchButton.interactable = detail.CanLaunch && _launchRequested != null;
         }
 
-        private void RenderMonitor(CampExpeditionMonitorPresentation monitor)
+        private void RenderMonitor(CampExpeditionMonitorPresentation monitor, CampUiCatalogSO catalog)
         {
             UiText.SetActive(monitorPanel, monitor != null && monitor.HasActiveExpedition);
             if (monitor == null || !monitor.HasActiveExpedition) return;
 
+            ApplyArtwork(monitorPanelArtwork, catalog.ExpeditionMonitorPanelTexture);
             UiText.Set(monitorTitle, monitor.Title);
             UiText.Set(monitorHeader, monitor.Header);
             UiText.Set(monitorProgress, monitor.Progress);
             UiText.Set(monitorLoot, monitor.Loot);
             UiText.Set(monitorNoise, monitor.Noise);
             UiText.Set(monitorLog, monitor.Log);
+        }
+
+        private static bool ApplyArtwork(RawImage target, Texture2D texture)
+        {
+            if (target == null) return false;
+            var hasTexture = texture != null;
+            target.gameObject.SetActive(hasTexture);
+            if (hasTexture)
+            {
+                target.texture = texture;
+                target.color = Color.white;
+            }
+
+            return hasTexture;
         }
 
         private void ApplyHandlers()
@@ -250,6 +348,14 @@ namespace AshfallCamp.Presentation
                 if (card != null)
                 {
                     card.Wire(SelectRoute);
+                }
+            }
+
+            foreach (var node in mapNodes)
+            {
+                if (node != null)
+                {
+                    node.Wire(SelectRoute);
                 }
             }
 
@@ -364,9 +470,83 @@ namespace AshfallCamp.Presentation
         }
 
         [Serializable]
+        public sealed class RouteMapNodeBinding
+        {
+            [SerializeField] private Image node;
+            [SerializeField] private Button button;
+            [SerializeField] private TextMeshProUGUI label;
+
+            [NonSerialized] private string _zoneId = string.Empty;
+            [NonSerialized] private Action<string> _selected;
+            [NonSerialized] private UnityAction _click;
+
+            public RouteMapNodeBinding()
+            {
+            }
+
+            public RouteMapNodeBinding(Image nodeImage, Button nodeButton, TextMeshProUGUI nodeLabel)
+            {
+                node = nodeImage;
+                button = nodeButton;
+                label = nodeLabel;
+            }
+
+            public void Wire(Action<string> selected)
+            {
+                Clear();
+                _selected = selected;
+                if (button == null) return;
+                _click = OnClicked;
+                button.onClick.AddListener(_click);
+            }
+
+            public void Clear()
+            {
+                if (button != null && _click != null)
+                {
+                    button.onClick.RemoveListener(_click);
+                }
+
+                _click = null;
+            }
+
+            public void Render(CampExpeditionRoutePresentation route, CampUiCatalogSO catalog)
+            {
+                _zoneId = route != null ? route.ZoneId : string.Empty;
+                UiText.SetActive(node, route != null);
+                if (button != null) button.interactable = route != null && route.CanSelect && !route.IsSelected;
+                if (route == null) return;
+
+                UiText.Set(label, route.Title);
+
+                if (node != null)
+                {
+                    node.color = route.IsSelected
+                        ? catalog.Theme.WithAlpha(catalog.Theme.Teal, catalog.Theme.ExpeditionRouteSelectedPanelAlpha)
+                        : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, route.CanSelect ? catalog.Theme.ExpeditionRouteAvailablePanelAlpha : catalog.Theme.ExpeditionRouteBlockedPanelAlpha);
+                }
+
+                if (label != null)
+                {
+                    label.color = route.IsSelected ? catalog.Theme.Paper : route.CanSelect ? catalog.Theme.Ink : catalog.Theme.Rust;
+                }
+            }
+
+            private void OnClicked()
+            {
+                if (!string.IsNullOrWhiteSpace(_zoneId))
+                {
+                    _selected?.Invoke(_zoneId);
+                }
+            }
+        }
+
+        [Serializable]
         public sealed class RouteCardBinding
         {
             [SerializeField] private Image panel;
+            [SerializeField] private RawImage thumbnail;
+            [SerializeField] private RawImage riskBadge;
             [SerializeField] private Button button;
             [SerializeField] private TextMeshProUGUI title;
             [SerializeField] private TextMeshProUGUI subtitle;
@@ -413,17 +593,24 @@ namespace AshfallCamp.Presentation
                 _zoneId = route != null ? route.ZoneId : string.Empty;
                 UiText.SetActive(panel, route != null);
                 if (button != null) button.interactable = route != null && route.CanSelect && !route.IsSelected;
-                if (route == null) return;
+                if (route == null)
+                {
+                    ApplyArtwork(thumbnail, null);
+                    ApplyArtwork(riskBadge, null);
+                    return;
+                }
 
                 UiText.Set(title, route.Title);
                 UiText.Set(subtitle, route.Subtitle);
                 UiText.Set(status, route.Status);
+                ApplyArtwork(thumbnail, route.Thumbnail);
+                ApplyArtwork(riskBadge, route.RiskBadge);
 
                 if (panel != null)
                 {
                     panel.color = route.IsSelected
-                        ? new Color(catalog.Theme.Teal.r, catalog.Theme.Teal.g, catalog.Theme.Teal.b, 0.84f)
-                        : new Color(catalog.Theme.PaperDark.r, catalog.Theme.PaperDark.g, catalog.Theme.PaperDark.b, route.CanSelect ? 0.72f : 0.38f);
+                        ? catalog.Theme.WithAlpha(catalog.Theme.Teal, catalog.Theme.ExpeditionRouteSelectedPanelAlpha)
+                        : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, route.CanSelect ? catalog.Theme.ExpeditionRouteAvailablePanelAlpha : catalog.Theme.ExpeditionRouteBlockedPanelAlpha);
                 }
 
                 var textColor = route.IsSelected ? catalog.Theme.Paper : catalog.Theme.Ink;
@@ -445,6 +632,7 @@ namespace AshfallCamp.Presentation
         public sealed class SquadMemberBinding
         {
             [SerializeField] private Image panel;
+            [SerializeField] private RawImage cardArtwork;
             [SerializeField] private Button button;
             [SerializeField] private TextMeshProUGUI title;
             [SerializeField] private TextMeshProUGUI meta;
@@ -489,16 +677,21 @@ namespace AshfallCamp.Presentation
                 _survivorId = member != null ? member.SurvivorId : string.Empty;
                 UiText.SetActive(panel, member != null);
                 if (button != null) button.interactable = member != null && member.CanSelect;
-                if (member == null) return;
+                if (member == null)
+                {
+                    ApplyArtwork(cardArtwork, null);
+                    return;
+                }
 
                 UiText.Set(title, member.Name);
                 UiText.Set(meta, member.Meta);
+                ApplyArtwork(cardArtwork, catalog.ExpeditionSquadMemberCardTexture);
 
                 if (panel != null)
                 {
                     panel.color = member.IsSelected
-                        ? new Color(catalog.Theme.Amber.r, catalog.Theme.Amber.g, catalog.Theme.Amber.b, 0.86f)
-                        : new Color(catalog.Theme.PaperDark.r, catalog.Theme.PaperDark.g, catalog.Theme.PaperDark.b, member.CanSelect ? 0.66f : 0.32f);
+                        ? catalog.Theme.WithAlpha(catalog.Theme.Amber, catalog.Theme.ExpeditionSquadSelectedPanelAlpha)
+                        : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, member.CanSelect ? catalog.Theme.ExpeditionSquadAvailablePanelAlpha : catalog.Theme.ExpeditionSquadBlockedPanelAlpha);
                 }
 
                 if (title != null) title.color = member.IsSelected ? catalog.Theme.Ink : catalog.Theme.MutedInk;
@@ -518,6 +711,7 @@ namespace AshfallCamp.Presentation
         public sealed class PolicyBinding
         {
             [SerializeField] private Image panel;
+            [SerializeField] private RawImage cardArtwork;
             [SerializeField] private Button button;
             [SerializeField] private TextMeshProUGUI title;
             [SerializeField] private TextMeshProUGUI details;
@@ -562,16 +756,21 @@ namespace AshfallCamp.Presentation
                 _policyId = policy != null ? policy.PolicyId : string.Empty;
                 UiText.SetActive(panel, policy != null);
                 if (button != null) button.interactable = policy != null && policy.CanSelect && !policy.IsSelected;
-                if (policy == null) return;
+                if (policy == null)
+                {
+                    ApplyArtwork(cardArtwork, null);
+                    return;
+                }
 
                 UiText.Set(title, policy.Title);
                 UiText.Set(details, policy.Details);
+                ApplyArtwork(cardArtwork, catalog.ExpeditionPolicyCardTexture);
 
                 if (panel != null)
                 {
                     panel.color = policy.IsSelected
-                        ? new Color(catalog.Theme.Teal.r, catalog.Theme.Teal.g, catalog.Theme.Teal.b, 0.82f)
-                        : new Color(catalog.Theme.PaperDark.r, catalog.Theme.PaperDark.g, catalog.Theme.PaperDark.b, 0.62f);
+                        ? catalog.Theme.WithAlpha(catalog.Theme.Teal, catalog.Theme.ExpeditionPolicySelectedPanelAlpha)
+                        : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, catalog.Theme.ExpeditionPolicyInactivePanelAlpha);
                 }
 
                 if (title != null) title.color = policy.IsSelected ? catalog.Theme.Paper : catalog.Theme.Ink;

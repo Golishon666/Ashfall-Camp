@@ -22,6 +22,33 @@ MonoBehaviour:
     Rust: {r: 0.7882353, g: 0.3882353, b: 0.22745098, a: 1}
     Amber: {r: 0.88235295, g: 0.7058824, b: 0.41568628, a: 1}
     Line: {r: 0.43, g: 0.33, b: 0.22, a: 0.28}
+    NavInactivePanelAlpha: 0.38
+    BuildingFilterInactivePanelAlpha: 0.55
+    AlertPanelAlpha: 0.08
+    ExpeditionDetailPanelAlpha: 0.86
+    ExpeditionRouteSelectedPanelAlpha: 0.84
+    ExpeditionRouteAvailablePanelAlpha: 0.72
+    ExpeditionRouteBlockedPanelAlpha: 0.38
+    ExpeditionSquadSelectedPanelAlpha: 0.86
+    ExpeditionSquadAvailablePanelAlpha: 0.66
+    ExpeditionSquadBlockedPanelAlpha: 0.32
+    ExpeditionPolicySelectedPanelAlpha: 0.82
+    ExpeditionPolicyInactivePanelAlpha: 0.62
+    RadioCandidatePanelAlpha: 0.68
+    SurvivorSelectedPanelAlpha: 0.86
+    SurvivorInactivePanelAlpha: 0.64
+    WorkshopItemPanelAlpha: 0.74
+  ScreenTransition:
+    Enabled: 1
+    DurationSeconds: 0.16
+    Ease: 6
+    UseUnscaledTime: 1
+  Toast:
+    Enabled: 1
+    VisibleSeconds: 2.2
+    FadeSeconds: 0.14
+    Ease: 6
+    UseUnscaledTime: 1
   BrandBannerText: A
   BrandTitle: ASHFALL CAMP
   BrandSubtitle: REBUILD  *  SURVIVE  *  THRIVE
@@ -30,7 +57,8 @@ MonoBehaviour:
   BuildingScreenTitle: BUILDINGS
   CampStatusTitle: CAMP STATUS
   CampStatusBody: Our camp is stable and ready to grow.
-  CampStatusBodyFormat: '{0} idle survivors, {1} need care, {2} squads out. Supplies {3}%.'
+  CampStatusBodyFormat: '{0} idle survivors, {1} need care, {2} squads out. Supplies
+    {3}%.'
   CampStatusHealthyLabel: THRIVING
   CampStatusStrainedLabel: STRAINED
   CampStatusBadgeLabel: OK
@@ -61,9 +89,9 @@ MonoBehaviour:
   NoAlertsTitle: CAMP QUIET
   NoAlertsBody: No urgent issues in the last shift.
   SurvivorJoinedAlertTitleFormat: '{0} JOINED'
-  SurvivorJoinedAlertBodyFormat: 'Radio signal secured. Roster {1}/{2}.'
+  SurvivorJoinedAlertBodyFormat: Radio signal secured. Roster {1}/{2}.
   DemoCompletedAlertTitleFormat: SIGNAL FOUND
-  DemoCompletedAlertBodyFormat: 'Decoded from {0}. Demo objective complete.'
+  DemoCompletedAlertBodyFormat: Decoded from {0}. Demo objective complete.
   ActiveExpeditionAlertTitleFormat: '{0} EXPEDITION ACTIVE'
   ActiveExpeditionAlertBodyFormat: '{0} route is {1}% complete.'
   LowResourceAlertTitleFormat: LOW {0}
@@ -72,26 +100,31 @@ MonoBehaviour:
   WoundedAlertTitleFormat: '{0} SURVIVOR NEEDS CARE'
   WoundedAlertBodyFormat: '{0} is not ready for field work.'
   EmergencyScavengeAlertTitle: SCAVENGE AROUND CAMP
-  EmergencyScavengeReadyBodyFormat: 'No cost. {0}s for {1}.'
-  EmergencyScavengeActiveBodyFormat: 'Crew is checking the perimeter. {0}s left.'
-  EmergencyScavengeCooldownBodyFormat: 'Perimeter stripped. Ready again in {0}s.'
+  EmergencyScavengeReadyBodyFormat: No cost. {0}s for {1}.
+  EmergencyScavengeActiveBodyFormat: Crew is checking the perimeter. {0}s left.
+  EmergencyScavengeCooldownBodyFormat: Perimeter stripped. Ready again in {0}s.
   EmergencyScavengeButton: SCAVENGE
   EmergencyScavengeCompletedAlertTitle: SUPPLIES RECOVERED
-  EmergencyScavengeCompletedAlertBodyFormat: 'Camp scavenge brought in {0}.'
+  EmergencyScavengeCompletedAlertBodyFormat: Camp scavenge brought in {0}.
   UpgradeAvailableAlertTitleFormat: '{0} CAN UPGRADE'
   UpgradeAvailableAlertBodyFormat: Next level {0} is affordable.
+  CampStatusPanelTexture: {fileID: 2800000, guid: 9178779e68b64d988de16f9f2c969227, type: 3}
+  CampAlertCardTexture: {fileID: 2800000, guid: d209b5b82da7452daafb769ef7bc0fdf, type: 3}
   CampOverviewTitle: CAMP OVERVIEW
   ActiveExpeditionsTitle: ACTIVE EXPEDITIONS
   RadioIntelTitle: RADIO INTEL
   RadioIntelBody: No transmission yet. Upgrade the radio tower to widen the search.
-  RadioIntelBodyFormat: 'Routes {0}/{1}. Clears {2}. Survivors {3}/{4}. Broadcast: {5} scrap, {6} food, {7} water. Signals {8}.'
+  RadioIntelBodyFormat: 'Routes {0}/{1}. Clears {2}. Survivors {3}/{4}. Broadcast:
+    {5} scrap, {6} food, {7} water. Signals {8}.'
   RadioIntelButton: BROADCAST
+  RadioIntelPanelTexture: {fileID: 2800000, guid: f71f9246467e4215bdcaa1f1268bcdc0, type: 3}
   RadioScreenTitle: RADIO
   RadioBroadcastTitle: BROADCAST CONTROL
   RadioBroadcastCostFormat: 'Cost: {0}'
   RadioBroadcastReadyLabel: Signal clear
   RadioBroadcastPendingLabel: Survivor signals awaiting decision
   RadioBroadcastBlockedFormat: 'Blocked: {0}'
+  RadioBroadcastPanelTexture: {fileID: 2800000, guid: 132ccc20beb94d70b363a605b531b362, type: 3}
   RadioCandidateListTitle: SIGNALS
   RadioCandidateAwaitingTitle: AWAITING BROADCAST
   RadioCandidateAwaitingBody: Start a broadcast to reveal available survivor signals.
@@ -102,6 +135,8 @@ MonoBehaviour:
   RadioCandidateTraitsFormat: 'Traits: {0}'
   RadioCandidateRecruitButton: RECRUIT
   RadioCandidateSkipButton: SKIP SIGNALS
+  RadioEmptyPanelTexture: {fileID: 2800000, guid: 71bf6b428c4a4497ad466a82090ab991, type: 3}
+  RadioCandidateCardTexture: {fileID: 2800000, guid: 253d465fd411472290e128dbb3daf481, type: 3}
   ExpeditionEmptyTitle: NO ROUTES
   ExpeditionEmptySubtitle: Radio intel required
   ExpeditionEmptyStatus: WAITING
@@ -110,13 +145,15 @@ MonoBehaviour:
   ExpeditionRouteSubtitleFormat: '{0} risk, costs {1} food / {2} water'
   ExpeditionRouteStatusFormat: '{0}% familiar'
   ExpeditionScreenTitle: EXPEDITIONS
-  ExpeditionSquadTitleFormat: 'SQUAD {0}/{1}'
+  ExpeditionSquadTitleFormat: SQUAD {0}/{1}
   ExpeditionSquadMemberMetaFormat: '{0}  *  LVL {1}  *  {2}  *  PWR {3}'
   ExpeditionPolicyTitle: POLICY
-  ExpeditionPolicyDetailsFormat: 'Risk x{0}  *  Loot x{1}  *  Time x{2}  *  Noise {3}'
-  ExpeditionSurvivalChanceFormat: 'Survival {0}%'
+  ExpeditionPolicyDetailsFormat: Risk x{0}  *  Loot x{1}  *  Time x{2}  *  Noise
+    {3}
+  ExpeditionSurvivalChanceFormat: Survival {0}%
   ExpeditionSelectedTitleFormat: '{0}  *  {1}'
-  ExpeditionSelectedDetailsFormat: 'Duration {0} min. Cost {1} food / {2} water. Power {3}/{4}. Familiarity {5}%. {6}.'
+  ExpeditionSelectedDetailsFormat: Duration {0} min. Cost {1} food / {2} water. Power
+    {3}/{4}. Familiarity {5}%. {6}.
   ExpeditionSelectedLootFormat: 'Expected loot: {0}'
   ExpeditionLootRangeFormat: '{0} {1}-{2}'
   ExpeditionSelectedEnemiesFormat: 'Known threats: {0}'
@@ -128,9 +165,9 @@ MonoBehaviour:
   ExpeditionRiskConfirmationNoticeFormat: 'Confirm risk: {0}'
   ExpeditionMonitorTitle: ACTIVE MONITOR
   ExpeditionMonitorHeaderFormat: '{0}  *  {1} survivor(s)  *  {2} min left'
-  ExpeditionMonitorProgressFormat: 'Progress {0}%'
+  ExpeditionMonitorProgressFormat: Progress {0}%
   ExpeditionMonitorLootFormat: 'Loot so far: {0}'
-  ExpeditionMonitorNoiseFormat: 'Noise {0} ({1})'
+  ExpeditionMonitorNoiseFormat: Noise {0} ({1})
   ExpeditionMonitorLogFormat: 'Log: {0}'
   ExpeditionMonitorThreatFormat: 'Threats: {0}'
   ExpeditionMonitorWoundsFormat: 'Wounds: {0}'
@@ -140,6 +177,10 @@ MonoBehaviour:
   ExpeditionMonitorNoiseHighLabel: HIGH
   ExpeditionMonitorNoiseMediumThreshold: 4
   ExpeditionMonitorNoiseHighThreshold: 8
+  ExpeditionDetailPanelTexture: {fileID: 2800000, guid: a5a9824b2c4548da835828574930a68f, type: 3}
+  ExpeditionMonitorPanelTexture: {fileID: 2800000, guid: bc9efbf0790a4b74b2bd081a1c8d7372, type: 3}
+  ExpeditionSquadMemberCardTexture: {fileID: 2800000, guid: a95e4e9052be42b1b048b465b16916e2, type: 3}
+  ExpeditionPolicyCardTexture: {fileID: 2800000, guid: de1fc3720b6c43b5a027a40141f82e49, type: 3}
   ExpeditionLockedStatusFormat: 'Locked: {0}'
   ExpeditionUnlockRequirementFormat: '{0} {1}'
   ExpeditionNoWarningsLabel: None
@@ -156,6 +197,7 @@ MonoBehaviour:
   ResourceCapEffectFormat: '{0} cap {1}, +{2}/h.'
   ResourceCapOnlyEffectFormat: '{0} cap {1}.'
   RouteUnlockEffectLabel: Unlocks routes and future camp systems.
+  BuildingCardTexture: {fileID: 2800000, guid: f586f8235bcc4fd8a6647aef321c58d7, type: 3}
   IdleSuffixLabel: idle
   PerHourSuffixLabel: /h
   LevelLabelFormat: Level {0}
@@ -169,36 +211,50 @@ MonoBehaviour:
   SurvivorDetailBackgroundFormat: 'Background: {0}'
   SurvivorDetailTraitsFormat: 'Traits: {0}'
   SurvivorDetailWeaponFormat: 'Weapon: {0}  ({1}/{2})'
-  SurvivorDetailStatsFormat: 'HP {0}/{1}  Morale {2}  Fatigue {3}  XP {4}'
+  SurvivorDetailStatsFormat: HP {0}/{1}  Morale {2}  Fatigue {3}  XP {4}
   SurvivorDetailTreatmentFormat: 'Treatment: {0}'
   SurvivorDetailHealthyLabel: Healthy
   SurvivorDetailWoundFormat: '{0}, {1} min left'
   SurvivorDetailHealingLockedFormat: '{0}. Infirmary lvl {1} required'
   SurvivorDetailMedicineCostFormat: 'Medicine: {0}'
   SurvivorDetailUseMedicineButton: USE MEDICINE
+  SurvivorsEmptyPanelTexture: {fileID: 2800000, guid: 3d9e9f1c1be6475cb55315c39300a658, type: 3}
+  SurvivorDetailPanelTexture: {fileID: 2800000, guid: 2d7c527756ed442eab5632edccb17338, type: 3}
+  SurvivorRosterCardTexture: {fileID: 2800000, guid: 1e0d4db6228d440380c358e3aeca4c14, type: 3}
+  DefaultSurvivorPortraitId: default
   SurvivorNoWeaponLabel: Unarmed
   SurvivorNoTraitsLabel: None
   WorkshopScreenTitle: WORKSHOP
-  WorkshopStatusFormat: 'Target {0}. Items {1}. Parts {2}. Repair requires Workshop lvl {3}.'
+  WorkshopStatusFormat: Target {0}. Items {1}. Parts {2}. Repair requires Workshop
+    lvl {3}.
   WorkshopEmptyTitle: NO GEAR
   WorkshopEmptyBody: Expeditions and recruits can bring weapons back to camp.
-  WorkshopItemDurabilityFormat: 'Durability {0}/{1}'
-  WorkshopItemEquippedFormat: 'Equipped by {0}'
+  WorkshopItemDurabilityFormat: Durability {0}/{1}
+  WorkshopItemEquippedFormat: Equipped by {0}
   WorkshopItemUnequippedLabel: Stored
   WorkshopRepairCostFormat: 'Repair: {0} parts'
   WorkshopRepairButton: REPAIR
   WorkshopEquipButton: EQUIP
   WorkshopBrokenLabel: BROKEN
+  WorkshopEmptyPanelTexture: {fileID: 2800000, guid: caf4faaf424542f08a558f956e809b49, type: 3}
+  WorkshopItemTileTexture: {fileID: 2800000, guid: d2289dc8aa9a42adb804fdedafa90641, type: 3}
+  ReportsScreenId: reports
   ReportsScreenTitle: REPORTS
   ReportsEmptyTitle: NO REPORTS
-  ReportsEmptyBody: Complete an expedition or return after offline time to generate reports.
+  ReportsEmptyBody: Complete an expedition or return after offline time to generate
+    reports.
+  ReportsEmptyPanelTexture: {fileID: 2800000, guid: b952fa630e444172a79c6ca0a8995397, type: 3}
+  ReportsAfterActionPanelTexture: {fileID: 2800000, guid: 8fd3153f8d0946aa86723f9c26aad466, type: 3}
+  ReportsCampEventPanelTexture: {fileID: 2800000, guid: 30312172372c4c1a9bf416cc5045f47f, type: 3}
+  ReportsOfflinePanelTexture: {fileID: 2800000, guid: 7cb890257a784d1881d623e9c20164b9, type: 3}
   CampEventPanelTitle: CAMP NOTES
   SurvivorJoinedReportTitleFormat: '{0} JOINED THE CAMP'
-  SurvivorJoinedReportBodyFormat: 'Recovered from {1}. Roster now {2}/{3}.'
+  SurvivorJoinedReportBodyFormat: Recovered from {1}. Roster now {2}/{3}.
   DemoCompletedReportTitleFormat: SIGNAL RECOVERED
-  DemoCompletedReportBodyFormat: '{0} yielded the final transmission. The camp can survive another season.'
+  DemoCompletedReportBodyFormat: '{0} yielded the final transmission. The camp can
+    survive another season.'
   EmergencyScavengeReportTitle: SUPPLIES RECOVERED
-  EmergencyScavengeReportBodyFormat: 'Camp scavenge brought in {0}.'
+  EmergencyScavengeReportBodyFormat: Camp scavenge brought in {0}.
   AfterActionPanelTitle: AFTER ACTION
   AfterActionSuccessLabel: SUCCESS
   AfterActionFailureLabel: FAILED
@@ -207,21 +263,38 @@ MonoBehaviour:
   AfterActionXpFormat: 'XP gained: {0}'
   AfterActionWoundsFormat: 'Wounds: {0}'
   AfterActionEnemiesFormat: 'Enemies defeated: {0}'
-  AfterActionEventsFormat: 'Events: {0}'
+  AfterActionEventsFormat: 'Details: {0}'
+  AfterActionSkillXpFormat: 'Skill XP: {0}'
+  AfterActionDurabilityFormat: 'Gear damage: {0}'
+  AfterActionDurabilityItemFormat: '{0} -{1}'
+  AfterActionBrokenItemsFormat: 'Broken gear: {0}'
+  AfterActionProgressFormat: 'Progress: {0}'
+  AfterActionUnlockedFormat: 'Unlocked {0}'
+  AfterActionDemoProgressFormat: 'Demo goal complete: {0}'
   AfterActionSendAgainButton: SEND AGAIN
   OfflineReportPanelTitle: OFFLINE REPORT
   OfflineReportSummaryFormat: '{0} min passed while away'
   OfflineReportResourcesFormat: 'Resources: {0}'
+  OfflineReportResourcesSpentFormat: 'Spent: {0}'
   OfflineReportCompletedFormat: 'Expeditions completed: {0}'
   OfflineReportHealingFormat: 'Healing completed: {0}'
   OfflineReportWarningsFormat: 'Warnings: {0}'
   SettingsScreenTitle: SETTINGS
   SettingsAutosaveTitle: AUTOSAVE
-  SettingsAutosaveEnabledBodyFormat: 'Saving every {0}s while enabled.'
+  SettingsAutosaveEnabledBodyFormat: Saving every {0}s while enabled.
   SettingsAutosaveDisabledBody: Autosave is off. The current choice is saved immediately.
   SettingsAutosaveEnabledLabel: ENABLED
   SettingsAutosaveDisabledLabel: DISABLED
   SettingsAutosaveToggleLabel: Autosave
+  SettingsManualSaveTitle: MANUAL SAVE
+  SettingsManualSaveBody: Save the current camp state immediately.
+  SettingsManualSaveButton: SAVE NOW
+  SettingsRowTexture: {fileID: 2800000, guid: a6c76585d9c54b128b0b6cbe5cecb08e, type: 3}
+  SettingsToggleTrackActiveTexture: {fileID: 2800000, guid: 203095ad4bbd4308866484dfaeb1bc58, type: 3}
+  SettingsToggleTrackInactiveTexture: {fileID: 2800000, guid: 3424bfb624e647c0ba44b17f0477a3f9, type: 3}
+  SettingsToggleKnobTexture: {fileID: 2800000, guid: d37e26ec26a54759a08df26b81c993a4, type: 3}
+  SettingsSliderTrackTexture: {fileID: 2800000, guid: 6abe14d052ab4436a276fb5b349e9059, type: 3}
+  SettingsSliderHandleTexture: {fileID: 2800000, guid: f3b6051645c948bd86fef564c7cca6d7, type: 3}
   ReportNoneLabel: None
   ReportListSeparator: ', '
   ReportCountFormat: '{0} x{1}'
@@ -248,7 +321,7 @@ MonoBehaviour:
     CompleteWhenAnyCondition: 0
     Conditions:
     - Type: survivor_count
-      Id: ''
+      Id:
       Value: 2
   - Id: workshop_one
     Title: 'NEXT: BUILD WORKSHOP'
@@ -292,7 +365,7 @@ MonoBehaviour:
     UsesSurvivorCapacity: 0
   - Id: survivors
     Label: CAPACITY
-    Icon: {fileID: 0}
+    Icon: {fileID: 2800000, guid: 911e2f9b550a95b42b9828e52356a8ca, type: 3}
     UsesSurvivorCapacity: 1
   BuildingFilters:
   - Id: all
@@ -310,32 +383,16 @@ MonoBehaviour:
   - Id: radio
     Label: RADIO
     IsActive: 0
-  - Id: settings
-    Label: SETTINGS
-    IsActive: 0
-  SurvivorSkillLabels:
-  - Id: scavenging
-    Label: SCAV
-  - Id: melee
-    Label: MELEE
-  - Id: firearms
-    Label: FIRE
-  - Id: survival
-    Label: SURV
-  - Id: mechanics
-    Label: MECH
-  - Id: medicine
-    Label: MED
   Buildings:
   - BuildingId: barracks
     Description: Population capacity and squad size.
-    Icon: {fileID: 0}
+    Icon: {fileID: 2800000, guid: 911e2f9b550a95b42b9828e52356a8ca, type: 3}
     Image: {fileID: 0}
     OverviewLeftPercent: 10
     OverviewTopPercent: 18
   - BuildingId: workshop
     Description: Crafting, repairs, and route unlocks.
-    Icon: {fileID: 0}
+    Icon: {fileID: 2800000, guid: f398bd99595f0214586895e7a61a6bb7, type: 3}
     Image: {fileID: 0}
     OverviewLeftPercent: 42
     OverviewTopPercent: 44
@@ -353,7 +410,7 @@ MonoBehaviour:
     OverviewTopPercent: 64
   - BuildingId: radio_tower
     Description: Signals, intel range, and mission unlocks.
-    Icon: {fileID: 0}
+    Icon: {fileID: 2800000, guid: d6bc12cd4c798af4a9e4011919711632, type: 3}
     Image: {fileID: 0}
     OverviewLeftPercent: 60
     OverviewTopPercent: 20
@@ -374,22 +431,163 @@ MonoBehaviour:
   - Title: DRY SUBURB
     Subtitle: Locked
     Status: Need clears
+  ExpeditionZoneArtwork:
+  - ZoneId: abandoned_store
+    Thumbnail: {fileID: 2800000, guid: 5f8fa38ec55045428b6c0df6585a9dd3, type: 3}
+  - ZoneId: dry_suburb
+    Thumbnail: {fileID: 2800000, guid: 678760d3a4854afbbc176a1acd5e214c, type: 3}
+  - ZoneId: ruined_clinic
+    Thumbnail: {fileID: 2800000, guid: 088c8dc05f5d403b9007d71dc61caa63, type: 3}
+  - ZoneId: police_outpost
+    Thumbnail: {fileID: 2800000, guid: bd033d2ffed44ac89e1048463a9771a4, type: 3}
+  - ZoneId: mutant_tunnel
+    Thumbnail: {fileID: 2800000, guid: a7199af999844370ab51401df8511742, type: 3}
+  ExpeditionRiskArtwork:
+  - RiskTier: Safe
+    Badge: {fileID: 2800000, guid: 23e8b506593c439cbb374abfde7e43b4, type: 3}
+  - RiskTier: Unstable
+    Badge: {fileID: 2800000, guid: 56f94cc6594f48bca63bc24d6f9d9816, type: 3}
+  - RiskTier: Dangerous
+    Badge: {fileID: 2800000, guid: ebdfd18743154409a283d846e071bd2c, type: 3}
+  - RiskTier: DeadZone
+    Badge: {fileID: 2800000, guid: 91ea2635dc8e490eae92884761ebc88f, type: 3}
   NavItems:
   - Id: expeditions
     Label: EXPEDITIONS
+    Icon: {fileID: 2800000, guid: a597ee356523901408b8d779b765ea1f, type: 3}
     IsActive: 0
   - Id: survivors
     Label: SURVIVORS
+    Icon: {fileID: 2800000, guid: 911e2f9b550a95b42b9828e52356a8ca, type: 3}
     IsActive: 0
   - Id: buildings
     Label: BUILDINGS
+    Icon: {fileID: 2800000, guid: ebb35b604d6d6d243999e5bc29882a7d, type: 3}
     IsActive: 1
   - Id: workshop
     Label: WORKSHOP
+    Icon: {fileID: 2800000, guid: f398bd99595f0214586895e7a61a6bb7, type: 3}
     IsActive: 0
   - Id: reports
     Label: REPORTS
+    Icon: {fileID: 2800000, guid: 697e79168b8544088c982e7063364f08, type: 3}
     IsActive: 0
   - Id: radio
     Label: RADIO
+    Icon: {fileID: 2800000, guid: d6bc12cd4c798af4a9e4011919711632, type: 3}
     IsActive: 0
+  - Id: settings
+    Label: SETTINGS
+    Icon: {fileID: 2800000, guid: d37e26ec26a54759a08df26b81c993a4, type: 3}
+    IsActive: 0
+  SurvivorSkillLabels:
+  - Id: scavenging
+    Label: SCAV
+  - Id: melee
+    Label: MELEE
+  - Id: firearms
+    Label: FIRE
+  - Id: survival
+    Label: SURV
+  - Id: mechanics
+    Label: MECH
+  - Id: medicine
+    Label: MED
+  SurvivorPortraits:
+  - Id: survivor_1
+    Portrait: {fileID: 2800000, guid: 67ef02d0cd5b491997f40982ecd9ada0, type: 3}
+  - Id: scavenger
+    Portrait: {fileID: 2800000, guid: 67ef02d0cd5b491997f40982ecd9ada0, type: 3}
+  - Id: default
+    Portrait: {fileID: 2800000, guid: 9055609bcf290da4bb5db43819f39ca4, type: 3}
+  - Id: elias
+    Portrait: {fileID: 2800000, guid: b30644392d56b794099004b3a6259106, type: 3}
+  - Id: ex_cop
+    Portrait: {fileID: 2800000, guid: b30644392d56b794099004b3a6259106, type: 3}
+  - Id: nika
+    Portrait: {fileID: 2800000, guid: 9252c059948b41848b2f29e0da8bf2a9, type: 3}
+  - Id: mechanic
+    Portrait: {fileID: 2800000, guid: 9252c059948b41848b2f29e0da8bf2a9, type: 3}
+  - Id: june
+    Portrait: {fileID: 2800000, guid: b5b360bf7ffa7614786a388a44610f8d, type: 3}
+  - Id: nurse
+    Portrait: {fileID: 2800000, guid: b5b360bf7ffa7614786a388a44610f8d, type: 3}
+  - Id: tomas
+    Portrait: {fileID: 2800000, guid: 3c92c456571127e429513b2df1157ee7, type: 3}
+  - Id: brawler
+    Portrait: {fileID: 2800000, guid: 3c92c456571127e429513b2df1157ee7, type: 3}
+  - Id: rhea
+    Portrait: {fileID: 2800000, guid: 949c5ed8749b7b24fa59175a4591c02a, type: 3}
+  - Id: hunter
+    Portrait: {fileID: 2800000, guid: 949c5ed8749b7b24fa59175a4591c02a, type: 3}
+  - Id: kade
+    Portrait: {fileID: 2800000, guid: 2f1eb5beafaf9c34fb4ea40ff8cf5995, type: 3}
+  ToastMessages:
+  - Id: action_blocked
+    TitleFormat: ACTION BLOCKED
+    BodyFormat: '{0}'
+    ToneColor: {r: 0.7882353, g: 0.3882353, b: 0.22745098, a: 1}
+  - Id: no_idle_survivors
+    TitleFormat: NO CREW READY
+    BodyFormat: All available survivors are busy or wounded.
+    ToneColor: {r: 0.7882353, g: 0.3882353, b: 0.22745098, a: 1}
+  - Id: building_upgraded
+    TitleFormat: BUILDING UPGRADED
+    BodyFormat: '{0} reached level {1}.'
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
+  - Id: expedition_launched
+    TitleFormat: EXPEDITION LAUNCHED
+    BodyFormat: '{0} route is underway.'
+    ToneColor: {r: 0.18431373, g: 0.41568628, b: 0.44705883, a: 1}
+  - Id: expedition_completed
+    TitleFormat: REPORT READY
+    BodyFormat: '{0} team returned. After Action is open.'
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
+  - Id: expedition_failed
+    TitleFormat: EXPEDITION FAILED
+    BodyFormat: '{0} report is ready. Review losses and loot.'
+    ToneColor: {r: 0.7882353, g: 0.3882353, b: 0.22745098, a: 1}
+  - Id: offline_report_ready
+    TitleFormat: OFFLINE REPORT
+    BodyFormat: Camp progress from {0} min away is ready.
+    ToneColor: {r: 0.18431373, g: 0.41568628, b: 0.44705883, a: 1}
+  - Id: recruitment_broadcast
+    TitleFormat: BROADCAST SENT
+    BodyFormat: '{0} signal candidates found.'
+    ToneColor: {r: 0.18431373, g: 0.41568628, b: 0.44705883, a: 1}
+  - Id: recruitment_skipped
+    TitleFormat: SIGNALS CLEARED
+    BodyFormat: Current candidate signals were dismissed.
+    ToneColor: {r: 0.41568628, g: 0.3647059, b: 0.2901961, a: 1}
+  - Id: survivor_recruited
+    TitleFormat: SURVIVOR JOINED
+    BodyFormat: '{0} joined the camp.'
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
+  - Id: item_repaired
+    TitleFormat: ITEM REPAIRED
+    BodyFormat: '{0} is ready for field work.'
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
+  - Id: item_equipped
+    TitleFormat: ITEM EQUIPPED
+    BodyFormat: '{0} equipped {1}.'
+    ToneColor: {r: 0.18431373, g: 0.41568628, b: 0.44705883, a: 1}
+  - Id: medicine_used
+    TitleFormat: MEDICINE USED
+    BodyFormat: '{0} is back on their feet.'
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
+  - Id: emergency_scavenge_started
+    TitleFormat: SCAVENGE STARTED
+    BodyFormat: Perimeter sweep will finish in {0}s.
+    ToneColor: {r: 0.88235295, g: 0.7058824, b: 0.41568628, a: 1}
+  - Id: autosave_enabled
+    TitleFormat: AUTOSAVE ON
+    BodyFormat: Progress will save automatically.
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
+  - Id: autosave_disabled
+    TitleFormat: AUTOSAVE OFF
+    BodyFormat: Use manual save to preserve progress.
+    ToneColor: {r: 0.88235295, g: 0.7058824, b: 0.41568628, a: 1}
+  - Id: manual_saved
+    TitleFormat: SAVED
+    BodyFormat: Camp progress was written to disk.
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}

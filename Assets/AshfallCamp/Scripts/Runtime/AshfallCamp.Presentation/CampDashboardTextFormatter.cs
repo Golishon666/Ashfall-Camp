@@ -202,6 +202,7 @@ namespace AshfallCamp.Presentation
                 state.Zones.TryGetValue(zone.Id, out zoneState);
                 var unlocked = zoneState != null && zoneState.IsUnlocked;
                 var familiarity = zoneState != null ? zoneState.Familiarity : 0;
+                var riskTier = zone.RiskTier.ToString();
                 var validation = unlocked ? ValidateZoneLaunch(state, config, zone.Id, policyId, survivorIds) : null;
                 var status = unlocked
                     ? Format(catalog.ExpeditionRouteStatusFormat, ToWholePercent(familiarity))
@@ -210,11 +211,14 @@ namespace AshfallCamp.Presentation
                 result.Routes.Add(new CampExpeditionRoutePresentation(
                     zone.Id,
                     zone.Name,
-                    Format(catalog.ExpeditionRouteSubtitleFormat, zone.RiskTier, zone.FoodCostPerSurvivor, zone.WaterCostPerSurvivor),
+                    Format(catalog.ExpeditionRouteSubtitleFormat, riskTier, zone.FoodCostPerSurvivor, zone.WaterCostPerSurvivor),
                     status,
                     unlocked,
                     validation != null && validation.IsValid,
-                    string.Equals(zone.Id, selectedId, StringComparison.Ordinal)));
+                    string.Equals(zone.Id, selectedId, StringComparison.Ordinal),
+                    riskTier,
+                    FindExpeditionZoneThumbnail(catalog, zone.Id),
+                    FindExpeditionRiskBadge(catalog, riskTier)));
             }
 
             BuildSelectedExpeditionDetail(result, state, config, catalog, selectedId, policyId, survivorIds, riskConfirmationPending);
@@ -304,7 +308,8 @@ namespace AshfallCamp.Presentation
                     survivor.Name,
                     string.IsNullOrEmpty(survivor.Name) ? string.Empty : survivor.Name.Substring(0, 1).ToUpperInvariant(),
                     Format(catalog.SurvivorCardStateFormat, survivor.State, survivor.Level),
-                    FormatTopSkill(survivor, catalog)));
+                    FormatTopSkill(survivor, catalog),
+                    ResolveSurvivorPortrait(survivor, catalog)));
             }
 
             return result;
@@ -327,6 +332,7 @@ namespace AshfallCamp.Presentation
                 Stats = Format(catalog.SurvivorDetailStatsFormat, survivor.Health, survivor.MaxHealth, survivor.Morale, survivor.Fatigue, survivor.Xp),
                 MedicineCost = Format(catalog.SurvivorDetailMedicineCostFormat, FormatResourceAmounts(HealingSystem.CalculateMedicineCost(config), config, catalog)),
                 MedicineButton = catalog.SurvivorDetailUseMedicineButton,
+                Portrait = ResolveSurvivorPortrait(survivor, catalog),
                 ShowMedicineAction = survivor.State == SurvivorActivityState.Wounded,
                 CanUseMedicine = HealingSystem.ValidateUseMedicine(state, config, new UseMedicineRequest { SurvivorId = survivor.Id }).IsValid
             };
@@ -406,7 +412,7 @@ namespace AshfallCamp.Presentation
                 presentation.AfterActionXp = Format(catalog.AfterActionXpFormat, CalculateExpeditionXp(expedition, config));
                 presentation.AfterActionWounds = Format(catalog.AfterActionWoundsFormat, FormatSurvivorNames(state, expedition.WoundedSurvivorIds, catalog));
                 presentation.AfterActionEnemies = Format(catalog.AfterActionEnemiesFormat, FormatEnemyCounts(expedition.EnemiesDefeated, config, catalog));
-                presentation.AfterActionEvents = Format(catalog.AfterActionEventsFormat, FormatRecentEvents(expedition, catalog));
+                presentation.AfterActionEvents = Format(catalog.AfterActionEventsFormat, FormatAfterActionDetails(state, config, catalog, expedition, zone));
                 presentation.AfterActionSendAgainButton = catalog.AfterActionSendAgainButton;
                 presentation.AfterActionSendAgainRequest = BuildSendAgainRequest(config, expedition);
                 presentation.AfterActionCanSendAgain = presentation.AfterActionSendAgainRequest != null &&
@@ -424,7 +430,7 @@ namespace AshfallCamp.Presentation
                 presentation.HasOfflineReport = true;
                 presentation.OfflineReportTitle = catalog.OfflineReportPanelTitle;
                 presentation.OfflineSummary = Format(catalog.OfflineReportSummaryFormat, FormatMinutesCeil(offline.AppliedSeconds));
-                presentation.OfflineResources = Format(catalog.OfflineReportResourcesFormat, FormatResourceAmounts(offline.ResourcesGained, config, catalog));
+                presentation.OfflineResources = Format(catalog.OfflineReportResourcesFormat, FormatOfflineResourceChanges(offline, config, catalog));
                 presentation.OfflineCompleted = Format(catalog.OfflineReportCompletedFormat, FormatCompletedExpeditions(state, config, offline.CompletedExpeditionIds, catalog));
                 presentation.OfflineHealing = Format(catalog.OfflineReportHealingFormat, FormatSurvivorNames(state, offline.HealedSurvivorIds, catalog));
                 presentation.OfflineWarnings = Format(catalog.OfflineReportWarningsFormat, FormatSurvivorNames(state, offline.WoundedSurvivorIds, catalog));
@@ -447,6 +453,9 @@ namespace AshfallCamp.Presentation
             presentation.AutosaveState = autosaveEnabled ? catalog.SettingsAutosaveEnabledLabel : catalog.SettingsAutosaveDisabledLabel;
             presentation.AutosaveToggleLabel = catalog.SettingsAutosaveToggleLabel;
             presentation.AutosaveEnabled = autosaveEnabled;
+            presentation.ManualSaveTitle = catalog.SettingsManualSaveTitle;
+            presentation.ManualSaveBody = catalog.SettingsManualSaveBody;
+            presentation.ManualSaveButton = catalog.SettingsManualSaveButton;
             return presentation;
         }
 
@@ -915,7 +924,8 @@ namespace AshfallCamp.Presentation
                 Format(catalog.RadioCandidateSkillFormat, GetSkillLabel(GetBestSkillId(candidate.Skills), catalog), GetBestSkillValue(candidate.Skills)),
                 Format(catalog.RadioCandidateTraitsFormat, FormatTraits(candidate.TraitIds, config, catalog)),
                 catalog.RadioCandidateRecruitButton,
-                canRecruit);
+                canRecruit,
+                ResolveRecruitablePortrait(candidate, catalog));
         }
 
         private static string GetBackgroundName(string backgroundId, GameConfigSnapshot config)
@@ -1285,7 +1295,7 @@ namespace AshfallCamp.Presentation
             var policyId = ResolvePolicyId(config, expedition.PolicyId);
             if (string.IsNullOrWhiteSpace(policyId)) return null;
 
-            return new ExpeditionLaunchViewRequest(expedition.ZoneId, policyId, expedition.SurvivorIds);
+            return new ExpeditionLaunchViewRequest(expedition.ZoneId, policyId, expedition.SurvivorIds, true);
         }
 
         private static List<string> ResolveSelectedSurvivorIds(GameState state, IReadOnlyList<string> requestedSurvivorIds)
@@ -1460,6 +1470,25 @@ namespace AshfallCamp.Presentation
             return entries.Count > 0 ? string.Join(catalog.ReportListSeparator, entries.ToArray()) : catalog.ReportNoneLabel;
         }
 
+        private static string FormatOfflineResourceChanges(OfflineProgressReport offline, GameConfigSnapshot config, CampUiCatalogSO catalog)
+        {
+            if (offline == null) return catalog.ReportNoneLabel;
+            var entries = new List<string>();
+            var gained = FormatResourceAmounts(offline.ResourcesGained, config, catalog);
+            if (!string.Equals(gained, catalog.ReportNoneLabel, StringComparison.Ordinal))
+            {
+                entries.Add(gained);
+            }
+
+            var spent = FormatResourceAmounts(offline.ResourcesSpent, config, catalog);
+            if (!string.Equals(spent, catalog.ReportNoneLabel, StringComparison.Ordinal) && !string.IsNullOrWhiteSpace(catalog.OfflineReportResourcesSpentFormat))
+            {
+                entries.Add(Format(catalog.OfflineReportResourcesSpentFormat, spent));
+            }
+
+            return entries.Count > 0 ? string.Join(catalog.ReportListSeparator, entries.ToArray()) : catalog.ReportNoneLabel;
+        }
+
         private static string FormatEnemyCounts(Dictionary<string, int> enemies, GameConfigSnapshot config, CampUiCatalogSO catalog)
         {
             if (enemies == null || enemies.Count == 0) return catalog.ReportNoneLabel;
@@ -1547,6 +1576,124 @@ namespace AshfallCamp.Presentation
             return entries.Count > 0 ? string.Join(catalog.ReportListSeparator, entries.ToArray()) : catalog.ReportNoneLabel;
         }
 
+        private static string FormatAfterActionDetails(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog, ExpeditionState expedition, ZoneDefinition zone)
+        {
+            var entries = new List<string>();
+            AddFormattedReportDetail(entries, catalog.AfterActionSkillXpFormat, FormatExpeditionSkillXp(expedition, config, catalog), catalog);
+            AddFormattedReportDetail(entries, catalog.AfterActionDurabilityFormat, FormatExpeditionDurabilityLoss(state, expedition, config, catalog), catalog);
+            AddFormattedReportDetail(entries, catalog.AfterActionBrokenItemsFormat, FormatBrokenItems(state, expedition, config, catalog), catalog);
+            AddFormattedReportDetail(entries, catalog.AfterActionProgressFormat, FormatAfterActionProgress(state, config, catalog, expedition, zone), catalog);
+
+            var recentEvents = FormatRecentEvents(expedition, catalog);
+            if (!string.Equals(recentEvents, catalog.ReportNoneLabel, StringComparison.Ordinal))
+            {
+                entries.Add(recentEvents);
+            }
+
+            return entries.Count > 0 ? string.Join(catalog.ReportListSeparator, entries.ToArray()) : catalog.ReportNoneLabel;
+        }
+
+        private static void AddFormattedReportDetail(List<string> entries, string format, string value, CampUiCatalogSO catalog)
+        {
+            if (entries == null || string.IsNullOrWhiteSpace(format) || string.Equals(value, catalog.ReportNoneLabel, StringComparison.Ordinal)) return;
+            entries.Add(Format(format, value));
+        }
+
+        private static string FormatExpeditionSkillXp(ExpeditionState expedition, GameConfigSnapshot config, CampUiCatalogSO catalog)
+        {
+            if (expedition == null || expedition.Status != ExpeditionStatus.Completed || config == null || config.Balance == null) return catalog.ReportNoneLabel;
+            var amount = Math.Max(0, config.Balance.ExpeditionCompletionSkillXp) * Math.Max(0, expedition.SurvivorIds.Count);
+            if (amount <= 0 || string.IsNullOrWhiteSpace(config.Balance.ExpeditionCompletionSkillId)) return catalog.ReportNoneLabel;
+            return Format(catalog.ReportCountFormat, GetSkillLabel(config.Balance.ExpeditionCompletionSkillId, catalog), amount);
+        }
+
+        private static string FormatExpeditionDurabilityLoss(GameState state, ExpeditionState expedition, GameConfigSnapshot config, CampUiCatalogSO catalog)
+        {
+            if (expedition == null || expedition.EquipmentDurabilityLost == null || expedition.EquipmentDurabilityLost.Count == 0) return catalog.ReportNoneLabel;
+
+            var entries = new List<string>();
+            foreach (var pair in expedition.EquipmentDurabilityLost)
+            {
+                if (pair.Value <= 0) continue;
+                entries.Add(Format(catalog.AfterActionDurabilityItemFormat, GetItemNameForUid(state, config, pair.Key), pair.Value));
+            }
+
+            return entries.Count > 0 ? string.Join(catalog.ReportListSeparator, entries.ToArray()) : catalog.ReportNoneLabel;
+        }
+
+        private static string FormatBrokenItems(GameState state, ExpeditionState expedition, GameConfigSnapshot config, CampUiCatalogSO catalog)
+        {
+            if (expedition == null || expedition.BrokenItemUids == null || expedition.BrokenItemUids.Count == 0) return catalog.ReportNoneLabel;
+
+            var entries = new List<string>();
+            foreach (var itemUid in expedition.BrokenItemUids)
+            {
+                var name = GetItemNameForUid(state, config, itemUid);
+                if (!string.IsNullOrWhiteSpace(name)) entries.Add(name);
+            }
+
+            return entries.Count > 0 ? string.Join(catalog.ReportListSeparator, entries.ToArray()) : catalog.ReportNoneLabel;
+        }
+
+        private static string FormatAfterActionProgress(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog, ExpeditionState expedition, ZoneDefinition zone)
+        {
+            if (state == null || config == null || expedition == null || expedition.Status != ExpeditionStatus.Completed) return catalog.ReportNoneLabel;
+
+            var entries = new List<string>();
+            ZoneState zoneState;
+            if (zone != null && state.Zones.TryGetValue(expedition.ZoneId, out zoneState) && zoneState.Completions > 0)
+            {
+                entries.Add(Format(catalog.ReportCountFormat, FormatConfiguredName(zone.Id, zone.Name), zoneState.Completions));
+            }
+
+            foreach (var candidate in config.Zones.Values)
+            {
+                ZoneState candidateState;
+                if (!state.Zones.TryGetValue(candidate.Id, out candidateState) || !candidateState.IsUnlocked) continue;
+                if (WasUnlockedByCompletedExpedition(state, candidate, expedition))
+                {
+                    entries.Add(Format(catalog.AfterActionUnlockedFormat, FormatConfiguredName(candidate.Id, candidate.Name)));
+                }
+            }
+
+            if (state.Progress != null && state.Progress.DemoCompleted)
+            {
+                var expectedCompletionId = GameConditionTypes.ZoneCompletions + ":" + expedition.ZoneId;
+                if (string.Equals(state.Progress.DemoCompletionId, expectedCompletionId, StringComparison.Ordinal))
+                {
+                    var completionName = GetDemoCompletionName(config, new CampEventState { SubjectId = state.Progress.DemoCompletionId, DetailId = state.Progress.DemoCompletionId });
+                    entries.Add(Format(catalog.AfterActionDemoProgressFormat, completionName));
+                }
+            }
+
+            return entries.Count > 0 ? string.Join(catalog.ReportListSeparator, entries.ToArray()) : catalog.ReportNoneLabel;
+        }
+
+        private static bool WasUnlockedByCompletedExpedition(GameState state, ZoneDefinition zone, ExpeditionState expedition)
+        {
+            if (state == null || zone == null || expedition == null) return false;
+            foreach (var condition in zone.UnlockConditions)
+            {
+                if (!string.Equals(condition.Type, GameConditionTypes.ZoneCompletions, StringComparison.Ordinal)) continue;
+                if (!string.Equals(condition.Id, expedition.ZoneId, StringComparison.Ordinal)) continue;
+
+                ZoneState requiredZone;
+                if (state.Zones.TryGetValue(condition.Id, out requiredZone) && requiredZone.Completions == Math.Max(1, condition.Value))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static string GetItemNameForUid(GameState state, GameConfigSnapshot config, string itemUid)
+        {
+            var item = WorkshopSystem.FindItem(state, itemUid);
+            if (item == null) return itemUid ?? string.Empty;
+            return GetItemName(item.ItemId, config);
+        }
+
         private static string FormatMonitorEvents(GameState state, GameConfigSnapshot config, ExpeditionState expedition, CampUiCatalogSO catalog)
         {
             if (expedition == null) return catalog.ReportNoneLabel;
@@ -1625,7 +1772,8 @@ namespace AshfallCamp.Presentation
         {
             if (expedition == null) return 0;
 
-            var xp = expedition.Status == ExpeditionStatus.Completed ? expedition.SurvivorIds.Count * 5 : 0;
+            var completionXp = config != null && config.Balance != null ? Math.Max(0, config.Balance.ExpeditionCompletionXp) : 0;
+            var xp = expedition.Status == ExpeditionStatus.Completed ? expedition.SurvivorIds.Count * completionXp : 0;
             foreach (var pair in expedition.EnemiesDefeated)
             {
                 EnemyDefinition enemy;
@@ -1649,6 +1797,74 @@ namespace AshfallCamp.Presentation
             }
 
             return skillId;
+        }
+
+        private static Texture2D ResolveSurvivorPortrait(SurvivorState survivor, CampUiCatalogSO catalog)
+        {
+            if (survivor == null || catalog == null) return null;
+
+            var portrait = FindSurvivorPortrait(catalog, survivor.Id);
+            if (portrait != null) return portrait;
+
+            portrait = FindSurvivorPortrait(catalog, survivor.BackgroundId);
+            if (portrait != null) return portrait;
+
+            return FindSurvivorPortrait(catalog, catalog.DefaultSurvivorPortraitId);
+        }
+
+        private static Texture2D ResolveRecruitablePortrait(RecruitableSurvivorDefinition candidate, CampUiCatalogSO catalog)
+        {
+            if (candidate == null || catalog == null) return null;
+
+            var portrait = FindSurvivorPortrait(catalog, candidate.Id);
+            if (portrait != null) return portrait;
+
+            portrait = FindSurvivorPortrait(catalog, candidate.BackgroundId);
+            if (portrait != null) return portrait;
+
+            return FindSurvivorPortrait(catalog, catalog.DefaultSurvivorPortraitId);
+        }
+
+        private static Texture2D FindSurvivorPortrait(CampUiCatalogSO catalog, string id)
+        {
+            if (catalog == null || catalog.SurvivorPortraits == null || string.IsNullOrWhiteSpace(id)) return null;
+            foreach (var entry in catalog.SurvivorPortraits)
+            {
+                if (entry != null && string.Equals(entry.Id, id, StringComparison.Ordinal))
+                {
+                    return entry.Portrait;
+                }
+            }
+
+            return null;
+        }
+
+        private static Texture2D FindExpeditionZoneThumbnail(CampUiCatalogSO catalog, string zoneId)
+        {
+            if (catalog == null || catalog.ExpeditionZoneArtwork == null || string.IsNullOrWhiteSpace(zoneId)) return null;
+            foreach (var entry in catalog.ExpeditionZoneArtwork)
+            {
+                if (entry != null && string.Equals(entry.ZoneId, zoneId, StringComparison.Ordinal))
+                {
+                    return entry.Thumbnail;
+                }
+            }
+
+            return null;
+        }
+
+        private static Texture2D FindExpeditionRiskBadge(CampUiCatalogSO catalog, string riskTier)
+        {
+            if (catalog == null || catalog.ExpeditionRiskArtwork == null || string.IsNullOrWhiteSpace(riskTier)) return null;
+            foreach (var entry in catalog.ExpeditionRiskArtwork)
+            {
+                if (entry != null && string.Equals(entry.RiskTier, riskTier, StringComparison.Ordinal))
+                {
+                    return entry.Badge;
+                }
+            }
+
+            return null;
         }
 
         private static int CalculateSuppliesPercent(GameState state, GameConfigSnapshot config)
@@ -1703,14 +1919,21 @@ namespace AshfallCamp.Presentation
         public readonly string Avatar;
         public readonly string State;
         public readonly string Skill;
+        public readonly Texture2D Portrait;
 
         public CampSurvivorCardPresentation(string survivorId, string name, string avatar, string state, string skill)
+            : this(survivorId, name, avatar, state, skill, null)
+        {
+        }
+
+        public CampSurvivorCardPresentation(string survivorId, string name, string avatar, string state, string skill, Texture2D portrait)
         {
             SurvivorId = survivorId ?? string.Empty;
             Name = name ?? string.Empty;
             Avatar = avatar ?? string.Empty;
             State = state ?? string.Empty;
             Skill = skill ?? string.Empty;
+            Portrait = portrait;
         }
     }
 
@@ -1724,6 +1947,7 @@ namespace AshfallCamp.Presentation
         public string Stats = string.Empty;
         public string MedicineCost = string.Empty;
         public string MedicineButton = string.Empty;
+        public Texture2D Portrait;
         public bool ShowMedicineAction;
         public bool CanUseMedicine;
     }
@@ -1796,6 +2020,9 @@ namespace AshfallCamp.Presentation
         public string AutosaveState = string.Empty;
         public string AutosaveToggleLabel = string.Empty;
         public bool AutosaveEnabled;
+        public string ManualSaveTitle = string.Empty;
+        public string ManualSaveBody = string.Empty;
+        public string ManualSaveButton = string.Empty;
     }
 
     public sealed class CampRadioPresentation
@@ -1833,8 +2060,14 @@ namespace AshfallCamp.Presentation
         public readonly string Traits;
         public readonly string RecruitButton;
         public readonly bool CanRecruit;
+        public readonly Texture2D Portrait;
 
         public CampRadioCandidatePresentation(string candidateId, string name, string avatar, string meta, string skill, string traits, string recruitButton, bool canRecruit)
+            : this(candidateId, name, avatar, meta, skill, traits, recruitButton, canRecruit, null)
+        {
+        }
+
+        public CampRadioCandidatePresentation(string candidateId, string name, string avatar, string meta, string skill, string traits, string recruitButton, bool canRecruit, Texture2D portrait)
         {
             CandidateId = candidateId ?? string.Empty;
             Name = name ?? string.Empty;
@@ -1844,6 +2077,7 @@ namespace AshfallCamp.Presentation
             Traits = traits ?? string.Empty;
             RecruitButton = recruitButton ?? string.Empty;
             CanRecruit = canRecruit;
+            Portrait = portrait;
         }
     }
 
@@ -1871,8 +2105,26 @@ namespace AshfallCamp.Presentation
         public readonly bool CanSelect;
         public readonly bool CanLaunch;
         public readonly bool IsSelected;
+        public readonly string RiskTier;
+        public readonly Texture2D Thumbnail;
+        public readonly Texture2D RiskBadge;
 
         public CampExpeditionRoutePresentation(string zoneId, string title, string subtitle, string status, bool canSelect, bool canLaunch, bool isSelected)
+            : this(zoneId, title, subtitle, status, canSelect, canLaunch, isSelected, string.Empty, null, null)
+        {
+        }
+
+        public CampExpeditionRoutePresentation(
+            string zoneId,
+            string title,
+            string subtitle,
+            string status,
+            bool canSelect,
+            bool canLaunch,
+            bool isSelected,
+            string riskTier,
+            Texture2D thumbnail,
+            Texture2D riskBadge)
         {
             ZoneId = zoneId ?? string.Empty;
             Title = title ?? string.Empty;
@@ -1881,6 +2133,9 @@ namespace AshfallCamp.Presentation
             CanSelect = canSelect;
             CanLaunch = canLaunch;
             IsSelected = isSelected;
+            RiskTier = riskTier ?? string.Empty;
+            Thumbnail = thumbnail;
+            RiskBadge = riskBadge;
         }
     }
 

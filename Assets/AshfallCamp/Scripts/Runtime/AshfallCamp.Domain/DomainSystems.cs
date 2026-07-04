@@ -235,9 +235,20 @@ namespace AshfallCamp.Domain
             if (!CanSpend(state, cost)) return false;
             foreach (var pair in cost)
             {
-                state.Resources[pair.Key] = GetAmount(state, pair.Key) - pair.Value;
+                SpendUpTo(state, pair.Key, pair.Value);
             }
             return true;
+        }
+
+        public static int SpendUpTo(GameState state, string resourceId, int amount)
+        {
+            if (state == null || string.IsNullOrWhiteSpace(resourceId) || amount <= 0) return 0;
+            var current = GetAmount(state, resourceId);
+            var spent = Math.Min(current, amount);
+            if (spent <= 0) return 0;
+            state.Resources[resourceId] = current - spent;
+            AddSpentStatistic(state, resourceId, spent);
+            return spent;
         }
 
         public static void Add(GameState state, string resourceId, int amount)
@@ -251,6 +262,16 @@ namespace AshfallCamp.Domain
                 next = Math.Min(next, cap);
             }
             state.Resources[resourceId] = next;
+            if (state.Statistics == null)
+            {
+                state.Statistics = new GameStatistics();
+            }
+
+            if (state.Statistics.TotalResourcesGained == null)
+            {
+                state.Statistics.TotalResourcesGained = new Dictionary<string, int>(StringComparer.Ordinal);
+            }
+
             if (!state.Statistics.TotalResourcesGained.ContainsKey(resourceId))
             {
                 state.Statistics.TotalResourcesGained[resourceId] = 0;
@@ -262,6 +283,93 @@ namespace AshfallCamp.Domain
         {
             int amount;
             return state.Resources.TryGetValue(resourceId, out amount) ? amount : 0;
+        }
+
+        private static void AddSpentStatistic(GameState state, string resourceId, int amount)
+        {
+            if (amount <= 0) return;
+            if (state.Statistics == null)
+            {
+                state.Statistics = new GameStatistics();
+            }
+
+            if (state.Statistics.TotalResourcesSpent == null)
+            {
+                state.Statistics.TotalResourcesSpent = new Dictionary<string, int>(StringComparer.Ordinal);
+            }
+
+            if (!state.Statistics.TotalResourcesSpent.ContainsKey(resourceId))
+            {
+                state.Statistics.TotalResourcesSpent[resourceId] = 0;
+            }
+
+            state.Statistics.TotalResourcesSpent[resourceId] += amount;
+        }
+    }
+
+    public static class CampUpkeepSystem
+    {
+        public static void Tick(GameState state, GameConfigSnapshot config, double deltaSeconds)
+        {
+            if (state == null || config == null || config.Balance == null) return;
+            var interval = Math.Max(1, config.Balance.CampUpkeepIntervalSeconds);
+            var dt = Math.Max(0, deltaSeconds);
+            state.CampUpkeepAccumulatorSeconds = Math.Max(0, state.CampUpkeepAccumulatorSeconds) + dt;
+
+            while (state.CampUpkeepAccumulatorSeconds >= interval)
+            {
+                state.CampUpkeepAccumulatorSeconds -= interval;
+                ApplyInterval(state, config);
+            }
+        }
+
+        private static void ApplyInterval(GameState state, GameConfigSnapshot config)
+        {
+            var survivors = CountSupportedSurvivors(state);
+            if (survivors <= 0) return;
+
+            var shortage = ApplyNeed(state, config.Balance.CampUpkeepFoodResourceId, config.Balance.CampUpkeepFoodPerSurvivor, survivors);
+            shortage |= ApplyNeed(state, config.Balance.CampUpkeepWaterResourceId, config.Balance.CampUpkeepWaterPerSurvivor, survivors);
+            if (shortage)
+            {
+                ApplyShortagePressure(state, config);
+            }
+        }
+
+        private static bool ApplyNeed(GameState state, string resourceId, int perSurvivor, int survivorCount)
+        {
+            if (string.IsNullOrWhiteSpace(resourceId) || perSurvivor <= 0 || survivorCount <= 0) return false;
+            var required = perSurvivor * survivorCount;
+            var spent = ResourceSystem.SpendUpTo(state, resourceId, required);
+            return spent < required;
+        }
+
+        private static int CountSupportedSurvivors(GameState state)
+        {
+            var count = 0;
+            foreach (var survivor in state.Survivors)
+            {
+                if (survivor != null && survivor.State != SurvivorActivityState.Missing && survivor.State != SurvivorActivityState.OnExpedition)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private static void ApplyShortagePressure(GameState state, GameConfigSnapshot config)
+        {
+            var moralePenalty = Math.Max(0, config.Balance.CampUpkeepShortageMoralePenalty);
+            var fatigue = Math.Max(0, config.Balance.CampUpkeepShortageFatigue);
+            if (moralePenalty <= 0 && fatigue <= 0) return;
+
+            foreach (var survivor in state.Survivors)
+            {
+                if (survivor == null || survivor.State == SurvivorActivityState.Missing || survivor.State == SurvivorActivityState.OnExpedition) continue;
+                survivor.Morale = GameMath.Clamp(survivor.Morale - moralePenalty, 0, 100);
+                survivor.Fatigue = GameMath.Clamp(survivor.Fatigue + fatigue, 0, 100);
+            }
         }
     }
 
@@ -1283,6 +1391,59 @@ namespace AshfallCamp.Domain
                 AtUnixMs = Math.Max(0, nowUnixMs)
             });
         }
+
+        public static void GrantExpeditionCompletion(SurvivorState survivor, BalanceDefinition balance)
+        {
+            if (survivor == null || balance == null) return;
+            GrantSurvivorXp(survivor, Math.Max(0, balance.ExpeditionCompletionXp), balance);
+            GrantSkillXp(survivor, balance.ExpeditionCompletionSkillId, Math.Max(0, balance.ExpeditionCompletionSkillXp), balance);
+        }
+
+        public static void GrantSurvivorXp(SurvivorState survivor, int amount, BalanceDefinition balance)
+        {
+            if (survivor == null || balance == null || amount <= 0) return;
+            survivor.Xp += amount;
+            var maxLevel = Math.Max(1, balance.SurvivorMaxLevel);
+            while (survivor.Level < maxLevel)
+            {
+                var required = GetSurvivorXpRequired(survivor.Level, balance);
+                if (required <= 0 || survivor.Xp < required) break;
+                survivor.Xp -= required;
+                survivor.Level++;
+                var healthGain = Math.Max(0, balance.SurvivorHealthPerLevel);
+                survivor.MaxHealth += healthGain;
+                survivor.Health = GameMath.Clamp(survivor.Health + healthGain, 0, survivor.MaxHealth);
+            }
+        }
+
+        public static void GrantSkillXp(SurvivorState survivor, string skillId, int amount, BalanceDefinition balance)
+        {
+            if (survivor == null || balance == null || amount <= 0 || string.IsNullOrWhiteSpace(skillId)) return;
+            if (!survivor.Skills.ContainsKey(skillId)) survivor.Skills[skillId] = 0;
+            if (!survivor.SkillXp.ContainsKey(skillId)) survivor.SkillXp[skillId] = 0;
+
+            survivor.SkillXp[skillId] += amount;
+            var maxLevel = Math.Max(0, balance.SkillMaxLevel);
+            while (survivor.Skills[skillId] < maxLevel)
+            {
+                var required = GetSkillXpRequired(survivor.Skills[skillId], balance);
+                if (required <= 0 || survivor.SkillXp[skillId] < required) break;
+                survivor.SkillXp[skillId] -= required;
+                survivor.Skills[skillId]++;
+            }
+        }
+
+        public static int GetSurvivorXpRequired(int level, BalanceDefinition balance)
+        {
+            if (balance == null) return 0;
+            return Math.Max(1, (int)Math.Floor(Math.Max(1, balance.SurvivorXpThresholdBase) * Math.Pow(Math.Max(1, level), Math.Max(0.01, balance.SurvivorXpThresholdExponent))));
+        }
+
+        public static int GetSkillXpRequired(int skillLevel, BalanceDefinition balance)
+        {
+            if (balance == null) return 0;
+            return Math.Max(1, (int)Math.Floor(Math.Max(1, balance.SkillXpThresholdBase) * Math.Pow(Math.Max(1, skillLevel + 1), Math.Max(0.01, balance.SkillXpThresholdExponent))));
+        }
     }
 
     public static class ExpeditionValidator
@@ -1507,6 +1668,7 @@ namespace AshfallCamp.Domain
             for (var i = 0; i < state.Inventory.Count; i++)
             {
                 if (state.Inventory[i].Uid != itemUid) continue;
+                if (state.Inventory[i].Durability <= 0) return null;
                 ItemDefinition definition;
                 return config.Items.TryGetValue(state.Inventory[i].ItemId, out definition) ? definition : null;
             }
@@ -1596,7 +1758,7 @@ namespace AshfallCamp.Domain
                 foreach (var survivorId in expedition.SurvivorIds)
                 {
                     var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
-                    if (survivor != null) survivor.Xp += enemy.XpReward;
+                    ProgressionSystem.GrantSurvivorXp(survivor, enemy.XpReward, config.Balance);
                 }
                 state.Statistics.CombatsWon++;
                 return true;
@@ -1870,7 +2032,7 @@ namespace AshfallCamp.Domain
                 foreach (var survivorId in expedition.SurvivorIds)
                 {
                     var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
-                    if (survivor != null) survivor.Xp += 1;
+                    ProgressionSystem.GrantSurvivorXp(survivor, 1, config.Balance);
                 }
             }
             else
@@ -1904,6 +2066,8 @@ namespace AshfallCamp.Domain
                 ResourceSystem.Add(state, pair.Key, pair.Value);
             }
 
+            ApplyEquipmentDurabilityLoss(state, config, expedition);
+
             foreach (var survivorId in expedition.SurvivorIds)
             {
                 var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
@@ -1919,7 +2083,7 @@ namespace AshfallCamp.Domain
                 }
 
                 survivor.Fatigue = GameMath.Clamp(survivor.Fatigue + 8, 0, 100);
-                survivor.Xp += 5;
+                ProgressionSystem.GrantExpeditionCompletion(survivor, config.Balance);
             }
 
             ZoneState zoneState;
@@ -1936,6 +2100,87 @@ namespace AshfallCamp.Domain
             UnlockSystem.RefreshZoneUnlocks(state, config);
             state.Statistics.ExpeditionsCompleted++;
             ProgressionSystem.RefreshDemoCompletion(state, config);
+        }
+
+        public static int CalculateDurabilityLoss(GameConfigSnapshot config, ZoneDefinition zone, ExpeditionPolicyDefinition policy, SurvivorState survivor)
+        {
+            if (config == null || zone == null || survivor == null) return 0;
+            var policyModifier = policy != null ? policy.DurabilityModifier : 0;
+            var traitModifier = CalculateTraitDurabilityModifier(config, survivor);
+            return Math.Max(0, zone.DurabilityPressure + policyModifier + traitModifier);
+        }
+
+        private static void ApplyEquipmentDurabilityLoss(GameState state, GameConfigSnapshot config, ExpeditionState expedition)
+        {
+            if (state == null || config == null || expedition == null) return;
+            ZoneDefinition zone;
+            if (!config.Zones.TryGetValue(expedition.ZoneId, out zone)) return;
+            ExpeditionPolicyDefinition policy;
+            config.Policies.TryGetValue(expedition.PolicyId, out policy);
+
+            var damagedItems = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var survivorId in expedition.SurvivorIds)
+            {
+                var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
+                if (survivor == null || survivor.Equipment == null) continue;
+                var loss = CalculateDurabilityLoss(config, zone, policy, survivor);
+                if (loss <= 0) continue;
+
+                DamageEquippedItem(state, expedition, survivor.Equipment.WeaponItemUid, loss, damagedItems);
+                DamageEquippedItem(state, expedition, survivor.Equipment.ArmorItemUid, loss, damagedItems);
+                DamageEquippedItem(state, expedition, survivor.Equipment.UtilityItemUid, loss, damagedItems);
+            }
+        }
+
+        private static int CalculateTraitDurabilityModifier(GameConfigSnapshot config, SurvivorState survivor)
+        {
+            if (config == null || survivor == null || config.Balance == null || string.IsNullOrWhiteSpace(config.Balance.DurabilityTraitModifierId)) return 0;
+            var total = 0;
+            foreach (var traitId in survivor.TraitIds)
+            {
+                TraitDefinition trait;
+                if (!config.Traits.TryGetValue(traitId, out trait)) continue;
+                int modifier;
+                if (trait.StatModifiers.TryGetValue(config.Balance.DurabilityTraitModifierId, out modifier))
+                {
+                    total += modifier;
+                }
+            }
+
+            return total;
+        }
+
+        private static void DamageEquippedItem(GameState state, ExpeditionState expedition, string itemUid, int loss, HashSet<string> damagedItems)
+        {
+            if (string.IsNullOrWhiteSpace(itemUid) || loss <= 0 || damagedItems == null || !damagedItems.Add(itemUid)) return;
+            var item = WorkshopSystem.FindItem(state, itemUid);
+            if (item == null || item.Durability <= 0) return;
+            var actualLoss = Math.Min(item.Durability, loss);
+            item.Durability = Math.Max(0, item.Durability - loss);
+            if (actualLoss > 0 && expedition != null)
+            {
+                if (expedition.EquipmentDurabilityLost == null)
+                {
+                    expedition.EquipmentDurabilityLost = new Dictionary<string, int>(StringComparer.Ordinal);
+                }
+
+                int existingLoss;
+                expedition.EquipmentDurabilityLost.TryGetValue(item.Uid, out existingLoss);
+                expedition.EquipmentDurabilityLost[item.Uid] = existingLoss + actualLoss;
+            }
+
+            if (item.Durability <= 0 && expedition != null)
+            {
+                if (expedition.BrokenItemUids == null)
+                {
+                    expedition.BrokenItemUids = new List<string>();
+                }
+
+                if (!expedition.BrokenItemUids.Contains(item.Uid))
+                {
+                    expedition.BrokenItemUids.Add(item.Uid);
+                }
+            }
         }
 
         private static void Fail(GameState state, GameConfigSnapshot config, ExpeditionState expedition)

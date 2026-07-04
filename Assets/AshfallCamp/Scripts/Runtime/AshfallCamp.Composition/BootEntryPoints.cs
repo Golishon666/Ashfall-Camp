@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using AshfallCamp.Application;
 using AshfallCamp.Domain;
@@ -40,13 +42,17 @@ namespace AshfallCamp.Composition
     {
         private readonly ITickGameUseCase _tickGame;
         private readonly IGameConfigProvider _configs;
+        private readonly ISaveLoadUseCase _saveLoad;
+        private readonly IGameStateReader _reader;
         private double _accumulator;
         private bool _isTicking;
 
-        public GameClockLoop(ITickGameUseCase tickGame, IGameConfigProvider configs)
+        public GameClockLoop(ITickGameUseCase tickGame, IGameConfigProvider configs, ISaveLoadUseCase saveLoad, IGameStateReader reader)
         {
             _tickGame = tickGame;
             _configs = configs;
+            _saveLoad = saveLoad;
+            _reader = reader;
         }
 
         public void Tick()
@@ -56,15 +62,20 @@ namespace AshfallCamp.Composition
             var step = Math.Max(0.1, _configs.Current.Balance.SimulationTickSeconds);
             if (_accumulator < step || _isTicking) return;
             _accumulator -= step;
-            TickAsync(step).Forget();
+            TickStepAsync(step, CancellationToken.None).Forget();
         }
 
-        private async UniTaskVoid TickAsync(double step)
+        public async UniTask TickStepAsync(double step, CancellationToken ct)
         {
+            if (_isTicking) return;
             _isTicking = true;
             try
             {
-                await _tickGame.ExecuteAsync(step, CancellationToken.None);
+                var result = await _tickGame.ExecuteAsync(step, ct);
+                if (result != null && result.HasCriticalProgress && IsAutosaveEnabled())
+                {
+                    await _saveLoad.SaveAsync(ct);
+                }
             }
             catch (Exception ex)
             {
@@ -74,6 +85,12 @@ namespace AshfallCamp.Composition
             {
                 _isTicking = false;
             }
+        }
+
+        private bool IsAutosaveEnabled()
+        {
+            var settings = _reader.State.CurrentValue.Settings;
+            return settings == null || settings.AutosaveEnabled;
         }
     }
 
@@ -123,6 +140,7 @@ namespace AshfallCamp.Composition
     {
         private readonly IUiRootView _view;
         private readonly IGameStateReader _reader;
+        private readonly IGameStateWriter _writer;
         private readonly IGameConfigProvider _configs;
         private readonly IUpgradeBuildingUseCase _upgradeBuilding;
         private readonly ILaunchExpeditionUseCase _launchExpedition;
@@ -134,8 +152,12 @@ namespace AshfallCamp.Composition
         private readonly IUseMedicineUseCase _useMedicine;
         private readonly IStartEmergencyScavengeUseCase _startEmergencyScavenge;
         private readonly ISetAutosaveUseCase _setAutosave;
+        private readonly ISaveLoadUseCase _saveLoad;
+        private readonly HashSet<string> _knownFinishedExpeditionIds = new HashSet<string>(StringComparer.Ordinal);
         private IDisposable _stateSubscription;
         private double _accumulator;
+        private bool _expeditionTrackingInitialized;
+        private bool _isMarkingOfflineReportPresented;
         private bool _isUpgrading;
         private bool _isLaunching;
         private bool _isRecruiting;
@@ -144,10 +166,12 @@ namespace AshfallCamp.Composition
         private bool _isUsingMedicine;
         private bool _isStartingEmergencyScavenge;
         private bool _isSettingAutosave;
+        private bool _isManualSaving;
 
         public CampHudPresenter(
             IUiRootView view,
             IGameStateReader reader,
+            IGameStateWriter writer,
             IGameConfigProvider configs,
             IUpgradeBuildingUseCase upgradeBuilding,
             ILaunchExpeditionUseCase launchExpedition,
@@ -158,10 +182,12 @@ namespace AshfallCamp.Composition
             IEquipItemUseCase equipItem,
             IUseMedicineUseCase useMedicine,
             IStartEmergencyScavengeUseCase startEmergencyScavenge,
-            ISetAutosaveUseCase setAutosave)
+            ISetAutosaveUseCase setAutosave,
+            ISaveLoadUseCase saveLoad)
         {
             _view = view;
             _reader = reader;
+            _writer = writer;
             _configs = configs;
             _upgradeBuilding = upgradeBuilding;
             _launchExpedition = launchExpedition;
@@ -173,6 +199,7 @@ namespace AshfallCamp.Composition
             _useMedicine = useMedicine;
             _startEmergencyScavenge = startEmergencyScavenge;
             _setAutosave = setAutosave;
+            _saveLoad = saveLoad;
         }
 
         public void Start()
@@ -187,6 +214,7 @@ namespace AshfallCamp.Composition
             _view.UseMedicineRequested += OnUseMedicineRequested;
             _view.EmergencyScavengeRequested += OnEmergencyScavengeRequested;
             _view.AutosaveChanged += OnAutosaveChanged;
+            _view.ManualSaveRequested += OnManualSaveRequested;
             _stateSubscription = _reader.State.Subscribe(_ => RenderCurrent());
             RenderCurrent();
         }
@@ -212,6 +240,7 @@ namespace AshfallCamp.Composition
             _view.UseMedicineRequested -= OnUseMedicineRequested;
             _view.EmergencyScavengeRequested -= OnEmergencyScavengeRequested;
             _view.AutosaveChanged -= OnAutosaveChanged;
+            _view.ManualSaveRequested -= OnManualSaveRequested;
             _stateSubscription?.Dispose();
         }
 
@@ -275,6 +304,12 @@ namespace AshfallCamp.Composition
             SetAutosaveAsync(enabled).Forget();
         }
 
+        private void OnManualSaveRequested()
+        {
+            if (_isManualSaving) return;
+            ManualSaveAsync().Forget();
+        }
+
         private async UniTaskVoid UpgradeAsync(string buildingId)
         {
             _isUpgrading = true;
@@ -284,6 +319,15 @@ namespace AshfallCamp.Composition
                 if (!result.Validation.IsValid)
                 {
                     Debug.LogWarning("Building upgrade blocked: " + string.Join(", ", result.Validation.Errors));
+                    ShowBlockedToast(result.Validation);
+                }
+                else if (result.Building != null)
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(
+                        CampToastIds.BuildingUpgraded,
+                        ResolveBuildingName(result.Building.Id),
+                        result.Building.Level.ToString(CultureInfo.InvariantCulture));
                 }
 
                 if (_configs.Current != null)
@@ -315,6 +359,7 @@ namespace AshfallCamp.Composition
                 if (survivorIds.Count == 0)
                 {
                     Debug.LogWarning("Expedition launch blocked: no idle survivors.");
+                    ShowToast(CampToastIds.NoIdleSurvivors);
                     return;
                 }
 
@@ -332,6 +377,12 @@ namespace AshfallCamp.Composition
                 if (!result.Validation.IsValid)
                 {
                     Debug.LogWarning("Expedition launch blocked: " + string.Join(", ", result.Validation.Errors));
+                    ShowBlockedToast(result.Validation);
+                }
+                else if (result.Expedition != null)
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(CampToastIds.ExpeditionLaunched, ResolveZoneName(result.Expedition.ZoneId));
                 }
 
                 if (_configs.Current != null)
@@ -367,6 +418,12 @@ namespace AshfallCamp.Composition
                 if (!result.Validation.IsValid)
                 {
                     Debug.LogWarning("Recruitment broadcast blocked: " + string.Join(", ", result.Validation.Errors));
+                    ShowBlockedToast(result.Validation);
+                }
+                else
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(CampToastIds.RecruitmentBroadcast, result.CandidateIds.Count.ToString(CultureInfo.InvariantCulture));
                 }
 
                 if (_configs.Current != null)
@@ -393,6 +450,12 @@ namespace AshfallCamp.Composition
                 if (!result.Validation.IsValid)
                 {
                     Debug.LogWarning("Recruitment skip blocked: " + string.Join(", ", result.Validation.Errors));
+                    ShowBlockedToast(result.Validation);
+                }
+                else
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(CampToastIds.RecruitmentSkipped);
                 }
 
                 if (_configs.Current != null)
@@ -427,6 +490,12 @@ namespace AshfallCamp.Composition
                 if (!result.Validation.IsValid)
                 {
                     Debug.LogWarning("Recruitment blocked: " + string.Join(", ", result.Validation.Errors));
+                    ShowBlockedToast(result.Validation);
+                }
+                else if (result.Survivor != null)
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(CampToastIds.SurvivorRecruited, ResolveSurvivorName(result.Survivor));
                 }
 
                 if (_configs.Current != null)
@@ -453,6 +522,12 @@ namespace AshfallCamp.Composition
                 if (!result.Validation.IsValid)
                 {
                     Debug.LogWarning("Workshop repair blocked: " + string.Join(", ", result.Validation.Errors));
+                    ShowBlockedToast(result.Validation);
+                }
+                else if (result.Item != null)
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(CampToastIds.ItemRepaired, ResolveItemName(result.Item));
                 }
 
                 if (_configs.Current != null)
@@ -479,6 +554,12 @@ namespace AshfallCamp.Composition
                 if (!result.Validation.IsValid)
                 {
                     Debug.LogWarning("Workshop equip blocked: " + string.Join(", ", result.Validation.Errors));
+                    ShowBlockedToast(result.Validation);
+                }
+                else if (result.Survivor != null && result.Item != null)
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(CampToastIds.ItemEquipped, ResolveSurvivorName(result.Survivor), ResolveItemName(result.Item));
                 }
 
                 if (_configs.Current != null)
@@ -505,6 +586,12 @@ namespace AshfallCamp.Composition
                 if (!result.Validation.IsValid)
                 {
                     Debug.LogWarning("Use medicine blocked: " + string.Join(", ", result.Validation.Errors));
+                    ShowBlockedToast(result.Validation);
+                }
+                else if (result.Healed && result.Survivor != null)
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(CampToastIds.MedicineUsed, ResolveSurvivorName(result.Survivor));
                 }
 
                 if (_configs.Current != null)
@@ -535,6 +622,14 @@ namespace AshfallCamp.Composition
                 if (!result.Validation.IsValid)
                 {
                     Debug.LogWarning("Emergency scavenge blocked: " + string.Join(", ", result.Validation.Errors));
+                    ShowBlockedToast(result.Validation);
+                }
+                else if (result.Started)
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(
+                        CampToastIds.EmergencyScavengeStarted,
+                        Math.Ceiling(result.DurationSeconds).ToString(CultureInfo.InvariantCulture));
                 }
 
                 if (_configs.Current != null)
@@ -558,6 +653,7 @@ namespace AshfallCamp.Composition
             try
             {
                 await _setAutosave.ExecuteAsync(enabled, CancellationToken.None);
+                ShowToast(enabled ? CampToastIds.AutosaveEnabled : CampToastIds.AutosaveDisabled);
                 if (_configs.Current != null)
                 {
                     RenderCurrent();
@@ -571,6 +667,105 @@ namespace AshfallCamp.Composition
             {
                 _isSettingAutosave = false;
             }
+        }
+
+        private async UniTaskVoid ManualSaveAsync()
+        {
+            _isManualSaving = true;
+            try
+            {
+                await _saveLoad.SaveAsync(CancellationToken.None);
+                ShowToast(CampToastIds.ManualSaved);
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isManualSaving = false;
+            }
+        }
+
+        private async UniTask SaveCriticalProgressAsync()
+        {
+            if (!IsAutosaveEnabled()) return;
+            await _saveLoad.SaveAsync(CancellationToken.None);
+        }
+
+        private void ShowBlockedToast(ValidationResult validation)
+        {
+            ShowToast(CampToastIds.ActionBlocked, FormatValidation(validation));
+        }
+
+        private void ShowToast(string id, params string[] args)
+        {
+            _view.ShowToast(new CampToastRequest(id, args));
+        }
+
+        private static string FormatValidation(ValidationResult validation)
+        {
+            if (validation == null || validation.Errors == null) return string.Empty;
+            return string.Join("; ", validation.Errors);
+        }
+
+        private string ResolveBuildingName(string buildingId)
+        {
+            var config = _configs.Current;
+            if (config != null &&
+                !string.IsNullOrWhiteSpace(buildingId) &&
+                config.Buildings.TryGetValue(buildingId, out var definition) &&
+                !string.IsNullOrWhiteSpace(definition.Name))
+            {
+                return definition.Name;
+            }
+
+            return buildingId ?? string.Empty;
+        }
+
+        private string ResolveZoneName(string zoneId)
+        {
+            var config = _configs.Current;
+            if (config != null &&
+                !string.IsNullOrWhiteSpace(zoneId) &&
+                config.Zones.TryGetValue(zoneId, out var definition) &&
+                !string.IsNullOrWhiteSpace(definition.Name))
+            {
+                return definition.Name;
+            }
+
+            return zoneId ?? string.Empty;
+        }
+
+        private string ResolveItemName(InventoryItemState item)
+        {
+            if (item == null) return string.Empty;
+            var config = _configs.Current;
+            if (config != null &&
+                !string.IsNullOrWhiteSpace(item.ItemId) &&
+                config.Items.TryGetValue(item.ItemId, out var definition) &&
+                !string.IsNullOrWhiteSpace(definition.Name))
+            {
+                return definition.Name;
+            }
+
+            return item.ItemId ?? string.Empty;
+        }
+
+        private static string ResolveSurvivorName(SurvivorState survivor)
+        {
+            if (survivor == null) return string.Empty;
+            return string.IsNullOrWhiteSpace(survivor.Name) ? survivor.Id ?? string.Empty : survivor.Name;
+        }
+
+        private bool IsAutosaveEnabled()
+        {
+            var settings = _reader.State.CurrentValue.Settings;
+            return settings == null || settings.AutosaveEnabled;
         }
 
         private static System.Collections.Generic.List<string> SelectIdleSurvivors(AshfallCamp.Domain.GameState state)
@@ -615,7 +810,108 @@ namespace AshfallCamp.Composition
         private void RenderCurrent()
         {
             if (_configs.Current == null) return;
-            _view.Render(_reader.State.CurrentValue, _configs.Current);
+            var state = _reader.State.CurrentValue;
+            HandleFinishedExpeditionReports(state);
+            HandleOfflineReportPresentation(state);
+            _view.Render(state, _configs.Current);
+        }
+
+        private void HandleOfflineReportPresentation(GameState state)
+        {
+            if (!ShouldPresentOfflineReport(state)) return;
+
+            state.LastOfflineReport.WasPresented = true;
+            var minutes = Math.Ceiling(state.LastOfflineReport.AppliedSeconds / 60.0).ToString(CultureInfo.InvariantCulture);
+            ShowToast(CampToastIds.OfflineReportReady, minutes);
+            _view.OpenReports();
+            MarkOfflineReportPresentedAsync().Forget();
+        }
+
+        private bool ShouldPresentOfflineReport(GameState state)
+        {
+            if (state == null || state.LastOfflineReport == null || state.LastOfflineReport.WasPresented) return false;
+            if (_isMarkingOfflineReportPresented || _configs.Current == null || _configs.Current.Balance == null) return false;
+
+            var minimumSeconds = Math.Max(0, _configs.Current.Balance.OfflineReportMinimumSeconds);
+            return state.LastOfflineReport.AppliedSeconds >= minimumSeconds;
+        }
+
+        private async UniTaskVoid MarkOfflineReportPresentedAsync()
+        {
+            if (_isMarkingOfflineReportPresented) return;
+            _isMarkingOfflineReportPresented = true;
+            try
+            {
+                await _writer.MutateAsync(state =>
+                {
+                    if (state.LastOfflineReport != null)
+                    {
+                        state.LastOfflineReport.WasPresented = true;
+                    }
+
+                    return state;
+                }, CancellationToken.None);
+                await _saveLoad.SaveAsync(CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isMarkingOfflineReportPresented = false;
+            }
+        }
+
+        private void HandleFinishedExpeditionReports(GameState state)
+        {
+            if (state == null || state.Expeditions == null) return;
+
+            if (!_expeditionTrackingInitialized)
+            {
+                TrackFinishedExpeditions(state);
+                _expeditionTrackingInitialized = true;
+                return;
+            }
+
+            ExpeditionState latestNewFinished = null;
+            for (var i = 0; i < state.Expeditions.Count; i++)
+            {
+                var expedition = state.Expeditions[i];
+                if (expedition == null || string.IsNullOrWhiteSpace(expedition.Id)) continue;
+                if (!IsFinishedExpedition(expedition.Status)) continue;
+
+                if (_knownFinishedExpeditionIds.Add(expedition.Id))
+                {
+                    latestNewFinished = expedition;
+                }
+            }
+
+            if (latestNewFinished == null) return;
+
+            var toastId = latestNewFinished.Status == ExpeditionStatus.Completed
+                ? CampToastIds.ExpeditionCompleted
+                : CampToastIds.ExpeditionFailed;
+            ShowToast(toastId, ResolveZoneName(latestNewFinished.ZoneId));
+            _view.OpenReports();
+        }
+
+        private void TrackFinishedExpeditions(GameState state)
+        {
+            for (var i = 0; i < state.Expeditions.Count; i++)
+            {
+                var expedition = state.Expeditions[i];
+                if (expedition == null || string.IsNullOrWhiteSpace(expedition.Id)) continue;
+                if (IsFinishedExpedition(expedition.Status))
+                {
+                    _knownFinishedExpeditionIds.Add(expedition.Id);
+                }
+            }
+        }
+
+        private static bool IsFinishedExpedition(ExpeditionStatus status)
+        {
+            return status == ExpeditionStatus.Completed || status == ExpeditionStatus.Failed;
         }
     }
 }

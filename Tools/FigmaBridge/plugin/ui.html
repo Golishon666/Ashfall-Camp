@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: Inter, Arial, sans-serif;
+      }
+      body {
+        margin: 0;
+        padding: 18px;
+        background: var(--figma-color-bg);
+        color: var(--figma-color-text);
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 18px;
+      }
+      label {
+        display: block;
+        margin-top: 12px;
+        font-size: 12px;
+        color: var(--figma-color-text-secondary);
+      }
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 6px;
+        padding: 9px 10px;
+        border: 1px solid var(--figma-color-border);
+        border-radius: 6px;
+        background: var(--figma-color-bg-secondary);
+        color: var(--figma-color-text);
+        font-family: inherit;
+      }
+      button {
+        margin-top: 14px;
+        padding: 9px 12px;
+        border: 0;
+        border-radius: 6px;
+        background: var(--figma-color-bg-brand);
+        color: var(--figma-color-text-onbrand);
+        font-weight: 700;
+        cursor: pointer;
+      }
+      button.secondary {
+        margin-left: 8px;
+        background: var(--figma-color-bg-secondary);
+        color: var(--figma-color-text);
+        border: 1px solid var(--figma-color-border);
+      }
+      pre {
+        height: 260px;
+        overflow: auto;
+        margin-top: 14px;
+        padding: 10px;
+        border-radius: 6px;
+        background: var(--figma-color-bg-secondary);
+        color: var(--figma-color-text);
+        font-size: 11px;
+        white-space: pre-wrap;
+      }
+      .status {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: var(--figma-color-bg-secondary);
+        font-size: 12px;
+      }
+      .ok {
+        color: var(--figma-color-text-success);
+      }
+      .bad {
+        color: var(--figma-color-text-danger);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ashfall Local Bridge</h1>
+    <div id="status" class="status bad">Disconnected</div>
+
+    <label for="url">Bridge WebSocket URL</label>
+    <input id="url" value="ws://localhost:4827/plugin" />
+
+    <label for="token">Bridge token</label>
+    <input id="token" type="password" placeholder="Paste FIGMA_BRIDGE_TOKEN from server output" />
+
+    <button id="connect" type="button">Connect</button>
+    <button id="disconnect" type="button" class="secondary">Disconnect</button>
+
+    <pre id="log"></pre>
+
+    <script>
+      const urlInput = document.getElementById("url");
+      const tokenInput = document.getElementById("token");
+      const logEl = document.getElementById("log");
+      const statusEl = document.getElementById("status");
+      const defaultToken = "ashfall-local-bridge-2026-07-05";
+      let ws = null;
+      let figmaInfo = { fileKey: null, editorType: null };
+
+      urlInput.value = readSetting("figmaBridgeUrl") || urlInput.value;
+      tokenInput.value = readSetting("figmaBridgeToken") || defaultToken;
+
+      document.getElementById("connect").addEventListener("click", connect);
+      document.getElementById("disconnect").addEventListener("click", () => {
+        if (ws) ws.close();
+      });
+
+      write("Plugin UI loaded.");
+      window.setTimeout(() => {
+        if (!ws && tokenInput.value.trim()) connect();
+      }, 250);
+
+      window.onmessage = event => {
+        const message = event.data && event.data.pluginMessage;
+        if (!message) return;
+        if (message.type === "figma-info") {
+          figmaInfo = {
+            fileKey: message.fileKey || null,
+            editorType: message.editorType || null
+          };
+          return;
+        }
+        if (message.type !== "run-js-result") return;
+        send({
+          type: "figma.result",
+          requestId: message.requestId,
+          ok: message.ok,
+          result: message.result,
+          error: message.error
+        });
+      };
+
+      function connect() {
+        const url = urlInput.value.trim();
+        const token = tokenInput.value.trim();
+        if (!url || !token) {
+          write("URL and token are required.");
+          return;
+        }
+        writeSetting("figmaBridgeUrl", url);
+        writeSetting("figmaBridgeToken", token);
+
+        if (ws) ws.close();
+        write("Connecting to " + url + "...");
+        ws = new WebSocket(url);
+
+        ws.onopen = () => {
+          setStatus("Connected", true);
+          write("Connected to bridge.");
+          send({
+            type: "hello",
+            token,
+            pluginVersion: "0.1.0",
+            figmaFileKey: figmaInfo.fileKey,
+            editorType: figmaInfo.editorType
+          });
+        };
+        ws.onmessage = event => {
+          const message = JSON.parse(event.data);
+          if (message.type === "figma.run") {
+            write("Running request " + message.requestId);
+            parent.postMessage({
+              pluginMessage: {
+                type: "run-js",
+                requestId: message.requestId,
+                code: message.code,
+                payload: message.payload
+              }
+            }, "*");
+            return;
+          }
+          write(JSON.stringify(message, null, 2));
+        };
+        ws.onclose = () => {
+          setStatus("Disconnected", false);
+          write("Disconnected.");
+        };
+        ws.onerror = event => {
+          setStatus("Error", false);
+          write("WebSocket error: " + (event.message || "connection failed"));
+        };
+      }
+
+      function send(message) {
+        if (!ws || ws.readyState !== WebSocket.OPEN) {
+          write("Cannot send: bridge is not connected.");
+          return;
+        }
+        ws.send(JSON.stringify(message));
+      }
+
+      function setStatus(text, ok) {
+        statusEl.textContent = text;
+        statusEl.className = "status " + (ok ? "ok" : "bad");
+      }
+
+      function write(text) {
+        const time = new Date().toLocaleTimeString();
+        logEl.textContent = `[${time}] ${text}\n` + logEl.textContent;
+      }
+
+      function readSetting(key) {
+        try {
+          return localStorage.getItem(key) || "";
+        } catch {
+          return "";
+        }
+      }
+
+      function writeSetting(key, value) {
+        try {
+          localStorage.setItem(key, value);
+        } catch {}
+      }
+    </script>
+  </body>
+</html>

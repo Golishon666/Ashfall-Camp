@@ -48,4 +48,6 @@ MonoBehaviour:
     StatModifiers: []
   - Id: clumsy
     Name: Clumsy
-    StatModifiers: []
+    StatModifiers:
+    - Id: durability_loss
+      Value: 1

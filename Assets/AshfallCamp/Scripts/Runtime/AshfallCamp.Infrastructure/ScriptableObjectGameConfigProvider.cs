@@ -131,7 +131,8 @@ namespace AshfallCamp.Infrastructure
                     FoodModifier = item.FoodModifier,
                     WaterModifier = item.WaterModifier,
                     PowerModifier = item.PowerModifier,
-                    NoiseModifier = item.NoiseModifier
+                    NoiseModifier = item.NoiseModifier,
+                    DurabilityModifier = item.DurabilityModifier
                 }, "policies");
             }
         }
@@ -153,6 +154,7 @@ namespace AshfallCamp.Infrastructure
                     WaterCostPerSurvivor = item.WaterCostPerSurvivor,
                     RecommendedPower = item.RecommendedPower,
                     BaseAmbushChance = item.BaseAmbushChance,
+                    DurabilityPressure = item.DurabilityPressure,
                     RequiredBuildingLevels = ToDictionary(item.RequiredBuildingLevels)
                 };
                 foreach (var entry in item.EnemyTable) zone.EnemyTable.Add(new WeightedEntry { Id = entry.Id, Weight = entry.Weight });
@@ -263,6 +265,23 @@ namespace AshfallCamp.Infrastructure
                 RecruitmentWaterResourceId = source.RecruitmentWaterResourceId,
                 ExpeditionFoodResourceId = source.ExpeditionFoodResourceId,
                 ExpeditionWaterResourceId = source.ExpeditionWaterResourceId,
+                ExpeditionCompletionXp = source.ExpeditionCompletionXp,
+                ExpeditionCompletionSkillId = source.ExpeditionCompletionSkillId,
+                ExpeditionCompletionSkillXp = source.ExpeditionCompletionSkillXp,
+                CampUpkeepIntervalSeconds = source.CampUpkeepIntervalSeconds,
+                CampUpkeepFoodResourceId = source.CampUpkeepFoodResourceId,
+                CampUpkeepFoodPerSurvivor = source.CampUpkeepFoodPerSurvivor,
+                CampUpkeepWaterResourceId = source.CampUpkeepWaterResourceId,
+                CampUpkeepWaterPerSurvivor = source.CampUpkeepWaterPerSurvivor,
+                CampUpkeepShortageMoralePenalty = source.CampUpkeepShortageMoralePenalty,
+                CampUpkeepShortageFatigue = source.CampUpkeepShortageFatigue,
+                SurvivorXpThresholdBase = source.SurvivorXpThresholdBase,
+                SurvivorXpThresholdExponent = source.SurvivorXpThresholdExponent,
+                SurvivorMaxLevel = source.SurvivorMaxLevel,
+                SurvivorHealthPerLevel = source.SurvivorHealthPerLevel,
+                SkillXpThresholdBase = source.SkillXpThresholdBase,
+                SkillXpThresholdExponent = source.SkillXpThresholdExponent,
+                SkillMaxLevel = source.SkillMaxLevel,
                 RecruitmentBaseScrap = source.RecruitmentBaseScrap,
                 RecruitmentScrapExponent = source.RecruitmentScrapExponent,
                 RecruitmentBaseFood = source.RecruitmentBaseFood,
@@ -274,6 +293,7 @@ namespace AshfallCamp.Infrastructure
                 WorkshopRequiredBuildingLevel = source.WorkshopRequiredBuildingLevel,
                 WorkshopRepairResourceId = source.WorkshopRepairResourceId,
                 WorkshopRepairDurabilityBlock = source.WorkshopRepairDurabilityBlock,
+                DurabilityTraitModifierId = source.DurabilityTraitModifierId,
                 HealingRequiredBuildingId = source.HealingRequiredBuildingId,
                 HealingRequiredBuildingLevel = source.HealingRequiredBuildingLevel,
                 HealingDefaultWoundId = source.HealingDefaultWoundId,
@@ -331,6 +351,7 @@ namespace AshfallCamp.Infrastructure
             ValidateResources(snapshot);
             ValidatePolicies(snapshot);
             ValidateExpeditionBalance(snapshot);
+            ValidateCampUpkeep(snapshot);
             ValidateRecruitment(snapshot);
             ValidateWorkshop(snapshot);
             ValidateHealing(snapshot);
@@ -344,6 +365,7 @@ namespace AshfallCamp.Infrastructure
                 if (zone.BaseDurationSeconds <= 0) throw new InvalidOperationException("Zone duration must be positive: " + zone.Id);
                 if (zone.MinDurationSeconds <= 0 || zone.MaxDurationSeconds < zone.MinDurationSeconds) throw new InvalidOperationException("Zone duration bounds are invalid: " + zone.Id);
                 if (zone.FoodCostPerSurvivor < 0 || zone.WaterCostPerSurvivor < 0) throw new InvalidOperationException("Zone costs cannot be negative: " + zone.Id);
+                if (zone.DurabilityPressure < 0) throw new InvalidOperationException("Zone durability pressure cannot be negative: " + zone.Id);
                 foreach (var requirement in zone.RequiredBuildingLevels)
                 {
                     if (!snapshot.Buildings.ContainsKey(requirement.Key)) throw new InvalidOperationException("Zone requirement references unknown building: " + requirement.Key);
@@ -457,6 +479,27 @@ namespace AshfallCamp.Infrastructure
         {
             ValidateExpeditionResource(snapshot, snapshot.Balance.ExpeditionFoodResourceId);
             ValidateExpeditionResource(snapshot, snapshot.Balance.ExpeditionWaterResourceId);
+            if (snapshot.Balance.ExpeditionCompletionXp < 0) throw new InvalidOperationException("Expedition completion XP cannot be negative.");
+            if (snapshot.Balance.ExpeditionCompletionSkillXp < 0) throw new InvalidOperationException("Expedition completion skill XP cannot be negative.");
+            if (string.IsNullOrWhiteSpace(snapshot.Balance.ExpeditionCompletionSkillId)) throw new InvalidOperationException("Expedition completion skill id cannot be empty.");
+            if (!ContainsConfiguredSkillId(snapshot, snapshot.Balance.ExpeditionCompletionSkillId))
+            {
+                throw new InvalidOperationException("Expedition completion references unknown skill: " + snapshot.Balance.ExpeditionCompletionSkillId);
+            }
+
+            if (snapshot.Balance.SurvivorXpThresholdBase <= 0 || snapshot.Balance.SkillXpThresholdBase <= 0)
+            {
+                throw new InvalidOperationException("Progression XP threshold bases must be positive.");
+            }
+
+            if (snapshot.Balance.SurvivorXpThresholdExponent <= 0 || snapshot.Balance.SkillXpThresholdExponent <= 0)
+            {
+                throw new InvalidOperationException("Progression XP threshold exponents must be positive.");
+            }
+
+            if (snapshot.Balance.SurvivorMaxLevel <= 0) throw new InvalidOperationException("Survivor max level must be positive.");
+            if (snapshot.Balance.SkillMaxLevel < 0) throw new InvalidOperationException("Skill max level cannot be negative.");
+            if (snapshot.Balance.SurvivorHealthPerLevel < 0) throw new InvalidOperationException("Survivor health per level cannot be negative.");
         }
 
         private static void ValidateExpeditionResource(GameConfigSnapshot snapshot, string resourceId)
@@ -465,6 +508,53 @@ namespace AshfallCamp.Infrastructure
             {
                 throw new InvalidOperationException("Expedition cost references unknown resource: " + resourceId);
             }
+        }
+
+        private static void ValidateCampUpkeep(GameConfigSnapshot snapshot)
+        {
+            if (snapshot.Balance.CampUpkeepIntervalSeconds <= 0) throw new InvalidOperationException("Camp upkeep interval must be positive.");
+            if (snapshot.Balance.CampUpkeepFoodPerSurvivor < 0 || snapshot.Balance.CampUpkeepWaterPerSurvivor < 0)
+            {
+                throw new InvalidOperationException("Camp upkeep resource costs cannot be negative.");
+            }
+
+            if (snapshot.Balance.CampUpkeepShortageMoralePenalty < 0 || snapshot.Balance.CampUpkeepShortageFatigue < 0)
+            {
+                throw new InvalidOperationException("Camp upkeep shortage penalties cannot be negative.");
+            }
+
+            ValidateCampUpkeepResource(snapshot, snapshot.Balance.CampUpkeepFoodResourceId, snapshot.Balance.CampUpkeepFoodPerSurvivor);
+            ValidateCampUpkeepResource(snapshot, snapshot.Balance.CampUpkeepWaterResourceId, snapshot.Balance.CampUpkeepWaterPerSurvivor);
+        }
+
+        private static void ValidateCampUpkeepResource(GameConfigSnapshot snapshot, string resourceId, int amount)
+        {
+            if (amount <= 0 || string.IsNullOrWhiteSpace(resourceId)) return;
+            if (!snapshot.Resources.ContainsKey(resourceId))
+            {
+                throw new InvalidOperationException("Camp upkeep references unknown resource: " + resourceId);
+            }
+        }
+
+        private static bool ContainsConfiguredSkillId(GameConfigSnapshot snapshot, string skillId)
+        {
+            if (ContainsSkillId(snapshot.StartingSurvivor.Skills, skillId)) return true;
+            foreach (var survivor in snapshot.RecruitableSurvivors.Values)
+            {
+                if (ContainsSkillId(survivor.Skills, skillId)) return true;
+            }
+
+            foreach (var background in snapshot.Backgrounds.Values)
+            {
+                if (ContainsSkillId(background.SkillBonuses, skillId)) return true;
+            }
+
+            return false;
+        }
+
+        private static bool ContainsSkillId(Dictionary<string, int> skills, string skillId)
+        {
+            return skills != null && !string.IsNullOrWhiteSpace(skillId) && skills.ContainsKey(skillId);
         }
 
         private static void ValidateDemoCompletion(GameConfigSnapshot snapshot)

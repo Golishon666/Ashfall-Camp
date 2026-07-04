@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace AshfallCamp.Presentation
@@ -8,6 +9,8 @@ namespace AshfallCamp.Presentation
     public sealed class CampUiCatalogSO : ScriptableObject
     {
         public CampUiTheme Theme = new CampUiTheme();
+        public CampUiScreenTransition ScreenTransition = new CampUiScreenTransition();
+        public CampUiToastSettings Toast = new CampUiToastSettings();
         public string BrandBannerText = string.Empty;
         public string BrandTitle = string.Empty;
         public string BrandSubtitle = string.Empty;
@@ -66,18 +69,22 @@ namespace AshfallCamp.Presentation
         public string EmergencyScavengeCompletedAlertBodyFormat = string.Empty;
         public string UpgradeAvailableAlertTitleFormat = string.Empty;
         public string UpgradeAvailableAlertBodyFormat = string.Empty;
+        public Texture2D CampStatusPanelTexture;
+        public Texture2D CampAlertCardTexture;
         public string CampOverviewTitle = string.Empty;
         public string ActiveExpeditionsTitle = string.Empty;
         public string RadioIntelTitle = string.Empty;
         public string RadioIntelBody = string.Empty;
         public string RadioIntelBodyFormat = string.Empty;
         public string RadioIntelButton = string.Empty;
+        public Texture2D RadioIntelPanelTexture;
         public string RadioScreenTitle = string.Empty;
         public string RadioBroadcastTitle = string.Empty;
         public string RadioBroadcastCostFormat = string.Empty;
         public string RadioBroadcastReadyLabel = string.Empty;
         public string RadioBroadcastPendingLabel = string.Empty;
         public string RadioBroadcastBlockedFormat = string.Empty;
+        public Texture2D RadioBroadcastPanelTexture;
         public string RadioCandidateListTitle = string.Empty;
         public string RadioCandidateAwaitingTitle = string.Empty;
         public string RadioCandidateAwaitingBody = string.Empty;
@@ -88,6 +95,8 @@ namespace AshfallCamp.Presentation
         public string RadioCandidateTraitsFormat = string.Empty;
         public string RadioCandidateRecruitButton = string.Empty;
         public string RadioCandidateSkipButton = string.Empty;
+        public Texture2D RadioEmptyPanelTexture;
+        public Texture2D RadioCandidateCardTexture;
         public string ExpeditionEmptyTitle = string.Empty;
         public string ExpeditionEmptySubtitle = string.Empty;
         public string ExpeditionEmptyStatus = string.Empty;
@@ -126,6 +135,10 @@ namespace AshfallCamp.Presentation
         public string ExpeditionMonitorNoiseHighLabel = string.Empty;
         public int ExpeditionMonitorNoiseMediumThreshold = 4;
         public int ExpeditionMonitorNoiseHighThreshold = 8;
+        public Texture2D ExpeditionDetailPanelTexture;
+        public Texture2D ExpeditionMonitorPanelTexture;
+        public Texture2D ExpeditionSquadMemberCardTexture;
+        public Texture2D ExpeditionPolicyCardTexture;
         public string ExpeditionLockedStatusFormat = string.Empty;
         public string ExpeditionUnlockRequirementFormat = string.Empty;
         public string ExpeditionNoWarningsLabel = string.Empty;
@@ -142,6 +155,7 @@ namespace AshfallCamp.Presentation
         public string ResourceCapEffectFormat = string.Empty;
         public string ResourceCapOnlyEffectFormat = string.Empty;
         public string RouteUnlockEffectLabel = string.Empty;
+        public Texture2D BuildingCardTexture;
         public string IdleSuffixLabel = string.Empty;
         public string PerHourSuffixLabel = string.Empty;
         public string LevelLabelFormat = string.Empty;
@@ -162,6 +176,10 @@ namespace AshfallCamp.Presentation
         public string SurvivorDetailHealingLockedFormat = string.Empty;
         public string SurvivorDetailMedicineCostFormat = string.Empty;
         public string SurvivorDetailUseMedicineButton = string.Empty;
+        public Texture2D SurvivorsEmptyPanelTexture;
+        public Texture2D SurvivorDetailPanelTexture;
+        public Texture2D SurvivorRosterCardTexture;
+        public string DefaultSurvivorPortraitId = string.Empty;
         public string SurvivorNoWeaponLabel = string.Empty;
         public string SurvivorNoTraitsLabel = string.Empty;
         public string WorkshopScreenTitle = string.Empty;
@@ -175,9 +193,16 @@ namespace AshfallCamp.Presentation
         public string WorkshopRepairButton = string.Empty;
         public string WorkshopEquipButton = string.Empty;
         public string WorkshopBrokenLabel = string.Empty;
+        public Texture2D WorkshopEmptyPanelTexture;
+        public Texture2D WorkshopItemTileTexture;
+        public string ReportsScreenId = string.Empty;
         public string ReportsScreenTitle = string.Empty;
         public string ReportsEmptyTitle = string.Empty;
         public string ReportsEmptyBody = string.Empty;
+        public Texture2D ReportsEmptyPanelTexture;
+        public Texture2D ReportsAfterActionPanelTexture;
+        public Texture2D ReportsCampEventPanelTexture;
+        public Texture2D ReportsOfflinePanelTexture;
         public string CampEventPanelTitle = string.Empty;
         public string SurvivorJoinedReportTitleFormat = string.Empty;
         public string SurvivorJoinedReportBodyFormat = string.Empty;
@@ -194,10 +219,18 @@ namespace AshfallCamp.Presentation
         public string AfterActionWoundsFormat = string.Empty;
         public string AfterActionEnemiesFormat = string.Empty;
         public string AfterActionEventsFormat = string.Empty;
+        public string AfterActionSkillXpFormat = string.Empty;
+        public string AfterActionDurabilityFormat = string.Empty;
+        public string AfterActionDurabilityItemFormat = string.Empty;
+        public string AfterActionBrokenItemsFormat = string.Empty;
+        public string AfterActionProgressFormat = string.Empty;
+        public string AfterActionUnlockedFormat = string.Empty;
+        public string AfterActionDemoProgressFormat = string.Empty;
         public string AfterActionSendAgainButton = string.Empty;
         public string OfflineReportPanelTitle = string.Empty;
         public string OfflineReportSummaryFormat = string.Empty;
         public string OfflineReportResourcesFormat = string.Empty;
+        public string OfflineReportResourcesSpentFormat = string.Empty;
         public string OfflineReportCompletedFormat = string.Empty;
         public string OfflineReportHealingFormat = string.Empty;
         public string OfflineReportWarningsFormat = string.Empty;
@@ -208,6 +241,15 @@ namespace AshfallCamp.Presentation
         public string SettingsAutosaveEnabledLabel = string.Empty;
         public string SettingsAutosaveDisabledLabel = string.Empty;
         public string SettingsAutosaveToggleLabel = string.Empty;
+        public string SettingsManualSaveTitle = string.Empty;
+        public string SettingsManualSaveBody = string.Empty;
+        public string SettingsManualSaveButton = string.Empty;
+        public Texture2D SettingsRowTexture;
+        public Texture2D SettingsToggleTrackActiveTexture;
+        public Texture2D SettingsToggleTrackInactiveTexture;
+        public Texture2D SettingsToggleKnobTexture;
+        public Texture2D SettingsSliderTrackTexture;
+        public Texture2D SettingsSliderHandleTexture;
         public string ReportNoneLabel = string.Empty;
         public string ReportListSeparator = string.Empty;
         public string ReportCountFormat = string.Empty;
@@ -217,8 +259,31 @@ namespace AshfallCamp.Presentation
         public List<BuildingUiEntry> Buildings = new List<BuildingUiEntry>();
         public List<AlertUiEntry> Alerts = new List<AlertUiEntry>();
         public List<ExpeditionUiEntry> ExpeditionCards = new List<ExpeditionUiEntry>();
+        public List<ExpeditionZoneArtworkUiEntry> ExpeditionZoneArtwork = new List<ExpeditionZoneArtworkUiEntry>();
+        public List<ExpeditionRiskArtworkUiEntry> ExpeditionRiskArtwork = new List<ExpeditionRiskArtworkUiEntry>();
         public List<NavUiEntry> NavItems = new List<NavUiEntry>();
         public List<SurvivorSkillUiEntry> SurvivorSkillLabels = new List<SurvivorSkillUiEntry>();
+        public List<SurvivorPortraitUiEntry> SurvivorPortraits = new List<SurvivorPortraitUiEntry>();
+        public List<CampToastUiEntry> ToastMessages = new List<CampToastUiEntry>();
+    }
+
+    [Serializable]
+    public sealed class CampUiScreenTransition
+    {
+        public bool Enabled = true;
+        public float DurationSeconds = 0.16f;
+        public Ease Ease = Ease.OutCubic;
+        public bool UseUnscaledTime = true;
+    }
+
+    [Serializable]
+    public sealed class CampUiToastSettings
+    {
+        public bool Enabled = true;
+        [Range(0f, 10f)] public float VisibleSeconds = 2.2f;
+        [Range(0f, 2f)] public float FadeSeconds = 0.14f;
+        public Ease Ease = Ease.OutCubic;
+        public bool UseUnscaledTime = true;
     }
 
     [Serializable]
@@ -233,6 +298,27 @@ namespace AshfallCamp.Presentation
         public Color Rust = new Color32(0xC9, 0x63, 0x3A, 0xFF);
         public Color Amber = new Color32(0xE1, 0xB4, 0x6A, 0xFF);
         public Color Line = new Color(0.43f, 0.33f, 0.22f, 0.28f);
+        [Range(0f, 1f)] public float NavInactivePanelAlpha = 0.38f;
+        [Range(0f, 1f)] public float BuildingFilterInactivePanelAlpha = 0.55f;
+        [Range(0f, 1f)] public float AlertPanelAlpha = 0.08f;
+        [Range(0f, 1f)] public float ExpeditionDetailPanelAlpha = 0.86f;
+        [Range(0f, 1f)] public float ExpeditionRouteSelectedPanelAlpha = 0.84f;
+        [Range(0f, 1f)] public float ExpeditionRouteAvailablePanelAlpha = 0.72f;
+        [Range(0f, 1f)] public float ExpeditionRouteBlockedPanelAlpha = 0.38f;
+        [Range(0f, 1f)] public float ExpeditionSquadSelectedPanelAlpha = 0.86f;
+        [Range(0f, 1f)] public float ExpeditionSquadAvailablePanelAlpha = 0.66f;
+        [Range(0f, 1f)] public float ExpeditionSquadBlockedPanelAlpha = 0.32f;
+        [Range(0f, 1f)] public float ExpeditionPolicySelectedPanelAlpha = 0.82f;
+        [Range(0f, 1f)] public float ExpeditionPolicyInactivePanelAlpha = 0.62f;
+        [Range(0f, 1f)] public float RadioCandidatePanelAlpha = 0.68f;
+        [Range(0f, 1f)] public float SurvivorSelectedPanelAlpha = 0.86f;
+        [Range(0f, 1f)] public float SurvivorInactivePanelAlpha = 0.64f;
+        [Range(0f, 1f)] public float WorkshopItemPanelAlpha = 0.74f;
+
+        public Color WithAlpha(Color color, float alpha)
+        {
+            return new Color(color.r, color.g, color.b, Mathf.Clamp01(alpha));
+        }
     }
 
     [Serializable]
@@ -298,10 +384,25 @@ namespace AshfallCamp.Presentation
     }
 
     [Serializable]
+    public sealed class ExpeditionZoneArtworkUiEntry
+    {
+        public string ZoneId = string.Empty;
+        public Texture2D Thumbnail;
+    }
+
+    [Serializable]
+    public sealed class ExpeditionRiskArtworkUiEntry
+    {
+        public string RiskTier = string.Empty;
+        public Texture2D Badge;
+    }
+
+    [Serializable]
     public sealed class NavUiEntry
     {
         public string Id = string.Empty;
         public string Label = string.Empty;
+        public Texture2D Icon;
         public bool IsActive;
     }
 
@@ -310,5 +411,21 @@ namespace AshfallCamp.Presentation
     {
         public string Id = string.Empty;
         public string Label = string.Empty;
+    }
+
+    [Serializable]
+    public sealed class SurvivorPortraitUiEntry
+    {
+        public string Id = string.Empty;
+        public Texture2D Portrait;
+    }
+
+    [Serializable]
+    public sealed class CampToastUiEntry
+    {
+        public string Id = string.Empty;
+        public string TitleFormat = string.Empty;
+        public string BodyFormat = string.Empty;
+        public Color ToneColor = Color.white;
     }
 }

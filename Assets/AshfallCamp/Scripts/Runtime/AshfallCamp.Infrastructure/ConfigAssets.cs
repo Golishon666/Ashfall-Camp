@@ -64,6 +64,7 @@ namespace AshfallCamp.Infrastructure
         public double WaterModifier = 1.0;
         public double PowerModifier = 1.0;
         public int NoiseModifier;
+        public int DurabilityModifier;
     }
 
     [Serializable]
@@ -79,6 +80,7 @@ namespace AshfallCamp.Infrastructure
         public int WaterCostPerSurvivor;
         public int RecommendedPower;
         public double BaseAmbushChance;
+        public int DurabilityPressure;
         public List<IntPairData> RequiredBuildingLevels = new List<IntPairData>();
         public List<WeightedEntryData> EnemyTable = new List<WeightedEntryData>();
         public List<LootTableEntryData> LootTable = new List<LootTableEntryData>();
@@ -164,6 +166,23 @@ namespace AshfallCamp.Infrastructure
         public string RecruitmentWaterResourceId = "water";
         public string ExpeditionFoodResourceId = "food";
         public string ExpeditionWaterResourceId = "water";
+        public int ExpeditionCompletionXp = 5;
+        public string ExpeditionCompletionSkillId = "survival";
+        public int ExpeditionCompletionSkillXp = 3;
+        public double CampUpkeepIntervalSeconds = 300;
+        public string CampUpkeepFoodResourceId = "food";
+        public int CampUpkeepFoodPerSurvivor = 1;
+        public string CampUpkeepWaterResourceId = "water";
+        public int CampUpkeepWaterPerSurvivor = 1;
+        public int CampUpkeepShortageMoralePenalty = 4;
+        public int CampUpkeepShortageFatigue = 2;
+        public int SurvivorXpThresholdBase = 50;
+        public double SurvivorXpThresholdExponent = 1.55;
+        public int SurvivorMaxLevel = 50;
+        public int SurvivorHealthPerLevel = 2;
+        public int SkillXpThresholdBase = 20;
+        public double SkillXpThresholdExponent = 1.35;
+        public int SkillMaxLevel = 50;
         public int RecruitmentBaseScrap = 20;
         public double RecruitmentScrapExponent = 1.25;
         public int RecruitmentBaseFood = 2;
@@ -175,6 +194,7 @@ namespace AshfallCamp.Infrastructure
         public int WorkshopRequiredBuildingLevel = 1;
         public string WorkshopRepairResourceId = "weapon_parts";
         public int WorkshopRepairDurabilityBlock = 10;
+        public string DurabilityTraitModifierId = "durability_loss";
         public string HealingRequiredBuildingId = "infirmary";
         public int HealingRequiredBuildingLevel = 1;
         public string HealingDefaultWoundId = "cuts";

@@ -72,6 +72,7 @@ namespace AshfallCamp.Domain
         public long CreatedAtUnixMs;
         public long LastSaveAtUnixMs;
         public double TotalPlayTimeSeconds;
+        public double CampUpkeepAccumulatorSeconds;
         public int NextId = 1;
         public int SurvivorCap = 1;
         public int SquadSize = 1;
@@ -137,6 +138,7 @@ namespace AshfallCamp.Domain
         public int CombatsWon;
         public int CombatsLost;
         public Dictionary<string, int> TotalResourcesGained = new Dictionary<string, int>(StringComparer.Ordinal);
+        public Dictionary<string, int> TotalResourcesSpent = new Dictionary<string, int>(StringComparer.Ordinal);
     }
 
     public sealed class SurvivorState
@@ -226,6 +228,8 @@ namespace AshfallCamp.Domain
         public List<InventoryItemState> FoundItems = new List<InventoryItemState>();
         public Dictionary<string, int> EnemiesDefeated = new Dictionary<string, int>(StringComparer.Ordinal);
         public List<string> WoundedSurvivorIds = new List<string>();
+        public Dictionary<string, int> EquipmentDurabilityLost = new Dictionary<string, int>(StringComparer.Ordinal);
+        public List<string> BrokenItemUids = new List<string>();
     }
 
     public sealed class ExpeditionLogEntry
@@ -351,7 +355,9 @@ namespace AshfallCamp.Domain
     public sealed class OfflineProgressReport
     {
         public double AppliedSeconds;
+        public bool WasPresented;
         public Dictionary<string, int> ResourcesGained = new Dictionary<string, int>(StringComparer.Ordinal);
+        public Dictionary<string, int> ResourcesSpent = new Dictionary<string, int>(StringComparer.Ordinal);
         public List<string> CompletedExpeditionIds = new List<string>();
         public List<string> WoundedSurvivorIds = new List<string>();
         public List<string> HealedSurvivorIds = new List<string>();
@@ -407,6 +413,7 @@ namespace AshfallCamp.Domain
         public double WaterModifier = 1.0;
         public double PowerModifier = 1.0;
         public int NoiseModifier;
+        public int DurabilityModifier;
     }
 
     public sealed class ZoneDefinition
@@ -421,6 +428,7 @@ namespace AshfallCamp.Domain
         public int WaterCostPerSurvivor;
         public int RecommendedPower;
         public double BaseAmbushChance;
+        public int DurabilityPressure;
         public Dictionary<string, int> RequiredBuildingLevels = new Dictionary<string, int>(StringComparer.Ordinal);
         public List<WeightedEntry> EnemyTable = new List<WeightedEntry>();
         public List<LootTableEntry> LootTable = new List<LootTableEntry>();
@@ -522,6 +530,23 @@ namespace AshfallCamp.Domain
         public string RecruitmentWaterResourceId = "water";
         public string ExpeditionFoodResourceId = "food";
         public string ExpeditionWaterResourceId = "water";
+        public int ExpeditionCompletionXp = 5;
+        public string ExpeditionCompletionSkillId = "survival";
+        public int ExpeditionCompletionSkillXp = 3;
+        public double CampUpkeepIntervalSeconds = 300;
+        public string CampUpkeepFoodResourceId = "food";
+        public int CampUpkeepFoodPerSurvivor = 1;
+        public string CampUpkeepWaterResourceId = "water";
+        public int CampUpkeepWaterPerSurvivor = 1;
+        public int CampUpkeepShortageMoralePenalty = 4;
+        public int CampUpkeepShortageFatigue = 2;
+        public int SurvivorXpThresholdBase = 50;
+        public double SurvivorXpThresholdExponent = 1.55;
+        public int SurvivorMaxLevel = 50;
+        public int SurvivorHealthPerLevel = 2;
+        public int SkillXpThresholdBase = 20;
+        public double SkillXpThresholdExponent = 1.35;
+        public int SkillMaxLevel = 50;
         public int RecruitmentBaseScrap = 20;
         public double RecruitmentScrapExponent = 1.25;
         public int RecruitmentBaseFood = 2;
@@ -533,6 +558,7 @@ namespace AshfallCamp.Domain
         public int WorkshopRequiredBuildingLevel = 1;
         public string WorkshopRepairResourceId = "weapon_parts";
         public int WorkshopRepairDurabilityBlock = 10;
+        public string DurabilityTraitModifierId = "durability_loss";
         public string HealingRequiredBuildingId = "infirmary";
         public int HealingRequiredBuildingLevel = 1;
         public string HealingDefaultWoundId = "cuts";
