@@ -66,9 +66,9 @@ namespace AshfallCamp.Presentation
         [Serializable]
         public sealed class AlertBinding
         {
-            [SerializeField] private Image panel;
+            [SerializeField] private Graphic panel;
             [SerializeField] private RawImage cardArtwork;
-            [SerializeField] private Image dot;
+            [SerializeField] private Graphic dot;
             [SerializeField] private TextMeshProUGUI title;
             [SerializeField] private TextMeshProUGUI body;
             [SerializeField] private Button actionButton;
@@ -81,7 +81,7 @@ namespace AshfallCamp.Presentation
             {
             }
 
-            public AlertBinding(Image panel, Image dot, TextMeshProUGUI title, TextMeshProUGUI body)
+            public AlertBinding(Graphic panel, Graphic dot, TextMeshProUGUI title, TextMeshProUGUI body)
             {
                 this.panel = panel;
                 this.dot = dot;
@@ -89,8 +89,8 @@ namespace AshfallCamp.Presentation
                 this.body = body;
             }
 
-            public Image Panel { get { return panel; } }
-            public Image Dot { get { return dot; } }
+            public Graphic Panel { get { return panel; } }
+            public Graphic Dot { get { return dot; } }
             public TextMeshProUGUI Title { get { return title; } }
             public TextMeshProUGUI Body { get { return body; } }
             public Button ActionButton { get { return actionButton; } }

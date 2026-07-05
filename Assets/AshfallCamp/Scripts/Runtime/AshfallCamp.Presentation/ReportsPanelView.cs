@@ -44,6 +44,13 @@ namespace AshfallCamp.Presentation
         private UnityAction _sendAgainClick;
         private ExpeditionLaunchViewRequest _afterActionSendAgainRequest;
         private bool _afterActionCanSendAgain;
+        private RectTransform _afterActionPanelRect;
+        private RectTransform _campEventPanelRect;
+        private Vector2 _afterActionDefaultPosition;
+        private Vector2 _campEventDefaultPosition;
+        private bool _layoutDefaultsCached;
+
+        private const float ReportPanelStackGap = 14f;
 
         public void ConfigureBindings(
             TextMeshProUGUI titleLabel,
@@ -238,6 +245,8 @@ namespace AshfallCamp.Presentation
                 UiText.Set(offlineHealing, report.OfflineHealing);
                 UiText.Set(offlineWarnings, report.OfflineWarnings);
             }
+
+            ApplyPanelLayout(report.HasAfterAction, report.HasCampEvent);
         }
 
         private void WireSendAgainButton()
@@ -281,6 +290,49 @@ namespace AshfallCamp.Presentation
                 target.texture = texture;
                 target.color = Color.white;
             }
+        }
+
+        private void ApplyPanelLayout(bool hasAfterAction, bool hasCampEvent)
+        {
+            CacheLayoutDefaults();
+
+            if (_campEventPanelRect != null)
+            {
+                _campEventPanelRect.anchoredPosition = _campEventDefaultPosition;
+            }
+
+            if (_afterActionPanelRect == null) return;
+            if (hasAfterAction && hasCampEvent && _campEventPanelRect != null)
+            {
+                var eventHeight = _campEventPanelRect.rect.height > 0f
+                    ? _campEventPanelRect.rect.height
+                    : _campEventPanelRect.sizeDelta.y;
+                _afterActionPanelRect.anchoredPosition = new Vector2(
+                    _afterActionDefaultPosition.x,
+                    _campEventDefaultPosition.y - eventHeight - ReportPanelStackGap);
+                return;
+            }
+
+            _afterActionPanelRect.anchoredPosition = _afterActionDefaultPosition;
+        }
+
+        private void CacheLayoutDefaults()
+        {
+            if (_layoutDefaultsCached) return;
+
+            _afterActionPanelRect = afterActionPanel != null ? afterActionPanel.rectTransform : null;
+            _campEventPanelRect = campEventPanel != null ? campEventPanel.rectTransform : null;
+            if (_afterActionPanelRect != null)
+            {
+                _afterActionDefaultPosition = _afterActionPanelRect.anchoredPosition;
+            }
+
+            if (_campEventPanelRect != null)
+            {
+                _campEventDefaultPosition = _campEventPanelRect.anchoredPosition;
+            }
+
+            _layoutDefaultsCached = true;
         }
     }
 }

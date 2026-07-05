@@ -147,10 +147,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1790f430ad49af946a262fca3fa6a5bf, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: AshfallCamp.Composition::AshfallCamp.Composition.ProjectLifetimeScope
   parentReference:
-    TypeName:
+    TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
   configDatabase: {fileID: 11400000, guid: db02893f44c88e346a5e2315f05269d2, type: 2}
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6686e186a93627f4482d8ec2b4c71dd2, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: AshfallCamp.Composition::AshfallCamp.Composition.ApplicationLifecycleSaveAdapter
 --- !u!1001 &165648050
 PrefabInstance:
@@ -270,6 +270,14 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 288446819226481214, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292670975
+      objectReference: {fileID: 0}
+    - target: {fileID: 288446819226481214, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 316944522945305074, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -279,6 +287,38 @@ PrefabInstance:
       value: 1382441262
       objectReference: {fileID: 0}
     - target: {fileID: 316944522945305074, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 384379563376582735, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 384379563376582735, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 384379563376582735, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 414748567767715247, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 414748567767715247, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 414748567767715247, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 462578592665889158, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282415189
+      objectReference: {fileID: 0}
+    - target: {fileID: 462578592665889158, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -330,6 +370,30 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 698606921219715601, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 698606921219715601, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 698606921219715601, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 766111737531320746, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 766111737531320746, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 766111737531320746, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 778525008019379147, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -339,6 +403,26 @@ PrefabInstance:
       value: 1382441262
       objectReference: {fileID: 0}
     - target: {fileID: 778525008019379147, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 778561590304242117, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 778561590304242117, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 830820497354307593, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 830820497354307593, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 830820497354307593, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -366,6 +450,54 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 1091687838291562826, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091687838291562826, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1095852291876643242, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4284964644
+      objectReference: {fileID: 0}
+    - target: {fileID: 1095852291876643242, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107151684168164747, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4281107383
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107151684168164747, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124109251451202215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124109251451202215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4281107383
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124109251451202215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137668239883475052, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137668239883475052, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137668239883475052, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 1153353230081243657, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -375,6 +507,14 @@ PrefabInstance:
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 1153353230081243657, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157266532373756264, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157266532373756264, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -406,6 +546,46 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 1331224260501344147, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 1331224260501344147, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1365919788271906798, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1365919788271906798, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 1365919788271906798, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456938317066498706, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456938317066498706, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456938317066498706, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539844621092522761, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539844621092522761, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 1558837401974186190, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -438,11 +618,35 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 1742940717330143215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1742940717330143215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 1742940717330143215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 1826553301876146029, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283063658
       objectReference: {fileID: 0}
     - target: {fileID: 1826553301876146029, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863659885286568543, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863659885286568543, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863659885286568543, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -455,6 +659,22 @@ PrefabInstance:
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 1863857676922387823, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1871800625736606853, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282415189
+      objectReference: {fileID: 0}
+    - target: {fileID: 1871800625736606853, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903490678663838063, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903490678663838063, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -470,6 +690,18 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 2006518796923042734, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2006518796923042734, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 2006518796923042734, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 2032440659941568237, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -499,6 +731,26 @@ PrefabInstance:
       value: 4292077811
       objectReference: {fileID: 0}
     - target: {fileID: 2122685521775982694, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136035147591743837, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136035147591743837, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136035147591743837, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166209112250477088, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292670975
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166209112250477088, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -534,6 +786,30 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 2339528406887098326, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 2339528406887098326, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354423621818311161, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354423621818311161, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2365192361710945857, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 2365192361710945857, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 2435330399282150867, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283063658
@@ -563,6 +839,22 @@ PrefabInstance:
       value: 4285688367
       objectReference: {fileID: 0}
     - target: {fileID: 2521799593038838263, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556489931023900453, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556489931023900453, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585368185683324678, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585368185683324678, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -610,6 +902,18 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 2676914654770047854, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4284964644
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676914654770047854, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2802576935143599669, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2888086408555682111, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283063658
@@ -630,6 +934,14 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 2911291003276373623, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2911291003276373623, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2959652537007664818, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283063658
@@ -643,6 +955,14 @@ PrefabInstance:
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 2985317770818364215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986905325646931972, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986905325646931972, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -682,6 +1002,22 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 3135914869296353519, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135914869296353519, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137447816098870627, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282415189
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137447816098870627, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 3155561623403489762, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4281544235
@@ -690,11 +1026,43 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 3286344061913406003, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 3286344061913406003, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 3329628498205433621, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 3329628498205433621, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3333419063758539083, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292670975
+      objectReference: {fileID: 0}
+    - target: {fileID: 3333419063758539083, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3349833170885729340, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 3349833170885729340, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3439629387414094252, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 3439629387414094252, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -728,15 +1096,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3506771295450998450, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: expeditionCards.Array.data[0].button
-      value:
+      value: 
       objectReference: {fileID: 1680111102}
     - target: {fileID: 3506771295450998450, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: expeditionCards.Array.data[1].button
-      value:
+      value: 
       objectReference: {fileID: 1644349868}
+    - target: {fileID: 3521863368177153357, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3521863368177153357, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4281616549
+      objectReference: {fileID: 0}
+    - target: {fileID: 3521863368177153357, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3568567537931083378, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontSize
+      value: 14.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 3568567537931083378, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3568567537931083378, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 3568567537931083378, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 3576220710359689907, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_Sprite
-      value:
+      value: 
       objectReference: {fileID: 21300000, guid: 521a574c1da84fa29f4a30ce19bee2e1, type: 3}
     - target: {fileID: 3576220710359689907, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_Enabled
@@ -806,6 +1202,26 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 3992064892667381398, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 3992064892667381398, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015132484976511436, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015132484976511436, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015132484976511436, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 4019111467105347975, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -859,6 +1275,30 @@ PrefabInstance:
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 4178953618701463946, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4237870065323614834, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4237870065323614834, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 4237870065323614834, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4239426529620424170, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4239426529620424170, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 4239426529620424170, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -950,6 +1390,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4279495303558880851, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4279495303558880851, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 4279495303558880851, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 4338018538633428205, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -962,11 +1414,35 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 4464220462320910621, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464220462320910621, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483332507893761129, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483332507893761129, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 4521971366812866003, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283063658
       objectReference: {fileID: 0}
     - target: {fileID: 4521971366812866003, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546652632946585064, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282415189
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546652632946585064, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1002,6 +1478,14 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 4685020805021498519, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 4685020805021498519, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 4739814746016226473, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283063658
@@ -1018,6 +1502,30 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 36.1585
       objectReference: {fileID: 0}
+    - target: {fileID: 4818444077088054751, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292670975
+      objectReference: {fileID: 0}
+    - target: {fileID: 4818444077088054751, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850075132748008933, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontSize
+      value: 9.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850075132748008933, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850075132748008933, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850075132748008933, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 4870104775477799450, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -1030,6 +1538,34 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 4929860379929824879, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 4929860379929824879, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4989386788108094606, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 4989386788108094606, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004191910527419542, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004191910527419542, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004191910527419542, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 5020165246095741729, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -1042,6 +1578,18 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 5131410966517580947, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5131410966517580947, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 5131410966517580947, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 5140556482549649940, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -1051,6 +1599,50 @@ PrefabInstance:
       value: 4292077811
       objectReference: {fileID: 0}
     - target: {fileID: 5140556482549649940, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193873698182550611, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193873698182550611, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193873698182550611, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236811013868092266, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236811013868092266, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242806916854484509, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242806916854484509, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242806916854484509, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285014613127930643, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285014613127930643, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4281107383
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285014613127930643, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1080,7 +1672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5337404812819000952, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_Sprite
-      value:
+      value: 
       objectReference: {fileID: 21300000, guid: 3f30777a03b64e0b819d1a3637d61db1, type: 3}
     - target: {fileID: 5337404812819000952, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_Color.b
@@ -1106,6 +1698,26 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 5361641063928758375, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361641063928758375, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5380269641555208674, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5380269641555208674, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282415189
+      objectReference: {fileID: 0}
+    - target: {fileID: 5380269641555208674, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 5407512171375468972, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -1126,11 +1738,51 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 5555240978663564467, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 5555240978663564467, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604808235510400226, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604808235510400226, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604808235510400226, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 5632546587674104237, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283063658
       objectReference: {fileID: 0}
     - target: {fileID: 5632546587674104237, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5704693285271010490, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 5704693285271010490, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863256539618837008, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863256539618837008, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863256539618837008, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1143,6 +1795,14 @@ PrefabInstance:
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 5934347953023091911, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996493960347660401, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996493960347660401, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1158,11 +1818,55 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 6086347542051979187, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086347542051979187, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086347542051979187, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114614770320202053, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114614770320202053, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 6133958629110701882, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6133958629110701882, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 6133958629110701882, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 6136107307389319158, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283063658
       objectReference: {fileID: 0}
     - target: {fileID: 6136107307389319158, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 6137261199355217409, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6137261199355217409, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 6137261199355217409, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1175,6 +1879,22 @@ PrefabInstance:
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 6142016356528345443, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389912223678361215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontSize
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389912223678361215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389912223678361215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389912223678361215, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1198,6 +1918,22 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 6434997638674331949, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6434997638674331949, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292670975
+      objectReference: {fileID: 0}
+    - target: {fileID: 6434997638674331949, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 6452227437413811428, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6510988909714790769, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4281544235
@@ -1227,6 +1963,18 @@ PrefabInstance:
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 6591027545257170128, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 6602626944948436000, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6602626944948436000, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 6602626944948436000, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1274,6 +2022,22 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 6916184338855992566, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916184338855992566, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030046562589439087, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030046562589439087, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 7060753386752243153, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -1283,6 +2047,14 @@ PrefabInstance:
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 7060753386752243153, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085410571610318928, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085410571610318928, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1346,6 +2118,14 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 7324989090823750488, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4281616549
+      objectReference: {fileID: 0}
+    - target: {fileID: 7324989090823750488, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 7330053821446393578, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -1375,6 +2155,14 @@ PrefabInstance:
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 7451551967850850203, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7503673816709931727, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4281107383
+      objectReference: {fileID: 0}
+    - target: {fileID: 7503673816709931727, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1414,6 +2202,42 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 7750108611697078724, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4284964644
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750108611697078724, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7817908704431422016, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4284964644
+      objectReference: {fileID: 0}
+    - target: {fileID: 7817908704431422016, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838635260424607650, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838635260424607650, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899369299836316509, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899369299836316509, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899369299836316509, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 7945941400021409306, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -1423,6 +2247,14 @@ PrefabInstance:
       value: 4285688367
       objectReference: {fileID: 0}
     - target: {fileID: 7945941400021409306, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7955945077958509748, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4284964644
+      objectReference: {fileID: 0}
+    - target: {fileID: 7955945077958509748, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1442,6 +2274,14 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 8036318284224031597, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8036318284224031597, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8058031181366928996, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -1454,6 +2294,14 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 8107405867601048456, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282415189
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107405867601048456, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 8107656866706284966, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -1463,6 +2311,14 @@ PrefabInstance:
       value: 4281544235
       objectReference: {fileID: 0}
     - target: {fileID: 8107656866706284966, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145558744898682819, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145558744898682819, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1475,6 +2331,14 @@ PrefabInstance:
       value: 4292077811
       objectReference: {fileID: 0}
     - target: {fileID: 8147699966096028719, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 8372611635361769125, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 8372611635361769125, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1506,6 +2370,22 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 8739361278032415224, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739361278032415224, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756357088991425316, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4284964644
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756357088991425316, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 8837105838607023858, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_overflowMode
       value: 3
@@ -1517,6 +2397,14 @@ PrefabInstance:
     - target: {fileID: 8837105838607023858, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870510531402220039, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870510531402220039, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8927666465625244744, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
@@ -1566,11 +2454,55 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 8984538001482661325, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282930526
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984538001482661325, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999096131066940796, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999096131066940796, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 9007914803291679354, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9007914803291679354, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9012285913586985113, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283063658
       objectReference: {fileID: 0}
     - target: {fileID: 9012285913586985113, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064410832098293342, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280099103
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064410832098293342, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076641199578762524, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076641199578762524, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4287727451
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076641199578762524, guid: c9d21ee2227738b4499184b719885ad5, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -1634,7 +2566,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2044bc8baaa53984493a72ced02810f6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: AshfallCamp.Presentation::AshfallCamp.Presentation.CampDashboardView
 --- !u!1 &424110340
 GameObject:
@@ -1756,7 +2688,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.StandaloneInputModule
   m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
@@ -1776,7 +2708,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
@@ -1810,7 +2742,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!114 &1644349868
 MonoBehaviour:
@@ -1822,7 +2754,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
     m_Mode: 3
@@ -1870,7 +2802,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!114 &1680111102
 MonoBehaviour:
@@ -1882,7 +2814,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
     m_Mode: 3

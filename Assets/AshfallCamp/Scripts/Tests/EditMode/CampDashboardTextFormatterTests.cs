@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using AshfallCamp.Domain;
 using AshfallCamp.Presentation;
 using TMPro;
@@ -673,6 +674,45 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void DashboardViewStartsOnDashboardEvenWhenCatalogMarksAnotherNavItemActive()
+        {
+            var root = new GameObject("Dashboard");
+            var dashboardRoot = new GameObject("DashboardScreen");
+            var survivorsRoot = new GameObject("SurvivorsScreen");
+            var catalog = ScriptableObject.CreateInstance<CampUiCatalogSO>();
+
+            try
+            {
+                dashboardRoot.transform.SetParent(root.transform, false);
+                survivorsRoot.transform.SetParent(root.transform, false);
+
+                catalog.ScreenTransition.Enabled = false;
+                catalog.NavItems.Add(new NavUiEntry { Id = "survivors", Label = "SURVIVORS", IsActive = true });
+                catalog.NavItems.Add(new NavUiEntry { Id = "buildings", Label = "BUILDINGS", IsActive = false });
+
+                var view = root.AddComponent<CampDashboardView>();
+                SetPrivateField(view, "catalog", catalog);
+                SetPrivateField(view, "screens", new List<CampDashboardView.ScreenBinding>
+                {
+                    new CampDashboardView.ScreenBinding("buildings", new[] { dashboardRoot }),
+                    new CampDashboardView.ScreenBinding("survivors", new[] { survivorsRoot })
+                });
+
+                InvokePrivate(view, "EnsureActiveScreenId");
+                InvokePrivate(view, "ApplyScreenVisibility");
+
+                Assert.AreEqual("buildings", GetPrivateField<string>(view, "_activeScreenId"));
+                Assert.IsTrue(dashboardRoot.activeSelf);
+                Assert.IsFalse(survivorsRoot.activeSelf);
+            }
+            finally
+            {
+                Object.DestroyImmediate(catalog);
+                Object.DestroyImmediate(root);
+            }
+        }
+
+        [Test]
         public void ExpeditionCardsPreferActiveRunsThenUnlockedRoutes()
         {
             var config = TestConfigFactory.Create();
@@ -1183,6 +1223,27 @@ namespace AshfallCamp.Tests.EditMode
             var go = new GameObject(name, typeof(RectTransform), typeof(RawImage));
             go.transform.SetParent(parent, false);
             return go.GetComponent<RawImage>();
+        }
+
+        private static void SetPrivateField(object target, string fieldName, object value)
+        {
+            target.GetType()
+                .GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(target, value);
+        }
+
+        private static T GetPrivateField<T>(object target, string fieldName)
+        {
+            return (T)target.GetType()
+                .GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(target);
+        }
+
+        private static void InvokePrivate(object target, string methodName)
+        {
+            target.GetType()
+                .GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic)
+                .Invoke(target, null);
         }
 
         private static CampUiCatalogSO CreateCatalog()

@@ -227,7 +227,7 @@ namespace AshfallCamp.Presentation
         [Serializable]
         public sealed class ExpeditionCardBinding
         {
-            [SerializeField] private Image panel;
+            [SerializeField] private Graphic panel;
             [SerializeField] private Button button;
             [SerializeField] private TextMeshProUGUI title;
             [SerializeField] private TextMeshProUGUI subtitle;
@@ -242,7 +242,7 @@ namespace AshfallCamp.Presentation
             {
             }
 
-            public ExpeditionCardBinding(Image panel, Button button, TextMeshProUGUI title, TextMeshProUGUI subtitle, TextMeshProUGUI status)
+            public ExpeditionCardBinding(Graphic panel, Button button, TextMeshProUGUI title, TextMeshProUGUI subtitle, TextMeshProUGUI status)
             {
                 this.panel = panel;
                 this.button = button;
@@ -252,7 +252,7 @@ namespace AshfallCamp.Presentation
                 WireButton();
             }
 
-            public Image Panel { get { return panel; } }
+            public Graphic Panel { get { return panel; } }
             public Button Button { get { return button; } }
             public TextMeshProUGUI Title { get { return title; } }
             public TextMeshProUGUI Subtitle { get { return subtitle; } }

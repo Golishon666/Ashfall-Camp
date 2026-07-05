@@ -50,6 +50,7 @@ namespace AshfallCamp.Presentation
                 }
 
                 UiText.Set(binding.Value, FormatResourceValue(state, config, entry));
+                ApplyCapacitySlider(binding, state, entry);
             }
         }
 
@@ -91,6 +92,19 @@ namespace AshfallCamp.Presentation
             return amount.ToString();
         }
 
+        private static void ApplyCapacitySlider(ResourceBinding binding, GameState state, ResourceUiEntry entry)
+        {
+            if (binding == null || !entry.UsesSurvivorCapacity) return;
+
+            var slider = binding.FindSlider();
+            if (slider == null) return;
+
+            slider.minValue = 0f;
+            slider.maxValue = 1f;
+            slider.wholeNumbers = false;
+            slider.SetValueWithoutNotify(Mathf.Clamp01(state.Survivors.Count / (float)Math.Max(1, state.SurvivorCap)));
+        }
+
         [Serializable]
         public sealed class ResourceBinding
         {
@@ -115,6 +129,12 @@ namespace AshfallCamp.Presentation
             public TextMeshProUGUI Label { get { return label; } }
             public TextMeshProUGUI Value { get { return value; } }
             public RawImage Icon { get { return icon; } }
+
+            public Slider FindSlider()
+            {
+                var source = icon != null ? icon.transform : label != null ? label.transform : value != null ? value.transform : null;
+                return source != null && source.parent != null ? source.parent.GetComponentInChildren<Slider>(true) : null;
+            }
         }
     }
 }

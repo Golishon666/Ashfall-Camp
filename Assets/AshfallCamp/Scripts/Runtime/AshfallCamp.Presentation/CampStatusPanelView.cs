@@ -72,17 +72,53 @@ namespace AshfallCamp.Presentation
             UiText.Set(moraleValue, status.MoraleValue);
             UiText.Set(safetyValue, status.SafetyValue);
             UiText.Set(suppliesValue, status.SuppliesValue);
-            ApplyFill(moraleFill, status.MoralePercent, catalog);
-            ApplyFill(safetyFill, status.SafetyPercent, catalog);
-            ApplyFill(suppliesFill, status.SuppliesPercent, catalog);
+            ApplyFill(moraleFill, moraleLabel, moraleValue, status.MoralePercent, catalog);
+            ApplyFill(safetyFill, safetyLabel, safetyValue, status.SafetyPercent, catalog);
+            ApplyFill(suppliesFill, suppliesLabel, suppliesValue, status.SuppliesPercent, catalog);
         }
 
-        private static void ApplyFill(Image target, int percent, CampUiCatalogSO catalog)
+        private static void ApplyFill(Image target, TextMeshProUGUI label, TextMeshProUGUI value, int percent, CampUiCatalogSO catalog)
         {
+            var color = ColorForPercent(percent, catalog);
+            var slider = FindSlider(target, label, value);
+            if (slider != null)
+            {
+                slider.minValue = 0f;
+                slider.maxValue = 1f;
+                slider.wholeNumbers = false;
+                slider.SetValueWithoutNotify(Mathf.Clamp01(percent / 100f));
+
+                var fillGraphic = slider.fillRect != null ? slider.fillRect.GetComponent<Graphic>() : null;
+                if (fillGraphic != null)
+                {
+                    fillGraphic.color = color;
+                }
+            }
+
             if (target == null) return;
 
             target.fillAmount = Mathf.Clamp01(percent / 100f);
-            target.color = ColorForPercent(percent, catalog);
+            target.color = color;
+        }
+
+        private static Slider FindSlider(params Component[] sources)
+        {
+            for (var i = 0; i < sources.Length; i++)
+            {
+                var source = sources[i];
+                if (source == null) continue;
+
+                var parentSlider = source.GetComponentInParent<Slider>(true);
+                if (parentSlider != null) return parentSlider;
+
+                var parent = source.transform.parent;
+                if (parent == null) continue;
+
+                var childSlider = parent.GetComponentInChildren<Slider>(true);
+                if (childSlider != null) return childSlider;
+            }
+
+            return null;
         }
 
         private static Color ColorForPercent(int percent, CampUiCatalogSO catalog)

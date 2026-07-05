@@ -108,8 +108,8 @@ MonoBehaviour:
   EmergencyScavengeCompletedAlertBodyFormat: Camp scavenge brought in {0}.
   UpgradeAvailableAlertTitleFormat: '{0} CAN UPGRADE'
   UpgradeAvailableAlertBodyFormat: Next level {0} is affordable.
-  CampStatusPanelTexture: {fileID: 2800000, guid: 9178779e68b64d988de16f9f2c969227, type: 3}
-  CampAlertCardTexture: {fileID: 2800000, guid: d209b5b82da7452daafb769ef7bc0fdf, type: 3}
+  CampStatusPanelTexture: {fileID: 2800000, guid: 14640c1a92c63b54084e7c8a291bf0b2, type: 3}
+  CampAlertCardTexture: {fileID: 2800000, guid: 880ecdc8d736fd54684291fac0e8a536, type: 3}
   CampOverviewTitle: CAMP OVERVIEW
   ActiveExpeditionsTitle: ACTIVE EXPEDITIONS
   RadioIntelTitle: RADIO INTEL
@@ -178,8 +178,8 @@ MonoBehaviour:
   ExpeditionMonitorNoiseMediumThreshold: 4
   ExpeditionMonitorNoiseHighThreshold: 8
   ExpeditionDetailPanelTexture: {fileID: 2800000, guid: a5a9824b2c4548da835828574930a68f, type: 3}
-  ExpeditionMonitorPanelTexture: {fileID: 2800000, guid: bc9efbf0790a4b74b2bd081a1c8d7372, type: 3}
-  ExpeditionSquadMemberCardTexture: {fileID: 2800000, guid: a95e4e9052be42b1b048b465b16916e2, type: 3}
+  ExpeditionMonitorPanelTexture: {fileID: 2800000, guid: 91346f6ce8b31354a924f737fbcdf68c, type: 3}
+  ExpeditionSquadMemberCardTexture: {fileID: 2800000, guid: 2c30f4983289ac64c8e23aed4cef9617, type: 3}
   ExpeditionPolicyCardTexture: {fileID: 2800000, guid: de1fc3720b6c43b5a027a40141f82e49, type: 3}
   ExpeditionLockedStatusFormat: 'Locked: {0}'
   ExpeditionUnlockRequirementFormat: '{0} {1}'
@@ -197,7 +197,7 @@ MonoBehaviour:
   ResourceCapEffectFormat: '{0} cap {1}, +{2}/h.'
   ResourceCapOnlyEffectFormat: '{0} cap {1}.'
   RouteUnlockEffectLabel: Unlocks routes and future camp systems.
-  BuildingCardTexture: {fileID: 2800000, guid: f586f8235bcc4fd8a6647aef321c58d7, type: 3}
+  BuildingCardTexture: {fileID: 2800000, guid: a6ad7c432a5f9954984b72cd9ae455e1, type: 3}
   IdleSuffixLabel: idle
   PerHourSuffixLabel: /h
   LevelLabelFormat: Level {0}
@@ -272,7 +272,7 @@ MonoBehaviour:
   AfterActionDurabilityItemFormat: '{0} -{1}'
   AfterActionBrokenItemsFormat: 'Broken gear: {0}'
   AfterActionProgressFormat: 'Progress: {0}'
-  AfterActionUnlockedFormat: 'Unlocked {0}'
+  AfterActionUnlockedFormat: Unlocked {0}
   AfterActionDemoProgressFormat: 'Demo goal complete: {0}'
   AfterActionSendAgainButton: SEND AGAIN
   OfflineReportPanelTitle: OFFLINE REPORT
@@ -324,7 +324,7 @@ MonoBehaviour:
     CompleteWhenAnyCondition: 0
     Conditions:
     - Type: survivor_count
-      Id:
+      Id: 
       Value: 2
   - Id: workshop_one
     Title: 'NEXT: BUILD WORKSHOP'

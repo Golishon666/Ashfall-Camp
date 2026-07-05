@@ -9,6 +9,9 @@ namespace AshfallCamp.Presentation
     [DisallowMultipleComponent]
     public sealed class CampDashboardView : MonoBehaviour, IUiRootView
     {
+        private const string DashboardScreenId = "camp";
+        private const string LegacyDashboardScreenId = "buildings";
+
         [SerializeField] private Transform root;
         [SerializeField] private CampUiCatalogSO catalog;
         [SerializeField] private CampHeaderView header;
@@ -295,23 +298,31 @@ namespace AshfallCamp.Presentation
         {
             if (HasScreenBinding(_activeScreenId)) return;
 
+            if (TrySetActiveScreen(DashboardScreenId)) return;
+            if (TrySetActiveScreen(LegacyDashboardScreenId)) return;
+
             foreach (var entry in catalog.NavItems)
             {
-                if (entry != null && entry.IsActive && HasScreenBinding(entry.Id))
+                if (entry != null && entry.IsActive && TrySetActiveScreen(entry.Id))
                 {
-                    _activeScreenId = entry.Id;
                     return;
                 }
             }
 
             foreach (var entry in catalog.NavItems)
             {
-                if (entry != null && HasScreenBinding(entry.Id))
+                if (entry != null && TrySetActiveScreen(entry.Id))
                 {
-                    _activeScreenId = entry.Id;
                     return;
                 }
             }
+        }
+
+        private bool TrySetActiveScreen(string screenId)
+        {
+            if (!HasScreenBinding(screenId)) return false;
+            _activeScreenId = screenId;
+            return true;
         }
 
         private bool HasScreenBinding(string screenId)
