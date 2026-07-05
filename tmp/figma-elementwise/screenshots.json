@@ -1,0 +1,86 @@
+[
+  {
+    "title": "00 Resource Bar Elementwise",
+    "frameId": "45:11721",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-elementwise\\screenshots\\00-resource-bar-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "45:11721",
+      "scale": 0.8166666666666667,
+      "format": "png",
+      "byteLength": 27755,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "01 Camp Dashboard Elementwise",
+    "frameId": "45:11759",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-elementwise\\screenshots\\01-camp-dashboard-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "45:11759",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 310946,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "02 Buildings Elementwise",
+    "frameId": "45:11957",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-elementwise\\screenshots\\02-buildings-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "45:11957",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 158277,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "03 Expedition Planning Elementwise",
+    "frameId": "45:12157",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-elementwise\\screenshots\\03-expedition-planning-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "45:12157",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 211375,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "04 Workshop Elementwise",
+    "frameId": "45:12415",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-elementwise\\screenshots\\04-workshop-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "45:12415",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 145370,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "05 World Map Elementwise",
+    "frameId": "45:12650",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-elementwise\\screenshots\\05-world-map-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "45:12650",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 636717,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  }
+]

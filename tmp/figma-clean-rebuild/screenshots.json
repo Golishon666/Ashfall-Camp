@@ -1,0 +1,114 @@
+[
+  {
+    "frame": "Ashfall Camp - Full HD / Camp Dashboard",
+    "id": "34:2460",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-clean-rebuild\\screenshots\\ashfall-camp-full-hd-camp-dashboard.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:2460",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 57705,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "frame": "Ashfall Camp - Full HD / Survivors",
+    "id": "34:2682",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-clean-rebuild\\screenshots\\ashfall-camp-full-hd-survivors.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:2682",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 52643,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "frame": "Ashfall Camp - Full HD / Buildings",
+    "id": "34:2911",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-clean-rebuild\\screenshots\\ashfall-camp-full-hd-buildings.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:2911",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 53884,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "frame": "Ashfall Camp - Full HD / Expedition Setup",
+    "id": "34:3117",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-clean-rebuild\\screenshots\\ashfall-camp-full-hd-expedition-setup.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:3117",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 47422,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "frame": "Ashfall Camp - Full HD / Expedition Monitor",
+    "id": "34:3281",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-clean-rebuild\\screenshots\\ashfall-camp-full-hd-expedition-monitor.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:3281",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 58008,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "frame": "Ashfall Camp - Full HD / Workshop",
+    "id": "34:3621",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-clean-rebuild\\screenshots\\ashfall-camp-full-hd-workshop.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:3621",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 45606,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "frame": "Ashfall Camp - Full HD / Radio",
+    "id": "34:3798",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-clean-rebuild\\screenshots\\ashfall-camp-full-hd-radio.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:3798",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 48021,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "frame": "Ashfall Camp - Full HD / After Action Report",
+    "id": "34:3941",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-clean-rebuild\\screenshots\\ashfall-camp-full-hd-after-action-report.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:3941",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 43164,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  }
+]

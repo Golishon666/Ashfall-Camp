@@ -1,0 +1,374 @@
+[
+  {
+    "key": "resScrap",
+    "scaleMode": "FIT",
+    "count": 20,
+    "success": true
+  },
+  {
+    "key": "resFood",
+    "scaleMode": "FIT",
+    "count": 13,
+    "success": true
+  },
+  {
+    "key": "resWater",
+    "scaleMode": "FIT",
+    "count": 22,
+    "success": true
+  },
+  {
+    "key": "resMedicine",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "resParts",
+    "scaleMode": "FIT",
+    "count": 11,
+    "success": true
+  },
+  {
+    "key": "resRadio",
+    "scaleMode": "FIT",
+    "count": 4,
+    "success": true
+  },
+  {
+    "key": "navSurvivors",
+    "scaleMode": "FIT",
+    "count": 7,
+    "success": true
+  },
+  {
+    "key": "navCamp",
+    "scaleMode": "FIT",
+    "count": 6,
+    "success": true
+  },
+  {
+    "key": "statusHealthy",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "statusMorale",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "statusSafe",
+    "scaleMode": "FIT",
+    "count": 4,
+    "success": true
+  },
+  {
+    "key": "eqBackpack",
+    "scaleMode": "FIT",
+    "count": 14,
+    "success": true
+  },
+  {
+    "key": "statusWounded",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "statusIdle",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "statusLevel",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "bgCamp",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "navWorkshop",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "navRadio",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "navExpedition",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "expGas",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "expWind",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "dashWounded",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "dashIdle",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "dashUpgrade",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "navBuildings",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "buildingBarracks",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "buildingWorkshop",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "buildingWater",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "buildingInfirmary",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "buildingRadio",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "eqRadio",
+    "scaleMode": "FIT",
+    "count": 9,
+    "success": true
+  },
+  {
+    "key": "zoneStore",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "zoneDry",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "zoneClinic",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "zonePolice",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "zoneTunnel",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "survivor1",
+    "scaleMode": "FILL",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "eqHatchet",
+    "scaleMode": "FIT",
+    "count": 6,
+    "success": true
+  },
+  {
+    "key": "survivor2",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "survivor3",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "eqMedkit",
+    "scaleMode": "FIT",
+    "count": 5,
+    "success": true
+  },
+  {
+    "key": "survivor4",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "eqRifle",
+    "scaleMode": "FIT",
+    "count": 4,
+    "success": true
+  },
+  {
+    "key": "eqAmmo",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "eqPistol",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "eqVest",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "eqTape",
+    "scaleMode": "FIT",
+    "count": 4,
+    "success": true
+  },
+  {
+    "key": "eqCanteen",
+    "scaleMode": "FIT",
+    "count": 4,
+    "success": true
+  },
+  {
+    "key": "eqFlashlight",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "workshopRifle",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "workshopBench",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "markerCamp",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "markerScavenging",
+    "scaleMode": "FIT",
+    "count": 4,
+    "success": true
+  },
+  {
+    "key": "markerEvent",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "markerUnknown",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "mapBase",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "mapRoute",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "markerForest",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "markerHospital",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "markerPolice",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "markerHazard",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "mapDry",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  }
+]

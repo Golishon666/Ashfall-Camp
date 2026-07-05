@@ -1,0 +1,86 @@
+[
+  {
+    "title": "00 Resource Panel Exact",
+    "frameId": "34:4753",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-exact-concepts\\screenshots\\00-resource-panel-exact.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:4753",
+      "scale": 0.8166666666666667,
+      "format": "png",
+      "byteLength": 325223,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "01 Camp Dashboard Exact",
+    "frameId": "34:4755",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-exact-concepts\\screenshots\\01-camp-dashboard-exact.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:4755",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 919438,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "02 Buildings Exact",
+    "frameId": "34:4758",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-exact-concepts\\screenshots\\02-buildings-exact.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:4758",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 883276,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "03 Expedition Planning Exact",
+    "frameId": "34:4760",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-exact-concepts\\screenshots\\03-expedition-planning-exact.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:4760",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 916547,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "04 Workshop Exact",
+    "frameId": "34:4762",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-exact-concepts\\screenshots\\04-workshop-exact.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:4762",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 849011,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "05 World Map Exact",
+    "frameId": "34:4764",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-exact-concepts\\screenshots\\05-world-map-exact.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "34:4764",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 1125774,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  }
+]

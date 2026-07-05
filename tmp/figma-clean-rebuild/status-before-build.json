@@ -1,0 +1,53 @@
+{
+  "_mcp": "figma-console-mcp",
+  "mode": "local",
+  "currentFileName": "Ashfall Camp UI Concept",
+  "currentFileKey": "ZkkZIaihzfRvAUEuffZfIu",
+  "editorType": "figma",
+  "monitoredPageUrl": "https://www.figma.com/design/ZkkZIaihzfRvAUEuffZfIu/Ashfall%20Camp%20UI%20Concept?node-id=33-773",
+  "monitorWorkerCount": 0,
+  "transport": {
+    "active": "websocket",
+    "websocket": {
+      "available": true,
+      "serverRunning": true,
+      "bundledPluginVersion": "1.34.0",
+      "port": "9225",
+      "preferredPort": "9225",
+      "portFallbackUsed": false,
+      "connectedFile": {
+        "fileName": "Ashfall Camp UI Concept",
+        "fileKey": "ZkkZIaihzfRvAUEuffZfIu",
+        "currentPage": "Ashfall Camp - Clean Full HD",
+        "connectedAt": "2026-07-05T13:40:20.575Z",
+        "pluginVersion": "1.34.0"
+      },
+      "connectedFiles": [
+        {
+          "fileName": "Ashfall Camp UI Concept",
+          "fileKey": "ZkkZIaihzfRvAUEuffZfIu",
+          "currentPage": "Ashfall Camp - Clean Full HD",
+          "editorType": "figma",
+          "isActive": true,
+          "connectedAt": "2026-07-05T13:40:20.575Z",
+          "pluginVersion": "1.34.0"
+        }
+      ],
+      "lastPongAt": "2026-07-05T13:40:20.575Z"
+    }
+  },
+  "setup": {
+    "valid": true,
+    "failureLayer": null,
+    "probeResult": {
+      "success": true,
+      "latencyMs": 2
+    },
+    "message": "✅ Connected to Figma Desktop via WebSocket Bridge",
+    "ai_instruction": "Connected via WebSocket Bridge to \"Ashfall Camp UI Concept\" on port 9225. All design tools and console monitoring tools are available. Console logs are captured from the plugin sandbox (code.js). IMPORTANT: Always verify the file name before destructive operations when multiple files have the plugin open."
+  },
+  "pluginPath": "C:\\Users\\jaros\\.figma-console-mcp\\plugin\\manifest.json",
+  "consoleMonitor": null,
+  "initialized": true,
+  "timestamp": 1783258821116
+}

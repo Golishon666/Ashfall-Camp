@@ -1,0 +1,52 @@
+{
+  "_mcp": "figma-console-mcp",
+  "success": true,
+  "result": {
+    "pageName": "Ashfall Camp - Exact Concepts",
+    "created": [
+      {
+        "key": "resource",
+        "title": "00 Resource Panel Exact",
+        "frameId": "34:4753",
+        "imageNodeId": "34:4754",
+        "sourceName": "codex-clipboard-49ce7b18-fc5d-4dd9-b720-962836011177.png"
+      },
+      {
+        "key": "dashboard",
+        "title": "01 Camp Dashboard Exact",
+        "frameId": "34:4755",
+        "imageNodeId": "34:4756",
+        "sourceName": "ui_concept_camp_dashboard_01.png"
+      },
+      {
+        "key": "buildings",
+        "title": "02 Buildings Exact",
+        "frameId": "34:4758",
+        "imageNodeId": "34:4759",
+        "sourceName": "ui_concept_buildings_01.png"
+      },
+      {
+        "key": "expedition",
+        "title": "03 Expedition Planning Exact",
+        "frameId": "34:4760",
+        "imageNodeId": "34:4761",
+        "sourceName": "ui_concept_expedition_setup_01.png"
+      },
+      {
+        "key": "workshop",
+        "title": "04 Workshop Exact",
+        "frameId": "34:4762",
+        "imageNodeId": "34:4763",
+        "sourceName": "ui_concept_workshop_01.png"
+      },
+      {
+        "key": "map",
+        "title": "05 World Map Exact",
+        "frameId": "34:4764",
+        "imageNodeId": "34:4765",
+        "sourceName": "ui_concept_world_map_01.png"
+      }
+    ]
+  },
+  "timestamp": 1783261041813
+}

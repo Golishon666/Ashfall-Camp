@@ -1,0 +1,1960 @@
+{
+  "frameId": "45:11721",
+  "frameName": "Ashfall Camp - Resource Dashboard Bar / Elementwise",
+  "width": 1920,
+  "height": 150,
+  "rootBounds": {
+    "x": 0,
+    "y": 0,
+    "width": 1920,
+    "height": 150
+  },
+  "nodeCount": 38,
+  "textCount": 21,
+  "visualCount": 17,
+  "tree": {
+    "id": "45:11721",
+    "parentId": null,
+    "name": "Ashfall Camp - Resource Dashboard Bar / Elementwise",
+    "type": "FRAME",
+    "depth": 0,
+    "siblingIndex": 0,
+    "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise",
+    "renderMode": "background",
+    "clipsContent": true,
+    "opacity": 1,
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 150
+    },
+    "fills": [
+      {
+        "type": "SOLID",
+        "opacity": 1,
+        "color": {
+          "r": 0.9372549057006836,
+          "g": 0.886274516582489,
+          "b": 0.7843137383460999
+        }
+      }
+    ],
+    "strokes": [
+      {
+        "type": "SOLID",
+        "opacity": 1,
+        "color": {
+          "r": 0.23137255012989044,
+          "g": 0.19607843458652496,
+          "b": 0.15294118225574493
+        }
+      }
+    ],
+    "strokeWeight": 4,
+    "cornerRadius": 0,
+    "text": null,
+    "children": [
+      {
+        "id": "45:11722",
+        "parentId": "45:11721",
+        "name": "Resource Bar",
+        "type": "FRAME",
+        "depth": 1,
+        "siblingIndex": 0,
+        "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]",
+        "renderMode": "background",
+        "clipsContent": true,
+        "opacity": 1,
+        "bounds": {
+          "x": 8,
+          "y": 14,
+          "width": 1904,
+          "height": 120
+        },
+        "fills": [
+          {
+            "type": "SOLID",
+            "opacity": 1,
+            "color": {
+              "r": 0.9529411792755127,
+              "g": 0.8980392217636108,
+              "b": 0.7921568751335144
+            }
+          }
+        ],
+        "strokes": [
+          {
+            "type": "SOLID",
+            "opacity": 1,
+            "color": {
+              "r": 0.7843137383460999,
+              "g": 0.6784313917160034,
+              "b": 0.5137255191802979
+            }
+          }
+        ],
+        "strokeWeight": 1,
+        "cornerRadius": 8,
+        "text": null,
+        "children": [
+          {
+            "id": "45:11723",
+            "parentId": "45:11722",
+            "name": "Icon / SCRAP",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 0,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / SCRAP[0]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 28,
+              "y": 38,
+              "width": 50,
+              "height": 50
+            },
+            "fills": [
+              {
+                "type": "IMAGE",
+                "opacity": 1,
+                "scaleMode": "FIT",
+                "hasImage": true
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0002-icon-scrap-45-11723.png"
+          },
+          {
+            "id": "45:11724",
+            "parentId": "45:11722",
+            "name": "Label / SCRAP",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 1,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Label / SCRAP[1]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 92,
+              "y": 32,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "SCRAP",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 18
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11725",
+            "parentId": "45:11722",
+            "name": "Value / SCRAP",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 2,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Value / SCRAP[2]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 92,
+              "y": 64,
+              "width": 180,
+              "height": 32
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "1,250",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 24,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 30
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11726",
+            "parentId": "45:11722",
+            "name": "Rate / SCRAP",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 3,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Rate / SCRAP[3]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 92,
+              "y": 97,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.3686274588108063,
+                  "g": 0.3333333432674408,
+                  "b": 0.2823529541492462
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "+32 /h",
+              "fontName": {
+                "family": "Inter",
+                "style": "Medium"
+              },
+              "fontSize": 15,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 19
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11727",
+            "parentId": "45:11722",
+            "name": "Cell separator 1",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 4,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 1[4]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 280,
+              "y": 24,
+              "width": 1,
+              "height": 100
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 0.699999988079071,
+                "color": {
+                  "r": 0.7843137383460999,
+                  "g": 0.6784313917160034,
+                  "b": 0.5137255191802979
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0003-cell-separator-1-45-11727.png"
+          },
+          {
+            "id": "45:11728",
+            "parentId": "45:11722",
+            "name": "Icon / FOOD",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 5,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / FOOD[5]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 300,
+              "y": 38,
+              "width": 50,
+              "height": 50
+            },
+            "fills": [
+              {
+                "type": "IMAGE",
+                "opacity": 1,
+                "scaleMode": "FIT",
+                "hasImage": true
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0004-icon-food-45-11728.png"
+          },
+          {
+            "id": "45:11729",
+            "parentId": "45:11722",
+            "name": "Label / FOOD",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 6,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Label / FOOD[6]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 364,
+              "y": 32,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "FOOD",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 18
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11730",
+            "parentId": "45:11722",
+            "name": "Value / FOOD",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 7,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Value / FOOD[7]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 364,
+              "y": 64,
+              "width": 180,
+              "height": 32
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "320",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 24,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 30
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11731",
+            "parentId": "45:11722",
+            "name": "Rate / FOOD",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 8,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Rate / FOOD[8]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 364,
+              "y": 97,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.3686274588108063,
+                  "g": 0.3333333432674408,
+                  "b": 0.2823529541492462
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "+28 /h",
+              "fontName": {
+                "family": "Inter",
+                "style": "Medium"
+              },
+              "fontSize": 15,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 19
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11732",
+            "parentId": "45:11722",
+            "name": "Cell separator 2",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 9,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 2[9]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 552,
+              "y": 24,
+              "width": 1,
+              "height": 100
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 0.699999988079071,
+                "color": {
+                  "r": 0.7843137383460999,
+                  "g": 0.6784313917160034,
+                  "b": 0.5137255191802979
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0005-cell-separator-2-45-11732.png"
+          },
+          {
+            "id": "45:11733",
+            "parentId": "45:11722",
+            "name": "Icon / WATER",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 10,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / WATER[10]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 572,
+              "y": 38,
+              "width": 50,
+              "height": 50
+            },
+            "fills": [
+              {
+                "type": "IMAGE",
+                "opacity": 1,
+                "scaleMode": "FIT",
+                "hasImage": true
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0006-icon-water-45-11733.png"
+          },
+          {
+            "id": "45:11734",
+            "parentId": "45:11722",
+            "name": "Label / WATER",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 11,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Label / WATER[11]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 636,
+              "y": 32,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "WATER",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 18
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11735",
+            "parentId": "45:11722",
+            "name": "Value / WATER",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 12,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Value / WATER[12]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 636,
+              "y": 64,
+              "width": 180,
+              "height": 32
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "480",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 24,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 30
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11736",
+            "parentId": "45:11722",
+            "name": "Rate / WATER",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 13,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Rate / WATER[13]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 636,
+              "y": 97,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.3686274588108063,
+                  "g": 0.3333333432674408,
+                  "b": 0.2823529541492462
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "+24 /h",
+              "fontName": {
+                "family": "Inter",
+                "style": "Medium"
+              },
+              "fontSize": 15,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 19
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11737",
+            "parentId": "45:11722",
+            "name": "Cell separator 3",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 14,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 3[14]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 824,
+              "y": 24,
+              "width": 1,
+              "height": 100
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 0.699999988079071,
+                "color": {
+                  "r": 0.7843137383460999,
+                  "g": 0.6784313917160034,
+                  "b": 0.5137255191802979
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0007-cell-separator-3-45-11737.png"
+          },
+          {
+            "id": "45:11738",
+            "parentId": "45:11722",
+            "name": "Icon / MEDICINE",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 15,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / MEDICINE[15]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 844,
+              "y": 38,
+              "width": 50,
+              "height": 50
+            },
+            "fills": [
+              {
+                "type": "IMAGE",
+                "opacity": 1,
+                "scaleMode": "FIT",
+                "hasImage": true
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0008-icon-medicine-45-11738.png"
+          },
+          {
+            "id": "45:11739",
+            "parentId": "45:11722",
+            "name": "Label / MEDICINE",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 16,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Label / MEDICINE[16]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 908,
+              "y": 32,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "MEDICINE",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 18
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11740",
+            "parentId": "45:11722",
+            "name": "Value / MEDICINE",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 17,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Value / MEDICINE[17]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 908,
+              "y": 64,
+              "width": 180,
+              "height": 32
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "210",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 24,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 30
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11741",
+            "parentId": "45:11722",
+            "name": "Rate / MEDICINE",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 18,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Rate / MEDICINE[18]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 908,
+              "y": 97,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.3686274588108063,
+                  "g": 0.3333333432674408,
+                  "b": 0.2823529541492462
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "+16 /h",
+              "fontName": {
+                "family": "Inter",
+                "style": "Medium"
+              },
+              "fontSize": 15,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 19
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11742",
+            "parentId": "45:11722",
+            "name": "Cell separator 4",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 19,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 4[19]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1096,
+              "y": 24,
+              "width": 1,
+              "height": 100
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 0.699999988079071,
+                "color": {
+                  "r": 0.7843137383460999,
+                  "g": 0.6784313917160034,
+                  "b": 0.5137255191802979
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0009-cell-separator-4-45-11742.png"
+          },
+          {
+            "id": "45:11743",
+            "parentId": "45:11722",
+            "name": "Icon / WEAPON PARTS",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 20,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / WEAPON PARTS[20]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1116,
+              "y": 38,
+              "width": 50,
+              "height": 50
+            },
+            "fills": [
+              {
+                "type": "IMAGE",
+                "opacity": 1,
+                "scaleMode": "FIT",
+                "hasImage": true
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0010-icon-weapon-parts-45-11743.png"
+          },
+          {
+            "id": "45:11744",
+            "parentId": "45:11722",
+            "name": "Label / WEAPON PARTS",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 21,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Label / WEAPON PARTS[21]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1180,
+              "y": 32,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "WEAPON PARTS",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 18
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11745",
+            "parentId": "45:11722",
+            "name": "Value / WEAPON PARTS",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 22,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Value / WEAPON PARTS[22]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1180,
+              "y": 64,
+              "width": 180,
+              "height": 32
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "75",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 24,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 30
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11746",
+            "parentId": "45:11722",
+            "name": "Rate / WEAPON PARTS",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 23,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Rate / WEAPON PARTS[23]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1180,
+              "y": 97,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.3686274588108063,
+                  "g": 0.3333333432674408,
+                  "b": 0.2823529541492462
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "+6 /h",
+              "fontName": {
+                "family": "Inter",
+                "style": "Medium"
+              },
+              "fontSize": 15,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 19
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11747",
+            "parentId": "45:11722",
+            "name": "Cell separator 5",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 24,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 5[24]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1368,
+              "y": 24,
+              "width": 1,
+              "height": 100
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 0.699999988079071,
+                "color": {
+                  "r": 0.7843137383460999,
+                  "g": 0.6784313917160034,
+                  "b": 0.5137255191802979
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0011-cell-separator-5-45-11747.png"
+          },
+          {
+            "id": "45:11748",
+            "parentId": "45:11722",
+            "name": "Icon / RADIO INTEL",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 25,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / RADIO INTEL[25]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1388,
+              "y": 38,
+              "width": 50,
+              "height": 50
+            },
+            "fills": [
+              {
+                "type": "IMAGE",
+                "opacity": 1,
+                "scaleMode": "FIT",
+                "hasImage": true
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0012-icon-radio-intel-45-11748.png"
+          },
+          {
+            "id": "45:11749",
+            "parentId": "45:11722",
+            "name": "Label / RADIO INTEL",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 26,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Label / RADIO INTEL[26]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1452,
+              "y": 32,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "RADIO INTEL",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 18
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11750",
+            "parentId": "45:11722",
+            "name": "Value / RADIO INTEL",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 27,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Value / RADIO INTEL[27]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1452,
+              "y": 64,
+              "width": 180,
+              "height": 32
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "3",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 24,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 30
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11751",
+            "parentId": "45:11722",
+            "name": "Rate / RADIO INTEL",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 28,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Rate / RADIO INTEL[28]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1452,
+              "y": 97,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.3686274588108063,
+                  "g": 0.3333333432674408,
+                  "b": 0.2823529541492462
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "+1 /h",
+              "fontName": {
+                "family": "Inter",
+                "style": "Medium"
+              },
+              "fontSize": 15,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 19
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11752",
+            "parentId": "45:11722",
+            "name": "Cell separator 6",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 29,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 6[29]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1640,
+              "y": 24,
+              "width": 1,
+              "height": 100
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 0.699999988079071,
+                "color": {
+                  "r": 0.7843137383460999,
+                  "g": 0.6784313917160034,
+                  "b": 0.5137255191802979
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0013-cell-separator-6-45-11752.png"
+          },
+          {
+            "id": "45:11753",
+            "parentId": "45:11722",
+            "name": "Icon / SURVIVOR CAPACITY",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 30,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / SURVIVOR CAPACITY[30]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1660,
+              "y": 38,
+              "width": 50,
+              "height": 50
+            },
+            "fills": [
+              {
+                "type": "IMAGE",
+                "opacity": 1,
+                "scaleMode": "FIT",
+                "hasImage": true
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 0,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0014-icon-survivor-capacity-45-11753.png"
+          },
+          {
+            "id": "45:11754",
+            "parentId": "45:11722",
+            "name": "Label / SURVIVOR CAPACITY",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 31,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Label / SURVIVOR CAPACITY[31]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1724,
+              "y": 32,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "SURVIVOR CAPACITY",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 18
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11755",
+            "parentId": "45:11722",
+            "name": "Value / SURVIVOR CAPACITY",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 32,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Value / SURVIVOR CAPACITY[32]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1724,
+              "y": 64,
+              "width": 180,
+              "height": 32
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.12156862765550613,
+                  "g": 0.12941177189350128,
+                  "b": 0.11372549086809158
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "28 / 36",
+              "fontName": {
+                "family": "Inter",
+                "style": "Bold"
+              },
+              "fontSize": 24,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 30
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11756",
+            "parentId": "45:11722",
+            "name": "Rate / SURVIVOR CAPACITY",
+            "type": "TEXT",
+            "depth": 2,
+            "siblingIndex": 33,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Rate / SURVIVOR CAPACITY[33]",
+            "renderMode": "text",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1724,
+              "y": 97,
+              "width": 180,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.3686274588108063,
+                  "g": 0.3333333432674408,
+                  "b": 0.2823529541492462
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "cornerRadius": 0,
+            "text": {
+              "characters": "8 idle",
+              "fontName": {
+                "family": "Inter",
+                "style": "Medium"
+              },
+              "fontSize": 15,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 19
+              },
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "NONE"
+            },
+            "children": []
+          },
+          {
+            "id": "45:11757",
+            "parentId": "45:11722",
+            "name": "Capacity bar / track",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 34,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Capacity bar / track[34]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1732,
+              "y": 100,
+              "width": 150,
+              "height": 8
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.8117647171020508,
+                  "g": 0.7607843279838562,
+                  "b": 0.6627451181411743
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 4,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0015-capacity-bar-track-45-11757.png"
+          },
+          {
+            "id": "45:11758",
+            "parentId": "45:11722",
+            "name": "Capacity bar / fill",
+            "type": "RECTANGLE",
+            "depth": 2,
+            "siblingIndex": 35,
+            "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Capacity bar / fill[35]",
+            "renderMode": "visual",
+            "clipsContent": false,
+            "opacity": 1,
+            "bounds": {
+              "x": 1732,
+              "y": 100,
+              "width": 117,
+              "height": 8
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "opacity": 1,
+                "color": {
+                  "r": 0.3333333432674408,
+                  "g": 0.47058823704719543,
+                  "b": 0.250980406999588
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 0,
+            "cornerRadius": 4,
+            "text": null,
+            "children": [],
+            "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0016-capacity-bar-fill-45-11758.png"
+          }
+        ],
+        "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0001-resource-bar-45-11722.png"
+      }
+    ],
+    "assetPath": "Assets/AshfallCamp/Art/UI/FigmaExports/ResourceBarElementwise/ElementAssets/0000-ashfall-camp-resource-dashboard-bar-elementwise-45-11721.png"
+  },
+  "exports": [
+    {
+      "id": "45:11721",
+      "name": "Ashfall Camp - Resource Dashboard Bar / Elementwise",
+      "mode": "background",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 150
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise",
+      "index": 0,
+      "scale": 2,
+      "byteLength": 5402
+    },
+    {
+      "id": "45:11722",
+      "name": "Resource Bar",
+      "mode": "background",
+      "bounds": {
+        "x": 8,
+        "y": 14,
+        "width": 1904,
+        "height": 120
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]",
+      "index": 1,
+      "scale": 2,
+      "byteLength": 5311
+    },
+    {
+      "id": "45:11723",
+      "name": "Icon / SCRAP",
+      "mode": "visual",
+      "bounds": {
+        "x": 28,
+        "y": 38,
+        "width": 50,
+        "height": 50
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / SCRAP[0]",
+      "index": 2,
+      "scale": 2,
+      "byteLength": 10868
+    },
+    {
+      "id": "45:11727",
+      "name": "Cell separator 1",
+      "mode": "visual",
+      "bounds": {
+        "x": 280,
+        "y": 24,
+        "width": 1,
+        "height": 100
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 1[4]",
+      "index": 3,
+      "scale": 2,
+      "byteLength": 170
+    },
+    {
+      "id": "45:11728",
+      "name": "Icon / FOOD",
+      "mode": "visual",
+      "bounds": {
+        "x": 300,
+        "y": 38,
+        "width": 50,
+        "height": 50
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / FOOD[5]",
+      "index": 4,
+      "scale": 2,
+      "byteLength": 7793
+    },
+    {
+      "id": "45:11732",
+      "name": "Cell separator 2",
+      "mode": "visual",
+      "bounds": {
+        "x": 552,
+        "y": 24,
+        "width": 1,
+        "height": 100
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 2[9]",
+      "index": 5,
+      "scale": 2,
+      "byteLength": 170
+    },
+    {
+      "id": "45:11733",
+      "name": "Icon / WATER",
+      "mode": "visual",
+      "bounds": {
+        "x": 572,
+        "y": 38,
+        "width": 50,
+        "height": 50
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / WATER[10]",
+      "index": 6,
+      "scale": 2,
+      "byteLength": 6164
+    },
+    {
+      "id": "45:11737",
+      "name": "Cell separator 3",
+      "mode": "visual",
+      "bounds": {
+        "x": 824,
+        "y": 24,
+        "width": 1,
+        "height": 100
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 3[14]",
+      "index": 7,
+      "scale": 2,
+      "byteLength": 170
+    },
+    {
+      "id": "45:11738",
+      "name": "Icon / MEDICINE",
+      "mode": "visual",
+      "bounds": {
+        "x": 844,
+        "y": 38,
+        "width": 50,
+        "height": 50
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / MEDICINE[15]",
+      "index": 8,
+      "scale": 2,
+      "byteLength": 8953
+    },
+    {
+      "id": "45:11742",
+      "name": "Cell separator 4",
+      "mode": "visual",
+      "bounds": {
+        "x": 1096,
+        "y": 24,
+        "width": 1,
+        "height": 100
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 4[19]",
+      "index": 9,
+      "scale": 2,
+      "byteLength": 170
+    },
+    {
+      "id": "45:11743",
+      "name": "Icon / WEAPON PARTS",
+      "mode": "visual",
+      "bounds": {
+        "x": 1116,
+        "y": 38,
+        "width": 50,
+        "height": 50
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / WEAPON PARTS[20]",
+      "index": 10,
+      "scale": 2,
+      "byteLength": 10122
+    },
+    {
+      "id": "45:11747",
+      "name": "Cell separator 5",
+      "mode": "visual",
+      "bounds": {
+        "x": 1368,
+        "y": 24,
+        "width": 1,
+        "height": 100
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 5[24]",
+      "index": 11,
+      "scale": 2,
+      "byteLength": 170
+    },
+    {
+      "id": "45:11748",
+      "name": "Icon / RADIO INTEL",
+      "mode": "visual",
+      "bounds": {
+        "x": 1388,
+        "y": 38,
+        "width": 50,
+        "height": 50
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / RADIO INTEL[25]",
+      "index": 12,
+      "scale": 2,
+      "byteLength": 13806
+    },
+    {
+      "id": "45:11752",
+      "name": "Cell separator 6",
+      "mode": "visual",
+      "bounds": {
+        "x": 1640,
+        "y": 24,
+        "width": 1,
+        "height": 100
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Cell separator 6[29]",
+      "index": 13,
+      "scale": 2,
+      "byteLength": 170
+    },
+    {
+      "id": "45:11753",
+      "name": "Icon / SURVIVOR CAPACITY",
+      "mode": "visual",
+      "bounds": {
+        "x": 1660,
+        "y": 38,
+        "width": 50,
+        "height": 50
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Icon / SURVIVOR CAPACITY[30]",
+      "index": 14,
+      "scale": 2,
+      "byteLength": 4248
+    },
+    {
+      "id": "45:11757",
+      "name": "Capacity bar / track",
+      "mode": "visual",
+      "bounds": {
+        "x": 1732,
+        "y": 100,
+        "width": 150,
+        "height": 8
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Capacity bar / track[34]",
+      "index": 15,
+      "scale": 2,
+      "byteLength": 434
+    },
+    {
+      "id": "45:11758",
+      "name": "Capacity bar / fill",
+      "mode": "visual",
+      "bounds": {
+        "x": 1732,
+        "y": 100,
+        "width": 117,
+        "height": 8
+      },
+      "path": "Ashfall Camp - Resource Dashboard Bar / Elementwise/Resource Bar[0]/Capacity bar / fill[35]",
+      "index": 16,
+      "scale": 2,
+      "byteLength": 446
+    }
+  ]
+}

@@ -1,0 +1,5641 @@
+{
+  "_mcp": "figma-console-mcp",
+  "success": true,
+  "result": [
+    {
+      "page": "Page 1",
+      "pageId": "0:1",
+      "childCount": 126,
+      "frames": [
+        {
+          "id": "9:3",
+          "name": "ui_bg_survivors_roster_01",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 200,
+            "h": 150
+          },
+          "abs": {
+            "x": 198,
+            "y": 1730,
+            "w": 200,
+            "h": 150
+          },
+          "childCount": 0,
+          "navish": []
+        },
+        {
+          "id": "9:6",
+          "name": "ui_backplate_clean_buildings_01",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 96,
+            "h": 96
+          },
+          "abs": {
+            "x": -520,
+            "y": 1760,
+            "w": 96,
+            "h": 96
+          },
+          "childCount": 0,
+          "navish": []
+        },
+        {
+          "id": "9:10",
+          "name": "Ashfall Camp - Full HD / 01 Camp Dashboard",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1924,
+            "h": 1087
+          },
+          "abs": {
+            "x": 2098,
+            "y": -4,
+            "w": 1924,
+            "h": 1087
+          },
+          "childCount": 9,
+          "navish": [
+            {
+              "id": "17:971",
+              "name": "Top Resource Bar",
+              "type": "FRAME",
+              "rel": {
+                "x": 1132,
+                "y": 36,
+                "w": 750,
+                "h": 65
+              },
+              "abs": {
+                "x": 3230,
+                "y": 32,
+                "w": 750,
+                "h": 65
+              },
+              "childCount": 5
+            },
+            {
+              "id": "17:1110",
+              "name": "Bottom Nav / Camp",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 128,
+                "y": 970,
+                "w": 1664,
+                "h": 88
+              },
+              "abs": {
+                "x": 2226,
+                "y": 966,
+                "w": 1664,
+                "h": 88
+              },
+              "childCount": 18
+            }
+          ]
+        },
+        {
+          "id": "9:384",
+          "name": "Ashfall Camp - Full HD / 02 Survivors",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1924,
+            "h": 1087
+          },
+          "abs": {
+            "x": 4138,
+            "y": -4,
+            "w": 1924,
+            "h": 1087
+          },
+          "childCount": 9,
+          "navish": [
+            {
+              "id": "17:1135",
+              "name": "Top Resource Bar",
+              "type": "FRAME",
+              "rel": {
+                "x": 1132,
+                "y": 36,
+                "w": 750,
+                "h": 65
+              },
+              "abs": {
+                "x": 5270,
+                "y": 32,
+                "w": 750,
+                "h": 65
+              },
+              "childCount": 5
+            },
+            {
+              "id": "17:1328",
+              "name": "Bottom Nav / Survivors",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 128,
+                "y": 970,
+                "w": 1664,
+                "h": 88
+              },
+              "abs": {
+                "x": 4266,
+                "y": 966,
+                "w": 1664,
+                "h": 88
+              },
+              "childCount": 18
+            }
+          ]
+        },
+        {
+          "id": "9:905",
+          "name": "Ashfall Camp - Full HD / 03 Expeditions",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1924,
+            "h": 1087
+          },
+          "abs": {
+            "x": 6178,
+            "y": -4,
+            "w": 1924,
+            "h": 1087
+          },
+          "childCount": 9,
+          "navish": [
+            {
+              "id": "17:1353",
+              "name": "Top Resource Bar",
+              "type": "FRAME",
+              "rel": {
+                "x": 1132,
+                "y": 36,
+                "w": 750,
+                "h": 65
+              },
+              "abs": {
+                "x": 7310,
+                "y": 32,
+                "w": 750,
+                "h": 65
+              },
+              "childCount": 5
+            },
+            {
+              "id": "17:1509",
+              "name": "Bottom Nav / Expeditions",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 128,
+                "y": 970,
+                "w": 1664,
+                "h": 88
+              },
+              "abs": {
+                "x": 6306,
+                "y": 966,
+                "w": 1664,
+                "h": 88
+              },
+              "childCount": 18
+            }
+          ]
+        },
+        {
+          "id": "9:1380",
+          "name": "Ashfall Camp - Full HD / 04 Buildings",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1924,
+            "h": 1087
+          },
+          "abs": {
+            "x": 2098,
+            "y": 1196,
+            "w": 1924,
+            "h": 1087
+          },
+          "childCount": 9,
+          "navish": [
+            {
+              "id": "17:1534",
+              "name": "Top Resource Bar",
+              "type": "FRAME",
+              "rel": {
+                "x": 1132,
+                "y": 36,
+                "w": 750,
+                "h": 65
+              },
+              "abs": {
+                "x": 3230,
+                "y": 1232,
+                "w": 750,
+                "h": 65
+              },
+              "childCount": 5
+            },
+            {
+              "id": "17:1669",
+              "name": "Bottom Nav / Buildings",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 128,
+                "y": 970,
+                "w": 1664,
+                "h": 88
+              },
+              "abs": {
+                "x": 2226,
+                "y": 2166,
+                "w": 1664,
+                "h": 88
+              },
+              "childCount": 18
+            }
+          ]
+        },
+        {
+          "id": "9:1896",
+          "name": "Ashfall Camp - Full HD / 05 Workshop",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1924,
+            "h": 1087
+          },
+          "abs": {
+            "x": 4138,
+            "y": 1196,
+            "w": 1924,
+            "h": 1087
+          },
+          "childCount": 9,
+          "navish": [
+            {
+              "id": "17:1694",
+              "name": "Top Resource Bar",
+              "type": "FRAME",
+              "rel": {
+                "x": 1132,
+                "y": 36,
+                "w": 750,
+                "h": 65
+              },
+              "abs": {
+                "x": 5270,
+                "y": 1232,
+                "w": 750,
+                "h": 65
+              },
+              "childCount": 5
+            },
+            {
+              "id": "17:1813",
+              "name": "Bottom Nav / Workshop",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 128,
+                "y": 970,
+                "w": 1664,
+                "h": 88
+              },
+              "abs": {
+                "x": 4266,
+                "y": 2166,
+                "w": 1664,
+                "h": 88
+              },
+              "childCount": 18
+            }
+          ]
+        },
+        {
+          "id": "9:2411",
+          "name": "Ashfall Camp - Full HD / 06 Radio",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1924,
+            "h": 1087
+          },
+          "abs": {
+            "x": 6178,
+            "y": 1196,
+            "w": 1924,
+            "h": 1087
+          },
+          "childCount": 9,
+          "navish": [
+            {
+              "id": "17:1838",
+              "name": "Top Resource Bar",
+              "type": "FRAME",
+              "rel": {
+                "x": 1132,
+                "y": 36,
+                "w": 750,
+                "h": 65
+              },
+              "abs": {
+                "x": 7310,
+                "y": 1232,
+                "w": 750,
+                "h": 65
+              },
+              "childCount": 5
+            },
+            {
+              "id": "17:1956",
+              "name": "Bottom Nav / Radio",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 128,
+                "y": 970,
+                "w": 1664,
+                "h": 88
+              },
+              "abs": {
+                "x": 6306,
+                "y": 2166,
+                "w": 1664,
+                "h": 88
+              },
+              "childCount": 18
+            }
+          ]
+        },
+        {
+          "id": "10:424",
+          "name": "ui_backplate_clean_survivors_roster_01",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 96,
+            "h": 96
+          },
+          "abs": {
+            "x": -520,
+            "y": 1760,
+            "w": 96,
+            "h": 96
+          },
+          "childCount": 0,
+          "navish": []
+        },
+        {
+          "id": "10:1425",
+          "name": "Ashfall Camp - Full HD / 07 Expedition Monitor",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1924,
+            "h": 1087
+          },
+          "abs": {
+            "x": 2098,
+            "y": 2396,
+            "w": 1924,
+            "h": 1087
+          },
+          "childCount": 1,
+          "navish": []
+        },
+        {
+          "id": "17:879",
+          "name": "Ashfall Camp - Structure Components",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1700,
+            "h": 1220
+          },
+          "abs": {
+            "x": -3460,
+            "y": -4,
+            "w": 1700,
+            "h": 1220
+          },
+          "childCount": 10,
+          "navish": [
+            {
+              "id": "17:895",
+              "name": "Ashfall Structure/Resource Pill",
+              "type": "COMPONENT",
+              "rel": {
+                "x": 40,
+                "y": 490,
+                "w": 142,
+                "h": 44
+              },
+              "abs": {
+                "x": -3420,
+                "y": 486,
+                "w": 142,
+                "h": 44
+              },
+              "childCount": 3
+            },
+            {
+              "id": "17:946",
+              "name": "Ashfall Structure/Bottom Nav",
+              "type": "COMPONENT",
+              "rel": {
+                "x": 420,
+                "y": 410,
+                "w": 1664,
+                "h": 82
+              },
+              "abs": {
+                "x": -3040,
+                "y": 406,
+                "w": 1664,
+                "h": 82
+              },
+              "childCount": 18
+            }
+          ]
+        },
+        {
+          "id": "19:571",
+          "name": "Ashfall Camp - UI Components",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1920,
+            "h": 1500
+          },
+          "abs": {
+            "x": -1240,
+            "y": -4,
+            "w": 1920,
+            "h": 1500
+          },
+          "childCount": 11,
+          "navish": [
+            {
+              "id": "19:589",
+              "name": "Ashfall/Common/Resource Pill",
+              "type": "COMPONENT",
+              "rel": {
+                "x": 42,
+                "y": 322,
+                "w": 148,
+                "h": 42
+              },
+              "abs": {
+                "x": -1198,
+                "y": 318,
+                "w": 148,
+                "h": 42
+              },
+              "childCount": 3
+            },
+            {
+              "id": "19:603",
+              "name": "Ashfall/Buildings/Building Card",
+              "type": "COMPONENT",
+              "rel": {
+                "x": 420,
+                "y": 938,
+                "w": 500,
+                "h": 238
+              },
+              "abs": {
+                "x": -820,
+                "y": 934,
+                "w": 500,
+                "h": 238
+              },
+              "childCount": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "Page 2",
+      "pageId": "26:3094",
+      "childCount": 0,
+      "frames": []
+    },
+    {
+      "page": "Ashfall Camp - Clean Full HD",
+      "pageId": "34:2434",
+      "childCount": 16,
+      "frames": [
+        {
+          "id": "34:2460",
+          "name": "Ashfall Camp - Full HD / Camp Dashboard",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "abs": {
+            "x": 0,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "childCount": 207,
+          "navish": [
+            {
+              "id": "34:2469",
+              "name": "Instance / Resource Pill / Scrap",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1112,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1112,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2472",
+              "name": "Resource icon dot / Scrap",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2473",
+              "name": "TXT / Resource icon / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2474",
+              "name": "TXT / Resource label / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1146,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1146,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2475",
+              "name": "TXT / Resource value / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1196,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1196,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2476",
+              "name": "Instance / Resource Pill / Food",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1258,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1258,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2479",
+              "name": "Resource icon dot / Food",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2480",
+              "name": "TXT / Resource icon / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2481",
+              "name": "TXT / Resource label / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1292,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1292,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2482",
+              "name": "TXT / Resource value / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1342,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1342,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2483",
+              "name": "Instance / Resource Pill / Water",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1404,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1404,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2486",
+              "name": "Resource icon dot / Water",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2487",
+              "name": "TXT / Resource icon / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2488",
+              "name": "TXT / Resource label / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1438,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1438,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2489",
+              "name": "TXT / Resource value / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1488,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1488,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2490",
+              "name": "Instance / Resource Pill / Meds",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1550,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1550,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2493",
+              "name": "Resource icon dot / Meds",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2494",
+              "name": "TXT / Resource icon / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2495",
+              "name": "TXT / Resource label / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1584,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1584,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2496",
+              "name": "TXT / Resource value / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1634,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1634,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2497",
+              "name": "Instance / Resource Pill / Parts",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1696,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1696,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2500",
+              "name": "Resource icon dot / Parts",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2501",
+              "name": "TXT / Resource icon / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2502",
+              "name": "TXT / Resource label / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1730,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1730,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2503",
+              "name": "TXT / Resource value / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1780,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1780,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2504",
+              "name": "Instance / Bottom Nav Base",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 294,
+                "y": 1002,
+                "w": 1332,
+                "h": 58
+              },
+              "abs": {
+                "x": 294,
+                "y": 1002,
+                "w": 1332,
+                "h": 58
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2507",
+              "name": "Instance / Current Tab / Camp",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 300,
+                "y": 1009,
+                "w": 158,
+                "h": 44
+              },
+              "abs": {
+                "x": 300,
+                "y": 1009,
+                "w": 158,
+                "h": 44
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2510",
+              "name": "TXT / Nav / Camp",
+              "type": "TEXT",
+              "rel": {
+                "x": 302,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 302,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2511",
+              "name": "TXT / Nav / Survivors",
+              "type": "TEXT",
+              "rel": {
+                "x": 468,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 468,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2512",
+              "name": "TXT / Nav / Buildings",
+              "type": "TEXT",
+              "rel": {
+                "x": 634,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 634,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2513",
+              "name": "TXT / Nav / Expeditions",
+              "type": "TEXT",
+              "rel": {
+                "x": 800,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 800,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2514",
+              "name": "TXT / Nav / Combat",
+              "type": "TEXT",
+              "rel": {
+                "x": 966,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 966,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2515",
+              "name": "TXT / Nav / Workshop",
+              "type": "TEXT",
+              "rel": {
+                "x": 1132,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 1132,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2516",
+              "name": "TXT / Nav / Radio",
+              "type": "TEXT",
+              "rel": {
+                "x": 1298,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 1298,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2517",
+              "name": "TXT / Nav / Report",
+              "type": "TEXT",
+              "rel": {
+                "x": 1464,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 1464,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            }
+          ]
+        },
+        {
+          "id": "34:2682",
+          "name": "Ashfall Camp - Full HD / Survivors",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "abs": {
+            "x": 2040,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "childCount": 214,
+          "navish": [
+            {
+              "id": "34:2691",
+              "name": "Instance / Resource Pill / Scrap",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1112,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 3152,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2694",
+              "name": "Resource icon dot / Scrap",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 3162,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2695",
+              "name": "TXT / Resource icon / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 3162,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2696",
+              "name": "TXT / Resource label / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1146,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3186,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2697",
+              "name": "TXT / Resource value / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1196,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3236,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2698",
+              "name": "Instance / Resource Pill / Food",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1258,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 3298,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2701",
+              "name": "Resource icon dot / Food",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 3308,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2702",
+              "name": "TXT / Resource icon / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 3308,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2703",
+              "name": "TXT / Resource label / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1292,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3332,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2704",
+              "name": "TXT / Resource value / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1342,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3382,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2705",
+              "name": "Instance / Resource Pill / Water",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1404,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 3444,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2708",
+              "name": "Resource icon dot / Water",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 3454,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2709",
+              "name": "TXT / Resource icon / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 3454,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2710",
+              "name": "TXT / Resource label / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1438,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3478,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2711",
+              "name": "TXT / Resource value / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1488,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3528,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2712",
+              "name": "Instance / Resource Pill / Meds",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1550,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 3590,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2715",
+              "name": "Resource icon dot / Meds",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 3600,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2716",
+              "name": "TXT / Resource icon / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 3600,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2717",
+              "name": "TXT / Resource label / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1584,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3624,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2718",
+              "name": "TXT / Resource value / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1634,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3674,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2719",
+              "name": "Instance / Resource Pill / Parts",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1696,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 3736,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2722",
+              "name": "Resource icon dot / Parts",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 3746,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2723",
+              "name": "TXT / Resource icon / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 3746,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2724",
+              "name": "TXT / Resource label / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1730,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3770,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2725",
+              "name": "TXT / Resource value / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1780,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3820,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2726",
+              "name": "Instance / Bottom Nav Base",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 294,
+                "y": 1002,
+                "w": 1332,
+                "h": 58
+              },
+              "abs": {
+                "x": 2334,
+                "y": 1002,
+                "w": 1332,
+                "h": 58
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2729",
+              "name": "TXT / Nav / Camp",
+              "type": "TEXT",
+              "rel": {
+                "x": 302,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 2342,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2730",
+              "name": "Instance / Current Tab / Survivors",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 466,
+                "y": 1009,
+                "w": 158,
+                "h": 44
+              },
+              "abs": {
+                "x": 2506,
+                "y": 1009,
+                "w": 158,
+                "h": 44
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2733",
+              "name": "TXT / Nav / Survivors",
+              "type": "TEXT",
+              "rel": {
+                "x": 468,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 2508,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2734",
+              "name": "TXT / Nav / Buildings",
+              "type": "TEXT",
+              "rel": {
+                "x": 634,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 2674,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2735",
+              "name": "TXT / Nav / Expeditions",
+              "type": "TEXT",
+              "rel": {
+                "x": 800,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 2840,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2736",
+              "name": "TXT / Nav / Combat",
+              "type": "TEXT",
+              "rel": {
+                "x": 966,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 3006,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2737",
+              "name": "TXT / Nav / Workshop",
+              "type": "TEXT",
+              "rel": {
+                "x": 1132,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 3172,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2738",
+              "name": "TXT / Nav / Radio",
+              "type": "TEXT",
+              "rel": {
+                "x": 1298,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 3338,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2739",
+              "name": "TXT / Nav / Report",
+              "type": "TEXT",
+              "rel": {
+                "x": 1464,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 3504,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            }
+          ]
+        },
+        {
+          "id": "34:2911",
+          "name": "Ashfall Camp - Full HD / Buildings",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "abs": {
+            "x": 4080,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "childCount": 173,
+          "navish": [
+            {
+              "id": "34:2920",
+              "name": "Instance / Resource Pill / Scrap",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1112,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 5192,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2923",
+              "name": "Resource icon dot / Scrap",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 5202,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2924",
+              "name": "TXT / Resource icon / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 5202,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2925",
+              "name": "TXT / Resource label / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1146,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5226,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2926",
+              "name": "TXT / Resource value / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1196,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5276,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2927",
+              "name": "Instance / Resource Pill / Food",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1258,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 5338,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2930",
+              "name": "Resource icon dot / Food",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 5348,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2931",
+              "name": "TXT / Resource icon / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 5348,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2932",
+              "name": "TXT / Resource label / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1292,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5372,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2933",
+              "name": "TXT / Resource value / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1342,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5422,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2934",
+              "name": "Instance / Resource Pill / Water",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1404,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 5484,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2937",
+              "name": "Resource icon dot / Water",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 5494,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2938",
+              "name": "TXT / Resource icon / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 5494,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2939",
+              "name": "TXT / Resource label / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1438,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5518,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2940",
+              "name": "TXT / Resource value / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1488,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5568,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2941",
+              "name": "Instance / Resource Pill / Meds",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1550,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 5630,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2944",
+              "name": "Resource icon dot / Meds",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 5640,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2945",
+              "name": "TXT / Resource icon / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 5640,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2946",
+              "name": "TXT / Resource label / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1584,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5664,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2947",
+              "name": "TXT / Resource value / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1634,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5714,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2948",
+              "name": "Instance / Resource Pill / Parts",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1696,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 5776,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2951",
+              "name": "Resource icon dot / Parts",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 5786,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2952",
+              "name": "TXT / Resource icon / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 5786,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2953",
+              "name": "TXT / Resource label / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1730,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5810,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2954",
+              "name": "TXT / Resource value / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1780,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5860,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2955",
+              "name": "Instance / Bottom Nav Base",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 294,
+                "y": 1002,
+                "w": 1332,
+                "h": 58
+              },
+              "abs": {
+                "x": 4374,
+                "y": 1002,
+                "w": 1332,
+                "h": 58
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2958",
+              "name": "TXT / Nav / Camp",
+              "type": "TEXT",
+              "rel": {
+                "x": 302,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 4382,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2959",
+              "name": "TXT / Nav / Survivors",
+              "type": "TEXT",
+              "rel": {
+                "x": 468,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 4548,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2960",
+              "name": "Instance / Current Tab / Buildings",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 632,
+                "y": 1009,
+                "w": 158,
+                "h": 44
+              },
+              "abs": {
+                "x": 4712,
+                "y": 1009,
+                "w": 158,
+                "h": 44
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:2963",
+              "name": "TXT / Nav / Buildings",
+              "type": "TEXT",
+              "rel": {
+                "x": 634,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 4714,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2964",
+              "name": "TXT / Nav / Expeditions",
+              "type": "TEXT",
+              "rel": {
+                "x": 800,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 4880,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2965",
+              "name": "TXT / Nav / Combat",
+              "type": "TEXT",
+              "rel": {
+                "x": 966,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 5046,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2966",
+              "name": "TXT / Nav / Workshop",
+              "type": "TEXT",
+              "rel": {
+                "x": 1132,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 5212,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2967",
+              "name": "TXT / Nav / Radio",
+              "type": "TEXT",
+              "rel": {
+                "x": 1298,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 5378,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:2968",
+              "name": "TXT / Nav / Report",
+              "type": "TEXT",
+              "rel": {
+                "x": 1464,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 5544,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            }
+          ]
+        },
+        {
+          "id": "34:3117",
+          "name": "Ashfall Camp - Full HD / Expedition Setup",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "abs": {
+            "x": 0,
+            "y": 1160,
+            "w": 1920,
+            "h": 1080
+          },
+          "childCount": 149,
+          "navish": [
+            {
+              "id": "34:3126",
+              "name": "Instance / Resource Pill / Scrap",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1112,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1112,
+                "y": 1200,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3129",
+              "name": "Resource icon dot / Scrap",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1122,
+                "y": 1209,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3130",
+              "name": "TXT / Resource icon / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1122,
+                "y": 1209,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3131",
+              "name": "TXT / Resource label / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1146,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1146,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3132",
+              "name": "TXT / Resource value / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1196,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1196,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3133",
+              "name": "Instance / Resource Pill / Food",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1258,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1258,
+                "y": 1200,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3136",
+              "name": "Resource icon dot / Food",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1268,
+                "y": 1209,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3137",
+              "name": "TXT / Resource icon / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1268,
+                "y": 1209,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3138",
+              "name": "TXT / Resource label / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1292,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1292,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3139",
+              "name": "TXT / Resource value / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1342,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1342,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3140",
+              "name": "Instance / Resource Pill / Water",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1404,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1404,
+                "y": 1200,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3143",
+              "name": "Resource icon dot / Water",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1414,
+                "y": 1209,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3144",
+              "name": "TXT / Resource icon / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1414,
+                "y": 1209,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3145",
+              "name": "TXT / Resource label / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1438,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1438,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3146",
+              "name": "TXT / Resource value / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1488,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1488,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3147",
+              "name": "Instance / Resource Pill / Meds",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1550,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1550,
+                "y": 1200,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3150",
+              "name": "Resource icon dot / Meds",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1560,
+                "y": 1209,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3151",
+              "name": "TXT / Resource icon / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1560,
+                "y": 1209,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3152",
+              "name": "TXT / Resource label / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1584,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1584,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3153",
+              "name": "TXT / Resource value / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1634,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1634,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3154",
+              "name": "Instance / Resource Pill / Parts",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1696,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1696,
+                "y": 1200,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3157",
+              "name": "Resource icon dot / Parts",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1706,
+                "y": 1209,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3158",
+              "name": "TXT / Resource icon / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1706,
+                "y": 1209,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3159",
+              "name": "TXT / Resource label / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1730,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1730,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3160",
+              "name": "TXT / Resource value / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1780,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1780,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3161",
+              "name": "Instance / Bottom Nav Base",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 294,
+                "y": 1002,
+                "w": 1332,
+                "h": 58
+              },
+              "abs": {
+                "x": 294,
+                "y": 2162,
+                "w": 1332,
+                "h": 58
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3164",
+              "name": "TXT / Nav / Camp",
+              "type": "TEXT",
+              "rel": {
+                "x": 302,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 302,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3165",
+              "name": "TXT / Nav / Survivors",
+              "type": "TEXT",
+              "rel": {
+                "x": 468,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 468,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3166",
+              "name": "TXT / Nav / Buildings",
+              "type": "TEXT",
+              "rel": {
+                "x": 634,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 634,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3167",
+              "name": "Instance / Current Tab / Expeditions",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 798,
+                "y": 1009,
+                "w": 158,
+                "h": 44
+              },
+              "abs": {
+                "x": 798,
+                "y": 2169,
+                "w": 158,
+                "h": 44
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3170",
+              "name": "TXT / Nav / Expeditions",
+              "type": "TEXT",
+              "rel": {
+                "x": 800,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 800,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3171",
+              "name": "TXT / Nav / Combat",
+              "type": "TEXT",
+              "rel": {
+                "x": 966,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 966,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3172",
+              "name": "TXT / Nav / Workshop",
+              "type": "TEXT",
+              "rel": {
+                "x": 1132,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 1132,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3173",
+              "name": "TXT / Nav / Radio",
+              "type": "TEXT",
+              "rel": {
+                "x": 1298,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 1298,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3174",
+              "name": "TXT / Nav / Report",
+              "type": "TEXT",
+              "rel": {
+                "x": 1464,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 1464,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            }
+          ]
+        },
+        {
+          "id": "34:3281",
+          "name": "Ashfall Camp - Full HD / Expedition Monitor",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "abs": {
+            "x": 2040,
+            "y": 1160,
+            "w": 1920,
+            "h": 1080
+          },
+          "childCount": 308,
+          "navish": [
+            {
+              "id": "34:3591",
+              "name": "Bottom action tray",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 40,
+                "y": 900,
+                "w": 1840,
+                "h": 140
+              },
+              "abs": {
+                "x": 2080,
+                "y": 2060,
+                "w": 1840,
+                "h": 140
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3592",
+              "name": "Icon badge / EN",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 70,
+                "y": 930,
+                "w": 62,
+                "h": 62
+              },
+              "abs": {
+                "x": 2110,
+                "y": 2090,
+                "w": 62,
+                "h": 62
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3593",
+              "name": "TXT / Icon badge label / EN",
+              "type": "TEXT",
+              "rel": {
+                "x": 70,
+                "y": 952,
+                "w": 62,
+                "h": 20
+              },
+              "abs": {
+                "x": 2110,
+                "y": 2112,
+                "w": 62,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3594",
+              "name": "TXT / Energy count",
+              "type": "TEXT",
+              "rel": {
+                "x": 150,
+                "y": 944,
+                "w": 100,
+                "h": 32
+              },
+              "abs": {
+                "x": 2190,
+                "y": 2104,
+                "w": 100,
+                "h": 32
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3595",
+              "name": "TXT / Abilities heading",
+              "type": "TEXT",
+              "rel": {
+                "x": 320,
+                "y": 922,
+                "w": 180,
+                "h": 18
+              },
+              "abs": {
+                "x": 2360,
+                "y": 2082,
+                "w": 180,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3596",
+              "name": "Icon badge / A",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 322,
+                "y": 956,
+                "w": 46,
+                "h": 46
+              },
+              "abs": {
+                "x": 2362,
+                "y": 2116,
+                "w": 46,
+                "h": 46
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3597",
+              "name": "TXT / Icon badge label / A",
+              "type": "TEXT",
+              "rel": {
+                "x": 322,
+                "y": 970,
+                "w": 46,
+                "h": 20
+              },
+              "abs": {
+                "x": 2362,
+                "y": 2130,
+                "w": 46,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3598",
+              "name": "TXT / Ability Aim",
+              "type": "TEXT",
+              "rel": {
+                "x": 300,
+                "y": 1008,
+                "w": 88,
+                "h": 16
+              },
+              "abs": {
+                "x": 2340,
+                "y": 2168,
+                "w": 88,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3599",
+              "name": "Icon badge / G",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 408,
+                "y": 956,
+                "w": 46,
+                "h": 46
+              },
+              "abs": {
+                "x": 2448,
+                "y": 2116,
+                "w": 46,
+                "h": 46
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3600",
+              "name": "TXT / Icon badge label / G",
+              "type": "TEXT",
+              "rel": {
+                "x": 408,
+                "y": 970,
+                "w": 46,
+                "h": 20
+              },
+              "abs": {
+                "x": 2448,
+                "y": 2130,
+                "w": 46,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3601",
+              "name": "TXT / Ability Guard",
+              "type": "TEXT",
+              "rel": {
+                "x": 386,
+                "y": 1008,
+                "w": 88,
+                "h": 16
+              },
+              "abs": {
+                "x": 2426,
+                "y": 2168,
+                "w": 88,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3602",
+              "name": "Icon badge / T",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 494,
+                "y": 956,
+                "w": 46,
+                "h": 46
+              },
+              "abs": {
+                "x": 2534,
+                "y": 2116,
+                "w": 46,
+                "h": 46
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3603",
+              "name": "TXT / Icon badge label / T",
+              "type": "TEXT",
+              "rel": {
+                "x": 494,
+                "y": 970,
+                "w": 46,
+                "h": 20
+              },
+              "abs": {
+                "x": 2534,
+                "y": 2130,
+                "w": 46,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3604",
+              "name": "TXT / Ability Treat",
+              "type": "TEXT",
+              "rel": {
+                "x": 472,
+                "y": 1008,
+                "w": 88,
+                "h": 16
+              },
+              "abs": {
+                "x": 2512,
+                "y": 2168,
+                "w": 88,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3605",
+              "name": "Icon badge / M",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 580,
+                "y": 956,
+                "w": 46,
+                "h": 46
+              },
+              "abs": {
+                "x": 2620,
+                "y": 2116,
+                "w": 46,
+                "h": 46
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3606",
+              "name": "TXT / Icon badge label / M",
+              "type": "TEXT",
+              "rel": {
+                "x": 580,
+                "y": 970,
+                "w": 46,
+                "h": 20
+              },
+              "abs": {
+                "x": 2620,
+                "y": 2130,
+                "w": 46,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3607",
+              "name": "TXT / Ability Move",
+              "type": "TEXT",
+              "rel": {
+                "x": 558,
+                "y": 1008,
+                "w": 88,
+                "h": 16
+              },
+              "abs": {
+                "x": 2598,
+                "y": 2168,
+                "w": 88,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3608",
+              "name": "Icon badge / I",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 666,
+                "y": 956,
+                "w": 46,
+                "h": 46
+              },
+              "abs": {
+                "x": 2706,
+                "y": 2116,
+                "w": 46,
+                "h": 46
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3609",
+              "name": "TXT / Icon badge label / I",
+              "type": "TEXT",
+              "rel": {
+                "x": 666,
+                "y": 970,
+                "w": 46,
+                "h": 20
+              },
+              "abs": {
+                "x": 2706,
+                "y": 2130,
+                "w": 46,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3610",
+              "name": "TXT / Ability Item",
+              "type": "TEXT",
+              "rel": {
+                "x": 644,
+                "y": 1008,
+                "w": 88,
+                "h": 16
+              },
+              "abs": {
+                "x": 2684,
+                "y": 2168,
+                "w": 88,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3611",
+              "name": "TXT / Combat phase info",
+              "type": "TEXT",
+              "rel": {
+                "x": 736,
+                "y": 930,
+                "w": 420,
+                "h": 56
+              },
+              "abs": {
+                "x": 2776,
+                "y": 2090,
+                "w": 420,
+                "h": 56
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3612",
+              "name": "Button / RETREAT",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1210,
+                "y": 944,
+                "w": 190,
+                "h": 52
+              },
+              "abs": {
+                "x": 3250,
+                "y": 2104,
+                "w": 190,
+                "h": 52
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3613",
+              "name": "TXT / Button icon / RETREAT",
+              "type": "TEXT",
+              "rel": {
+                "x": 1226,
+                "y": 959,
+                "w": 24,
+                "h": 20
+              },
+              "abs": {
+                "x": 3266,
+                "y": 2119,
+                "w": 24,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3614",
+              "name": "TXT / Button text / RETREAT",
+              "type": "TEXT",
+              "rel": {
+                "x": 1258,
+                "y": 959,
+                "w": 128,
+                "h": 20
+              },
+              "abs": {
+                "x": 3298,
+                "y": 2119,
+                "w": 128,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3615",
+              "name": "Button / USE ITEM",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1430,
+                "y": 944,
+                "w": 210,
+                "h": 52
+              },
+              "abs": {
+                "x": 3470,
+                "y": 2104,
+                "w": 210,
+                "h": 52
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3616",
+              "name": "TXT / Button icon / USE ITEM",
+              "type": "TEXT",
+              "rel": {
+                "x": 1446,
+                "y": 959,
+                "w": 24,
+                "h": 20
+              },
+              "abs": {
+                "x": 3486,
+                "y": 2119,
+                "w": 24,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3617",
+              "name": "TXT / Button text / USE ITEM",
+              "type": "TEXT",
+              "rel": {
+                "x": 1478,
+                "y": 959,
+                "w": 148,
+                "h": 20
+              },
+              "abs": {
+                "x": 3518,
+                "y": 2119,
+                "w": 148,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3618",
+              "name": "Button / END TURN",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1668,
+                "y": 944,
+                "w": 180,
+                "h": 52
+              },
+              "abs": {
+                "x": 3708,
+                "y": 2104,
+                "w": 180,
+                "h": 52
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3619",
+              "name": "TXT / Button icon / END TURN",
+              "type": "TEXT",
+              "rel": {
+                "x": 1684,
+                "y": 959,
+                "w": 24,
+                "h": 20
+              },
+              "abs": {
+                "x": 3724,
+                "y": 2119,
+                "w": 24,
+                "h": 20
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3620",
+              "name": "TXT / Button text / END TURN",
+              "type": "TEXT",
+              "rel": {
+                "x": 1716,
+                "y": 959,
+                "w": 118,
+                "h": 20
+              },
+              "abs": {
+                "x": 3756,
+                "y": 2119,
+                "w": 118,
+                "h": 20
+              },
+              "childCount": 0
+            }
+          ]
+        },
+        {
+          "id": "34:3621",
+          "name": "Ashfall Camp - Full HD / Workshop",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "abs": {
+            "x": 4080,
+            "y": 1160,
+            "w": 1920,
+            "h": 1080
+          },
+          "childCount": 162,
+          "navish": [
+            {
+              "id": "34:3630",
+              "name": "Instance / Resource Pill / Scrap",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1112,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 5192,
+                "y": 1200,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3633",
+              "name": "Resource icon dot / Scrap",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 5202,
+                "y": 1209,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3634",
+              "name": "TXT / Resource icon / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 5202,
+                "y": 1209,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3635",
+              "name": "TXT / Resource label / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1146,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5226,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3636",
+              "name": "TXT / Resource value / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1196,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5276,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3637",
+              "name": "Instance / Resource Pill / Food",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1258,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 5338,
+                "y": 1200,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3640",
+              "name": "Resource icon dot / Food",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 5348,
+                "y": 1209,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3641",
+              "name": "TXT / Resource icon / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 5348,
+                "y": 1209,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3642",
+              "name": "TXT / Resource label / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1292,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5372,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3643",
+              "name": "TXT / Resource value / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1342,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5422,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3644",
+              "name": "Instance / Resource Pill / Water",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1404,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 5484,
+                "y": 1200,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3647",
+              "name": "Resource icon dot / Water",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 5494,
+                "y": 1209,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3648",
+              "name": "TXT / Resource icon / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 5494,
+                "y": 1209,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3649",
+              "name": "TXT / Resource label / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1438,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5518,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3650",
+              "name": "TXT / Resource value / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1488,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5568,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3651",
+              "name": "Instance / Resource Pill / Meds",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1550,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 5630,
+                "y": 1200,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3654",
+              "name": "Resource icon dot / Meds",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 5640,
+                "y": 1209,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3655",
+              "name": "TXT / Resource icon / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 5640,
+                "y": 1209,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3656",
+              "name": "TXT / Resource label / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1584,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5664,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3657",
+              "name": "TXT / Resource value / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1634,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5714,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3658",
+              "name": "Instance / Resource Pill / Parts",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1696,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 5776,
+                "y": 1200,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3661",
+              "name": "Resource icon dot / Parts",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 5786,
+                "y": 1209,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3662",
+              "name": "TXT / Resource icon / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 5786,
+                "y": 1209,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3663",
+              "name": "TXT / Resource label / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1730,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5810,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3664",
+              "name": "TXT / Resource value / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1780,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 5860,
+                "y": 1208,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3665",
+              "name": "Instance / Bottom Nav Base",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 294,
+                "y": 1002,
+                "w": 1332,
+                "h": 58
+              },
+              "abs": {
+                "x": 4374,
+                "y": 2162,
+                "w": 1332,
+                "h": 58
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3668",
+              "name": "TXT / Nav / Camp",
+              "type": "TEXT",
+              "rel": {
+                "x": 302,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 4382,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3669",
+              "name": "TXT / Nav / Survivors",
+              "type": "TEXT",
+              "rel": {
+                "x": 468,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 4548,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3670",
+              "name": "TXT / Nav / Buildings",
+              "type": "TEXT",
+              "rel": {
+                "x": 634,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 4714,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3671",
+              "name": "TXT / Nav / Expeditions",
+              "type": "TEXT",
+              "rel": {
+                "x": 800,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 4880,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3672",
+              "name": "TXT / Nav / Combat",
+              "type": "TEXT",
+              "rel": {
+                "x": 966,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 5046,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3673",
+              "name": "Instance / Current Tab / Workshop",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1130,
+                "y": 1009,
+                "w": 158,
+                "h": 44
+              },
+              "abs": {
+                "x": 5210,
+                "y": 2169,
+                "w": 158,
+                "h": 44
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3676",
+              "name": "TXT / Nav / Workshop",
+              "type": "TEXT",
+              "rel": {
+                "x": 1132,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 5212,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3677",
+              "name": "TXT / Nav / Radio",
+              "type": "TEXT",
+              "rel": {
+                "x": 1298,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 5378,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3678",
+              "name": "TXT / Nav / Report",
+              "type": "TEXT",
+              "rel": {
+                "x": 1464,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 5544,
+                "y": 2184,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            }
+          ]
+        },
+        {
+          "id": "34:3798",
+          "name": "Ashfall Camp - Full HD / Radio",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "abs": {
+            "x": 0,
+            "y": 2320,
+            "w": 1920,
+            "h": 1080
+          },
+          "childCount": 128,
+          "navish": [
+            {
+              "id": "34:3807",
+              "name": "Instance / Resource Pill / Scrap",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1112,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1112,
+                "y": 2360,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3810",
+              "name": "Resource icon dot / Scrap",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1122,
+                "y": 2369,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3811",
+              "name": "TXT / Resource icon / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1122,
+                "y": 2369,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3812",
+              "name": "TXT / Resource label / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1146,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1146,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3813",
+              "name": "TXT / Resource value / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1196,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1196,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3814",
+              "name": "Instance / Resource Pill / Food",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1258,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1258,
+                "y": 2360,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3817",
+              "name": "Resource icon dot / Food",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1268,
+                "y": 2369,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3818",
+              "name": "TXT / Resource icon / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1268,
+                "y": 2369,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3819",
+              "name": "TXT / Resource label / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1292,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1292,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3820",
+              "name": "TXT / Resource value / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1342,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1342,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3821",
+              "name": "Instance / Resource Pill / Water",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1404,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1404,
+                "y": 2360,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3824",
+              "name": "Resource icon dot / Water",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1414,
+                "y": 2369,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3825",
+              "name": "TXT / Resource icon / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1414,
+                "y": 2369,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3826",
+              "name": "TXT / Resource label / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1438,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1438,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3827",
+              "name": "TXT / Resource value / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1488,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1488,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3828",
+              "name": "Instance / Resource Pill / Meds",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1550,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1550,
+                "y": 2360,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3831",
+              "name": "Resource icon dot / Meds",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1560,
+                "y": 2369,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3832",
+              "name": "TXT / Resource icon / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1560,
+                "y": 2369,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3833",
+              "name": "TXT / Resource label / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1584,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1584,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3834",
+              "name": "TXT / Resource value / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1634,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1634,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3835",
+              "name": "Instance / Resource Pill / Parts",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1696,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 1696,
+                "y": 2360,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3838",
+              "name": "Resource icon dot / Parts",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 1706,
+                "y": 2369,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3839",
+              "name": "TXT / Resource icon / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 1706,
+                "y": 2369,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3840",
+              "name": "TXT / Resource label / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1730,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1730,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3841",
+              "name": "TXT / Resource value / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1780,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 1780,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3842",
+              "name": "Instance / Bottom Nav Base",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 294,
+                "y": 1002,
+                "w": 1332,
+                "h": 58
+              },
+              "abs": {
+                "x": 294,
+                "y": 3322,
+                "w": 1332,
+                "h": 58
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3845",
+              "name": "TXT / Nav / Camp",
+              "type": "TEXT",
+              "rel": {
+                "x": 302,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 302,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3846",
+              "name": "TXT / Nav / Survivors",
+              "type": "TEXT",
+              "rel": {
+                "x": 468,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 468,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3847",
+              "name": "TXT / Nav / Buildings",
+              "type": "TEXT",
+              "rel": {
+                "x": 634,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 634,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3848",
+              "name": "TXT / Nav / Expeditions",
+              "type": "TEXT",
+              "rel": {
+                "x": 800,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 800,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3849",
+              "name": "TXT / Nav / Combat",
+              "type": "TEXT",
+              "rel": {
+                "x": 966,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 966,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3850",
+              "name": "TXT / Nav / Workshop",
+              "type": "TEXT",
+              "rel": {
+                "x": 1132,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 1132,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3851",
+              "name": "Instance / Current Tab / Radio",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1296,
+                "y": 1009,
+                "w": 158,
+                "h": 44
+              },
+              "abs": {
+                "x": 1296,
+                "y": 3329,
+                "w": 158,
+                "h": 44
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3854",
+              "name": "TXT / Nav / Radio",
+              "type": "TEXT",
+              "rel": {
+                "x": 1298,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 1298,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3855",
+              "name": "TXT / Nav / Report",
+              "type": "TEXT",
+              "rel": {
+                "x": 1464,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 1464,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            }
+          ]
+        },
+        {
+          "id": "34:3941",
+          "name": "Ashfall Camp - Full HD / After Action Report",
+          "rel": {
+            "x": 0,
+            "y": 0,
+            "w": 1920,
+            "h": 1080
+          },
+          "abs": {
+            "x": 2040,
+            "y": 2320,
+            "w": 1920,
+            "h": 1080
+          },
+          "childCount": 139,
+          "navish": [
+            {
+              "id": "34:3950",
+              "name": "Instance / Resource Pill / Scrap",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1112,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 3152,
+                "y": 2360,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3953",
+              "name": "Resource icon dot / Scrap",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 3162,
+                "y": 2369,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3954",
+              "name": "TXT / Resource icon / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1122,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 3162,
+                "y": 2369,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3955",
+              "name": "TXT / Resource label / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1146,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3186,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3956",
+              "name": "TXT / Resource value / Scrap",
+              "type": "TEXT",
+              "rel": {
+                "x": 1196,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3236,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3957",
+              "name": "Instance / Resource Pill / Food",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1258,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 3298,
+                "y": 2360,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3960",
+              "name": "Resource icon dot / Food",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 3308,
+                "y": 2369,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3961",
+              "name": "TXT / Resource icon / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1268,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 3308,
+                "y": 2369,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3962",
+              "name": "TXT / Resource label / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1292,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3332,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3963",
+              "name": "TXT / Resource value / Food",
+              "type": "TEXT",
+              "rel": {
+                "x": 1342,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3382,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3964",
+              "name": "Instance / Resource Pill / Water",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1404,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 3444,
+                "y": 2360,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3967",
+              "name": "Resource icon dot / Water",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 3454,
+                "y": 2369,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3968",
+              "name": "TXT / Resource icon / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1414,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 3454,
+                "y": 2369,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3969",
+              "name": "TXT / Resource label / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1438,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3478,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3970",
+              "name": "TXT / Resource value / Water",
+              "type": "TEXT",
+              "rel": {
+                "x": 1488,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3528,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3971",
+              "name": "Instance / Resource Pill / Meds",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1550,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 3590,
+                "y": 2360,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3974",
+              "name": "Resource icon dot / Meds",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 3600,
+                "y": 2369,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3975",
+              "name": "TXT / Resource icon / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1560,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 3600,
+                "y": 2369,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3976",
+              "name": "TXT / Resource label / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1584,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3624,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3977",
+              "name": "TXT / Resource value / Meds",
+              "type": "TEXT",
+              "rel": {
+                "x": 1634,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3674,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3978",
+              "name": "Instance / Resource Pill / Parts",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1696,
+                "y": 40,
+                "w": 138,
+                "h": 36
+              },
+              "abs": {
+                "x": 3736,
+                "y": 2360,
+                "w": 138,
+                "h": 36
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3981",
+              "name": "Resource icon dot / Parts",
+              "type": "RECTANGLE",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 18
+              },
+              "abs": {
+                "x": 3746,
+                "y": 2369,
+                "w": 18,
+                "h": 18
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3982",
+              "name": "TXT / Resource icon / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1706,
+                "y": 49,
+                "w": 18,
+                "h": 16
+              },
+              "abs": {
+                "x": 3746,
+                "y": 2369,
+                "w": 18,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3983",
+              "name": "TXT / Resource label / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1730,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3770,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3984",
+              "name": "TXT / Resource value / Parts",
+              "type": "TEXT",
+              "rel": {
+                "x": 1780,
+                "y": 48,
+                "w": 44,
+                "h": 16
+              },
+              "abs": {
+                "x": 3820,
+                "y": 2368,
+                "w": 44,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3985",
+              "name": "Instance / Bottom Nav Base",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 294,
+                "y": 1002,
+                "w": 1332,
+                "h": 58
+              },
+              "abs": {
+                "x": 2334,
+                "y": 3322,
+                "w": 1332,
+                "h": 58
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3988",
+              "name": "TXT / Nav / Camp",
+              "type": "TEXT",
+              "rel": {
+                "x": 302,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 2342,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3989",
+              "name": "TXT / Nav / Survivors",
+              "type": "TEXT",
+              "rel": {
+                "x": 468,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 2508,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3990",
+              "name": "TXT / Nav / Buildings",
+              "type": "TEXT",
+              "rel": {
+                "x": 634,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 2674,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3991",
+              "name": "TXT / Nav / Expeditions",
+              "type": "TEXT",
+              "rel": {
+                "x": 800,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 2840,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3992",
+              "name": "TXT / Nav / Combat",
+              "type": "TEXT",
+              "rel": {
+                "x": 966,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 3006,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3993",
+              "name": "TXT / Nav / Workshop",
+              "type": "TEXT",
+              "rel": {
+                "x": 1132,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 3172,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3994",
+              "name": "TXT / Nav / Radio",
+              "type": "TEXT",
+              "rel": {
+                "x": 1298,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 3338,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            },
+            {
+              "id": "34:3995",
+              "name": "Instance / Current Tab / Report",
+              "type": "INSTANCE",
+              "rel": {
+                "x": 1462,
+                "y": 1009,
+                "w": 158,
+                "h": 44
+              },
+              "abs": {
+                "x": 3502,
+                "y": 3329,
+                "w": 158,
+                "h": 44
+              },
+              "childCount": 2
+            },
+            {
+              "id": "34:3998",
+              "name": "TXT / Nav / Report",
+              "type": "TEXT",
+              "rel": {
+                "x": 1464,
+                "y": 1024,
+                "w": 154,
+                "h": 16
+              },
+              "abs": {
+                "x": 3504,
+                "y": 3344,
+                "w": 154,
+                "h": 16
+              },
+              "childCount": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "timestamp": 1783259337248
+}

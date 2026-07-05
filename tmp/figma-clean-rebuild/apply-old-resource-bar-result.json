@@ -1,0 +1,115 @@
+{
+  "_mcp": "figma-console-mcp",
+  "success": true,
+  "result": {
+    "mutated": [
+      {
+        "frame": "Ashfall Camp - Full HD / Camp Dashboard",
+        "frameId": "34:2460",
+        "resourceId": "34:4424",
+        "active": "Camp"
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Survivors",
+        "frameId": "34:2682",
+        "resourceId": "34:4465",
+        "active": "Survivors"
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Buildings",
+        "frameId": "34:2911",
+        "resourceId": "34:4506",
+        "active": "Buildings"
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Expedition Setup",
+        "frameId": "34:3117",
+        "resourceId": "34:4547",
+        "active": "Expeditions"
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Expedition Monitor",
+        "frameId": "34:3281",
+        "resourceId": "34:4588",
+        "active": "Combat"
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Workshop",
+        "frameId": "34:3621",
+        "resourceId": "34:4629",
+        "active": "Workshop"
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Radio",
+        "frameId": "34:3798",
+        "resourceId": "34:4670",
+        "active": "Radio"
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / After Action Report",
+        "frameId": "34:3941",
+        "resourceId": "34:4711",
+        "active": "Report"
+      }
+    ],
+    "audit": [
+      {
+        "frame": "Ashfall Camp - Full HD / Camp Dashboard",
+        "nodeId": "34:2460",
+        "overlapCount": 0,
+        "overlaps": [],
+        "outOfBounds": []
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Survivors",
+        "nodeId": "34:2682",
+        "overlapCount": 0,
+        "overlaps": [],
+        "outOfBounds": []
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Buildings",
+        "nodeId": "34:2911",
+        "overlapCount": 0,
+        "overlaps": [],
+        "outOfBounds": []
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Expedition Setup",
+        "nodeId": "34:3117",
+        "overlapCount": 0,
+        "overlaps": [],
+        "outOfBounds": []
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Expedition Monitor",
+        "nodeId": "34:3281",
+        "overlapCount": 0,
+        "overlaps": [],
+        "outOfBounds": []
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Workshop",
+        "nodeId": "34:3621",
+        "overlapCount": 0,
+        "overlaps": [],
+        "outOfBounds": []
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / Radio",
+        "nodeId": "34:3798",
+        "overlapCount": 0,
+        "overlaps": [],
+        "outOfBounds": []
+      },
+      {
+        "frame": "Ashfall Camp - Full HD / After Action Report",
+        "nodeId": "34:3941",
+        "overlapCount": 0,
+        "overlaps": [],
+        "outOfBounds": []
+      }
+    ]
+  },
+  "timestamp": 1783259795917
+}
