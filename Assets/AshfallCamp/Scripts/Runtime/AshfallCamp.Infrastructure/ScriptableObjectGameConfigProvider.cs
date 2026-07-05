@@ -275,6 +275,7 @@ namespace AshfallCamp.Infrastructure
                 CampUpkeepWaterPerSurvivor = source.CampUpkeepWaterPerSurvivor,
                 CampUpkeepShortageMoralePenalty = source.CampUpkeepShortageMoralePenalty,
                 CampUpkeepShortageFatigue = source.CampUpkeepShortageFatigue,
+                RestFatigueRecoveryPerMinute = source.RestFatigueRecoveryPerMinute,
                 SurvivorXpThresholdBase = source.SurvivorXpThresholdBase,
                 SurvivorXpThresholdExponent = source.SurvivorXpThresholdExponent,
                 SurvivorMaxLevel = source.SurvivorMaxLevel,
@@ -341,7 +342,6 @@ namespace AshfallCamp.Infrastructure
             RequireAny(snapshot.Items, "items");
             RequireAny(snapshot.Buildings, "buildings");
             if (!snapshot.Policies.ContainsKey("balanced")) throw new InvalidOperationException("Policy catalog must include balanced.");
-            if (!snapshot.Resources.ContainsKey("scrap")) throw new InvalidOperationException("Resource catalog must include scrap.");
             if (!snapshot.Backgrounds.ContainsKey(snapshot.StartingSurvivor.BackgroundId)) throw new InvalidOperationException("Starting survivor background is missing.");
             foreach (var traitId in snapshot.StartingSurvivor.TraitIds)
             {
@@ -521,6 +521,11 @@ namespace AshfallCamp.Infrastructure
             if (snapshot.Balance.CampUpkeepShortageMoralePenalty < 0 || snapshot.Balance.CampUpkeepShortageFatigue < 0)
             {
                 throw new InvalidOperationException("Camp upkeep shortage penalties cannot be negative.");
+            }
+
+            if (snapshot.Balance.RestFatigueRecoveryPerMinute <= 0)
+            {
+                throw new InvalidOperationException("Rest fatigue recovery must be positive.");
             }
 
             ValidateCampUpkeepResource(snapshot, snapshot.Balance.CampUpkeepFoodResourceId, snapshot.Balance.CampUpkeepFoodPerSurvivor);

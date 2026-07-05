@@ -822,6 +822,54 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void CampDashboardPrefabBindsEveryConfiguredBuildingEntry()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DashboardPrefabPath);
+            var catalogAsset = AssetDatabase.LoadAssetAtPath<CampUiCatalogSO>(CampUiCatalogPath);
+            var configDatabase = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
+
+            Assert.NotNull(prefab, DashboardPrefabPath + " is missing.");
+            Assert.NotNull(catalogAsset, CampUiCatalogPath + " is missing.");
+            Assert.NotNull(configDatabase, GameConfigDatabasePath + " is missing.");
+
+            var instance = Object.Instantiate(prefab);
+            var catalog = Object.Instantiate(catalogAsset);
+
+            try
+            {
+                catalog.ScreenTransition.Enabled = false;
+
+                var configProvider = new ScriptableObjectGameConfigProvider(configDatabase);
+                var config = configProvider.LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+                var state = GameStateFactory.CreateNew(config, 0);
+                var dashboard = instance.GetComponent<CampDashboardView>();
+                Assert.NotNull(dashboard, DashboardPrefabPath + " does not contain CampDashboardView.");
+
+                dashboard.SetCatalog(catalog);
+                dashboard.Render(state, config);
+
+                foreach (var entry in catalog.Buildings)
+                {
+                    if (entry == null || string.IsNullOrWhiteSpace(entry.BuildingId)) continue;
+
+                    Assert.That(config.Buildings.ContainsKey(entry.BuildingId), Is.True, "Catalog building is missing from config: " + entry.BuildingId);
+                    var card = ReadBuildingCard(dashboard, entry.BuildingId);
+                    Assert.NotNull(card, "Building card binding is missing for " + entry.BuildingId + ".");
+                    Assert.That(card.gameObject.activeSelf, Is.True, "Building card is inactive for " + entry.BuildingId + ".");
+
+                    var pin = ReadBuildingPin(dashboard, entry.BuildingId);
+                    Assert.NotNull(pin, "Building overview pin is missing for " + entry.BuildingId + ".");
+                    Assert.That(pin.gameObject.activeSelf, Is.True, "Building overview pin is inactive for " + entry.BuildingId + ".");
+                }
+            }
+            finally
+            {
+                Object.DestroyImmediate(instance);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
         public void CampDashboardPrefabBuildingUpgradeButtonUpgradesThroughPresenter()
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DashboardPrefabPath);
@@ -2052,6 +2100,27 @@ namespace AshfallCamp.Tests.EditMode
             return null;
         }
 
+        private static Image ReadBuildingPin(CampDashboardView dashboard, string buildingId)
+        {
+            var dashboardSerialized = new SerializedObject(dashboard);
+            var rightColumn = dashboardSerialized.FindProperty("rightColumn").objectReferenceValue as CampRightColumnView;
+            Assert.NotNull(rightColumn, "CampDashboardView.rightColumn is not assigned.");
+
+            var rightSerialized = new SerializedObject(rightColumn);
+            var pins = rightSerialized.FindProperty("buildingPins");
+            for (var i = 0; i < pins.arraySize; i++)
+            {
+                var pin = pins.GetArrayElementAtIndex(i);
+                if (pin.FindPropertyRelative("buildingId").stringValue == buildingId)
+                {
+                    return pin.FindPropertyRelative("pin").objectReferenceValue as Image;
+                }
+            }
+
+            Assert.Fail("Missing building pin binding for building id: " + buildingId);
+            return null;
+        }
+
         private static CampHudPresenter CreatePresenter(
             CampDashboardView dashboard,
             GameStateStore store,
@@ -2072,6 +2141,8 @@ namespace AshfallCamp.Tests.EditMode
                 new RepairItemUseCase(store, configProvider),
                 new EquipItemUseCase(store, configProvider),
                 new UseMedicineUseCase(store, configProvider),
+                new StartRestUseCase(store, configProvider),
+                new StopRestUseCase(store),
                 new StartEmergencyScavengeUseCase(store, configProvider),
                 new SetAutosaveUseCase(store, repository),
                 saveLoad);

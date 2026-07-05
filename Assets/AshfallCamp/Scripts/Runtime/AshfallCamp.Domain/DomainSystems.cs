@@ -1967,6 +1967,175 @@ namespace AshfallCamp.Domain
         }
     }
 
+    public static class RestSystem
+    {
+        public static ValidationResult ValidateStartRest(GameState state, GameConfigSnapshot config, StartRestRequest request)
+        {
+            var result = new ValidationResult();
+            request = request ?? new StartRestRequest();
+            if (state == null || config == null)
+            {
+                result.Errors.Add("Rest state is missing.");
+                return result;
+            }
+
+            if (config.Balance.RestFatigueRecoveryPerMinute <= 0)
+            {
+                result.Errors.Add("Rest recovery is not configured.");
+            }
+
+            var survivor = FindSurvivor(state, request.SurvivorId);
+            if (survivor == null)
+            {
+                result.Errors.Add("Unknown survivor.");
+                return result;
+            }
+
+            if (survivor.State == SurvivorActivityState.Resting)
+            {
+                result.Errors.Add("Survivor is already resting.");
+            }
+            else if (survivor.State != SurvivorActivityState.Idle)
+            {
+                result.Errors.Add("Survivor cannot rest right now.");
+            }
+
+            if (survivor.Fatigue <= 0)
+            {
+                result.Errors.Add("Survivor is not tired.");
+            }
+
+            return result;
+        }
+
+        public static RestSurvivorResult StartRest(GameState state, GameConfigSnapshot config, StartRestRequest request)
+        {
+            var result = new RestSurvivorResult
+            {
+                Validation = ValidateStartRest(state, config, request)
+            };
+            if (!result.Validation.IsValid)
+            {
+                return result;
+            }
+
+            var survivor = FindSurvivor(state, request.SurvivorId);
+            survivor.State = SurvivorActivityState.Resting;
+            EnsureRemainders(state)[survivor.Id] = 0;
+            result.Survivor = survivor;
+            result.Started = true;
+            return result;
+        }
+
+        public static ValidationResult ValidateStopRest(GameState state, StopRestRequest request)
+        {
+            var result = new ValidationResult();
+            request = request ?? new StopRestRequest();
+            if (state == null)
+            {
+                result.Errors.Add("Rest state is missing.");
+                return result;
+            }
+
+            var survivor = FindSurvivor(state, request.SurvivorId);
+            if (survivor == null)
+            {
+                result.Errors.Add("Unknown survivor.");
+                return result;
+            }
+
+            if (survivor.State != SurvivorActivityState.Resting)
+            {
+                result.Errors.Add("Survivor is not resting.");
+            }
+
+            return result;
+        }
+
+        public static RestSurvivorResult StopRest(GameState state, StopRestRequest request)
+        {
+            var result = new RestSurvivorResult
+            {
+                Validation = ValidateStopRest(state, request)
+            };
+            if (!result.Validation.IsValid)
+            {
+                return result;
+            }
+
+            var survivor = FindSurvivor(state, request.SurvivorId);
+            CompleteRest(state, survivor);
+            result.Survivor = survivor;
+            result.Stopped = true;
+            return result;
+        }
+
+        public static List<string> Tick(GameState state, GameConfigSnapshot config, double deltaSeconds)
+        {
+            var completed = new List<string>();
+            if (state == null || config == null || config.Balance.RestFatigueRecoveryPerMinute <= 0) return completed;
+            var dt = Math.Max(0, deltaSeconds);
+            if (dt <= 0) return completed;
+
+            var remainders = EnsureRemainders(state);
+            foreach (var survivor in state.Survivors)
+            {
+                if (survivor == null || survivor.State != SurvivorActivityState.Resting) continue;
+                double remainder;
+                remainders.TryGetValue(survivor.Id, out remainder);
+                var recovery = remainder + Math.Max(0, config.Balance.RestFatigueRecoveryPerMinute) * dt / 60.0;
+                var whole = (int)Math.Floor(recovery);
+                remainders[survivor.Id] = recovery - whole;
+                if (whole > 0)
+                {
+                    survivor.Fatigue = GameMath.Clamp(survivor.Fatigue - whole, 0, 100);
+                }
+
+                if (survivor.Fatigue <= 0)
+                {
+                    CompleteRest(state, survivor);
+                    completed.Add(survivor.Id);
+                }
+            }
+
+            return completed;
+        }
+
+        private static void CompleteRest(GameState state, SurvivorState survivor)
+        {
+            if (survivor == null) return;
+            survivor.State = SurvivorActivityState.Idle;
+            if (state != null && state.RestFatigueRecoveryRemainders != null)
+            {
+                state.RestFatigueRecoveryRemainders.Remove(survivor.Id);
+            }
+        }
+
+        private static Dictionary<string, double> EnsureRemainders(GameState state)
+        {
+            if (state.RestFatigueRecoveryRemainders == null)
+            {
+                state.RestFatigueRecoveryRemainders = new Dictionary<string, double>(StringComparer.Ordinal);
+            }
+
+            return state.RestFatigueRecoveryRemainders;
+        }
+
+        private static SurvivorState FindSurvivor(GameState state, string survivorId)
+        {
+            if (state == null || string.IsNullOrWhiteSpace(survivorId)) return null;
+            foreach (var survivor in state.Survivors)
+            {
+                if (survivor != null && string.Equals(survivor.Id, survivorId, StringComparison.Ordinal))
+                {
+                    return survivor;
+                }
+            }
+
+            return null;
+        }
+    }
+
     public static class ExpeditionSimulator
     {
         public static void TickAll(GameState state, GameConfigSnapshot config, double deltaSeconds)

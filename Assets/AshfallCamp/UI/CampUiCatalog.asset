@@ -218,6 +218,9 @@ MonoBehaviour:
   SurvivorDetailHealingLockedFormat: '{0}. Infirmary lvl {1} required'
   SurvivorDetailMedicineCostFormat: 'Medicine: {0}'
   SurvivorDetailUseMedicineButton: USE MEDICINE
+  SurvivorDetailStartRestButton: REST
+  SurvivorDetailStopRestButton: STOP REST
+  SurvivorDetailRestingLabelFormat: Resting. Fatigue recovers {0}/min
   SurvivorsEmptyPanelTexture: {fileID: 2800000, guid: 3d9e9f1c1be6475cb55315c39300a658, type: 3}
   SurvivorDetailPanelTexture: {fileID: 2800000, guid: 2d7c527756ed442eab5632edccb17338, type: 3}
   SurvivorRosterCardTexture: {fileID: 2800000, guid: 1e0d4db6228d440380c358e3aeca4c14, type: 3}
@@ -402,6 +405,12 @@ MonoBehaviour:
     Image: {fileID: 0}
     OverviewLeftPercent: 8
     OverviewTopPercent: 68
+  - BuildingId: mushroom_beds
+    Description: Food storage and passive production.
+    Icon: {fileID: 2800000, guid: b99b3830405b85f4b82a76d60e9f0015, type: 3}
+    Image: {fileID: 0}
+    OverviewLeftPercent: 32
+    OverviewTopPercent: 70
   - BuildingId: infirmary
     Description: Medicine storage and recovery room.
     Icon: {fileID: 2800000, guid: 1fbf16eba429c26428801995f9a42d7c, type: 3}
@@ -575,6 +584,14 @@ MonoBehaviour:
     TitleFormat: MEDICINE USED
     BodyFormat: '{0} is back on their feet.'
     ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
+  - Id: survivor_rest_started
+    TitleFormat: REST STARTED
+    BodyFormat: '{0} is recovering fatigue.'
+    ToneColor: {r: 0.18431373, g: 0.41568628, b: 0.44705883, a: 1}
+  - Id: survivor_rest_stopped
+    TitleFormat: REST STOPPED
+    BodyFormat: '{0} is ready for orders.'
+    ToneColor: {r: 0.88235295, g: 0.7058824, b: 0.41568628, a: 1}
   - Id: emergency_scavenge_started
     TitleFormat: SCAVENGE STARTED
     BodyFormat: Perimeter sweep will finish in {0}s.

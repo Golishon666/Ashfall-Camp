@@ -34,6 +34,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("Treatment: Healthy", detail.Treatment);
             Assert.IsFalse(detail.ShowMedicineAction);
             Assert.IsFalse(detail.CanUseMedicine);
+            Assert.IsFalse(detail.ShowAction);
             Assert.That(detail.Stats, Does.Contain("HP 30/30"));
 
             Object.DestroyImmediate(catalog);
@@ -88,11 +89,43 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("Use Medicine", detail.MedicineButton);
             Assert.IsTrue(detail.ShowMedicineAction);
             Assert.IsTrue(detail.CanUseMedicine);
+            Assert.AreEqual(SurvivorDetailActionKind.UseMedicine, detail.ActionKind);
+            Assert.AreEqual("Use Medicine", detail.ActionButton);
+            Assert.IsTrue(detail.ShowAction);
+            Assert.IsTrue(detail.CanUseAction);
 
             state.Resources["medicine"] = 0;
             detail = CampDashboardTextFormatter.BuildSurvivorDetail(state.Survivors[0], state, config, catalog);
 
             Assert.IsFalse(detail.CanUseMedicine);
+            Assert.IsFalse(detail.CanUseAction);
+
+            Object.DestroyImmediate(catalog);
+        }
+
+        [Test]
+        public void SurvivorDetailShowsRestActionsForFatigue()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            var catalog = CreateCatalog();
+            state.Survivors[0].Fatigue = 12;
+
+            var detail = CampDashboardTextFormatter.BuildSurvivorDetail(state.Survivors[0], state, config, catalog);
+
+            Assert.AreEqual(SurvivorDetailActionKind.StartRest, detail.ActionKind);
+            Assert.AreEqual("Rest", detail.ActionButton);
+            Assert.IsTrue(detail.ShowAction);
+            Assert.IsTrue(detail.CanUseAction);
+
+            RestSystem.StartRest(state, config, new StartRestRequest { SurvivorId = "survivor_1" });
+            detail = CampDashboardTextFormatter.BuildSurvivorDetail(state.Survivors[0], state, config, catalog);
+
+            Assert.That(detail.Treatment, Does.Contain("Treatment: Resting 10/min"));
+            Assert.AreEqual(SurvivorDetailActionKind.StopRest, detail.ActionKind);
+            Assert.AreEqual("Stop Rest", detail.ActionButton);
+            Assert.IsTrue(detail.ShowAction);
+            Assert.IsTrue(detail.CanUseAction);
 
             Object.DestroyImmediate(catalog);
         }
@@ -140,6 +173,9 @@ namespace AshfallCamp.Tests.EditMode
             catalog.SurvivorDetailHealingLockedFormat = "{0} locked {1}";
             catalog.SurvivorDetailMedicineCostFormat = "Medicine: {0}";
             catalog.SurvivorDetailUseMedicineButton = "Use Medicine";
+            catalog.SurvivorDetailStartRestButton = "Rest";
+            catalog.SurvivorDetailStopRestButton = "Stop Rest";
+            catalog.SurvivorDetailRestingLabelFormat = "Resting {0}/min";
             catalog.SurvivorNoWeaponLabel = "Unarmed";
             catalog.SurvivorNoTraitsLabel = "None";
             catalog.ReportCountFormat = "{0} x{1}";

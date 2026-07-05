@@ -176,6 +176,7 @@ namespace AshfallCamp.Infrastructure
         public int CampUpkeepWaterPerSurvivor = 1;
         public int CampUpkeepShortageMoralePenalty = 4;
         public int CampUpkeepShortageFatigue = 2;
+        public double RestFatigueRecoveryPerMinute = 10;
         public int SurvivorXpThresholdBase = 50;
         public double SurvivorXpThresholdExponent = 1.55;
         public int SurvivorMaxLevel = 50;

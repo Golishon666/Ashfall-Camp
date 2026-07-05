@@ -32,7 +32,10 @@ namespace AshfallCamp.Presentation
         [SerializeField] private TextMeshProUGUI useMedicineButtonLabel;
 
         private string _selectedSurvivorId = string.Empty;
+        private SurvivorDetailActionKind _selectedActionKind;
         private Action<UseMedicineRequest> _useMedicineRequested;
+        private Action<StartRestRequest> _startRestRequested;
+        private Action<StopRestRequest> _stopRestRequested;
         private UnityAction _useMedicineClick;
 
         public void ConfigureBindings(
@@ -137,6 +140,13 @@ namespace AshfallCamp.Presentation
             WireUseMedicineButton();
         }
 
+        public void SetRestHandlers(Action<StartRestRequest> startRestRequested, Action<StopRestRequest> stopRestRequested)
+        {
+            _startRestRequested = startRestRequested;
+            _stopRestRequested = stopRestRequested;
+            WireUseMedicineButton();
+        }
+
         public void Render(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
         {
             if (state == null || config == null || catalog == null) return;
@@ -213,14 +223,15 @@ namespace AshfallCamp.Presentation
             UiText.Set(detailWeapon, detail.Weapon);
             UiText.Set(detailTreatment, detail.Treatment);
             UiText.Set(detailStats, detail.Stats);
-            UiText.Set(detailMedicineCost, detail.MedicineCost);
-            UiText.Set(useMedicineButtonLabel, detail.MedicineButton);
+            UiText.Set(detailMedicineCost, detail.ActionCost);
+            UiText.Set(useMedicineButtonLabel, detail.ActionButton);
             ApplyPortrait(detailPortrait, detail.Portrait);
-            UiText.SetActive(detailMedicineCost, detail.ShowMedicineAction);
+            _selectedActionKind = detail.ActionKind;
+            UiText.SetActive(detailMedicineCost, detail.ShowAction && !string.IsNullOrWhiteSpace(detail.ActionCost));
             if (useMedicineButton != null)
             {
-                UiText.SetActive(useMedicineButton, detail.ShowMedicineAction);
-                useMedicineButton.interactable = detail.ShowMedicineAction && detail.CanUseMedicine && _useMedicineRequested != null;
+                UiText.SetActive(useMedicineButton, detail.ShowAction);
+                useMedicineButton.interactable = detail.ShowAction && detail.CanUseAction && HasSelectedActionHandler(detail.ActionKind);
             }
         }
 
@@ -243,10 +254,28 @@ namespace AshfallCamp.Presentation
 
         private void OnUseMedicineClicked()
         {
-            if (!string.IsNullOrWhiteSpace(_selectedSurvivorId))
+            if (string.IsNullOrWhiteSpace(_selectedSurvivorId)) return;
+
+            if (_selectedActionKind == SurvivorDetailActionKind.UseMedicine)
             {
                 _useMedicineRequested?.Invoke(new UseMedicineRequest { SurvivorId = _selectedSurvivorId });
             }
+            else if (_selectedActionKind == SurvivorDetailActionKind.StartRest)
+            {
+                _startRestRequested?.Invoke(new StartRestRequest { SurvivorId = _selectedSurvivorId });
+            }
+            else if (_selectedActionKind == SurvivorDetailActionKind.StopRest)
+            {
+                _stopRestRequested?.Invoke(new StopRestRequest { SurvivorId = _selectedSurvivorId });
+            }
+        }
+
+        private bool HasSelectedActionHandler(SurvivorDetailActionKind actionKind)
+        {
+            if (actionKind == SurvivorDetailActionKind.UseMedicine) return _useMedicineRequested != null;
+            if (actionKind == SurvivorDetailActionKind.StartRest) return _startRestRequested != null;
+            if (actionKind == SurvivorDetailActionKind.StopRest) return _stopRestRequested != null;
+            return false;
         }
 
         [Serializable]

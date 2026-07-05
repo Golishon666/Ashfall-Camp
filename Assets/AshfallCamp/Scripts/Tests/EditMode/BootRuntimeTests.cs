@@ -153,16 +153,20 @@ namespace AshfallCamp.Tests.EditMode
             view.RaiseRepairItemRequested(new RepairItemRequest { ItemUid = "item_1" });
             view.RaiseEquipItemRequested(new EquipItemRequest { SurvivorId = "survivor_1", ItemUid = "item_2" });
             view.RaiseUseMedicineRequested(new UseMedicineRequest { SurvivorId = "survivor_1" });
+            view.RaiseStartRestRequested(new StartRestRequest { SurvivorId = "survivor_1" });
+            view.RaiseStopRestRequested(new StopRestRequest { SurvivorId = "survivor_1" });
             view.RaiseEmergencyScavengeRequested();
             presenter.Dispose();
 
-            Assert.AreEqual(7, saveLoad.SaveCalls);
+            Assert.AreEqual(9, saveLoad.SaveCalls);
             CollectionAssert.Contains(view.ToastIds, CampToastIds.RecruitmentBroadcast);
             CollectionAssert.Contains(view.ToastIds, CampToastIds.RecruitmentSkipped);
             CollectionAssert.Contains(view.ToastIds, CampToastIds.SurvivorRecruited);
             CollectionAssert.Contains(view.ToastIds, CampToastIds.ItemRepaired);
             CollectionAssert.Contains(view.ToastIds, CampToastIds.ItemEquipped);
             CollectionAssert.Contains(view.ToastIds, CampToastIds.MedicineUsed);
+            CollectionAssert.Contains(view.ToastIds, CampToastIds.SurvivorRestStarted);
+            CollectionAssert.Contains(view.ToastIds, CampToastIds.SurvivorRestStopped);
             CollectionAssert.Contains(view.ToastIds, CampToastIds.EmergencyScavengeStarted);
         }
 
@@ -346,6 +350,8 @@ namespace AshfallCamp.Tests.EditMode
                 useCases,
                 useCases,
                 useCases,
+                useCases,
+                useCases,
                 saveLoad);
         }
 
@@ -440,6 +446,8 @@ namespace AshfallCamp.Tests.EditMode
             public event Action<RepairItemRequest> RepairItemRequested;
             public event Action<EquipItemRequest> EquipItemRequested;
             public event Action<UseMedicineRequest> UseMedicineRequested;
+            public event Action<StartRestRequest> StartRestRequested;
+            public event Action<StopRestRequest> StopRestRequested;
             public event Action EmergencyScavengeRequested;
             public event Action<bool> AutosaveChanged;
             public event Action ManualSaveRequested;
@@ -498,6 +506,16 @@ namespace AshfallCamp.Tests.EditMode
                 UseMedicineRequested?.Invoke(request);
             }
 
+            public void RaiseStartRestRequested(StartRestRequest request)
+            {
+                StartRestRequested?.Invoke(request);
+            }
+
+            public void RaiseStopRestRequested(StopRestRequest request)
+            {
+                StopRestRequested?.Invoke(request);
+            }
+
             public void RaiseEmergencyScavengeRequested()
             {
                 EmergencyScavengeRequested?.Invoke();
@@ -523,6 +541,8 @@ namespace AshfallCamp.Tests.EditMode
             IRepairItemUseCase,
             IEquipItemUseCase,
             IUseMedicineUseCase,
+            IStartRestUseCase,
+            IStopRestUseCase,
             IStartEmergencyScavengeUseCase,
             ISetAutosaveUseCase
         {
@@ -560,6 +580,18 @@ namespace AshfallCamp.Tests.EditMode
             {
                 Survivor = new SurvivorState { Id = "survivor_1", Name = "Mara" },
                 Healed = true
+            };
+
+            public readonly RestSurvivorResult StartRestResult = new RestSurvivorResult
+            {
+                Survivor = new SurvivorState { Id = "survivor_1", Name = "Mara" },
+                Started = true
+            };
+
+            public readonly RestSurvivorResult StopRestResult = new RestSurvivorResult
+            {
+                Survivor = new SurvivorState { Id = "survivor_1", Name = "Mara" },
+                Stopped = true
             };
 
             public readonly EmergencyScavengeResult EmergencyScavengeResult = new EmergencyScavengeResult
@@ -612,6 +644,16 @@ namespace AshfallCamp.Tests.EditMode
             public UniTask<UseMedicineResult> ExecuteAsync(UseMedicineRequest request, CancellationToken ct)
             {
                 return UniTask.FromResult(UseMedicineResult);
+            }
+
+            public UniTask<RestSurvivorResult> ExecuteAsync(StartRestRequest request, CancellationToken ct)
+            {
+                return UniTask.FromResult(StartRestResult);
+            }
+
+            public UniTask<RestSurvivorResult> ExecuteAsync(StopRestRequest request, CancellationToken ct)
+            {
+                return UniTask.FromResult(StopRestResult);
             }
 
             public UniTask<EmergencyScavengeResult> ExecuteAsync(EmergencyScavengeRequest request, CancellationToken ct)

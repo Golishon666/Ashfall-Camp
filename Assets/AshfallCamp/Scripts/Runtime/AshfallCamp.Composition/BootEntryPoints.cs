@@ -150,6 +150,8 @@ namespace AshfallCamp.Composition
         private readonly IRepairItemUseCase _repairItem;
         private readonly IEquipItemUseCase _equipItem;
         private readonly IUseMedicineUseCase _useMedicine;
+        private readonly IStartRestUseCase _startRest;
+        private readonly IStopRestUseCase _stopRest;
         private readonly IStartEmergencyScavengeUseCase _startEmergencyScavenge;
         private readonly ISetAutosaveUseCase _setAutosave;
         private readonly ISaveLoadUseCase _saveLoad;
@@ -164,6 +166,7 @@ namespace AshfallCamp.Composition
         private bool _isRepairing;
         private bool _isEquipping;
         private bool _isUsingMedicine;
+        private bool _isChangingRest;
         private bool _isStartingEmergencyScavenge;
         private bool _isSettingAutosave;
         private bool _isManualSaving;
@@ -181,6 +184,8 @@ namespace AshfallCamp.Composition
             IRepairItemUseCase repairItem,
             IEquipItemUseCase equipItem,
             IUseMedicineUseCase useMedicine,
+            IStartRestUseCase startRest,
+            IStopRestUseCase stopRest,
             IStartEmergencyScavengeUseCase startEmergencyScavenge,
             ISetAutosaveUseCase setAutosave,
             ISaveLoadUseCase saveLoad)
@@ -197,6 +202,8 @@ namespace AshfallCamp.Composition
             _repairItem = repairItem;
             _equipItem = equipItem;
             _useMedicine = useMedicine;
+            _startRest = startRest;
+            _stopRest = stopRest;
             _startEmergencyScavenge = startEmergencyScavenge;
             _setAutosave = setAutosave;
             _saveLoad = saveLoad;
@@ -212,6 +219,8 @@ namespace AshfallCamp.Composition
             _view.RepairItemRequested += OnRepairItemRequested;
             _view.EquipItemRequested += OnEquipItemRequested;
             _view.UseMedicineRequested += OnUseMedicineRequested;
+            _view.StartRestRequested += OnStartRestRequested;
+            _view.StopRestRequested += OnStopRestRequested;
             _view.EmergencyScavengeRequested += OnEmergencyScavengeRequested;
             _view.AutosaveChanged += OnAutosaveChanged;
             _view.ManualSaveRequested += OnManualSaveRequested;
@@ -238,6 +247,8 @@ namespace AshfallCamp.Composition
             _view.RepairItemRequested -= OnRepairItemRequested;
             _view.EquipItemRequested -= OnEquipItemRequested;
             _view.UseMedicineRequested -= OnUseMedicineRequested;
+            _view.StartRestRequested -= OnStartRestRequested;
+            _view.StopRestRequested -= OnStopRestRequested;
             _view.EmergencyScavengeRequested -= OnEmergencyScavengeRequested;
             _view.AutosaveChanged -= OnAutosaveChanged;
             _view.ManualSaveRequested -= OnManualSaveRequested;
@@ -292,6 +303,18 @@ namespace AshfallCamp.Composition
             UseMedicineAsync(request).Forget();
         }
 
+        private void OnStartRestRequested(StartRestRequest request)
+        {
+            if (_isChangingRest || request == null) return;
+            StartRestAsync(request).Forget();
+        }
+
+        private void OnStopRestRequested(StopRestRequest request)
+        {
+            if (_isChangingRest || request == null) return;
+            StopRestAsync(request).Forget();
+        }
+
         private void OnEmergencyScavengeRequested()
         {
             if (_isStartingEmergencyScavenge) return;
@@ -318,7 +341,6 @@ namespace AshfallCamp.Composition
                 var result = await _upgradeBuilding.ExecuteAsync(buildingId, CancellationToken.None);
                 if (!result.Validation.IsValid)
                 {
-                    Debug.LogWarning("Building upgrade blocked: " + string.Join(", ", result.Validation.Errors));
                     ShowBlockedToast(result.Validation);
                 }
                 else if (result.Building != null)
@@ -358,7 +380,6 @@ namespace AshfallCamp.Composition
                     : SelectIdleSurvivors(state);
                 if (survivorIds.Count == 0)
                 {
-                    Debug.LogWarning("Expedition launch blocked: no idle survivors.");
                     ShowToast(CampToastIds.NoIdleSurvivors);
                     return;
                 }
@@ -376,7 +397,6 @@ namespace AshfallCamp.Composition
 
                 if (!result.Validation.IsValid)
                 {
-                    Debug.LogWarning("Expedition launch blocked: " + string.Join(", ", result.Validation.Errors));
                     ShowBlockedToast(result.Validation);
                 }
                 else if (result.Expedition != null)
@@ -417,7 +437,6 @@ namespace AshfallCamp.Composition
 
                 if (!result.Validation.IsValid)
                 {
-                    Debug.LogWarning("Recruitment broadcast blocked: " + string.Join(", ", result.Validation.Errors));
                     ShowBlockedToast(result.Validation);
                 }
                 else
@@ -449,7 +468,6 @@ namespace AshfallCamp.Composition
                 var result = await _skipRecruitmentCandidates.ExecuteAsync(CancellationToken.None);
                 if (!result.Validation.IsValid)
                 {
-                    Debug.LogWarning("Recruitment skip blocked: " + string.Join(", ", result.Validation.Errors));
                     ShowBlockedToast(result.Validation);
                 }
                 else
@@ -489,7 +507,6 @@ namespace AshfallCamp.Composition
 
                 if (!result.Validation.IsValid)
                 {
-                    Debug.LogWarning("Recruitment blocked: " + string.Join(", ", result.Validation.Errors));
                     ShowBlockedToast(result.Validation);
                 }
                 else if (result.Survivor != null)
@@ -521,7 +538,6 @@ namespace AshfallCamp.Composition
                 var result = await _repairItem.ExecuteAsync(request, CancellationToken.None);
                 if (!result.Validation.IsValid)
                 {
-                    Debug.LogWarning("Workshop repair blocked: " + string.Join(", ", result.Validation.Errors));
                     ShowBlockedToast(result.Validation);
                 }
                 else if (result.Item != null)
@@ -553,7 +569,6 @@ namespace AshfallCamp.Composition
                 var result = await _equipItem.ExecuteAsync(request, CancellationToken.None);
                 if (!result.Validation.IsValid)
                 {
-                    Debug.LogWarning("Workshop equip blocked: " + string.Join(", ", result.Validation.Errors));
                     ShowBlockedToast(result.Validation);
                 }
                 else if (result.Survivor != null && result.Item != null)
@@ -585,7 +600,6 @@ namespace AshfallCamp.Composition
                 var result = await _useMedicine.ExecuteAsync(request, CancellationToken.None);
                 if (!result.Validation.IsValid)
                 {
-                    Debug.LogWarning("Use medicine blocked: " + string.Join(", ", result.Validation.Errors));
                     ShowBlockedToast(result.Validation);
                 }
                 else if (result.Healed && result.Survivor != null)
@@ -609,6 +623,68 @@ namespace AshfallCamp.Composition
             }
         }
 
+        private async UniTaskVoid StartRestAsync(StartRestRequest request)
+        {
+            _isChangingRest = true;
+            try
+            {
+                var result = await _startRest.ExecuteAsync(request, CancellationToken.None);
+                if (!result.Validation.IsValid)
+                {
+                    ShowBlockedToast(result.Validation);
+                }
+                else if (result.Started && result.Survivor != null)
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(CampToastIds.SurvivorRestStarted, ResolveSurvivorName(result.Survivor));
+                }
+
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isChangingRest = false;
+            }
+        }
+
+        private async UniTaskVoid StopRestAsync(StopRestRequest request)
+        {
+            _isChangingRest = true;
+            try
+            {
+                var result = await _stopRest.ExecuteAsync(request, CancellationToken.None);
+                if (!result.Validation.IsValid)
+                {
+                    ShowBlockedToast(result.Validation);
+                }
+                else if (result.Stopped && result.Survivor != null)
+                {
+                    await SaveCriticalProgressAsync();
+                    ShowToast(CampToastIds.SurvivorRestStopped, ResolveSurvivorName(result.Survivor));
+                }
+
+                if (_configs.Current != null)
+                {
+                    RenderCurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _isChangingRest = false;
+            }
+        }
+
         private async UniTaskVoid StartEmergencyScavengeAsync()
         {
             _isStartingEmergencyScavenge = true;
@@ -621,7 +697,6 @@ namespace AshfallCamp.Composition
                 }, CancellationToken.None);
                 if (!result.Validation.IsValid)
                 {
-                    Debug.LogWarning("Emergency scavenge blocked: " + string.Join(", ", result.Validation.Errors));
                     ShowBlockedToast(result.Validation);
                 }
                 else if (result.Started)

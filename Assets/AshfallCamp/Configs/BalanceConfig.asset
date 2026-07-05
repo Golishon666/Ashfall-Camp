@@ -43,6 +43,7 @@ MonoBehaviour:
     CampUpkeepWaterPerSurvivor: 1
     CampUpkeepShortageMoralePenalty: 4
     CampUpkeepShortageFatigue: 2
+    RestFatigueRecoveryPerMinute: 10
     SurvivorXpThresholdBase: 50
     SurvivorXpThresholdExponent: 1.55
     SurvivorMaxLevel: 50

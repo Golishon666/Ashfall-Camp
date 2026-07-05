@@ -176,6 +176,9 @@ namespace AshfallCamp.Presentation
         public string SurvivorDetailHealingLockedFormat = string.Empty;
         public string SurvivorDetailMedicineCostFormat = string.Empty;
         public string SurvivorDetailUseMedicineButton = string.Empty;
+        public string SurvivorDetailStartRestButton = string.Empty;
+        public string SurvivorDetailStopRestButton = string.Empty;
+        public string SurvivorDetailRestingLabelFormat = string.Empty;
         public Texture2D SurvivorsEmptyPanelTexture;
         public Texture2D SurvivorDetailPanelTexture;
         public Texture2D SurvivorRosterCardTexture;

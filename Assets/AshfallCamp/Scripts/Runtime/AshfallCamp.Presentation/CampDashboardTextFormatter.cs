@@ -322,7 +322,7 @@ namespace AshfallCamp.Presentation
                 return new CampSurvivorDetailPresentation();
             }
 
-            return new CampSurvivorDetailPresentation
+            var presentation = new CampSurvivorDetailPresentation
             {
                 Title = Format(catalog.SurvivorDetailTitle, survivor.Name, survivor.Level),
                 Background = Format(catalog.SurvivorDetailBackgroundFormat, GetBackgroundName(survivor, config)),
@@ -332,10 +332,13 @@ namespace AshfallCamp.Presentation
                 Stats = Format(catalog.SurvivorDetailStatsFormat, survivor.Health, survivor.MaxHealth, survivor.Morale, survivor.Fatigue, survivor.Xp),
                 MedicineCost = Format(catalog.SurvivorDetailMedicineCostFormat, FormatResourceAmounts(HealingSystem.CalculateMedicineCost(config), config, catalog)),
                 MedicineButton = catalog.SurvivorDetailUseMedicineButton,
-                Portrait = ResolveSurvivorPortrait(survivor, catalog),
-                ShowMedicineAction = survivor.State == SurvivorActivityState.Wounded,
-                CanUseMedicine = HealingSystem.ValidateUseMedicine(state, config, new UseMedicineRequest { SurvivorId = survivor.Id }).IsValid
+                ActionCost = string.Empty,
+                ActionButton = string.Empty,
+                Portrait = ResolveSurvivorPortrait(survivor, catalog)
             };
+
+            ApplySurvivorDetailAction(presentation, survivor, state, config, catalog);
+            return presentation;
         }
 
         public static string FormatWorkshopStatus(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog, string targetSurvivorId)
@@ -866,6 +869,13 @@ namespace AshfallCamp.Presentation
 
         private static string FormatTreatment(SurvivorState survivor, GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
         {
+            if (survivor.State == SurvivorActivityState.Resting)
+            {
+                return Format(
+                    catalog.SurvivorDetailTreatmentFormat,
+                    Format(catalog.SurvivorDetailRestingLabelFormat, Math.Max(0, config.Balance.RestFatigueRecoveryPerMinute)));
+            }
+
             if (survivor.State != SurvivorActivityState.Wounded)
             {
                 return Format(catalog.SurvivorDetailTreatmentFormat, catalog.SurvivorDetailHealthyLabel);
@@ -882,6 +892,38 @@ namespace AshfallCamp.Presentation
             return Format(
                 catalog.SurvivorDetailTreatmentFormat,
                 Format(catalog.SurvivorDetailHealingLockedFormat, woundText, Math.Max(0, config.Balance.HealingRequiredBuildingLevel)));
+        }
+
+        private static void ApplySurvivorDetailAction(CampSurvivorDetailPresentation presentation, SurvivorState survivor, GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
+        {
+            if (presentation == null || survivor == null || state == null || config == null || catalog == null) return;
+
+            if (survivor.State == SurvivorActivityState.Wounded)
+            {
+                presentation.ActionKind = SurvivorDetailActionKind.UseMedicine;
+                presentation.ActionCost = presentation.MedicineCost;
+                presentation.ActionButton = catalog.SurvivorDetailUseMedicineButton;
+                presentation.ShowAction = true;
+                presentation.CanUseAction = HealingSystem.ValidateUseMedicine(state, config, new UseMedicineRequest { SurvivorId = survivor.Id }).IsValid;
+            }
+            else if (survivor.State == SurvivorActivityState.Resting)
+            {
+                presentation.ActionKind = SurvivorDetailActionKind.StopRest;
+                presentation.ActionButton = catalog.SurvivorDetailStopRestButton;
+                presentation.ShowAction = true;
+                presentation.CanUseAction = RestSystem.ValidateStopRest(state, new StopRestRequest { SurvivorId = survivor.Id }).IsValid;
+            }
+            else if (survivor.Fatigue > 0)
+            {
+                presentation.ActionKind = SurvivorDetailActionKind.StartRest;
+                presentation.ActionButton = catalog.SurvivorDetailStartRestButton;
+                presentation.ShowAction = true;
+                presentation.CanUseAction = RestSystem.ValidateStartRest(state, config, new StartRestRequest { SurvivorId = survivor.Id }).IsValid;
+            }
+
+            presentation.MedicineButton = presentation.ActionButton;
+            presentation.ShowMedicineAction = presentation.ActionKind == SurvivorDetailActionKind.UseMedicine;
+            presentation.CanUseMedicine = presentation.ActionKind == SurvivorDetailActionKind.UseMedicine && presentation.CanUseAction;
         }
 
         private static StatusEffectState FindStatusEffect(SurvivorState survivor, string effectId)
@@ -1937,6 +1979,14 @@ namespace AshfallCamp.Presentation
         }
     }
 
+    public enum SurvivorDetailActionKind
+    {
+        None,
+        UseMedicine,
+        StartRest,
+        StopRest
+    }
+
     public sealed class CampSurvivorDetailPresentation
     {
         public string Title = string.Empty;
@@ -1947,7 +1997,12 @@ namespace AshfallCamp.Presentation
         public string Stats = string.Empty;
         public string MedicineCost = string.Empty;
         public string MedicineButton = string.Empty;
+        public string ActionCost = string.Empty;
+        public string ActionButton = string.Empty;
         public Texture2D Portrait;
+        public SurvivorDetailActionKind ActionKind;
+        public bool ShowAction;
+        public bool CanUseAction;
         public bool ShowMedicineAction;
         public bool CanUseMedicine;
     }

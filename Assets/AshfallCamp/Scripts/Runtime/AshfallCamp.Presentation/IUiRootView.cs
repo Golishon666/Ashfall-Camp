@@ -16,6 +16,8 @@ namespace AshfallCamp.Presentation
         event Action<RepairItemRequest> RepairItemRequested;
         event Action<EquipItemRequest> EquipItemRequested;
         event Action<UseMedicineRequest> UseMedicineRequested;
+        event Action<StartRestRequest> StartRestRequested;
+        event Action<StopRestRequest> StopRestRequested;
         event Action EmergencyScavengeRequested;
         event Action<bool> AutosaveChanged;
         event Action ManualSaveRequested;
@@ -100,6 +102,8 @@ namespace AshfallCamp.Presentation
         public const string ItemRepaired = "item_repaired";
         public const string ItemEquipped = "item_equipped";
         public const string MedicineUsed = "medicine_used";
+        public const string SurvivorRestStarted = "survivor_rest_started";
+        public const string SurvivorRestStopped = "survivor_rest_stopped";
         public const string EmergencyScavengeStarted = "emergency_scavenge_started";
         public const string AutosaveEnabled = "autosave_enabled";
         public const string AutosaveDisabled = "autosave_disabled";
@@ -124,6 +128,8 @@ namespace AshfallCamp.Presentation
                     ItemRepaired,
                     ItemEquipped,
                     MedicineUsed,
+                    SurvivorRestStarted,
+                    SurvivorRestStopped,
                     EmergencyScavengeStarted,
                     AutosaveEnabled,
                     AutosaveDisabled,

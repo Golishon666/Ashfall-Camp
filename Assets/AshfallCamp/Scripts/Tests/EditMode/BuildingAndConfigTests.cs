@@ -74,6 +74,27 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void MushroomBedsUpgradeRaisesCapAndProducesFood()
+        {
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>("Assets/AshfallCamp/Configs/GameConfigDatabase.asset");
+            Assert.NotNull(database);
+
+            var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["food"] = 49;
+
+            var result = BuildingSystem.Upgrade(state, config, "mushroom_beds");
+            Assert.IsTrue(result.Validation.IsValid, string.Join(", ", result.Validation.Errors));
+            Assert.AreEqual(1, state.Buildings["mushroom_beds"].Level);
+            Assert.AreEqual(70, state.ResourceCaps["food"]);
+
+            BuildingSystem.TickProduction(state, config, 60);
+
+            Assert.AreEqual(50, state.Resources["food"]);
+        }
+
+        [Test]
         public void BuildingUpgradeRefreshesZoneUnlocks()
         {
             var config = TestConfigFactory.Create();
@@ -130,6 +151,24 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void ScriptableObjectConfigValidationUsesConfiguredScrapResourceId()
+        {
+            var database = CreateValidDatabase();
+            RenameResource(database, "scrap", "metal", "Metal");
+
+            var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+            var state = GameStateFactory.CreateNew(config, 0);
+            var recruitmentCost = RecruitmentSystem.CalculateCost(state, config);
+
+            Assert.IsTrue(config.Resources.ContainsKey("metal"));
+            Assert.IsFalse(config.Resources.ContainsKey("scrap"));
+            Assert.AreEqual("metal", config.Balance.RecruitmentScrapResourceId);
+            Assert.IsTrue(recruitmentCost.ContainsKey("metal"));
+            Assert.IsFalse(recruitmentCost.ContainsKey("scrap"));
+            DestroyDatabase(database);
+        }
+
+        [Test]
         public void StarterConfigAssetMatchesBootCoreDefaults()
         {
             var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>("Assets/AshfallCamp/Configs/GameConfigDatabase.asset");
@@ -146,8 +185,8 @@ namespace AshfallCamp.Tests.EditMode
             Assert.GreaterOrEqual(config.RecruitableSurvivors.Count, 6);
             Assert.GreaterOrEqual(config.Enemies.Count, 6);
             Assert.GreaterOrEqual(config.Items.Count, 10);
-            Assert.GreaterOrEqual(config.Buildings.Count, 5);
-            Assert.GreaterOrEqual(CountBuildingUpgradeLevels(config), 20);
+            Assert.GreaterOrEqual(config.Buildings.Count, 6);
+            Assert.GreaterOrEqual(CountBuildingUpgradeLevels(config), 24);
             Assert.AreEqual(60, config.Balance.EmergencyScavengeDurationSeconds);
             Assert.AreEqual(300, config.Balance.EmergencyScavengeCooldownSeconds);
             Assert.AreEqual(3, config.Balance.EmergencyScavengeRewards["scrap"]);
@@ -163,6 +202,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(1, config.Balance.CampUpkeepWaterPerSurvivor);
             Assert.AreEqual(4, config.Balance.CampUpkeepShortageMoralePenalty);
             Assert.AreEqual(2, config.Balance.CampUpkeepShortageFatigue);
+            Assert.AreEqual(10, config.Balance.RestFatigueRecoveryPerMinute);
             Assert.AreEqual(50, config.Balance.SurvivorXpThresholdBase);
             Assert.AreEqual(1.55, config.Balance.SurvivorXpThresholdExponent);
             Assert.AreEqual(20, config.Balance.SkillXpThresholdBase);
@@ -177,6 +217,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.IsTrue(config.Buildings.ContainsKey("barracks"));
             Assert.IsTrue(config.Buildings.ContainsKey("workshop"));
             Assert.IsTrue(config.Buildings.ContainsKey("water_collector"));
+            Assert.IsTrue(config.Buildings.ContainsKey("mushroom_beds"));
             Assert.IsTrue(config.Buildings.ContainsKey("infirmary"));
             Assert.IsTrue(config.Buildings.ContainsKey("radio_tower"));
             Assert.IsTrue(config.Zones.ContainsKey("abandoned_store"));
@@ -219,6 +260,18 @@ namespace AshfallCamp.Tests.EditMode
             var ex = Assert.Throws<InvalidOperationException>(() => new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult());
 
             StringAssert.Contains("Camp upkeep references unknown resource", ex.Message);
+            DestroyDatabase(database);
+        }
+
+        [Test]
+        public void ScriptableObjectConfigValidationRejectsInvalidRestRecovery()
+        {
+            var database = CreateValidDatabase();
+            database.Balance.Balance.RestFatigueRecoveryPerMinute = 0;
+
+            var ex = Assert.Throws<InvalidOperationException>(() => new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult());
+
+            StringAssert.Contains("Rest fatigue recovery", ex.Message);
             DestroyDatabase(database);
         }
 
@@ -332,6 +385,62 @@ namespace AshfallCamp.Tests.EditMode
             database.Balance.Balance.EmergencyScavengeRewards.Add(new IntPairData("food", 2));
             database.Balance.Balance.EmergencyScavengeRewards.Add(new IntPairData("water", 2));
             return database;
+        }
+
+        private static void RenameResource(GameConfigDatabaseSO database, string oldId, string newId, string newName)
+        {
+            foreach (var resource in database.Resources.Resources)
+            {
+                if (resource.Id == oldId)
+                {
+                    resource.Id = newId;
+                    resource.Name = newName;
+                }
+            }
+
+            foreach (var building in database.Buildings.Buildings)
+            {
+                if (building.AffectedResourceId == oldId) building.AffectedResourceId = newId;
+                if (building.ProducedResourceId == oldId) building.ProducedResourceId = newId;
+                foreach (var level in building.Levels)
+                {
+                    RenamePairs(level.Cost, oldId, newId);
+                }
+            }
+
+            foreach (var zone in database.Zones.Zones)
+            {
+                foreach (var loot in zone.LootTable)
+                {
+                    if (loot.ResourceId == oldId)
+                    {
+                        loot.ResourceId = newId;
+                    }
+                }
+            }
+
+            var balance = database.Balance.Balance;
+            if (balance.RecruitmentScrapResourceId == oldId) balance.RecruitmentScrapResourceId = newId;
+            if (balance.RecruitmentFoodResourceId == oldId) balance.RecruitmentFoodResourceId = newId;
+            if (balance.RecruitmentWaterResourceId == oldId) balance.RecruitmentWaterResourceId = newId;
+            if (balance.ExpeditionFoodResourceId == oldId) balance.ExpeditionFoodResourceId = newId;
+            if (balance.ExpeditionWaterResourceId == oldId) balance.ExpeditionWaterResourceId = newId;
+            if (balance.CampUpkeepFoodResourceId == oldId) balance.CampUpkeepFoodResourceId = newId;
+            if (balance.CampUpkeepWaterResourceId == oldId) balance.CampUpkeepWaterResourceId = newId;
+            if (balance.WorkshopRepairResourceId == oldId) balance.WorkshopRepairResourceId = newId;
+            if (balance.HealingMedicineResourceId == oldId) balance.HealingMedicineResourceId = newId;
+            RenamePairs(balance.EmergencyScavengeRewards, oldId, newId);
+        }
+
+        private static void RenamePairs(IEnumerable<IntPairData> pairs, string oldId, string newId)
+        {
+            foreach (var pair in pairs)
+            {
+                if (pair.Id == oldId)
+                {
+                    pair.Id = newId;
+                }
+            }
         }
 
         private static void AssertResource(GameConfigSnapshot config, string id, int startAmount, bool hasCap, int startCap)

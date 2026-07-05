@@ -79,6 +79,7 @@ namespace AshfallCamp.Domain
         public Dictionary<string, int> Resources = new Dictionary<string, int>(StringComparer.Ordinal);
         public Dictionary<string, int> ResourceCaps = new Dictionary<string, int>(StringComparer.Ordinal);
         public Dictionary<string, double> ResourceProductionRemainders = new Dictionary<string, double>(StringComparer.Ordinal);
+        public Dictionary<string, double> RestFatigueRecoveryRemainders = new Dictionary<string, double>(StringComparer.Ordinal);
         public List<SurvivorState> Survivors = new List<SurvivorState>();
         public List<InventoryItemState> Inventory = new List<InventoryItemState>();
         public Dictionary<string, BuildingState> Buildings = new Dictionary<string, BuildingState>(StringComparer.Ordinal);
@@ -339,6 +340,24 @@ namespace AshfallCamp.Domain
         public bool Healed;
     }
 
+    public sealed class StartRestRequest
+    {
+        public string SurvivorId = string.Empty;
+    }
+
+    public sealed class StopRestRequest
+    {
+        public string SurvivorId = string.Empty;
+    }
+
+    public sealed class RestSurvivorResult
+    {
+        public ValidationResult Validation = new ValidationResult();
+        public SurvivorState Survivor;
+        public bool Started;
+        public bool Stopped;
+    }
+
     public sealed class EmergencyScavengeRequest
     {
         public long NowUnixMs;
@@ -540,6 +559,7 @@ namespace AshfallCamp.Domain
         public int CampUpkeepWaterPerSurvivor = 1;
         public int CampUpkeepShortageMoralePenalty = 4;
         public int CampUpkeepShortageFatigue = 2;
+        public double RestFatigueRecoveryPerMinute = 10;
         public int SurvivorXpThresholdBase = 50;
         public double SurvivorXpThresholdExponent = 1.55;
         public int SurvivorMaxLevel = 50;

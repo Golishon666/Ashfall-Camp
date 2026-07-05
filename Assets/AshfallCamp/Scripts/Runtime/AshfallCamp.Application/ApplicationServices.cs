@@ -63,6 +63,16 @@ namespace AshfallCamp.Application
         UniTask<UseMedicineResult> ExecuteAsync(UseMedicineRequest request, CancellationToken ct);
     }
 
+    public interface IStartRestUseCase
+    {
+        UniTask<RestSurvivorResult> ExecuteAsync(StartRestRequest request, CancellationToken ct);
+    }
+
+    public interface IStopRestUseCase
+    {
+        UniTask<RestSurvivorResult> ExecuteAsync(StopRestRequest request, CancellationToken ct);
+    }
+
     public interface IStartEmergencyScavengeUseCase
     {
         UniTask<EmergencyScavengeResult> ExecuteAsync(EmergencyScavengeRequest request, CancellationToken ct);
@@ -131,10 +141,11 @@ namespace AshfallCamp.Application
     {
         public List<string> CompletedExpeditionIds = new List<string>();
         public List<string> FinishedExpeditionIds = new List<string>();
+        public List<string> RestCompletedSurvivorIds = new List<string>();
 
         public bool HasCriticalProgress
         {
-            get { return FinishedExpeditionIds.Count > 0; }
+            get { return FinishedExpeditionIds.Count > 0 || RestCompletedSurvivorIds.Count > 0; }
         }
     }
 
@@ -416,6 +427,59 @@ namespace AshfallCamp.Application
         }
     }
 
+    public sealed class StartRestUseCase : IStartRestUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private readonly IGameConfigProvider _configs;
+        private RestSurvivorResult _lastResult;
+
+        public StartRestUseCase(IGameStateWriter writer, IGameConfigProvider configs)
+        {
+            _writer = writer;
+            _configs = configs;
+        }
+
+        public async UniTask<RestSurvivorResult> ExecuteAsync(StartRestRequest request, CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            if (_configs.Current == null)
+            {
+                await _configs.LoadAsync(ct);
+            }
+
+            _lastResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _lastResult = RestSystem.StartRest(state, _configs.Current, request);
+                return state;
+            }, ct);
+            return _lastResult;
+        }
+    }
+
+    public sealed class StopRestUseCase : IStopRestUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private RestSurvivorResult _lastResult;
+
+        public StopRestUseCase(IGameStateWriter writer)
+        {
+            _writer = writer;
+        }
+
+        public async UniTask<RestSurvivorResult> ExecuteAsync(StopRestRequest request, CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            _lastResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _lastResult = RestSystem.StopRest(state, request);
+                return state;
+            }, ct);
+            return _lastResult;
+        }
+    }
+
     public sealed class StartEmergencyScavengeUseCase : IStartEmergencyScavengeUseCase
     {
         private readonly IGameStateWriter _writer;
@@ -512,6 +576,7 @@ namespace AshfallCamp.Application
                 BuildingSystem.TickProduction(state, _configs.Current, dt);
                 ExpeditionSimulator.TickAll(state, _configs.Current, dt);
                 HealingSystem.Tick(state, _configs.Current, dt);
+                result.RestCompletedSurvivorIds.AddRange(RestSystem.Tick(state, _configs.Current, dt));
                 RecoverySystem.Tick(state, _configs.Current, dt);
                 FillCompletedExpeditions(activeBefore, state, result.CompletedExpeditionIds);
                 FillFinishedExpeditions(activeBefore, state, result.FinishedExpeditionIds);
@@ -593,6 +658,7 @@ namespace AshfallCamp.Application
                     BuildingSystem.TickProduction(state, _configs.Current, dt);
                     ExpeditionSimulator.TickAll(state, _configs.Current, dt);
                     HealingSystem.Tick(state, _configs.Current, dt);
+                    RestSystem.Tick(state, _configs.Current, dt);
                     RecoverySystem.Tick(state, _configs.Current, dt);
                     remaining -= dt;
                 }

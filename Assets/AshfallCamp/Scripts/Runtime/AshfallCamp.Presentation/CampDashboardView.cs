@@ -44,6 +44,8 @@ namespace AshfallCamp.Presentation
         public event Action<RepairItemRequest> RepairItemRequested;
         public event Action<EquipItemRequest> EquipItemRequested;
         public event Action<UseMedicineRequest> UseMedicineRequested;
+        public event Action<StartRestRequest> StartRestRequested;
+        public event Action<StopRestRequest> StopRestRequested;
         public event Action EmergencyScavengeRequested;
         public event Action<bool> AutosaveChanged;
         public event Action ManualSaveRequested;
@@ -244,6 +246,9 @@ namespace AshfallCamp.Presentation
             if (survivorsPanel != null)
             {
                 survivorsPanel.SetUseMedicineHandler(request => UseMedicineRequested?.Invoke(request));
+                survivorsPanel.SetRestHandlers(
+                    request => StartRestRequested?.Invoke(request),
+                    request => StopRestRequested?.Invoke(request));
             }
 
             if (settingsPanel != null)

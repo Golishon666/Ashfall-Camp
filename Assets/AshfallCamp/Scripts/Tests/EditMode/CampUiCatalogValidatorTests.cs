@@ -24,6 +24,9 @@ namespace AshfallCamp.Tests.EditMode
             Assert.IsFalse(string.IsNullOrWhiteSpace(catalog.AfterActionUnlockedFormat));
             Assert.IsFalse(string.IsNullOrWhiteSpace(catalog.AfterActionDemoProgressFormat));
             Assert.IsFalse(string.IsNullOrWhiteSpace(catalog.OfflineReportResourcesSpentFormat));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(catalog.SurvivorDetailStartRestButton));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(catalog.SurvivorDetailStopRestButton));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(catalog.SurvivorDetailRestingLabelFormat));
         }
 
         [Test]

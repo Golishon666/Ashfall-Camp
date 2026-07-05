@@ -607,6 +607,91 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void RestStartTickAndStopRecoverFatigue()
+        {
+            var config = TestConfigFactory.Create();
+            config.Balance.RestFatigueRecoveryPerMinute = 10;
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Survivors[0].Fatigue = 15;
+
+            var started = RestSystem.StartRest(state, config, new StartRestRequest { SurvivorId = "survivor_1" });
+
+            Assert.IsTrue(started.Validation.IsValid);
+            Assert.IsTrue(started.Started);
+            Assert.AreEqual(SurvivorActivityState.Resting, state.Survivors[0].State);
+
+            var completed = RestSystem.Tick(state, config, 30);
+
+            Assert.AreEqual(10, state.Survivors[0].Fatigue);
+            Assert.AreEqual(0, completed.Count);
+            Assert.IsTrue(state.RestFatigueRecoveryRemainders.ContainsKey("survivor_1"));
+
+            completed = RestSystem.Tick(state, config, 60);
+
+            Assert.AreEqual(0, state.Survivors[0].Fatigue);
+            Assert.AreEqual(SurvivorActivityState.Idle, state.Survivors[0].State);
+            Assert.AreEqual("survivor_1", completed[0]);
+            Assert.IsFalse(state.RestFatigueRecoveryRemainders.ContainsKey("survivor_1"));
+
+            state.Survivors[0].Fatigue = 5;
+            RestSystem.StartRest(state, config, new StartRestRequest { SurvivorId = "survivor_1" });
+            var stopped = RestSystem.StopRest(state, new StopRestRequest { SurvivorId = "survivor_1" });
+
+            Assert.IsTrue(stopped.Validation.IsValid);
+            Assert.IsTrue(stopped.Stopped);
+            Assert.AreEqual(SurvivorActivityState.Idle, state.Survivors[0].State);
+        }
+
+        [Test]
+        public void RestRejectsUnavailableOrFreshSurvivors()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+
+            var fresh = RestSystem.StartRest(state, config, new StartRestRequest { SurvivorId = "survivor_1" });
+
+            Assert.IsFalse(fresh.Validation.IsValid);
+
+            state.Survivors[0].Fatigue = 10;
+            state.Survivors[0].State = SurvivorActivityState.OnExpedition;
+            var busy = RestSystem.StartRest(state, config, new StartRestRequest { SurvivorId = "survivor_1" });
+
+            Assert.IsFalse(busy.Validation.IsValid);
+        }
+
+        [Test]
+        public void RestUseCasesMutateStoreAndTickReportsCompletion()
+        {
+            var config = TestConfigFactory.Create();
+            config.Balance.RestFatigueRecoveryPerMinute = 10;
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Survivors[0].Fatigue = 10;
+            var store = new GameStateStore();
+            store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
+            var start = new StartRestUseCase(store, new StaticConfigProvider(config));
+            var stop = new StopRestUseCase(store);
+            var tick = new TickGameUseCase(store, new StaticConfigProvider(config));
+
+            var started = start.ExecuteAsync(new StartRestRequest { SurvivorId = "survivor_1" }, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.IsTrue(started.Started);
+            Assert.AreEqual(SurvivorActivityState.Resting, store.State.CurrentValue.Survivors[0].State);
+
+            var result = tick.ExecuteAsync(60, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.AreEqual("survivor_1", result.RestCompletedSurvivorIds[0]);
+            Assert.IsTrue(result.HasCriticalProgress);
+            Assert.AreEqual(SurvivorActivityState.Idle, store.State.CurrentValue.Survivors[0].State);
+
+            store.State.CurrentValue.Survivors[0].Fatigue = 5;
+            start.ExecuteAsync(new StartRestRequest { SurvivorId = "survivor_1" }, CancellationToken.None).GetAwaiter().GetResult();
+            var stopped = stop.ExecuteAsync(new StopRestRequest { SurvivorId = "survivor_1" }, CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.IsTrue(stopped.Stopped);
+            Assert.AreEqual(SurvivorActivityState.Idle, store.State.CurrentValue.Survivors[0].State);
+        }
+
+        [Test]
         public void TickGameUseCaseHealsWoundedSurvivor()
         {
             var config = TestConfigFactory.Create();
@@ -848,6 +933,7 @@ namespace AshfallCamp.Tests.EditMode
             state.Zones["abandoned_store"].Completions = 2;
             state.Zones["abandoned_store"].Familiarity = 42.5;
             state.Survivors[0].StatusEffects.Add(new StatusEffectState { Id = "sprained_ankle", RemainingSeconds = 120 });
+            state.RestFatigueRecoveryRemainders["survivor_1"] = 0.5;
             state.CampEvents.Add(new CampEventState { Id = "event_1", EventId = GameEventIds.SurvivorJoined, SubjectId = "survivor_1", SubjectName = "Mara", DetailId = "scavenger", AtUnixMs = 25 });
             state.Recruitment.PendingCandidateIds.Add("elias");
             state.Recruitment.LastBroadcastAtUnixMs = 25;
@@ -897,6 +983,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(ExpeditionStatus.Active, loaded.State.Expeditions[0].Status);
             Assert.AreEqual("sprained_ankle", loaded.State.Survivors[0].StatusEffects[0].Id);
             Assert.AreEqual(120, loaded.State.Survivors[0].StatusEffects[0].RemainingSeconds);
+            Assert.AreEqual(0.5, loaded.State.RestFatigueRecoveryRemainders["survivor_1"]);
             Assert.AreEqual(1, loaded.State.CampEvents.Count);
             Assert.AreEqual(GameEventIds.SurvivorJoined, loaded.State.CampEvents[0].EventId);
             Assert.AreEqual("Mara", loaded.State.CampEvents[0].SubjectName);

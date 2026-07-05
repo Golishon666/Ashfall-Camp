@@ -87,6 +87,7 @@ namespace AshfallCamp.Infrastructure
             public List<IntPairData> Resources = new List<IntPairData>();
             public List<IntPairData> ResourceCaps = new List<IntPairData>();
             public List<DoublePairData> ResourceProductionRemainders = new List<DoublePairData>();
+            public List<DoublePairData> RestFatigueRecoveryRemainders = new List<DoublePairData>();
             public List<SurvivorSaveData> Survivors = new List<SurvivorSaveData>();
             public List<InventoryItemSaveData> Inventory = new List<InventoryItemSaveData>();
             public List<BuildingSaveData> Buildings = new List<BuildingSaveData>();
@@ -123,6 +124,7 @@ namespace AshfallCamp.Infrastructure
                 dto.Resources = FromDictionary(state.Resources);
                 dto.ResourceCaps = FromDictionary(state.ResourceCaps);
                 dto.ResourceProductionRemainders = FromDictionary(state.ResourceProductionRemainders);
+                dto.RestFatigueRecoveryRemainders = FromDictionary(state.RestFatigueRecoveryRemainders);
                 foreach (var item in state.Survivors) dto.Survivors.Add(SurvivorSaveData.FromState(item));
                 foreach (var item in state.Inventory) dto.Inventory.Add(InventoryItemSaveData.FromState(item));
                 foreach (var item in state.Buildings.Values) dto.Buildings.Add(BuildingSaveData.FromState(item));
@@ -148,6 +150,7 @@ namespace AshfallCamp.Infrastructure
                     Resources = ToDictionary(Resources),
                     ResourceCaps = ToDictionary(ResourceCaps),
                     ResourceProductionRemainders = ToDoubleDictionary(ResourceProductionRemainders),
+                    RestFatigueRecoveryRemainders = ToDoubleDictionary(RestFatigueRecoveryRemainders),
                     Recruitment = Recruitment != null ? Recruitment.ToState() : new RecruitmentState(),
                     Recovery = Recovery != null ? Recovery.ToState() : new RecoveryActionState(),
                     LastOfflineReport = LastOfflineReport != null ? LastOfflineReport.ToState() : null,
