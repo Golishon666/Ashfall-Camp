@@ -95,7 +95,7 @@ namespace AshfallCamp.Editor.FigmaImport
 
         private static void BuildGenericPreviewPrefab(FigmaImportFrame frame)
         {
-            var prefabName = "PF_" + ToPascalName(frame.slug) + "Elementwise";
+            var prefabName = "PF_" + ToPreviewName(frame.slug) + "Elementwise";
             var prefabPath = "Assets/AshfallCamp/Prefabs/UI/FigmaExports/" + prefabName + ".prefab";
             var root = new GameObject(prefabName, typeof(RectTransform), typeof(CanvasGroup));
             try
@@ -424,6 +424,35 @@ namespace AshfallCamp.Editor.FigmaImport
             }
 
             return string.IsNullOrWhiteSpace(result) ? "Frame" : result;
+        }
+
+        private static string ToPreviewName(string slug)
+        {
+            if (string.IsNullOrWhiteSpace(slug)) return "Frame";
+
+            var result = string.Empty;
+            var parts = slug.Split(new[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+            for (var i = 0; i < parts.Length; i++)
+            {
+                var part = parts[i];
+                if (i == 0 && IsAllDigits(part)) continue;
+                if (string.Equals(part, "elementwise", StringComparison.OrdinalIgnoreCase)) continue;
+
+                result += ToPascalName(part);
+            }
+
+            return string.IsNullOrWhiteSpace(result) ? ToPascalName(slug) : result;
+        }
+
+        private static bool IsAllDigits(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return false;
+            for (var i = 0; i < value.Length; i++)
+            {
+                if (!char.IsDigit(value[i])) return false;
+            }
+
+            return true;
         }
 
         private static void EnsureFolder(string parent, string child)
