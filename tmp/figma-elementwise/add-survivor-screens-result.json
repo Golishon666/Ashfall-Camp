@@ -1,0 +1,390 @@
+{
+  "_mcp": "figma-console-mcp",
+  "success": true,
+  "result": {
+    "pageName": "Ashfall Camp - Elementwise Concept",
+    "imageTargets": [
+      {
+        "key": "bgSurvivors",
+        "nodeId": "72:21615",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "navCamp",
+        "nodeId": "72:21619",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navCamp",
+        "nodeId": "72:21625",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navSurvivors",
+        "nodeId": "72:21628",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navExpedition",
+        "nodeId": "72:21632",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navWorkshop",
+        "nodeId": "72:21635",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navRadio",
+        "nodeId": "72:21638",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navSurvivors",
+        "nodeId": "72:21651",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusIdle",
+        "nodeId": "72:21654",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusAssigned",
+        "nodeId": "72:21657",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusWounded",
+        "nodeId": "72:21660",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "72:21664",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "72:21667",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqTape",
+        "nodeId": "72:21670",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "72:21673",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusMorale",
+        "nodeId": "72:21676",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor01",
+        "nodeId": "72:21698",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusScouting",
+        "nodeId": "72:21700",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "72:21724",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor02",
+        "nodeId": "72:21729",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "72:21731",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "72:21755",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor03",
+        "nodeId": "72:21760",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "72:21762",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqPistol",
+        "nodeId": "72:21786",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor04",
+        "nodeId": "72:21791",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqTape",
+        "nodeId": "72:21793",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqHatchet",
+        "nodeId": "72:21817",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor05",
+        "nodeId": "72:21822",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusScouting",
+        "nodeId": "72:21824",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "72:21848",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor06",
+        "nodeId": "72:21853",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "72:21855",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqHatchet",
+        "nodeId": "72:21879",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor07",
+        "nodeId": "72:21884",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "72:21886",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqPistol",
+        "nodeId": "72:21910",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor08",
+        "nodeId": "72:21915",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusMorale",
+        "nodeId": "72:21917",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqPistol",
+        "nodeId": "72:21941",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navSurvivors",
+        "nodeId": "72:21946",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusIdle",
+        "nodeId": "72:21949",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusAssigned",
+        "nodeId": "72:21952",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusWounded",
+        "nodeId": "72:21955",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor01",
+        "nodeId": "72:21999",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusScouting",
+        "nodeId": "72:22001",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navSurvivors",
+        "nodeId": "72:22010",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "bgSurvivorDetail",
+        "nodeId": "72:22013",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "navCamp",
+        "nodeId": "72:22017",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "bgSurvivorDetail",
+        "nodeId": "72:22028",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "survivor01",
+        "nodeId": "72:22029",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusScouting",
+        "nodeId": "72:22033",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusIdle",
+        "nodeId": "72:22040",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "72:22047",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusFatigue",
+        "nodeId": "72:22054",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusMorale",
+        "nodeId": "72:22061",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusSafe",
+        "nodeId": "72:22068",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusScouting",
+        "nodeId": "72:22077",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "72:22088",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "72:22099",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusSafe",
+        "nodeId": "72:22110",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqTape",
+        "nodeId": "72:22121",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "72:22132",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "72:22146",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "72:22156",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqShotgun",
+        "nodeId": "72:22166",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "72:22176",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "72:22186",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "72:22198",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusSafe",
+        "nodeId": "72:22216",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusSafe",
+        "nodeId": "72:22223",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusWounded",
+        "nodeId": "72:22230",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusSafe",
+        "nodeId": "72:22237",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "bgSurvivors",
+        "nodeId": "72:22252",
+        "scaleMode": "FILL"
+      }
+    ],
+    "frameIds": [
+      {
+        "title": "06 Survivors Elementwise",
+        "frameId": "72:21614"
+      },
+      {
+        "title": "07 Survivor Detail Elementwise",
+        "frameId": "72:22012"
+      }
+    ]
+  },
+  "timestamp": 1783284488182
+}

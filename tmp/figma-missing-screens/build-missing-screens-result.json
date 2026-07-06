@@ -1,0 +1,1063 @@
+{
+  "_mcp": "figma-console-mcp",
+  "success": true,
+  "result": {
+    "pageName": "Ashfall Camp - Elementwise Concept",
+    "baseX": 6240,
+    "baseY": 1500,
+    "imageTargets": [
+      {
+        "key": "bgCamp",
+        "nodeId": "97:30505",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "navCamp",
+        "nodeId": "97:30509",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navCamp",
+        "nodeId": "97:30515",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navSurvivors",
+        "nodeId": "97:30518",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navExpedition",
+        "nodeId": "97:30521",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navWorkshop",
+        "nodeId": "97:30524",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navRadio",
+        "nodeId": "97:30527",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navRadio",
+        "nodeId": "97:30540",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "radioOperator",
+        "nodeId": "97:30541",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resScrap",
+        "nodeId": "97:30545",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:30547",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resIntel",
+        "nodeId": "97:30549",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRadio",
+        "nodeId": "97:30563",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navRadio",
+        "nodeId": "97:30621",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor01",
+        "nodeId": "97:30625",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqHatchet",
+        "nodeId": "97:30627",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqHatchet",
+        "nodeId": "97:30634",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqTape",
+        "nodeId": "97:30635",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resParts",
+        "nodeId": "97:30636",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resScrap",
+        "nodeId": "97:30639",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:30641",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resIntel",
+        "nodeId": "97:30643",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor02",
+        "nodeId": "97:30646",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "resFood",
+        "nodeId": "97:30648",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resFood",
+        "nodeId": "97:30655",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusMorale",
+        "nodeId": "97:30656",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resParts",
+        "nodeId": "97:30657",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resScrap",
+        "nodeId": "97:30660",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:30662",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resIntel",
+        "nodeId": "97:30664",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor03",
+        "nodeId": "97:30667",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "97:30669",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "97:30676",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resMedicine",
+        "nodeId": "97:30677",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resParts",
+        "nodeId": "97:30678",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resScrap",
+        "nodeId": "97:30681",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:30683",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resIntel",
+        "nodeId": "97:30685",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor04",
+        "nodeId": "97:30688",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqRadio",
+        "nodeId": "97:30690",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRadio",
+        "nodeId": "97:30697",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqTape",
+        "nodeId": "97:30698",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navRadio",
+        "nodeId": "97:30699",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resScrap",
+        "nodeId": "97:30702",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:30704",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resIntel",
+        "nodeId": "97:30706",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "navSurvivors",
+        "nodeId": "97:30712",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusScouting",
+        "nodeId": "97:30738",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRadio",
+        "nodeId": "97:30740",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resScrap",
+        "nodeId": "97:30745",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resParts",
+        "nodeId": "97:30746",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:30747",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusScouting",
+        "nodeId": "97:30749",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resFood",
+        "nodeId": "97:30754",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:30755",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resScrap",
+        "nodeId": "97:30756",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resMedicine",
+        "nodeId": "97:30758",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resMedicine",
+        "nodeId": "97:30763",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "97:30764",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:30765",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRadio",
+        "nodeId": "97:30768",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "bgReport",
+        "nodeId": "97:30771",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "navCamp",
+        "nodeId": "97:30775",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor01",
+        "nodeId": "97:30790",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "97:30791",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor02",
+        "nodeId": "97:30802",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:30803",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor03",
+        "nodeId": "97:30814",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "97:30815",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor04",
+        "nodeId": "97:30826",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqTape",
+        "nodeId": "97:30827",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusDanger",
+        "nodeId": "97:30843",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusSafe",
+        "nodeId": "97:30846",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusIdle",
+        "nodeId": "97:30858",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusDanger",
+        "nodeId": "97:30866",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resFuel",
+        "nodeId": "97:30874",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor01",
+        "nodeId": "97:30929",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "97:30934",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "97:30937",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:30939",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "97:30941",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "97:30945",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:30947",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusFatigue",
+        "nodeId": "97:30949",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor02",
+        "nodeId": "97:30958",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:30963",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "97:30966",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:30968",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "97:30970",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "97:30974",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:30976",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusFatigue",
+        "nodeId": "97:30978",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor03",
+        "nodeId": "97:30987",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "97:30992",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "97:30995",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:30997",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "97:30999",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "97:31003",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31005",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusFatigue",
+        "nodeId": "97:31007",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor04",
+        "nodeId": "97:31016",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqTape",
+        "nodeId": "97:31021",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "97:31024",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31026",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "97:31028",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "97:31032",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31034",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusFatigue",
+        "nodeId": "97:31036",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "enemyRaider",
+        "nodeId": "97:31048",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "97:31053",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "97:31056",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31058",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "97:31060",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "97:31064",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31066",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusFatigue",
+        "nodeId": "97:31068",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "enemyGhoul",
+        "nodeId": "97:31077",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "97:31082",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "97:31085",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31087",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "97:31089",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "97:31093",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31095",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusFatigue",
+        "nodeId": "97:31097",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "enemyHound",
+        "nodeId": "97:31106",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusDanger",
+        "nodeId": "97:31111",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusDanger",
+        "nodeId": "97:31114",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31116",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "97:31118",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "97:31122",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31124",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusFatigue",
+        "nodeId": "97:31126",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "enemyDuelist",
+        "nodeId": "97:31135",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "eqPistol",
+        "nodeId": "97:31140",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqPistol",
+        "nodeId": "97:31143",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31145",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "97:31147",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMachete",
+        "nodeId": "97:31151",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31153",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusFatigue",
+        "nodeId": "97:31155",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRifle",
+        "nodeId": "97:31171",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31175",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqMedkit",
+        "nodeId": "97:31179",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusScouting",
+        "nodeId": "97:31183",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRadio",
+        "nodeId": "97:31187",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "bgReport",
+        "nodeId": "97:31199",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "navCamp",
+        "nodeId": "97:31203",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "bgReport",
+        "nodeId": "97:31210",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "navCamp",
+        "nodeId": "97:31214",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "reportThumb",
+        "nodeId": "97:31219",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "bgCamp",
+        "nodeId": "97:31220",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "reportOutcome",
+        "nodeId": "97:31224",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resScrap",
+        "nodeId": "97:31234",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resFood",
+        "nodeId": "97:31239",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:31244",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resMedicine",
+        "nodeId": "97:31249",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resParts",
+        "nodeId": "97:31254",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqTape",
+        "nodeId": "97:31263",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqRadio",
+        "nodeId": "97:31266",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqVest",
+        "nodeId": "97:31269",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resFood",
+        "nodeId": "97:31272",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor01",
+        "nodeId": "97:31279",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "survivor02",
+        "nodeId": "97:31285",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "survivor03",
+        "nodeId": "97:31291",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "survivor04",
+        "nodeId": "97:31297",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "survivor01",
+        "nodeId": "97:31307",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "97:31310",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor02",
+        "nodeId": "97:31311",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealing",
+        "nodeId": "97:31314",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor03",
+        "nodeId": "97:31315",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "97:31318",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor04",
+        "nodeId": "97:31319",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "97:31322",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusSafe",
+        "nodeId": "97:31327",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "eqBackpack",
+        "nodeId": "97:31331",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusDanger",
+        "nodeId": "97:31335",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resIntel",
+        "nodeId": "97:31339",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "bgReport",
+        "nodeId": "97:31350",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "navCamp",
+        "nodeId": "97:31354",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor02",
+        "nodeId": "97:31362",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "resScrap",
+        "nodeId": "97:31369",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resFood",
+        "nodeId": "97:31374",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:31379",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resMedicine",
+        "nodeId": "97:31384",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resParts",
+        "nodeId": "97:31389",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "bgCamp",
+        "nodeId": "97:31398",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "97:31399",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "bgCamp",
+        "nodeId": "97:31403",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "97:31404",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor01",
+        "nodeId": "97:31414",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "97:31417",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor02",
+        "nodeId": "97:31418",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealing",
+        "nodeId": "97:31421",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor03",
+        "nodeId": "97:31422",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "97:31425",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "survivor04",
+        "nodeId": "97:31426",
+        "scaleMode": "FILL"
+      },
+      {
+        "key": "statusHealthy",
+        "nodeId": "97:31429",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resFood",
+        "nodeId": "97:31434",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resWater",
+        "nodeId": "97:31440",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resParts",
+        "nodeId": "97:31446",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resMedicine",
+        "nodeId": "97:31452",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resIntel",
+        "nodeId": "97:31458",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resFood",
+        "nodeId": "97:31468",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusMorale",
+        "nodeId": "97:31471",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "resParts",
+        "nodeId": "97:31474",
+        "scaleMode": "FIT"
+      },
+      {
+        "key": "statusDanger",
+        "nodeId": "97:31477",
+        "scaleMode": "FIT"
+      }
+    ],
+    "frameIds": [
+      {
+        "title": "08 Radio Recruitment Elementwise",
+        "frameId": "97:30504"
+      },
+      {
+        "title": "09 Expedition Combat Elementwise",
+        "frameId": "97:30770"
+      },
+      {
+        "title": "10 Reports Elementwise",
+        "frameId": "97:31198"
+      }
+    ],
+    "audit": {
+      "enemyCards": 4,
+      "statStrips": 8,
+      "forbidden": [],
+      "outOfBoundsCount": 0,
+      "outOfBounds": []
+    }
+  },
+  "timestamp": 1783296066376
+}

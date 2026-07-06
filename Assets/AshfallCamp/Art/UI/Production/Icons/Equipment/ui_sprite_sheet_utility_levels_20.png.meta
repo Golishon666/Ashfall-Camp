@@ -1,0 +1,676 @@
+fileFormatVersion: 2
+guid: 8b01a7f19c6841adb4ddc7b3506e5fb1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4245311397110716455
+    second: ui_utility_medkit_tier_01_rag_bundle
+  - first:
+      213: 3508157996359793064
+    second: ui_utility_medkit_tier_02_field_pouch
+  - first:
+      213: 4877407994281312486
+    second: ui_utility_medkit_tier_03_trauma_bag
+  - first:
+      213: 5957654100376175202
+    second: ui_utility_medkit_tier_04_hardcase_medkit
+  - first:
+      213: 8930770353793263672
+    second: ui_utility_medkit_tier_05_advanced_trauma_case
+  - first:
+      213: 3189432197845210750
+    second: ui_utility_toolkit_tier_01_rusty_tool_roll
+  - first:
+      213: 6232936837956443798
+    second: ui_utility_toolkit_tier_02_mechanic_tool_roll
+  - first:
+      213: 2742288712885616054
+    second: ui_utility_toolkit_tier_03_scrap_toolbox
+  - first:
+      213: 5815329282640834324
+    second: ui_utility_toolkit_tier_04_repair_case
+  - first:
+      213: 1257085183405352303
+    second: ui_utility_toolkit_tier_05_advanced_repair_case
+  - first:
+      213: 7791540999661742478
+    second: ui_utility_ammo_pack_tier_01_loose_ammo_pouch
+  - first:
+      213: 2611312706288611167
+    second: ui_utility_ammo_pack_tier_02_leather_ammo_bag
+  - first:
+      213: 4209675717166781508
+    second: ui_utility_ammo_pack_tier_03_canvas_ammo_pack
+  - first:
+      213: 3792940762518194398
+    second: ui_utility_ammo_pack_tier_04_tactical_ammo_crate
+  - first:
+      213: 3950492655763972696
+    second: ui_utility_ammo_pack_tier_05_reinforced_ammo_crate
+  - first:
+      213: 4545780541676797286
+    second: ui_utility_backpack_tier_01_torn_scavenger_bag
+  - first:
+      213: 3277206695687262799
+    second: ui_utility_backpack_tier_02_field_backpack
+  - first:
+      213: 7778255097416922494
+    second: ui_utility_backpack_tier_03_expedition_pack
+  - first:
+      213: 3340049011076259088
+    second: ui_utility_backpack_tier_04_reinforced_pack
+  - first:
+      213: 8518055178964911399
+    second: ui_utility_backpack_tier_05_elite_cargo_pack
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ui_utility_medkit_tier_01_rag_bundle
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08fa35cda3ce40c8833af2f4ce261096
+      internalID: 4245311397110716455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_medkit_tier_02_field_pouch
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6120be360397446083c1ea89c9800328
+      internalID: 3508157996359793064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_medkit_tier_03_trauma_bag
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a9fbbdb46dd4420aeea00460372023a
+      internalID: 4877407994281312486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_medkit_tier_04_hardcase_medkit
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e4117527dac4a9aa1271bea649b63f0
+      internalID: 5957654100376175202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_medkit_tier_05_advanced_trauma_case
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f827d4e9d9ca4e3ca32b26b3d35371ee
+      internalID: 8930770353793263672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_toolkit_tier_01_rusty_tool_roll
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b217a4e470e8461f92b424a25fa9f315
+      internalID: 3189432197845210750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_toolkit_tier_02_mechanic_tool_roll
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87fef1fec27c43b5a23e1fc3ba83bcfa
+      internalID: 6232936837956443798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_toolkit_tier_03_scrap_toolbox
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbfafe8062874eca9570750cce858b57
+      internalID: 2742288712885616054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_toolkit_tier_04_repair_case
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3059adb60fd7436e8209c4fd424fb389
+      internalID: 5815329282640834324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_toolkit_tier_05_advanced_repair_case
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1842ab6ea1054fed9fed93017759e765
+      internalID: 1257085183405352303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_ammo_pack_tier_01_loose_ammo_pouch
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5804e6c4f9484ae7b5d381d03952d1df
+      internalID: 7791540999661742478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_ammo_pack_tier_02_leather_ammo_bag
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df8dd3ba53914cedb4693bd710357435
+      internalID: 2611312706288611167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_ammo_pack_tier_03_canvas_ammo_pack
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a9dcb7b67d74efb836d58a4947eadee
+      internalID: 4209675717166781508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_ammo_pack_tier_04_tactical_ammo_crate
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 811ab3bbc8a04289b61c7eba922a7305
+      internalID: 3792940762518194398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_ammo_pack_tier_05_reinforced_ammo_crate
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eafb920711324f4e8483238220cf8e70
+      internalID: 3950492655763972696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_backpack_tier_01_torn_scavenger_bag
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f10dd959020439eab45d532ae7af6c7
+      internalID: 4545780541676797286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_backpack_tier_02_field_backpack
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5039b9942ab4c3fb7b04653388d8f4f
+      internalID: 3277206695687262799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_backpack_tier_03_expedition_pack
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d531f5a4c0d4134a5bbbed6d544fdf8
+      internalID: 7778255097416922494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_backpack_tier_04_reinforced_pack
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c583213538a4e0abe84d10dd9340588
+      internalID: 3340049011076259088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_utility_backpack_tier_05_elite_cargo_pack
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 624d42ae1d2247b691b77fd279680230
+      internalID: 8518055178964911399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 6f97cba1303244309ae18c2b8e427ac9
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ui_utility_medkit_tier_01_rag_bundle: 4245311397110716455
+      ui_utility_medkit_tier_02_field_pouch: 3508157996359793064
+      ui_utility_medkit_tier_03_trauma_bag: 4877407994281312486
+      ui_utility_medkit_tier_04_hardcase_medkit: 5957654100376175202
+      ui_utility_medkit_tier_05_advanced_trauma_case: 8930770353793263672
+      ui_utility_toolkit_tier_01_rusty_tool_roll: 3189432197845210750
+      ui_utility_toolkit_tier_02_mechanic_tool_roll: 6232936837956443798
+      ui_utility_toolkit_tier_03_scrap_toolbox: 2742288712885616054
+      ui_utility_toolkit_tier_04_repair_case: 5815329282640834324
+      ui_utility_toolkit_tier_05_advanced_repair_case: 1257085183405352303
+      ui_utility_ammo_pack_tier_01_loose_ammo_pouch: 7791540999661742478
+      ui_utility_ammo_pack_tier_02_leather_ammo_bag: 2611312706288611167
+      ui_utility_ammo_pack_tier_03_canvas_ammo_pack: 4209675717166781508
+      ui_utility_ammo_pack_tier_04_tactical_ammo_crate: 3792940762518194398
+      ui_utility_ammo_pack_tier_05_reinforced_ammo_crate: 3950492655763972696
+      ui_utility_backpack_tier_01_torn_scavenger_bag: 4545780541676797286
+      ui_utility_backpack_tier_02_field_backpack: 3277206695687262799
+      ui_utility_backpack_tier_03_expedition_pack: 7778255097416922494
+      ui_utility_backpack_tier_04_reinforced_pack: 3340049011076259088
+      ui_utility_backpack_tier_05_elite_cargo_pack: 8518055178964911399
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

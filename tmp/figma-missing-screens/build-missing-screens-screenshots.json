@@ -1,0 +1,44 @@
+[
+  {
+    "title": "08 Radio Recruitment Elementwise",
+    "frameId": "97:30504",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-missing-screens\\screenshots\\08-radio-recruitment-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "97:30504",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 189833,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "09 Expedition Combat Elementwise",
+    "frameId": "97:30770",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-missing-screens\\screenshots\\09-expedition-combat-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "97:30770",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 235297,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "10 Reports Elementwise",
+    "frameId": "97:31198",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-missing-screens\\screenshots\\10-reports-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "97:31198",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 218318,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  }
+]

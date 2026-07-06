@@ -1,4 +1,5 @@
 import { spawn, spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -394,6 +395,7 @@ try {
 
   const exportedFrames = [];
   const summary = [];
+  const assetPathByHash = new Map();
 
   for (const frame of frames) {
     const assetDir = join(outDir, "ElementAssets", frame.slug);
@@ -421,12 +423,26 @@ try {
     const payload = result.result;
     const exportMap = new Map();
     let saved = 0;
+    let deduped = 0;
 
     for (const item of payload.exports || []) {
       if (!item.base64 || item.error) continue;
+      const bytes = Buffer.from(item.base64, "base64");
+      const hash = createHash("sha256").update(bytes).digest("hex");
+      const existingUnityPath = assetPathByHash.get(hash);
+      if (existingUnityPath) {
+        exportMap.set(item.id, existingUnityPath);
+        item.assetPath = existingUnityPath;
+        item.dedupedFrom = existingUnityPath;
+        deduped++;
+        delete item.base64;
+        continue;
+      }
+
       const fileName = `${String(item.index).padStart(4, "0")}-${safeName(item.name)}-${item.id.replace(/[^a-z0-9]+/gi, "-")}.png`;
       const unityPath = `Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/ElementAssets/${frame.slug}/${fileName}`;
-      writeFileSync(join(assetDir, fileName), Buffer.from(item.base64, "base64"));
+      writeFileSync(join(assetDir, fileName), bytes);
+      assetPathByHash.set(hash, unityPath);
       exportMap.set(item.id, unityPath);
       saved++;
       delete item.base64;
@@ -453,6 +469,7 @@ try {
       textCount: payload.textCount,
       visualCount: payload.visualCount,
       exportedPngs: saved,
+      dedupedPngs: deduped,
       screenshotPath: payload.screenshotPath,
     });
   }

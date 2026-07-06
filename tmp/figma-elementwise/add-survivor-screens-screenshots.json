@@ -1,0 +1,30 @@
+[
+  {
+    "title": "06 Survivors Elementwise",
+    "frameId": "72:21614",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-elementwise\\screenshots\\06-survivors-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "72:21614",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 266156,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  },
+  {
+    "title": "07 Survivor Detail Elementwise",
+    "frameId": "72:22012",
+    "filePath": "C:\\Unity Project\\Ashfall Camp\\tmp\\figma-elementwise\\screenshots\\07-survivor-detail-elementwise.png",
+    "meta": {
+      "_mcp": "figma-console-mcp",
+      "nodeId": "72:22012",
+      "scale": 0.5,
+      "format": "png",
+      "byteLength": 271827,
+      "source": "desktop_bridge",
+      "note": "Screenshot captured via the Desktop Bridge plugin (current runtime state, no REST token required). The image is included below for visual analysis."
+    }
+  }
+]

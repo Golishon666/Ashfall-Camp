@@ -1,0 +1,194 @@
+[
+  {
+    "key": "bgSurvivors",
+    "scaleMode": "FILL",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "navCamp",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "navSurvivors",
+    "scaleMode": "FIT",
+    "count": 4,
+    "success": true
+  },
+  {
+    "key": "navExpedition",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "navWorkshop",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "navRadio",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "statusIdle",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "statusAssigned",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "statusWounded",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "eqBackpack",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "eqMachete",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "eqTape",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "eqMedkit",
+    "scaleMode": "FIT",
+    "count": 5,
+    "success": true
+  },
+  {
+    "key": "statusMorale",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "survivor01",
+    "scaleMode": "FILL",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "statusScouting",
+    "scaleMode": "FIT",
+    "count": 5,
+    "success": true
+  },
+  {
+    "key": "eqRifle",
+    "scaleMode": "FIT",
+    "count": 4,
+    "success": true
+  },
+  {
+    "key": "survivor02",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "statusHealthy",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "survivor03",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "eqPistol",
+    "scaleMode": "FIT",
+    "count": 3,
+    "success": true
+  },
+  {
+    "key": "survivor04",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "eqHatchet",
+    "scaleMode": "FIT",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "survivor05",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "survivor06",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "survivor07",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "survivor08",
+    "scaleMode": "FILL",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "bgSurvivorDetail",
+    "scaleMode": "FILL",
+    "count": 2,
+    "success": true
+  },
+  {
+    "key": "statusFatigue",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "statusSafe",
+    "scaleMode": "FIT",
+    "count": 5,
+    "success": true
+  },
+  {
+    "key": "eqVest",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  },
+  {
+    "key": "eqShotgun",
+    "scaleMode": "FIT",
+    "count": 1,
+    "success": true
+  }
+]
