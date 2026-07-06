@@ -1,0 +1,355 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e756b8baaf40471cac7ca6240dce708b, type: 3}
+  m_Name: UtilityCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.UtilityCatalogSO
+  Utilities:
+  - Id: utility_medkit_tier_01_rag_bundle
+    Name: Medkit Rag Bundle
+    Description: Medical utility gear that improves field recovery.
+    Type: 0
+    Rarity: 0
+    Tier: 1
+    HealAmount: 12
+    RepairBonus: 0
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 38
+    RepairCostMultiplier: 0.5
+    SortOrder: 1
+    UseSoundId: utility_medkit
+    Icon: {fileID: 2350678107861931002, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_medkit_tier_02_field_pouch
+    Name: Medkit Field Pouch
+    Description: Medical utility gear that improves field recovery.
+    Type: 0
+    Rarity: 1
+    Tier: 2
+    HealAmount: 22
+    RepairBonus: 0
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 0
+    BonusStamina: 1
+    MaxDurability: 46
+    RepairCostMultiplier: 0.7
+    SortOrder: 2
+    UseSoundId: utility_medkit
+    Icon: {fileID: 6856715218639913181, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_medkit_tier_03_trauma_bag
+    Name: Medkit Trauma Bag
+    Description: Medical utility gear that improves field recovery.
+    Type: 0
+    Rarity: 1
+    Tier: 3
+    HealAmount: 36
+    RepairBonus: 0
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 0
+    BonusStamina: 1
+    MaxDurability: 54
+    RepairCostMultiplier: 0.7
+    SortOrder: 3
+    UseSoundId: utility_medkit
+    Icon: {fileID: 2291988655952037146, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_medkit_tier_04_hardcase_medkit
+    Name: Medkit Hardcase Medkit
+    Description: Medical utility gear that improves field recovery.
+    Type: 0
+    Rarity: 2
+    Tier: 4
+    HealAmount: 52
+    RepairBonus: 0
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 0
+    BonusStamina: 2
+    MaxDurability: 62
+    RepairCostMultiplier: 0.9
+    SortOrder: 4
+    UseSoundId: utility_medkit
+    Icon: {fileID: 2703811328030918947, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_medkit_tier_05_advanced_trauma_case
+    Name: Medkit Advanced Trauma Case
+    Description: Medical utility gear that improves field recovery.
+    Type: 0
+    Rarity: 3
+    Tier: 5
+    HealAmount: 75
+    RepairBonus: 0
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 0
+    BonusStamina: 2
+    MaxDurability: 70
+    RepairCostMultiplier: 1.1
+    SortOrder: 5
+    UseSoundId: utility_medkit
+    Icon: {fileID: 4083858483665046957, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_toolkit_tier_01_rusty_tool_roll
+    Name: Toolkit Rusty Tool Roll
+    Description: Repair utility gear for maintaining equipment between fights.
+    Type: 1
+    Rarity: 0
+    Tier: 1
+    HealAmount: 0
+    RepairBonus: 8
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 67
+    RepairCostMultiplier: 0.8
+    SortOrder: 6
+    UseSoundId: utility_toolkit
+    Icon: {fileID: 2052314067507619800, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_toolkit_tier_02_mechanic_tool_roll
+    Name: Toolkit Mechanic Tool Roll
+    Description: Repair utility gear for maintaining equipment between fights.
+    Type: 1
+    Rarity: 1
+    Tier: 2
+    HealAmount: 0
+    RepairBonus: 16
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 79
+    RepairCostMultiplier: 1.05
+    SortOrder: 7
+    UseSoundId: utility_toolkit
+    Icon: {fileID: 2327715976708911138, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_toolkit_tier_03_scrap_toolbox
+    Name: Toolkit Scrap Toolbox
+    Description: Repair utility gear for maintaining equipment between fights.
+    Type: 1
+    Rarity: 1
+    Tier: 3
+    HealAmount: 0
+    RepairBonus: 26
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 91
+    RepairCostMultiplier: 1.05
+    SortOrder: 8
+    UseSoundId: utility_toolkit
+    Icon: {fileID: 7232509628309262253, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_toolkit_tier_04_repair_case
+    Name: Toolkit Repair Case
+    Description: Repair utility gear for maintaining equipment between fights.
+    Type: 1
+    Rarity: 2
+    Tier: 4
+    HealAmount: 0
+    RepairBonus: 38
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 103
+    RepairCostMultiplier: 1.3
+    SortOrder: 9
+    UseSoundId: utility_toolkit
+    Icon: {fileID: 8522936594208658493, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_toolkit_tier_05_advanced_repair_case
+    Name: Toolkit Advanced Repair Case
+    Description: Repair utility gear for maintaining equipment between fights.
+    Type: 1
+    Rarity: 3
+    Tier: 5
+    HealAmount: 0
+    RepairBonus: 55
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 115
+    RepairCostMultiplier: 1.55
+    SortOrder: 10
+    UseSoundId: utility_toolkit
+    Icon: {fileID: 6079755940853162157, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_ammo_pack_tier_01_loose_ammo_pouch
+    Name: Ammo Pack Loose Ammo Pouch
+    Description: Ammunition utility gear that increases carried rounds.
+    Type: 2
+    Rarity: 0
+    Tier: 1
+    HealAmount: 0
+    RepairBonus: 0
+    AmmoCapacityBonus: 6
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 67
+    RepairCostMultiplier: 0.8
+    SortOrder: 11
+    UseSoundId: utility_ammo_pack
+    Icon: {fileID: 8293405690202660490, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_ammo_pack_tier_02_leather_ammo_bag
+    Name: Ammo Pack Leather Ammo Bag
+    Description: Ammunition utility gear that increases carried rounds.
+    Type: 2
+    Rarity: 1
+    Tier: 2
+    HealAmount: 0
+    RepairBonus: 0
+    AmmoCapacityBonus: 12
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 79
+    RepairCostMultiplier: 1.05
+    SortOrder: 12
+    UseSoundId: utility_ammo_pack
+    Icon: {fileID: 7256466812758694411, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_ammo_pack_tier_03_canvas_ammo_pack
+    Name: Ammo Pack Canvas Ammo Pack
+    Description: Ammunition utility gear that increases carried rounds.
+    Type: 2
+    Rarity: 1
+    Tier: 3
+    HealAmount: 0
+    RepairBonus: 0
+    AmmoCapacityBonus: 20
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 91
+    RepairCostMultiplier: 1.05
+    SortOrder: 13
+    UseSoundId: utility_ammo_pack
+    Icon: {fileID: 3725052846614415929, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_ammo_pack_tier_04_tactical_ammo_crate
+    Name: Ammo Pack Tactical Ammo Crate
+    Description: Ammunition utility gear that increases carried rounds.
+    Type: 2
+    Rarity: 2
+    Tier: 4
+    HealAmount: 0
+    RepairBonus: 0
+    AmmoCapacityBonus: 32
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 103
+    RepairCostMultiplier: 1.3
+    SortOrder: 14
+    UseSoundId: utility_ammo_pack
+    Icon: {fileID: 8942338316456001194, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_ammo_pack_tier_05_reinforced_ammo_crate
+    Name: Ammo Pack Reinforced Ammo Crate
+    Description: Ammunition utility gear that increases carried rounds.
+    Type: 2
+    Rarity: 3
+    Tier: 5
+    HealAmount: 0
+    RepairBonus: 0
+    AmmoCapacityBonus: 48
+    CarryCapacityBonus: 0
+    BonusStamina: 0
+    MaxDurability: 115
+    RepairCostMultiplier: 1.55
+    SortOrder: 15
+    UseSoundId: utility_ammo_pack
+    Icon: {fileID: 2050032381601042494, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_backpack_tier_01_torn_scavenger_bag
+    Name: Backpack Torn Scavenger Bag
+    Description: Cargo utility gear that increases carrying capacity and stamina.
+    Type: 3
+    Rarity: 0
+    Tier: 1
+    HealAmount: 0
+    RepairBonus: 0
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 5
+    BonusStamina: 1
+    MaxDurability: 67
+    RepairCostMultiplier: 0.8
+    SortOrder: 16
+    UseSoundId: utility_backpack
+    Icon: {fileID: 7676188084514910549, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_backpack_tier_02_field_backpack
+    Name: Backpack Field Backpack
+    Description: Cargo utility gear that increases carrying capacity and stamina.
+    Type: 3
+    Rarity: 1
+    Tier: 2
+    HealAmount: 0
+    RepairBonus: 0
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 10
+    BonusStamina: 3
+    MaxDurability: 79
+    RepairCostMultiplier: 1.05
+    SortOrder: 17
+    UseSoundId: utility_backpack
+    Icon: {fileID: 8099977754114690837, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_backpack_tier_03_expedition_pack
+    Name: Backpack Expedition Pack
+    Description: Cargo utility gear that increases carrying capacity and stamina.
+    Type: 3
+    Rarity: 1
+    Tier: 3
+    HealAmount: 0
+    RepairBonus: 0
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 18
+    BonusStamina: 5
+    MaxDurability: 91
+    RepairCostMultiplier: 1.05
+    SortOrder: 18
+    UseSoundId: utility_backpack
+    Icon: {fileID: 3846200100718395168, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_backpack_tier_04_reinforced_pack
+    Name: Backpack Reinforced Pack
+    Description: Cargo utility gear that increases carrying capacity and stamina.
+    Type: 3
+    Rarity: 2
+    Tier: 4
+    HealAmount: 0
+    RepairBonus: 0
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 28
+    BonusStamina: 8
+    MaxDurability: 103
+    RepairCostMultiplier: 1.3
+    SortOrder: 19
+    UseSoundId: utility_backpack
+    Icon: {fileID: 7029683955470801137, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}
+  - Id: utility_backpack_tier_05_elite_cargo_pack
+    Name: Backpack Elite Cargo Pack
+    Description: Cargo utility gear that increases carrying capacity and stamina.
+    Type: 3
+    Rarity: 3
+    Tier: 5
+    HealAmount: 0
+    RepairBonus: 0
+    AmmoCapacityBonus: 0
+    CarryCapacityBonus: 42
+    BonusStamina: 12
+    MaxDurability: 115
+    RepairCostMultiplier: 1.55
+    SortOrder: 20
+    UseSoundId: utility_backpack
+    Icon: {fileID: 6264270563260109787, guid: 8b01a7f19c6841adb4ddc7b3506e5fb1, type: 3}
+    UseSound: {fileID: 0}

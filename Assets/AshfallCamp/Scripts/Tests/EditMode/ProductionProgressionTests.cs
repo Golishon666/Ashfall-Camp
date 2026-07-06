@@ -10,7 +10,7 @@ namespace AshfallCamp.Tests.EditMode
 {
     public sealed class ProductionProgressionTests
     {
-        private const string ConfigPath = "Assets/AshfallCamp/Configs/GameConfigDatabase.asset";
+        private const string ConfigPath = "Assets/AshfallCamp/Configs/Core/GameConfigDatabase.asset";
 
         [Test]
         public void ProductionConfigCanReachMutantTunnelFromNewGame()

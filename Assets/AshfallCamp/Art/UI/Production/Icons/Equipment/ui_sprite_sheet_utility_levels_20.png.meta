@@ -3,64 +3,64 @@ guid: 8b01a7f19c6841adb4ddc7b3506e5fb1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4245311397110716455
+      213: 2350678107861931002
     second: ui_utility_medkit_tier_01_rag_bundle
   - first:
-      213: 3508157996359793064
+      213: 6856715218639913181
     second: ui_utility_medkit_tier_02_field_pouch
   - first:
-      213: 4877407994281312486
+      213: 2291988655952037146
     second: ui_utility_medkit_tier_03_trauma_bag
   - first:
-      213: 5957654100376175202
+      213: 2703811328030918947
     second: ui_utility_medkit_tier_04_hardcase_medkit
   - first:
-      213: 8930770353793263672
+      213: 4083858483665046957
     second: ui_utility_medkit_tier_05_advanced_trauma_case
   - first:
-      213: 3189432197845210750
+      213: 2052314067507619800
     second: ui_utility_toolkit_tier_01_rusty_tool_roll
   - first:
-      213: 6232936837956443798
+      213: 2327715976708911138
     second: ui_utility_toolkit_tier_02_mechanic_tool_roll
   - first:
-      213: 2742288712885616054
+      213: 7232509628309262253
     second: ui_utility_toolkit_tier_03_scrap_toolbox
   - first:
-      213: 5815329282640834324
+      213: 8522936594208658493
     second: ui_utility_toolkit_tier_04_repair_case
   - first:
-      213: 1257085183405352303
+      213: 6079755940853162157
     second: ui_utility_toolkit_tier_05_advanced_repair_case
   - first:
-      213: 7791540999661742478
+      213: 8293405690202660490
     second: ui_utility_ammo_pack_tier_01_loose_ammo_pouch
   - first:
-      213: 2611312706288611167
+      213: 7256466812758694411
     second: ui_utility_ammo_pack_tier_02_leather_ammo_bag
   - first:
-      213: 4209675717166781508
+      213: 3725052846614415929
     second: ui_utility_ammo_pack_tier_03_canvas_ammo_pack
   - first:
-      213: 3792940762518194398
+      213: 8942338316456001194
     second: ui_utility_ammo_pack_tier_04_tactical_ammo_crate
   - first:
-      213: 3950492655763972696
+      213: 2050032381601042494
     second: ui_utility_ammo_pack_tier_05_reinforced_ammo_crate
   - first:
-      213: 4545780541676797286
+      213: 7676188084514910549
     second: ui_utility_backpack_tier_01_torn_scavenger_bag
   - first:
-      213: 3277206695687262799
+      213: 8099977754114690837
     second: ui_utility_backpack_tier_02_field_backpack
   - first:
-      213: 7778255097416922494
+      213: 3846200100718395168
     second: ui_utility_backpack_tier_03_expedition_pack
   - first:
-      213: 3340049011076259088
+      213: 7029683955470801137
     second: ui_utility_backpack_tier_04_reinforced_pack
   - first:
-      213: 8518055178964911399
+      213: 6264270563260109787
     second: ui_utility_backpack_tier_05_elite_cargo_pack
   externalObjects: {}
   serializedVersion: 13
@@ -211,8 +211,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08fa35cda3ce40c8833af2f4ce261096
-      internalID: 4245311397110716455
+      spriteID: 094a111052a9439992816c34f94de72e
+      internalID: 2350678107861931002
       vertices: []
       indices: 
       edges: []
@@ -233,8 +233,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6120be360397446083c1ea89c9800328
-      internalID: 3508157996359793064
+      spriteID: 675140d40506418da1647529c20bfb2d
+      internalID: 6856715218639913181
       vertices: []
       indices: 
       edges: []
@@ -255,8 +255,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4a9fbbdb46dd4420aeea00460372023a
-      internalID: 4877407994281312486
+      spriteID: 98e73fec2f954eb1bedc4aa016d0033e
+      internalID: 2291988655952037146
       vertices: []
       indices: 
       edges: []
@@ -277,8 +277,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2e4117527dac4a9aa1271bea649b63f0
-      internalID: 5957654100376175202
+      spriteID: 17dda5ad4c6c42a0a5c197a2c5cd5858
+      internalID: 2703811328030918947
       vertices: []
       indices: 
       edges: []
@@ -299,8 +299,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f827d4e9d9ca4e3ca32b26b3d35371ee
-      internalID: 8930770353793263672
+      spriteID: 8d7114c7aa864944b6713f10b48f333f
+      internalID: 4083858483665046957
       vertices: []
       indices: 
       edges: []
@@ -321,8 +321,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b217a4e470e8461f92b424a25fa9f315
-      internalID: 3189432197845210750
+      spriteID: a3e7dd8551194f42b8cc5426071fdc0e
+      internalID: 2052314067507619800
       vertices: []
       indices: 
       edges: []
@@ -343,8 +343,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 87fef1fec27c43b5a23e1fc3ba83bcfa
-      internalID: 6232936837956443798
+      spriteID: 6750bc16bdf941c0b3d8952912762134
+      internalID: 2327715976708911138
       vertices: []
       indices: 
       edges: []
@@ -365,8 +365,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cbfafe8062874eca9570750cce858b57
-      internalID: 2742288712885616054
+      spriteID: 4643e46b43224b479305c6a99063775f
+      internalID: 7232509628309262253
       vertices: []
       indices: 
       edges: []
@@ -387,8 +387,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3059adb60fd7436e8209c4fd424fb389
-      internalID: 5815329282640834324
+      spriteID: af1d087ceec2419cb31bdf9f283a1163
+      internalID: 8522936594208658493
       vertices: []
       indices: 
       edges: []
@@ -409,8 +409,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1842ab6ea1054fed9fed93017759e765
-      internalID: 1257085183405352303
+      spriteID: 7432cffe38984648b37c01b60ea42200
+      internalID: 6079755940853162157
       vertices: []
       indices: 
       edges: []
@@ -431,8 +431,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5804e6c4f9484ae7b5d381d03952d1df
-      internalID: 7791540999661742478
+      spriteID: 600ff37d9384403aa6a10b56403055be
+      internalID: 8293405690202660490
       vertices: []
       indices: 
       edges: []
@@ -453,8 +453,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: df8dd3ba53914cedb4693bd710357435
-      internalID: 2611312706288611167
+      spriteID: b9c4b3fc71bf42c1a1b8c85b64eb1c59
+      internalID: 7256466812758694411
       vertices: []
       indices: 
       edges: []
@@ -475,8 +475,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3a9dcb7b67d74efb836d58a4947eadee
-      internalID: 4209675717166781508
+      spriteID: a3f0c81c4c9340beab685e63850ebcac
+      internalID: 3725052846614415929
       vertices: []
       indices: 
       edges: []
@@ -497,8 +497,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 811ab3bbc8a04289b61c7eba922a7305
-      internalID: 3792940762518194398
+      spriteID: 2c47d5d6786c479684451f4858d1b117
+      internalID: 8942338316456001194
       vertices: []
       indices: 
       edges: []
@@ -519,8 +519,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eafb920711324f4e8483238220cf8e70
-      internalID: 3950492655763972696
+      spriteID: 8249f518c8964643ab84b261d62c0e4f
+      internalID: 2050032381601042494
       vertices: []
       indices: 
       edges: []
@@ -541,8 +541,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8f10dd959020439eab45d532ae7af6c7
-      internalID: 4545780541676797286
+      spriteID: 7a48f7e170e0463387f303808998f92e
+      internalID: 7676188084514910549
       vertices: []
       indices: 
       edges: []
@@ -563,8 +563,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c5039b9942ab4c3fb7b04653388d8f4f
-      internalID: 3277206695687262799
+      spriteID: a2cd7b21e02f40cc9a6dbdaa23b587a6
+      internalID: 8099977754114690837
       vertices: []
       indices: 
       edges: []
@@ -585,8 +585,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2d531f5a4c0d4134a5bbbed6d544fdf8
-      internalID: 7778255097416922494
+      spriteID: 0f4d872506b94431a753620546b16f82
+      internalID: 3846200100718395168
       vertices: []
       indices: 
       edges: []
@@ -607,8 +607,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0c583213538a4e0abe84d10dd9340588
-      internalID: 3340049011076259088
+      spriteID: 29a06992e20d44ef8444069422561491
+      internalID: 7029683955470801137
       vertices: []
       indices: 
       edges: []
@@ -629,8 +629,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 624d42ae1d2247b691b77fd279680230
-      internalID: 8518055178964911399
+      spriteID: b008045fe86d49a3b30d41590597fff7
+      internalID: 6264270563260109787
       vertices: []
       indices: 
       edges: []
@@ -639,7 +639,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6f97cba1303244309ae18c2b8e427ac9
+    spriteID: d034f0e9eeb64a6193a3e8aa2538d910
     internalID: 0
     vertices: []
     indices: 
@@ -649,26 +649,26 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ui_utility_medkit_tier_01_rag_bundle: 4245311397110716455
-      ui_utility_medkit_tier_02_field_pouch: 3508157996359793064
-      ui_utility_medkit_tier_03_trauma_bag: 4877407994281312486
-      ui_utility_medkit_tier_04_hardcase_medkit: 5957654100376175202
-      ui_utility_medkit_tier_05_advanced_trauma_case: 8930770353793263672
-      ui_utility_toolkit_tier_01_rusty_tool_roll: 3189432197845210750
-      ui_utility_toolkit_tier_02_mechanic_tool_roll: 6232936837956443798
-      ui_utility_toolkit_tier_03_scrap_toolbox: 2742288712885616054
-      ui_utility_toolkit_tier_04_repair_case: 5815329282640834324
-      ui_utility_toolkit_tier_05_advanced_repair_case: 1257085183405352303
-      ui_utility_ammo_pack_tier_01_loose_ammo_pouch: 7791540999661742478
-      ui_utility_ammo_pack_tier_02_leather_ammo_bag: 2611312706288611167
-      ui_utility_ammo_pack_tier_03_canvas_ammo_pack: 4209675717166781508
-      ui_utility_ammo_pack_tier_04_tactical_ammo_crate: 3792940762518194398
-      ui_utility_ammo_pack_tier_05_reinforced_ammo_crate: 3950492655763972696
-      ui_utility_backpack_tier_01_torn_scavenger_bag: 4545780541676797286
-      ui_utility_backpack_tier_02_field_backpack: 3277206695687262799
-      ui_utility_backpack_tier_03_expedition_pack: 7778255097416922494
-      ui_utility_backpack_tier_04_reinforced_pack: 3340049011076259088
-      ui_utility_backpack_tier_05_elite_cargo_pack: 8518055178964911399
+      ui_utility_medkit_tier_01_rag_bundle: 2350678107861931002
+      ui_utility_medkit_tier_02_field_pouch: 6856715218639913181
+      ui_utility_medkit_tier_03_trauma_bag: 2291988655952037146
+      ui_utility_medkit_tier_04_hardcase_medkit: 2703811328030918947
+      ui_utility_medkit_tier_05_advanced_trauma_case: 4083858483665046957
+      ui_utility_toolkit_tier_01_rusty_tool_roll: 2052314067507619800
+      ui_utility_toolkit_tier_02_mechanic_tool_roll: 2327715976708911138
+      ui_utility_toolkit_tier_03_scrap_toolbox: 7232509628309262253
+      ui_utility_toolkit_tier_04_repair_case: 8522936594208658493
+      ui_utility_toolkit_tier_05_advanced_repair_case: 6079755940853162157
+      ui_utility_ammo_pack_tier_01_loose_ammo_pouch: 8293405690202660490
+      ui_utility_ammo_pack_tier_02_leather_ammo_bag: 7256466812758694411
+      ui_utility_ammo_pack_tier_03_canvas_ammo_pack: 3725052846614415929
+      ui_utility_ammo_pack_tier_04_tactical_ammo_crate: 8942338316456001194
+      ui_utility_ammo_pack_tier_05_reinforced_ammo_crate: 2050032381601042494
+      ui_utility_backpack_tier_01_torn_scavenger_bag: 7676188084514910549
+      ui_utility_backpack_tier_02_field_backpack: 8099977754114690837
+      ui_utility_backpack_tier_03_expedition_pack: 3846200100718395168
+      ui_utility_backpack_tier_04_reinforced_pack: 7029683955470801137
+      ui_utility_backpack_tier_05_elite_cargo_pack: 6264270563260109787
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

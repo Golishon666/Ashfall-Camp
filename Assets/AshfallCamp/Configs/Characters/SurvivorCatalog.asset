@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6b143c88ad3134aac9109b580fc039, type: 3}
+  m_Name: SurvivorCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.SurvivorCatalogSO
+  StartingSurvivor:
+    Name: Mara
+    PortraitId: ui_character_battle_survivor_01
+    Portrait: {fileID: 21300000, guid: 67ef02d0cd5b491997f40982ecd9ada0, type: 3}
+    BackgroundId: scavenger
+    TraitIds:
+    - careful
+    WeaponItemId: rusty_knife
+    WeaponConfigId: weapon_melee_01_survival_knife
+    ArmorConfigId: armor_01_patched_cloth_jacket
+    UtilityConfigId: utility_medkit_tier_01_rag_bundle
+    Skills:
+    - Id: scavenging
+      Value: 4
+    - Id: melee
+      Value: 1
+    - Id: firearms
+      Value: 0
+    - Id: survival
+      Value: 2
+    - Id: mechanics
+      Value: 0
+    - Id: medicine
+      Value: 0
+  RecruitableSurvivors:
+  - Id: elias
+    Name: Elias
+    PortraitId: ui_character_battle_survivor_02
+    Portrait: {fileID: 21300000, guid: 9055609bcf290da4bb5db43819f39ca4, type: 3}
+    BackgroundId: ex_cop
+    TraitIds:
+    - brave
+    WeaponItemId: rusty_revolver
+    WeaponConfigId: weapon_firearm_03_heavy_revolver
+    ArmorConfigId: armor_11_police_tactical_vest
+    UtilityConfigId: utility_ammo_pack_tier_02_leather_ammo_bag
+    Skills:
+    - Id: scavenging
+      Value: 1
+    - Id: melee
+      Value: 1
+    - Id: firearms
+      Value: 4
+    - Id: survival
+      Value: 1
+    - Id: mechanics
+      Value: 0
+    - Id: medicine
+      Value: 1
+  - Id: nika
+    Name: Nika
+    PortraitId: ui_character_battle_survivor_03
+    Portrait: {fileID: 21300000, guid: b30644392d56b794099004b3a6259106, type: 3}
+    BackgroundId: mechanic
+    TraitIds:
+    - careful
+    WeaponItemId: metal_pipe
+    WeaponConfigId: weapon_melee_07_pipe_wrench
+    ArmorConfigId: armor_midgame_09_armored_mechanic_vest
+    UtilityConfigId: utility_toolkit_tier_03_scrap_toolbox
+    Skills:
+    - Id: scavenging
+      Value: 1
+    - Id: melee
+      Value: 1
+    - Id: firearms
+      Value: 0
+    - Id: survival
+      Value: 1
+    - Id: mechanics
+      Value: 4
+    - Id: medicine
+      Value: 0
+  - Id: june
+    Name: June
+    PortraitId: ui_character_battle_survivor_04
+    Portrait: {fileID: 21300000, guid: 9252c059948b41848b2f29e0da8bf2a9, type: 3}
+    BackgroundId: nurse
+    TraitIds:
+    - lucky
+    WeaponItemId: rusty_knife
+    WeaponConfigId: weapon_melee_01_survival_knife
+    ArmorConfigId: armor_02_leather_jacket
+    UtilityConfigId: utility_medkit_tier_03_trauma_bag
+    Skills:
+    - Id: scavenging
+      Value: 1
+    - Id: melee
+      Value: 1
+    - Id: firearms
+      Value: 0
+    - Id: survival
+      Value: 1
+    - Id: mechanics
+      Value: 0
+    - Id: medicine
+      Value: 4
+  - Id: tomas
+    Name: Tomas
+    PortraitId: ui_character_battle_survivor_05
+    Portrait: {fileID: 21300000, guid: b5b360bf7ffa7614786a388a44610f8d, type: 3}
+    BackgroundId: brawler
+    TraitIds:
+    - tough
+    WeaponItemId: metal_pipe
+    WeaponConfigId: weapon_melee_22_metal_pipe
+    ArmorConfigId: armor_05_biker_vest
+    UtilityConfigId: utility_backpack_tier_02_field_backpack
+    Skills:
+    - Id: scavenging
+      Value: 0
+    - Id: melee
+      Value: 4
+    - Id: firearms
+      Value: 0
+    - Id: survival
+      Value: 1
+    - Id: mechanics
+      Value: 0
+    - Id: medicine
+      Value: 0
+  - Id: rhea
+    Name: Rhea
+    PortraitId: ui_character_battle_survivor_06
+    Portrait: {fileID: 21300000, guid: 3c92c456571127e429513b2df1157ee7, type: 3}
+    BackgroundId: hunter
+    TraitIds:
+    - quiet
+    WeaponItemId: hunting_rifle
+    WeaponConfigId: weapon_firearm_14_hunting_rifle
+    ArmorConfigId: armor_midgame_15_hunter_scale_vest
+    UtilityConfigId: utility_ammo_pack_tier_03_canvas_ammo_pack
+    Skills:
+    - Id: scavenging
+      Value: 1
+    - Id: melee
+      Value: 0
+    - Id: firearms
+      Value: 3
+    - Id: survival
+      Value: 3
+    - Id: mechanics
+      Value: 0
+    - Id: medicine
+      Value: 0
+  - Id: kade
+    Name: Kade
+    PortraitId: ui_character_battle_survivor_07
+    Portrait: {fileID: 21300000, guid: 949c5ed8749b7b24fa59175a4591c02a, type: 3}
+    BackgroundId: scavenger
+    TraitIds:
+    - greedy
+    WeaponItemId: machete
+    WeaponConfigId: weapon_melee_03_curved_machete
+    ArmorConfigId: armor_08_raider_leather_armor
+    UtilityConfigId: utility_backpack_tier_01_torn_scavenger_bag
+    Skills:
+    - Id: scavenging
+      Value: 3
+    - Id: melee
+      Value: 2
+    - Id: firearms
+      Value: 0
+    - Id: survival
+      Value: 1
+    - Id: mechanics
+      Value: 1
+    - Id: medicine
+      Value: 0

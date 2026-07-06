@@ -19,9 +19,14 @@ namespace AshfallCamp.Infrastructure
     public sealed class StartingSurvivorConfigData
     {
         public string Name = "Mara";
+        public string PortraitId;
+        public Sprite Portrait;
         public string BackgroundId = "scavenger";
         public List<string> TraitIds = new List<string>();
         public string WeaponItemId = "rusty_knife";
+        public string WeaponConfigId;
+        public string ArmorConfigId;
+        public string UtilityConfigId;
         public List<IntPairData> Skills = new List<IntPairData>();
     }
 
@@ -30,9 +35,14 @@ namespace AshfallCamp.Infrastructure
     {
         public string Id;
         public string Name;
+        public string PortraitId;
+        public Sprite Portrait;
         public string BackgroundId;
         public List<string> TraitIds = new List<string>();
         public string WeaponItemId;
+        public string WeaponConfigId;
+        public string ArmorConfigId;
+        public string UtilityConfigId;
         public List<IntPairData> Skills = new List<IntPairData>();
     }
 
@@ -94,6 +104,9 @@ namespace AshfallCamp.Infrastructure
     {
         public string Id;
         public string Name;
+        public EnemyKind Kind;
+        public string PortraitId;
+        public Sprite Portrait;
         public int MaxHealth;
         public int Armor;
         public double Evasion;
@@ -102,6 +115,9 @@ namespace AshfallCamp.Infrastructure
         public double Accuracy = 0.75;
         public double AttackIntervalSeconds = 2;
         public int XpReward;
+        public string WeaponConfigId;
+        public string ArmorConfigId;
+        public string UtilityConfigId;
     }
 
     [Serializable]
@@ -138,12 +154,57 @@ namespace AshfallCamp.Infrastructure
         public double CriticalChance;
         public int AmmoCostPerAttack;
         public int NoisePerAttack;
+        [Range(0f, 1f)] public float Durability = 1f;
         public int MaxDurability = 100;
         public double RepairCostMultiplier = 1.0;
         public int SortOrder;
         public string AttackSoundId;
         public Sprite Icon;
         public AudioClip AttackSound;
+    }
+
+    [Serializable]
+    public sealed class ArmorConfigData
+    {
+        public string Id;
+        public string Name;
+        [TextArea(2, 4)] public string Description;
+        public ArmorType Type;
+        public WeaponRarity Rarity;
+        public int Defense;
+        public double EvasionChance;
+        public int BonusHealth;
+        public int BonusStamina;
+        public double SpeedModifier;
+        [Range(0f, 1f)] public float Durability = 1f;
+        public int MaxDurability = 100;
+        public double RepairCostMultiplier = 1.0;
+        public int SortOrder;
+        public string EquipSoundId;
+        public Sprite Icon;
+        public AudioClip EquipSound;
+    }
+
+    [Serializable]
+    public sealed class UtilityConfigData
+    {
+        public string Id;
+        public string Name;
+        [TextArea(2, 4)] public string Description;
+        public UtilityEquipmentType Type;
+        public WeaponRarity Rarity;
+        [Range(1, 5)] public int Tier = 1;
+        public int HealAmount;
+        public int RepairBonus;
+        public int AmmoCapacityBonus;
+        public int CarryCapacityBonus;
+        public int BonusStamina;
+        public int MaxDurability = 100;
+        public double RepairCostMultiplier = 1.0;
+        public int SortOrder;
+        public string UseSoundId;
+        public Sprite Icon;
+        public AudioClip UseSound;
     }
 
     [Serializable]

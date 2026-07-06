@@ -1,0 +1,1035 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8198122e6317456fb70b52ea4c4acb6e, type: 3}
+  m_Name: ArmorCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.ArmorCatalogSO
+  Armor:
+  - Id: armor_01_patched_cloth_jacket
+    Name: Patched Cloth Jacket
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 0
+    Rarity: 0
+    Defense: 1
+    EvasionChance: 0.06
+    BonusHealth: 2
+    BonusStamina: 5
+    SpeedModifier: 0.03
+    Durability: 1
+    MaxDurability: 65
+    RepairCostMultiplier: 0.85
+    SortOrder: 1
+    EquipSoundId: armor_light
+    Icon: {fileID: 2973972890394723921, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_02_leather_jacket
+    Name: Leather Jacket
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 0
+    Rarity: 0
+    Defense: 1
+    EvasionChance: 0.06
+    BonusHealth: 2
+    BonusStamina: 5
+    SpeedModifier: 0.03
+    Durability: 1
+    MaxDurability: 65
+    RepairCostMultiplier: 0.85
+    SortOrder: 2
+    EquipSoundId: armor_light
+    Icon: {fileID: 7779305384101558084, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_03_padded_scavenger_vest
+    Name: Padded Scavenger Vest
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 1
+    Rarity: 0
+    Defense: 2
+    EvasionChance: 0.04
+    BonusHealth: 6
+    BonusStamina: 3
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 70
+    RepairCostMultiplier: 0.85
+    SortOrder: 3
+    EquipSoundId: armor_medium
+    Icon: {fileID: 2653569683967758129, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_04_reinforced_hoodie
+    Name: Reinforced Hoodie
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 0
+    Rarity: 0
+    Defense: 2
+    EvasionChance: 0.06
+    BonusHealth: 4
+    BonusStamina: 5
+    SpeedModifier: 0.03
+    Durability: 1
+    MaxDurability: 70
+    RepairCostMultiplier: 0.85
+    SortOrder: 4
+    EquipSoundId: armor_light
+    Icon: {fileID: 6906382960203712598, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_05_biker_vest
+    Name: Biker Vest
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 1
+    Rarity: 0
+    Defense: 3
+    EvasionChance: 0.04
+    BonusHealth: 9
+    BonusStamina: 3
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 75
+    RepairCostMultiplier: 0.85
+    SortOrder: 5
+    EquipSoundId: armor_medium
+    Icon: {fileID: 6916163108030361214, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_06_scrap_shoulder_armor
+    Name: Scrap Shoulder Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 1
+    Rarity: 0
+    Defense: 3
+    EvasionChance: 0.04
+    BonusHealth: 9
+    BonusStamina: 3
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 75
+    RepairCostMultiplier: 0.85
+    SortOrder: 6
+    EquipSoundId: armor_medium
+    Icon: {fileID: 1677812782241920330, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_07_tire_rubber_chest_guard
+    Name: Tire Rubber Chest Guard
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 1
+    Rarity: 0
+    Defense: 4
+    EvasionChance: 0.04
+    BonusHealth: 12
+    BonusStamina: 3
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 80
+    RepairCostMultiplier: 0.85
+    SortOrder: 7
+    EquipSoundId: armor_medium
+    Icon: {fileID: 6213945507216653664, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_08_raider_leather_armor
+    Name: Raider Leather Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 1
+    Rarity: 0
+    Defense: 4
+    EvasionChance: 0.04
+    BonusHealth: 12
+    BonusStamina: 3
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 80
+    RepairCostMultiplier: 0.85
+    SortOrder: 8
+    EquipSoundId: armor_medium
+    Icon: {fileID: 2429564610304002706, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_09_metal_plate_vest
+    Name: Metal Plate Vest
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 0
+    Defense: 5
+    EvasionChance: 0.02
+    BonusHealth: 20
+    BonusStamina: 1
+    SpeedModifier: -0.05
+    Durability: 1
+    MaxDurability: 85
+    RepairCostMultiplier: 1
+    SortOrder: 9
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 7343455344510724759, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_10_riot_vest
+    Name: Riot Vest
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 0
+    Defense: 5
+    EvasionChance: 0.02
+    BonusHealth: 20
+    BonusStamina: 1
+    SpeedModifier: -0.05
+    Durability: 1
+    MaxDurability: 85
+    RepairCostMultiplier: 1
+    SortOrder: 10
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 1311588911312600897, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_11_police_tactical_vest
+    Name: Police Tactical Vest
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 1
+    Defense: 8
+    EvasionChance: 0.03
+    BonusHealth: 36
+    BonusStamina: 2
+    SpeedModifier: -0.08
+    Durability: 1
+    MaxDurability: 115
+    RepairCostMultiplier: 1.3
+    SortOrder: 11
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 7892649154642534519, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_12_fireproof_coat
+    Name: Fireproof Coat
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 0
+    Rarity: 1
+    Defense: 8
+    EvasionChance: 0.07
+    BonusHealth: 20
+    BonusStamina: 8
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 115
+    RepairCostMultiplier: 1.15
+    SortOrder: 12
+    EquipSoundId: armor_light
+    Icon: {fileID: 3013785210420097569, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_13_hunter_armor
+    Name: Hunter Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 0
+    Rarity: 1
+    Defense: 9
+    EvasionChance: 0.07
+    BonusHealth: 22
+    BonusStamina: 8
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 120
+    RepairCostMultiplier: 1.15
+    SortOrder: 13
+    EquipSoundId: armor_light
+    Icon: {fileID: 3621773297804652796, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_14_spiked_raider_armor
+    Name: Spiked Raider Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 1
+    Rarity: 1
+    Defense: 9
+    EvasionChance: 0.05
+    BonusHealth: 31
+    BonusStamina: 5
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 120
+    RepairCostMultiplier: 1.15
+    SortOrder: 14
+    EquipSoundId: armor_medium
+    Icon: {fileID: 1195160973663086419, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_15_reinforced_kevlar_vest
+    Name: Reinforced Kevlar Vest
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 1
+    Rarity: 1
+    Defense: 10
+    EvasionChance: 0.05
+    BonusHealth: 34
+    BonusStamina: 5
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 125
+    RepairCostMultiplier: 1.15
+    SortOrder: 15
+    EquipSoundId: armor_medium
+    Icon: {fileID: 6267595759091652531, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_16_scavenger_hazmat_suit
+    Name: Scavenger Hazmat Suit
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 0
+    Rarity: 1
+    Defense: 10
+    EvasionChance: 0.07
+    BonusHealth: 24
+    BonusStamina: 8
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 125
+    RepairCostMultiplier: 1.15
+    SortOrder: 16
+    EquipSoundId: armor_light
+    Icon: {fileID: 6461055848649029826, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_17_armored_trench_coat
+    Name: Armored Trench Coat
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 0
+    Rarity: 1
+    Defense: 11
+    EvasionChance: 0.07
+    BonusHealth: 26
+    BonusStamina: 8
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 130
+    RepairCostMultiplier: 1.15
+    SortOrder: 17
+    EquipSoundId: armor_light
+    Icon: {fileID: 8495878147205373260, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_18_junkyard_plate_armor
+    Name: Junkyard Plate Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 1
+    Defense: 11
+    EvasionChance: 0.03
+    BonusHealth: 48
+    BonusStamina: 2
+    SpeedModifier: -0.08
+    Durability: 1
+    MaxDurability: 130
+    RepairCostMultiplier: 1.3
+    SortOrder: 18
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 2098588527103521435, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_19_mutant_hide_armor
+    Name: Mutant Hide Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 1
+    Rarity: 1
+    Defense: 12
+    EvasionChance: 0.05
+    BonusHealth: 40
+    BonusStamina: 5
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 135
+    RepairCostMultiplier: 1.15
+    SortOrder: 19
+    EquipSoundId: armor_medium
+    Icon: {fileID: 4170559126715443047, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_20_exo_braced_vest
+    Name: Exo Braced Vest
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 1
+    Rarity: 1
+    Defense: 12
+    EvasionChance: 0.05
+    BonusHealth: 40
+    BonusStamina: 5
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 135
+    RepairCostMultiplier: 1.15
+    SortOrder: 20
+    EquipSoundId: armor_medium
+    Icon: {fileID: 6356980441074222889, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_21_combat_armor
+    Name: Combat Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 2
+    Defense: 15
+    EvasionChance: 0.04
+    BonusHealth: 68
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 165
+    RepairCostMultiplier: 1.6
+    SortOrder: 21
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 6120722983224303010, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_22_heavy_riot_armor
+    Name: Heavy Riot Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 2
+    Defense: 15
+    EvasionChance: 0.04
+    BonusHealth: 68
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 165
+    RepairCostMultiplier: 1.6
+    SortOrder: 22
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 6222164752761488741, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_23_blast_suit
+    Name: Blast Suit
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 2
+    Defense: 16
+    EvasionChance: 0.04
+    BonusHealth: 72
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 170
+    RepairCostMultiplier: 1.6
+    SortOrder: 23
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 4213579245194811706, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_24_advanced_tactical_armor
+    Name: Advanced Tactical Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 2
+    Defense: 16
+    EvasionChance: 0.04
+    BonusHealth: 72
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 170
+    RepairCostMultiplier: 1.6
+    SortOrder: 24
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 1254677640414585513, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_25_powered_chest_rig
+    Name: Powered Chest Rig
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 2
+    Defense: 17
+    EvasionChance: 0.04
+    BonusHealth: 76
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 175
+    RepairCostMultiplier: 1.6
+    SortOrder: 25
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 8199323172344357027, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_26_ceramic_plate_armor
+    Name: Ceramic Plate Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 2
+    Defense: 17
+    EvasionChance: 0.04
+    BonusHealth: 76
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 175
+    RepairCostMultiplier: 1.6
+    SortOrder: 26
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 7276673739313832399, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_27_elite_wasteland_armor
+    Name: Elite Wasteland Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 1
+    Rarity: 2
+    Defense: 18
+    EvasionChance: 0.06
+    BonusHealth: 62
+    BonusStamina: 7
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 180
+    RepairCostMultiplier: 1.45
+    SortOrder: 27
+    EquipSoundId: armor_medium
+    Icon: {fileID: 2861946867407669677, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_28_heavy_mutant_hunter_armor
+    Name: Heavy Mutant Hunter Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 0
+    Rarity: 3
+    Defense: 20
+    EvasionChance: 0.1
+    BonusHealth: 52
+    BonusStamina: 14
+    SpeedModifier: 0.05
+    Durability: 1
+    MaxDurability: 205
+    RepairCostMultiplier: 1.75
+    SortOrder: 28
+    EquipSoundId: armor_light
+    Icon: {fileID: 3417839407790762993, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_29_improvised_exosuit_armor
+    Name: Improvised Exosuit Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 3
+    Defense: 21
+    EvasionChance: 0.05
+    BonusHealth: 96
+    BonusStamina: 4
+    SpeedModifier: -0.13
+    Durability: 1
+    MaxDurability: 210
+    RepairCostMultiplier: 1.9
+    SortOrder: 29
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 1036537935751737184, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_30_legendary_plated_survival_armor
+    Name: Legendary Plated Survival Armor
+    Description: Post-apocalyptic armor built from scavenged cloth, leather and metal.
+    Type: 2
+    Rarity: 3
+    Defense: 21
+    EvasionChance: 0.05
+    BonusHealth: 96
+    BonusStamina: 4
+    SpeedModifier: -0.13
+    Durability: 1
+    MaxDurability: 210
+    RepairCostMultiplier: 1.9
+    SortOrder: 30
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 8774648267502098272, guid: 2bf8944b106549428f3179bb6171e082, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_01_reinforced_scavenger_jacket
+    Name: Reinforced Scavenger Jacket
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 0
+    Rarity: 1
+    Defense: 8
+    EvasionChance: 0.07
+    BonusHealth: 20
+    BonusStamina: 8
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 115
+    RepairCostMultiplier: 1.15
+    SortOrder: 31
+    EquipSoundId: armor_light
+    Icon: {fileID: 8743143155460288182, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_02_road_guard_vest
+    Name: Road Guard Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 1
+    Defense: 8
+    EvasionChance: 0.05
+    BonusHealth: 28
+    BonusStamina: 5
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 115
+    RepairCostMultiplier: 1.15
+    SortOrder: 32
+    EquipSoundId: armor_medium
+    Icon: {fileID: 8590173339991262450, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_03_patched_kevlar_vest
+    Name: Patched Kevlar Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 1
+    Defense: 9
+    EvasionChance: 0.05
+    BonusHealth: 31
+    BonusStamina: 5
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 120
+    RepairCostMultiplier: 1.15
+    SortOrder: 33
+    EquipSoundId: armor_medium
+    Icon: {fileID: 5621449570330677539, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_04_raider_plate_vest
+    Name: Raider Plate Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 2
+    Rarity: 1
+    Defense: 9
+    EvasionChance: 0.03
+    BonusHealth: 40
+    BonusStamina: 2
+    SpeedModifier: -0.08
+    Durability: 1
+    MaxDurability: 120
+    RepairCostMultiplier: 1.3
+    SortOrder: 34
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 6353391484327025975, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_05_guard_patrol_armor
+    Name: Guard Patrol Armor
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 1
+    Defense: 10
+    EvasionChance: 0.05
+    BonusHealth: 34
+    BonusStamina: 5
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 125
+    RepairCostMultiplier: 1.15
+    SortOrder: 35
+    EquipSoundId: armor_medium
+    Icon: {fileID: 8829307965455445782, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_06_scrap_metal_breastplate
+    Name: Scrap Metal Breastplate
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 2
+    Rarity: 1
+    Defense: 10
+    EvasionChance: 0.03
+    BonusHealth: 44
+    BonusStamina: 2
+    SpeedModifier: -0.08
+    Durability: 1
+    MaxDurability: 125
+    RepairCostMultiplier: 1.3
+    SortOrder: 36
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 8736518210235625815, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_07_reinforced_biker_armor
+    Name: Reinforced Biker Armor
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 1
+    Defense: 11
+    EvasionChance: 0.05
+    BonusHealth: 37
+    BonusStamina: 5
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 130
+    RepairCostMultiplier: 1.15
+    SortOrder: 37
+    EquipSoundId: armor_medium
+    Icon: {fileID: 1616587692479435607, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_08_wasteland_ranger_coat
+    Name: Wasteland Ranger Coat
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 0
+    Rarity: 1
+    Defense: 11
+    EvasionChance: 0.07
+    BonusHealth: 26
+    BonusStamina: 8
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 130
+    RepairCostMultiplier: 1.15
+    SortOrder: 38
+    EquipSoundId: armor_light
+    Icon: {fileID: 7103516532672865014, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_09_armored_mechanic_vest
+    Name: Armored Mechanic Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 1
+    Defense: 12
+    EvasionChance: 0.05
+    BonusHealth: 40
+    BonusStamina: 5
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 135
+    RepairCostMultiplier: 1.15
+    SortOrder: 39
+    EquipSoundId: armor_medium
+    Icon: {fileID: 4050995034930320584, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_10_plated_leather_coat
+    Name: Plated Leather Coat
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 0
+    Rarity: 1
+    Defense: 12
+    EvasionChance: 0.07
+    BonusHealth: 28
+    BonusStamina: 8
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 135
+    RepairCostMultiplier: 1.15
+    SortOrder: 40
+    EquipSoundId: armor_light
+    Icon: {fileID: 6065080419048396973, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_11_tire_shoulder_guard
+    Name: Tire Shoulder Guard
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 2
+    Defense: 14
+    EvasionChance: 0.06
+    BonusHealth: 50
+    BonusStamina: 7
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 160
+    RepairCostMultiplier: 1.45
+    SortOrder: 41
+    EquipSoundId: armor_medium
+    Icon: {fileID: 1082759796207085532, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_12_police_surplus_armor
+    Name: Police Surplus Armor
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 2
+    Defense: 14
+    EvasionChance: 0.06
+    BonusHealth: 50
+    BonusStamina: 7
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 160
+    RepairCostMultiplier: 1.45
+    SortOrder: 42
+    EquipSoundId: armor_medium
+    Icon: {fileID: 5766814862822719659, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_13_riot_chest_rig
+    Name: Riot Chest Rig
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 2
+    Rarity: 2
+    Defense: 15
+    EvasionChance: 0.04
+    BonusHealth: 68
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 165
+    RepairCostMultiplier: 1.6
+    SortOrder: 43
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 5961184165637762026, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_14_fireproof_responder_coat
+    Name: Fireproof Responder Coat
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 0
+    Rarity: 2
+    Defense: 15
+    EvasionChance: 0.08
+    BonusHealth: 38
+    BonusStamina: 11
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 165
+    RepairCostMultiplier: 1.45
+    SortOrder: 44
+    EquipSoundId: armor_light
+    Icon: {fileID: 8924259532032163206, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_15_hunter_scale_vest
+    Name: Hunter Scale Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 0
+    Rarity: 2
+    Defense: 16
+    EvasionChance: 0.08
+    BonusHealth: 40
+    BonusStamina: 11
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 170
+    RepairCostMultiplier: 1.45
+    SortOrder: 45
+    EquipSoundId: armor_light
+    Icon: {fileID: 4167089227403483132, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_16_caravan_guard_armor
+    Name: Caravan Guard Armor
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 2
+    Defense: 16
+    EvasionChance: 0.06
+    BonusHealth: 56
+    BonusStamina: 7
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 170
+    RepairCostMultiplier: 1.45
+    SortOrder: 46
+    EquipSoundId: armor_medium
+    Icon: {fileID: 3090651276061238610, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_17_quarry_worker_armor
+    Name: Quarry Worker Armor
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 2
+    Defense: 17
+    EvasionChance: 0.06
+    BonusHealth: 59
+    BonusStamina: 7
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 175
+    RepairCostMultiplier: 1.45
+    SortOrder: 47
+    EquipSoundId: armor_medium
+    Icon: {fileID: 6256015467350545650, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_18_nomad_lamellar_vest
+    Name: Nomad Lamellar Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 2
+    Rarity: 2
+    Defense: 17
+    EvasionChance: 0.04
+    BonusHealth: 76
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 175
+    RepairCostMultiplier: 1.6
+    SortOrder: 48
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 7468984196802498289, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_19_scavenged_hazmat_armor
+    Name: Scavenged Hazmat Armor
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 0
+    Rarity: 2
+    Defense: 18
+    EvasionChance: 0.08
+    BonusHealth: 44
+    BonusStamina: 11
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 180
+    RepairCostMultiplier: 1.45
+    SortOrder: 49
+    EquipSoundId: armor_light
+    Icon: {fileID: 2903632885689852051, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_20_welded_plate_harness
+    Name: Welded Plate Harness
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 2
+    Rarity: 2
+    Defense: 18
+    EvasionChance: 0.04
+    BonusHealth: 80
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 180
+    RepairCostMultiplier: 1.6
+    SortOrder: 50
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 8644815499263690796, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_21_armored_poncho
+    Name: Armored Poncho
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 0
+    Rarity: 2
+    Defense: 19
+    EvasionChance: 0.08
+    BonusHealth: 46
+    BonusStamina: 11
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 185
+    RepairCostMultiplier: 1.45
+    SortOrder: 51
+    EquipSoundId: armor_light
+    Icon: {fileID: 8902124537517184476, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_22_highwayman_cuirass
+    Name: Highwayman Cuirass
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 2
+    Rarity: 2
+    Defense: 19
+    EvasionChance: 0.04
+    BonusHealth: 84
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 185
+    RepairCostMultiplier: 1.6
+    SortOrder: 52
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 8771079749236672901, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_23_reinforced_trench_vest
+    Name: Reinforced Trench Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 0
+    Rarity: 2
+    Defense: 20
+    EvasionChance: 0.08
+    BonusHealth: 48
+    BonusStamina: 11
+    SpeedModifier: 0.04
+    Durability: 1
+    MaxDurability: 190
+    RepairCostMultiplier: 1.45
+    SortOrder: 53
+    EquipSoundId: armor_light
+    Icon: {fileID: 3138776140721436617, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_24_militia_flak_vest
+    Name: Militia Flak Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 2
+    Rarity: 2
+    Defense: 20
+    EvasionChance: 0.04
+    BonusHealth: 88
+    BonusStamina: 3
+    SpeedModifier: -0.1
+    Durability: 1
+    MaxDurability: 190
+    RepairCostMultiplier: 1.6
+    SortOrder: 54
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 2511077814493731638, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_25_mutant_hide_reinforced_vest
+    Name: Mutant Hide Reinforced Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 2
+    Defense: 21
+    EvasionChance: 0.06
+    BonusHealth: 71
+    BonusStamina: 7
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 195
+    RepairCostMultiplier: 1.45
+    SortOrder: 55
+    EquipSoundId: armor_medium
+    Icon: {fileID: 8758746561081311192, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_26_armored_salvage_coat
+    Name: Armored Salvage Coat
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 0
+    Rarity: 3
+    Defense: 22
+    EvasionChance: 0.1
+    BonusHealth: 56
+    BonusStamina: 14
+    SpeedModifier: 0.05
+    Durability: 1
+    MaxDurability: 215
+    RepairCostMultiplier: 1.75
+    SortOrder: 56
+    EquipSoundId: armor_light
+    Icon: {fileID: 6315965438795711054, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_27_medium_combat_vest
+    Name: Medium Combat Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 2
+    Rarity: 3
+    Defense: 23
+    EvasionChance: 0.05
+    BonusHealth: 104
+    BonusStamina: 4
+    SpeedModifier: -0.13
+    Durability: 1
+    MaxDurability: 220
+    RepairCostMultiplier: 1.9
+    SortOrder: 57
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 5300454822671750824, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_28_patched_ceramic_vest
+    Name: Patched Ceramic Vest
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 2
+    Rarity: 3
+    Defense: 23
+    EvasionChance: 0.05
+    BonusHealth: 104
+    BonusStamina: 4
+    SpeedModifier: -0.13
+    Durability: 1
+    MaxDurability: 220
+    RepairCostMultiplier: 1.9
+    SortOrder: 58
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 8174069146276577174, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_29_reinforced_tactical_chest_rig
+    Name: Reinforced Tactical Chest Rig
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 2
+    Rarity: 3
+    Defense: 24
+    EvasionChance: 0.05
+    BonusHealth: 108
+    BonusStamina: 4
+    SpeedModifier: -0.13
+    Durability: 1
+    MaxDurability: 225
+    RepairCostMultiplier: 1.9
+    SortOrder: 59
+    EquipSoundId: armor_heavy
+    Icon: {fileID: 2871468082330516453, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}
+  - Id: armor_midgame_30_veteran_scavenger_armor
+    Name: Veteran Scavenger Armor
+    Description: Mid game post-apocalyptic armor with reliable field protection.
+    Type: 1
+    Rarity: 3
+    Defense: 24
+    EvasionChance: 0.07
+    BonusHealth: 84
+    BonusStamina: 9
+    SpeedModifier: 0
+    Durability: 1
+    MaxDurability: 225
+    RepairCostMultiplier: 1.75
+    SortOrder: 60
+    EquipSoundId: armor_medium
+    Icon: {fileID: 4942491470744078109, guid: 99aef8082c1a419b93e1b77b4334f350, type: 3}
+    EquipSound: {fileID: 0}

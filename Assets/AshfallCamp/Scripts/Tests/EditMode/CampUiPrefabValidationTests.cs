@@ -18,7 +18,7 @@ namespace AshfallCamp.Tests.EditMode
     {
         private const string DashboardPrefabPath = "Assets/AshfallCamp/Prefabs/UI/PF_CampDashboard.prefab";
         private const string CampUiCatalogPath = "Assets/AshfallCamp/UI/CampUiCatalog.asset";
-        private const string GameConfigDatabasePath = "Assets/AshfallCamp/Configs/GameConfigDatabase.asset";
+        private const string GameConfigDatabasePath = "Assets/AshfallCamp/Configs/Core/GameConfigDatabase.asset";
 
         private static readonly string[] UiPrefabPaths =
         {

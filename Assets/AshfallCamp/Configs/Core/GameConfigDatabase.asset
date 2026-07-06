@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5b0f44559daa34995933c1c250f637, type: 3}
+  m_Name: GameConfigDatabase
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.GameConfigDatabaseSO
+  Resources: {fileID: 11400000, guid: cedb1878519d1d440a6cce74eda9fd5a, type: 2}
+  Survivors: {fileID: 11400000, guid: f34b15e336731c843886f9786af007b6, type: 2}
+  Backgrounds: {fileID: 11400000, guid: 6dbb9f126a739ec41b5034151184eed4, type: 2}
+  Traits: {fileID: 11400000, guid: 18607390f013311458805ec41a0be043, type: 2}
+  Policies: {fileID: 11400000, guid: 73fa9b49698eb074590b63eb6750e8f1, type: 2}
+  Zones: {fileID: 11400000, guid: 182fc8e0e17646e459793e3dda08f827, type: 2}
+  Enemies: {fileID: 11400000, guid: 0aa6fed55dd771c41b6dc845b8f60eff, type: 2}
+  Items: {fileID: 11400000, guid: 54b618f851928504f81a16593375e72f, type: 2}
+  Weapons: {fileID: 11400000, guid: 6d49fb4f1bbe4fa6880d478181056678, type: 2}
+  Armor: {fileID: 11400000, guid: 4ee58e33ccbb4b349a73fae60a97cc73, type: 2}
+  Utilities: {fileID: 11400000, guid: ff887c1888f04184d80523455be06333, type: 2}
+  Buildings: {fileID: 11400000, guid: a82d14719c5f7bc41af7b2202eccedbb, type: 2}
+  Balance: {fileID: 11400000, guid: cca856b3737632a4da90d85583ee7aa4, type: 2}

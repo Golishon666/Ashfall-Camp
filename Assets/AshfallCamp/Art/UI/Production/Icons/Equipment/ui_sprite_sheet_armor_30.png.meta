@@ -3,94 +3,94 @@ guid: 2bf8944b106549428f3179bb6171e082
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2242464167279486024
+      213: 2973972890394723921
     second: ui_armor_01_patched_cloth_jacket
   - first:
-      213: 5082987059944077415
+      213: 7779305384101558084
     second: ui_armor_02_leather_jacket
   - first:
-      213: 5052251196504593099
+      213: 2653569683967758129
     second: ui_armor_03_padded_scavenger_vest
   - first:
-      213: 4934291021745591711
+      213: 6906382960203712598
     second: ui_armor_04_reinforced_hoodie
   - first:
-      213: 3633069213783057261
+      213: 6916163108030361214
     second: ui_armor_05_biker_vest
   - first:
-      213: 8090610891584234143
+      213: 1677812782241920330
     second: ui_armor_06_scrap_shoulder_armor
   - first:
-      213: 4070237927004165291
+      213: 6213945507216653664
     second: ui_armor_07_tire_rubber_chest_guard
   - first:
-      213: 8421818333879395819
+      213: 2429564610304002706
     second: ui_armor_08_raider_leather_armor
   - first:
-      213: 2910967130740063478
+      213: 7343455344510724759
     second: ui_armor_09_metal_plate_vest
   - first:
-      213: 8943226627115807289
+      213: 1311588911312600897
     second: ui_armor_10_riot_vest
   - first:
-      213: 3832319011950222773
+      213: 7892649154642534519
     second: ui_armor_11_police_tactical_vest
   - first:
-      213: 6933719471288812867
+      213: 3013785210420097569
     second: ui_armor_12_fireproof_coat
   - first:
-      213: 8887305121788947029
+      213: 3621773297804652796
     second: ui_armor_13_hunter_armor
   - first:
-      213: 7939230923630505318
+      213: 1195160973663086419
     second: ui_armor_14_spiked_raider_armor
   - first:
-      213: 7321799112307439488
+      213: 6267595759091652531
     second: ui_armor_15_reinforced_kevlar_vest
   - first:
-      213: 5544724664860557115
+      213: 6461055848649029826
     second: ui_armor_16_scavenger_hazmat_suit
   - first:
-      213: 6809809091872155483
+      213: 8495878147205373260
     second: ui_armor_17_armored_trench_coat
   - first:
-      213: 2005778359642989697
+      213: 2098588527103521435
     second: ui_armor_18_junkyard_plate_armor
   - first:
-      213: 7851203569921242845
+      213: 4170559126715443047
     second: ui_armor_19_mutant_hide_armor
   - first:
-      213: 1342451583262920815
+      213: 6356980441074222889
     second: ui_armor_20_exo_braced_vest
   - first:
-      213: 8431774679937798249
+      213: 6120722983224303010
     second: ui_armor_21_combat_armor
   - first:
-      213: 4937698337077405098
+      213: 6222164752761488741
     second: ui_armor_22_heavy_riot_armor
   - first:
-      213: 7844469521622558160
+      213: 4213579245194811706
     second: ui_armor_23_blast_suit
   - first:
-      213: 7953456958564995718
+      213: 1254677640414585513
     second: ui_armor_24_advanced_tactical_armor
   - first:
-      213: 7991071276615162471
+      213: 8199323172344357027
     second: ui_armor_25_powered_chest_rig
   - first:
-      213: 4117312851353564064
+      213: 7276673739313832399
     second: ui_armor_26_ceramic_plate_armor
   - first:
-      213: 6485143047497927654
+      213: 2861946867407669677
     second: ui_armor_27_elite_wasteland_armor
   - first:
-      213: 4281170098149480264
+      213: 3417839407790762993
     second: ui_armor_28_heavy_mutant_hunter_armor
   - first:
-      213: 1343446689825187045
+      213: 1036537935751737184
     second: ui_armor_29_improvised_exosuit_armor
   - first:
-      213: 7931634265116110947
+      213: 8774648267502098272
     second: ui_armor_30_legendary_plated_survival_armor
   externalObjects: {}
   serializedVersion: 13
@@ -241,8 +241,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f2a5353e5b124695b3164d61c1c920fd
-      internalID: 2242464167279486024
+      spriteID: ea13e2856614424da49b7ad8963a621f
+      internalID: 2973972890394723921
       vertices: []
       indices: 
       edges: []
@@ -263,8 +263,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 69ce18b0abcf4bb382629dfd5b662fe7
-      internalID: 5082987059944077415
+      spriteID: 7be0d84e4e804386bf99ae24b5cd2501
+      internalID: 7779305384101558084
       vertices: []
       indices: 
       edges: []
@@ -285,8 +285,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 59cec572a7284efaac3eccadc384cfe1
-      internalID: 5052251196504593099
+      spriteID: bea98e8d369042c0b9d2e42c64602c40
+      internalID: 2653569683967758129
       vertices: []
       indices: 
       edges: []
@@ -307,8 +307,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8c10b78a19c94aac995ead72928ae448
-      internalID: 4934291021745591711
+      spriteID: a4900c8ee92544db84acedd83d3f64d0
+      internalID: 6906382960203712598
       vertices: []
       indices: 
       edges: []
@@ -329,8 +329,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2e9890eb4412453c83512fafcfd7646f
-      internalID: 3633069213783057261
+      spriteID: c6c429839fe54d8cb66ca42b7fe12816
+      internalID: 6916163108030361214
       vertices: []
       indices: 
       edges: []
@@ -351,8 +351,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7c4258d449584985b066e5921ad8cf00
-      internalID: 8090610891584234143
+      spriteID: 101e36f1e6e94c91a56ac434bef1c63b
+      internalID: 1677812782241920330
       vertices: []
       indices: 
       edges: []
@@ -373,8 +373,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8e65d31f22cd4c0f945f591abde83832
-      internalID: 4070237927004165291
+      spriteID: d1aa54b252854d84b317363399aef3f2
+      internalID: 6213945507216653664
       vertices: []
       indices: 
       edges: []
@@ -395,8 +395,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e3bcfc5010bc476c83d96356f44edca8
-      internalID: 8421818333879395819
+      spriteID: 93128eedae0c4b5a8f5c694b093553d5
+      internalID: 2429564610304002706
       vertices: []
       indices: 
       edges: []
@@ -417,8 +417,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 56306e4ef1fa429aae9203576e19999a
-      internalID: 2910967130740063478
+      spriteID: d126d22193994142a9e03114068295b8
+      internalID: 7343455344510724759
       vertices: []
       indices: 
       edges: []
@@ -439,8 +439,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 007760c50d3646eba51e9136b5d833bb
-      internalID: 8943226627115807289
+      spriteID: 7599dd4a3c0e48e5ad06c87c13988904
+      internalID: 1311588911312600897
       vertices: []
       indices: 
       edges: []
@@ -461,8 +461,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a833c4c59ada427fab43bb6694928af6
-      internalID: 3832319011950222773
+      spriteID: f9c4ef69129c49d58a728a3465efc43c
+      internalID: 7892649154642534519
       vertices: []
       indices: 
       edges: []
@@ -483,8 +483,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b32fb9e2383d48e4bf219cb9c627dde2
-      internalID: 6933719471288812867
+      spriteID: c12703892793447ebbdd63979200b692
+      internalID: 3013785210420097569
       vertices: []
       indices: 
       edges: []
@@ -505,8 +505,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2c6815a45df34f9eb82f78c265f0a6a7
-      internalID: 8887305121788947029
+      spriteID: a7207765f24d4a1db8100c3cbc9ad7f8
+      internalID: 3621773297804652796
       vertices: []
       indices: 
       edges: []
@@ -527,8 +527,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6fd68bb0ee2b4795aecc25a8955ffc36
-      internalID: 7939230923630505318
+      spriteID: f58ded4df3b742c0b67a39e246097a78
+      internalID: 1195160973663086419
       vertices: []
       indices: 
       edges: []
@@ -549,8 +549,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d091f843e75f42e5b9d0fcee0d471a2f
-      internalID: 7321799112307439488
+      spriteID: 1cb75527e55344538ca0aae1827f85c7
+      internalID: 6267595759091652531
       vertices: []
       indices: 
       edges: []
@@ -571,8 +571,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a38a001657a443448c99534c944f5726
-      internalID: 5544724664860557115
+      spriteID: 856dc7f5f4de49a1bb5daeb328492de6
+      internalID: 6461055848649029826
       vertices: []
       indices: 
       edges: []
@@ -593,8 +593,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6fba9dbf383c497fb3fc3fba23bad277
-      internalID: 6809809091872155483
+      spriteID: 390019f633db4cb0a4a0b9ab1c751ffd
+      internalID: 8495878147205373260
       vertices: []
       indices: 
       edges: []
@@ -615,8 +615,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 552955353e2846f584bfc0f1741b6c1b
-      internalID: 2005778359642989697
+      spriteID: 840f8f0043d744708a3e1247e7308b93
+      internalID: 2098588527103521435
       vertices: []
       indices: 
       edges: []
@@ -637,8 +637,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 65ae0ff532b44889a02acc0d0c450785
-      internalID: 7851203569921242845
+      spriteID: b81ebe47fce645bca88f36e5c1c60873
+      internalID: 4170559126715443047
       vertices: []
       indices: 
       edges: []
@@ -659,8 +659,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d0cf423792c14923b0ee1cd823e23309
-      internalID: 1342451583262920815
+      spriteID: d67deca75de344738ae581923eb5d646
+      internalID: 6356980441074222889
       vertices: []
       indices: 
       edges: []
@@ -681,8 +681,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 78428f6a11d747b7a493a87bf8cdd89f
-      internalID: 8431774679937798249
+      spriteID: c5c18b52228b46339c243416f688c50f
+      internalID: 6120722983224303010
       vertices: []
       indices: 
       edges: []
@@ -703,8 +703,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0ed9ae3d1f4d4ed59d05b8b7c1784989
-      internalID: 4937698337077405098
+      spriteID: 402b03427ae943c1b2b9ef95432f7366
+      internalID: 6222164752761488741
       vertices: []
       indices: 
       edges: []
@@ -725,8 +725,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c8349dca532b4b2a8f303cfb9071f791
-      internalID: 7844469521622558160
+      spriteID: 93b0979ea9664457b822dcd50f5d2abe
+      internalID: 4213579245194811706
       vertices: []
       indices: 
       edges: []
@@ -747,8 +747,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8070c898b18c4731ab1a10b5b308bbbc
-      internalID: 7953456958564995718
+      spriteID: b7c5dff9439e4d48839bafba094b3350
+      internalID: 1254677640414585513
       vertices: []
       indices: 
       edges: []
@@ -769,8 +769,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 452f564440a14ab6883336a189fac845
-      internalID: 7991071276615162471
+      spriteID: 70f4257d13e745f89f79ef5b069ecf89
+      internalID: 8199323172344357027
       vertices: []
       indices: 
       edges: []
@@ -791,8 +791,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6817475dd8ef49d089edb83f69309fef
-      internalID: 4117312851353564064
+      spriteID: 942ff243b40b438eb6e6a1e6a6fcd8ab
+      internalID: 7276673739313832399
       vertices: []
       indices: 
       edges: []
@@ -813,8 +813,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a33e37dd40fc4e669d565a5df9a3e418
-      internalID: 6485143047497927654
+      spriteID: 2fa5fcd552c742d887b3863687a405cf
+      internalID: 2861946867407669677
       vertices: []
       indices: 
       edges: []
@@ -835,8 +835,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f041bc6bf01847e7baee749a186103d1
-      internalID: 4281170098149480264
+      spriteID: f46fb1c4c0274d12966c2e762fcb58bf
+      internalID: 3417839407790762993
       vertices: []
       indices: 
       edges: []
@@ -857,8 +857,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ad28822f6f5348a9a60861bb5a118ad4
-      internalID: 1343446689825187045
+      spriteID: fba27d217bd84c65a817e09d37e6c1a8
+      internalID: 1036537935751737184
       vertices: []
       indices: 
       edges: []
@@ -879,8 +879,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 905fe4931de84726b917e278062d705a
-      internalID: 7931634265116110947
+      spriteID: 44a8290906d24345933ecfda15b7df38
+      internalID: 8774648267502098272
       vertices: []
       indices: 
       edges: []
@@ -889,7 +889,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a3045bfb4e3c4cf68ce0bfc82b50044e
+    spriteID: 2aac48ba1f5347618766aa1bd5dc59c3
     internalID: 0
     vertices: []
     indices: 
@@ -899,36 +899,36 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ui_armor_01_patched_cloth_jacket: 2242464167279486024
-      ui_armor_02_leather_jacket: 5082987059944077415
-      ui_armor_03_padded_scavenger_vest: 5052251196504593099
-      ui_armor_04_reinforced_hoodie: 4934291021745591711
-      ui_armor_05_biker_vest: 3633069213783057261
-      ui_armor_06_scrap_shoulder_armor: 8090610891584234143
-      ui_armor_07_tire_rubber_chest_guard: 4070237927004165291
-      ui_armor_08_raider_leather_armor: 8421818333879395819
-      ui_armor_09_metal_plate_vest: 2910967130740063478
-      ui_armor_10_riot_vest: 8943226627115807289
-      ui_armor_11_police_tactical_vest: 3832319011950222773
-      ui_armor_12_fireproof_coat: 6933719471288812867
-      ui_armor_13_hunter_armor: 8887305121788947029
-      ui_armor_14_spiked_raider_armor: 7939230923630505318
-      ui_armor_15_reinforced_kevlar_vest: 7321799112307439488
-      ui_armor_16_scavenger_hazmat_suit: 5544724664860557115
-      ui_armor_17_armored_trench_coat: 6809809091872155483
-      ui_armor_18_junkyard_plate_armor: 2005778359642989697
-      ui_armor_19_mutant_hide_armor: 7851203569921242845
-      ui_armor_20_exo_braced_vest: 1342451583262920815
-      ui_armor_21_combat_armor: 8431774679937798249
-      ui_armor_22_heavy_riot_armor: 4937698337077405098
-      ui_armor_23_blast_suit: 7844469521622558160
-      ui_armor_24_advanced_tactical_armor: 7953456958564995718
-      ui_armor_25_powered_chest_rig: 7991071276615162471
-      ui_armor_26_ceramic_plate_armor: 4117312851353564064
-      ui_armor_27_elite_wasteland_armor: 6485143047497927654
-      ui_armor_28_heavy_mutant_hunter_armor: 4281170098149480264
-      ui_armor_29_improvised_exosuit_armor: 1343446689825187045
-      ui_armor_30_legendary_plated_survival_armor: 7931634265116110947
+      ui_armor_01_patched_cloth_jacket: 2973972890394723921
+      ui_armor_02_leather_jacket: 7779305384101558084
+      ui_armor_03_padded_scavenger_vest: 2653569683967758129
+      ui_armor_04_reinforced_hoodie: 6906382960203712598
+      ui_armor_05_biker_vest: 6916163108030361214
+      ui_armor_06_scrap_shoulder_armor: 1677812782241920330
+      ui_armor_07_tire_rubber_chest_guard: 6213945507216653664
+      ui_armor_08_raider_leather_armor: 2429564610304002706
+      ui_armor_09_metal_plate_vest: 7343455344510724759
+      ui_armor_10_riot_vest: 1311588911312600897
+      ui_armor_11_police_tactical_vest: 7892649154642534519
+      ui_armor_12_fireproof_coat: 3013785210420097569
+      ui_armor_13_hunter_armor: 3621773297804652796
+      ui_armor_14_spiked_raider_armor: 1195160973663086419
+      ui_armor_15_reinforced_kevlar_vest: 6267595759091652531
+      ui_armor_16_scavenger_hazmat_suit: 6461055848649029826
+      ui_armor_17_armored_trench_coat: 8495878147205373260
+      ui_armor_18_junkyard_plate_armor: 2098588527103521435
+      ui_armor_19_mutant_hide_armor: 4170559126715443047
+      ui_armor_20_exo_braced_vest: 6356980441074222889
+      ui_armor_21_combat_armor: 6120722983224303010
+      ui_armor_22_heavy_riot_armor: 6222164752761488741
+      ui_armor_23_blast_suit: 4213579245194811706
+      ui_armor_24_advanced_tactical_armor: 1254677640414585513
+      ui_armor_25_powered_chest_rig: 8199323172344357027
+      ui_armor_26_ceramic_plate_armor: 7276673739313832399
+      ui_armor_27_elite_wasteland_armor: 2861946867407669677
+      ui_armor_28_heavy_mutant_hunter_armor: 3417839407790762993
+      ui_armor_29_improvised_exosuit_armor: 1036537935751737184
+      ui_armor_30_legendary_plated_survival_armor: 8774648267502098272
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

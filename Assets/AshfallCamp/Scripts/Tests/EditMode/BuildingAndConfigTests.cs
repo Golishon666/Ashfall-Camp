@@ -12,6 +12,8 @@ namespace AshfallCamp.Tests.EditMode
 {
     public sealed class BuildingAndConfigTests
     {
+        private const string GameConfigDatabasePath = "Assets/AshfallCamp/Configs/Core/GameConfigDatabase.asset";
+
         [Test]
         public void BuildingUpgradeValidationBlocksUnknownLockedAndUnaffordable()
         {
@@ -76,7 +78,7 @@ namespace AshfallCamp.Tests.EditMode
         [Test]
         public void MushroomBedsUpgradeRaisesCapAndProducesFood()
         {
-            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>("Assets/AshfallCamp/Configs/GameConfigDatabase.asset");
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
             Assert.NotNull(database);
 
             var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
@@ -171,7 +173,7 @@ namespace AshfallCamp.Tests.EditMode
         [Test]
         public void StarterConfigAssetMatchesBootCoreDefaults()
         {
-            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>("Assets/AshfallCamp/Configs/GameConfigDatabase.asset");
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
             Assert.NotNull(database);
 
             var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
@@ -181,10 +183,17 @@ namespace AshfallCamp.Tests.EditMode
             AssertResource(config, "water", 6, true, 40);
             AssertResource(config, "medicine", 1, true, 20);
             Assert.AreEqual("Mara", config.StartingSurvivor.Name);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(config.StartingSurvivor.PortraitId));
             Assert.AreEqual("rusty_knife", config.StartingSurvivor.WeaponItemId);
+            Assert.IsTrue(config.Weapons.ContainsKey(config.StartingSurvivor.WeaponConfigId));
+            Assert.IsTrue(config.Armor.ContainsKey(config.StartingSurvivor.ArmorConfigId));
+            Assert.IsTrue(config.Utilities.ContainsKey(config.StartingSurvivor.UtilityConfigId));
             Assert.GreaterOrEqual(config.RecruitableSurvivors.Count, 6);
             Assert.GreaterOrEqual(config.Enemies.Count, 6);
             Assert.GreaterOrEqual(config.Items.Count, 10);
+            Assert.AreEqual(94, config.Weapons.Count);
+            Assert.AreEqual(60, config.Armor.Count);
+            Assert.AreEqual(20, config.Utilities.Count);
             Assert.GreaterOrEqual(config.Buildings.Count, 6);
             Assert.GreaterOrEqual(CountBuildingUpgradeLevels(config), 24);
             Assert.AreEqual(60, config.Balance.EmergencyScavengeDurationSeconds);
@@ -230,7 +239,7 @@ namespace AshfallCamp.Tests.EditMode
         [Test]
         public void WeaponCatalogAssetContainsImportedIconsAndCombatRules()
         {
-            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>("Assets/AshfallCamp/Configs/GameConfigDatabase.asset");
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
             Assert.NotNull(database);
             Assert.NotNull(database.Weapons);
 
@@ -246,6 +255,8 @@ namespace AshfallCamp.Tests.EditMode
             foreach (var weapon in database.Weapons.Weapons)
             {
                 Assert.NotNull(weapon.Icon, weapon.Id + " icon is missing.");
+                Assert.GreaterOrEqual(weapon.Durability, 0f, weapon.Id);
+                Assert.LessOrEqual(weapon.Durability, 1f, weapon.Id);
                 if (weapon.Type == WeaponCombatType.Melee)
                 {
                     meleeCount++;
@@ -266,6 +277,101 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(40, meleeCount);
             Assert.AreEqual(51, rangedCount);
             Assert.AreEqual(3, explosiveCount);
+        }
+
+        [Test]
+        public void ArmorAndUtilityCatalogAssetsContainImportedIconsAndProgressionStats()
+        {
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
+            Assert.NotNull(database);
+            Assert.NotNull(database.Armor);
+            Assert.NotNull(database.Utilities);
+
+            var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.AreEqual(60, config.Armor.Count);
+            Assert.AreEqual(20, config.Utilities.Count);
+            Assert.IsTrue(config.Armor.ContainsKey("armor_30_legendary_plated_survival_armor"));
+            Assert.IsTrue(config.Armor.ContainsKey("armor_midgame_30_veteran_scavenger_armor"));
+            Assert.IsTrue(config.Utilities.ContainsKey("utility_medkit_tier_05_advanced_trauma_case"));
+            Assert.IsTrue(config.Utilities.ContainsKey("utility_backpack_tier_05_elite_cargo_pack"));
+
+            var lightCount = 0;
+            var mediumCount = 0;
+            var heavyCount = 0;
+            foreach (var armor in database.Armor.Armor)
+            {
+                Assert.NotNull(armor.Icon, armor.Id + " icon is missing.");
+                Assert.GreaterOrEqual(armor.Defense, 0, armor.Id);
+                Assert.GreaterOrEqual(armor.Durability, 0f, armor.Id);
+                Assert.LessOrEqual(armor.Durability, 1f, armor.Id);
+                Assert.GreaterOrEqual(armor.MaxDurability, 1, armor.Id);
+                if (armor.Type == ArmorType.Light) lightCount++;
+                if (armor.Type == ArmorType.Medium) mediumCount++;
+                if (armor.Type == ArmorType.Heavy) heavyCount++;
+            }
+
+            Assert.Greater(lightCount, 0);
+            Assert.Greater(mediumCount, 0);
+            Assert.Greater(heavyCount, 0);
+
+            var medkits = 0;
+            var toolkits = 0;
+            var ammoPacks = 0;
+            var backpacks = 0;
+            foreach (var utility in database.Utilities.Utilities)
+            {
+                Assert.NotNull(utility.Icon, utility.Id + " icon is missing.");
+                Assert.GreaterOrEqual(utility.Tier, 1, utility.Id);
+                Assert.LessOrEqual(utility.Tier, 5, utility.Id);
+                if (utility.Type == UtilityEquipmentType.Medkit) medkits++;
+                if (utility.Type == UtilityEquipmentType.Toolkit) toolkits++;
+                if (utility.Type == UtilityEquipmentType.AmmoPack) ammoPacks++;
+                if (utility.Type == UtilityEquipmentType.Backpack) backpacks++;
+            }
+
+            Assert.AreEqual(5, medkits);
+            Assert.AreEqual(5, toolkits);
+            Assert.AreEqual(5, ammoPacks);
+            Assert.AreEqual(5, backpacks);
+        }
+
+        [Test]
+        public void CharacterCatalogAssetsContainPortraitsAndEquipmentLinks()
+        {
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
+            Assert.NotNull(database);
+            Assert.NotNull(database.Survivors);
+            Assert.NotNull(database.Enemies);
+
+            var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.NotNull(database.Survivors.StartingSurvivor.Portrait);
+            Assert.IsTrue(config.Weapons.ContainsKey(config.StartingSurvivor.WeaponConfigId));
+            Assert.IsTrue(config.Armor.ContainsKey(config.StartingSurvivor.ArmorConfigId));
+            Assert.IsTrue(config.Utilities.ContainsKey(config.StartingSurvivor.UtilityConfigId));
+
+            foreach (var survivor in database.Survivors.RecruitableSurvivors)
+            {
+                Assert.NotNull(survivor.Portrait, survivor.Id + " portrait is missing.");
+                Assert.IsTrue(config.Weapons.ContainsKey(survivor.WeaponConfigId), survivor.Id + " weapon config is missing.");
+                Assert.IsTrue(config.Armor.ContainsKey(survivor.ArmorConfigId), survivor.Id + " armor config is missing.");
+                Assert.IsTrue(config.Utilities.ContainsKey(survivor.UtilityConfigId), survivor.Id + " utility config is missing.");
+            }
+
+            var humanEnemyCount = 0;
+            foreach (var enemy in database.Enemies.Enemies)
+            {
+                Assert.NotNull(enemy.Portrait, enemy.Id + " portrait is missing.");
+                if (enemy.Kind != EnemyKind.Human) continue;
+
+                humanEnemyCount++;
+                Assert.IsTrue(config.Weapons.ContainsKey(enemy.WeaponConfigId), enemy.Id + " weapon config is missing.");
+                Assert.IsTrue(config.Armor.ContainsKey(enemy.ArmorConfigId), enemy.Id + " armor config is missing.");
+                Assert.IsTrue(config.Utilities.ContainsKey(enemy.UtilityConfigId), enemy.Id + " utility config is missing.");
+            }
+
+            Assert.Greater(humanEnemyCount, 0);
         }
 
         [Test]
@@ -330,18 +436,26 @@ namespace AshfallCamp.Tests.EditMode
             database.Survivors.StartingSurvivor = new StartingSurvivorConfigData
             {
                 Name = "Mara",
+                PortraitId = "ui_character_battle_survivor_01",
                 BackgroundId = "scavenger",
                 TraitIds = new List<string> { "careful" },
                 WeaponItemId = "rusty_knife",
+                WeaponConfigId = "rusty_knife",
+                ArmorConfigId = "leather_jacket",
+                UtilityConfigId = "field_medkit",
                 Skills = new List<IntPairData> { new IntPairData("scavenging", 4), new IntPairData("melee", 1), new IntPairData("survival", 2) }
             };
             database.Survivors.RecruitableSurvivors.Add(new RecruitableSurvivorConfigData
             {
                 Id = "elias",
                 Name = "Elias",
+                PortraitId = "ui_character_battle_survivor_02",
                 BackgroundId = "scavenger",
                 TraitIds = new List<string> { "careful" },
                 WeaponItemId = "rusty_knife",
+                WeaponConfigId = "rusty_knife",
+                ArmorConfigId = "leather_jacket",
+                UtilityConfigId = "field_medkit",
                 Skills = new List<IntPairData> { new IntPairData("scavenging", 1), new IntPairData("melee", 1) }
             });
 
@@ -355,7 +469,7 @@ namespace AshfallCamp.Tests.EditMode
             database.Policies.Policies.Add(new ExpeditionPolicyConfigData { Id = "balanced", Name = "Balanced" });
 
             database.Enemies = ScriptableObject.CreateInstance<EnemyCatalogSO>();
-            database.Enemies.Enemies.Add(new EnemyConfigData { Id = "feral_dog", Name = "Feral Dog", MaxHealth = 14, BaseDamage = 3, Accuracy = 0.75 });
+            database.Enemies.Enemies.Add(new EnemyConfigData { Id = "feral_dog", Name = "Feral Dog", Kind = EnemyKind.Creature, PortraitId = "ui_character_creature_weak_radiated_hound_01", MaxHealth = 14, BaseDamage = 3, Accuracy = 0.75 });
 
             database.Items = ScriptableObject.CreateInstance<ItemCatalogSO>();
             database.Items.Items.Add(new ItemConfigData { Id = "rusty_knife", Name = "Rusty Knife", Slot = ItemSlot.Weapon, WeaponType = WeaponType.Melee, BaseDamage = 4, MaxDurability = 80 });
@@ -375,9 +489,44 @@ namespace AshfallCamp.Tests.EditMode
                 HitChance = 0.86,
                 ArmorPenetration = 0.05,
                 CriticalChance = 0.04,
+                Durability = 1f,
                 MaxDurability = 80,
                 RepairCostMultiplier = 1.0,
                 AttackSoundId = "melee_blade"
+            });
+
+            database.Armor = ScriptableObject.CreateInstance<ArmorCatalogSO>();
+            database.Armor.Armor.Add(new ArmorConfigData
+            {
+                Id = "leather_jacket",
+                Name = "Leather Jacket",
+                Description = "A worn jacket with stitched padding.",
+                Type = ArmorType.Light,
+                Rarity = WeaponRarity.Common,
+                Defense = 1,
+                EvasionChance = 0.02,
+                BonusHealth = 2,
+                BonusStamina = 1,
+                SpeedModifier = 0,
+                Durability = 1f,
+                MaxDurability = 70,
+                RepairCostMultiplier = 1.0,
+                EquipSoundId = "armor_light"
+            });
+
+            database.Utilities = ScriptableObject.CreateInstance<UtilityCatalogSO>();
+            database.Utilities.Utilities.Add(new UtilityConfigData
+            {
+                Id = "field_medkit",
+                Name = "Field Medkit",
+                Description = "Basic bandages and disinfectant.",
+                Type = UtilityEquipmentType.Medkit,
+                Rarity = WeaponRarity.Common,
+                Tier = 1,
+                HealAmount = 12,
+                MaxDurability = 1,
+                RepairCostMultiplier = 0,
+                UseSoundId = "utility_medkit"
             });
 
             database.Buildings = ScriptableObject.CreateInstance<BuildingCatalogSO>();
@@ -540,6 +689,8 @@ namespace AshfallCamp.Tests.EditMode
             UnityEngine.Object.DestroyImmediate(database.Enemies);
             UnityEngine.Object.DestroyImmediate(database.Items);
             UnityEngine.Object.DestroyImmediate(database.Weapons);
+            UnityEngine.Object.DestroyImmediate(database.Armor);
+            UnityEngine.Object.DestroyImmediate(database.Utilities);
             UnityEngine.Object.DestroyImmediate(database.Buildings);
             UnityEngine.Object.DestroyImmediate(database.Zones);
             UnityEngine.Object.DestroyImmediate(database.Balance);

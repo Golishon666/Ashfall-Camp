@@ -81,6 +81,28 @@ namespace AshfallCamp.Domain
         Legendary
     }
 
+    public enum ArmorType
+    {
+        Light,
+        Medium,
+        Heavy
+    }
+
+    public enum UtilityEquipmentType
+    {
+        Medkit,
+        Toolkit,
+        AmmoPack,
+        Backpack
+    }
+
+    public enum EnemyKind
+    {
+        Creature,
+        Human,
+        Mutant
+    }
+
     public enum WeaponTargetingRule
     {
         FrontlineOnly,
@@ -414,6 +436,8 @@ namespace AshfallCamp.Domain
         public Dictionary<string, EnemyDefinition> Enemies = new Dictionary<string, EnemyDefinition>(StringComparer.Ordinal);
         public Dictionary<string, ItemDefinition> Items = new Dictionary<string, ItemDefinition>(StringComparer.Ordinal);
         public Dictionary<string, WeaponDefinition> Weapons = new Dictionary<string, WeaponDefinition>(StringComparer.Ordinal);
+        public Dictionary<string, ArmorDefinition> Armor = new Dictionary<string, ArmorDefinition>(StringComparer.Ordinal);
+        public Dictionary<string, UtilityDefinition> Utilities = new Dictionary<string, UtilityDefinition>(StringComparer.Ordinal);
         public Dictionary<string, BuildingDefinition> Buildings = new Dictionary<string, BuildingDefinition>(StringComparer.Ordinal);
         public Dictionary<string, RecruitableSurvivorDefinition> RecruitableSurvivors = new Dictionary<string, RecruitableSurvivorDefinition>(StringComparer.Ordinal);
         public BalanceDefinition Balance = new BalanceDefinition();
@@ -503,6 +527,8 @@ namespace AshfallCamp.Domain
     {
         public string Id = string.Empty;
         public string Name = string.Empty;
+        public EnemyKind Kind;
+        public string PortraitId = string.Empty;
         public int MaxHealth;
         public int Armor;
         public double Evasion;
@@ -511,6 +537,9 @@ namespace AshfallCamp.Domain
         public double Accuracy = 0.75;
         public double AttackIntervalSeconds = 2;
         public int XpReward;
+        public string WeaponConfigId = string.Empty;
+        public string ArmorConfigId = string.Empty;
+        public string UtilityConfigId = string.Empty;
     }
 
     public sealed class ItemDefinition
@@ -545,10 +574,49 @@ namespace AshfallCamp.Domain
         public double CriticalChance;
         public int AmmoCostPerAttack;
         public int NoisePerAttack;
+        public float Durability = 1f;
         public int MaxDurability = 100;
         public double RepairCostMultiplier = 1.0;
         public int SortOrder;
         public string AttackSoundId = string.Empty;
+    }
+
+    public sealed class ArmorDefinition
+    {
+        public string Id = string.Empty;
+        public string Name = string.Empty;
+        public string Description = string.Empty;
+        public ArmorType Type;
+        public WeaponRarity Rarity;
+        public int Defense;
+        public double EvasionChance;
+        public int BonusHealth;
+        public int BonusStamina;
+        public double SpeedModifier;
+        public float Durability = 1f;
+        public int MaxDurability = 100;
+        public double RepairCostMultiplier = 1.0;
+        public int SortOrder;
+        public string EquipSoundId = string.Empty;
+    }
+
+    public sealed class UtilityDefinition
+    {
+        public string Id = string.Empty;
+        public string Name = string.Empty;
+        public string Description = string.Empty;
+        public UtilityEquipmentType Type;
+        public WeaponRarity Rarity;
+        public int Tier = 1;
+        public int HealAmount;
+        public int RepairBonus;
+        public int AmmoCapacityBonus;
+        public int CarryCapacityBonus;
+        public int BonusStamina;
+        public int MaxDurability = 100;
+        public double RepairCostMultiplier = 1.0;
+        public int SortOrder;
+        public string UseSoundId = string.Empty;
     }
 
     public sealed class BuildingDefinition
@@ -642,9 +710,13 @@ namespace AshfallCamp.Domain
     public sealed class StartingSurvivorDefinition
     {
         public string Name = "Mara";
+        public string PortraitId = string.Empty;
         public string BackgroundId = "scavenger";
         public List<string> TraitIds = new List<string>();
         public string WeaponItemId = "rusty_knife";
+        public string WeaponConfigId = string.Empty;
+        public string ArmorConfigId = string.Empty;
+        public string UtilityConfigId = string.Empty;
         public Dictionary<string, int> Skills = new Dictionary<string, int>(StringComparer.Ordinal);
     }
 
@@ -652,9 +724,13 @@ namespace AshfallCamp.Domain
     {
         public string Id = string.Empty;
         public string Name = string.Empty;
+        public string PortraitId = string.Empty;
         public string BackgroundId = string.Empty;
         public List<string> TraitIds = new List<string>();
         public string WeaponItemId = string.Empty;
+        public string WeaponConfigId = string.Empty;
+        public string ArmorConfigId = string.Empty;
+        public string UtilityConfigId = string.Empty;
         public Dictionary<string, int> Skills = new Dictionary<string, int>(StringComparer.Ordinal);
     }
 }

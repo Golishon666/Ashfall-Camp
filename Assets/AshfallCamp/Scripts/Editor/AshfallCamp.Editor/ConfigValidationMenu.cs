@@ -8,7 +8,7 @@ namespace AshfallCamp.Editor
 {
     public static class ConfigValidationMenu
     {
-        private const string DatabasePath = "Assets/AshfallCamp/Configs/GameConfigDatabase.asset";
+        private const string DatabasePath = "Assets/AshfallCamp/Configs/Core/GameConfigDatabase.asset";
 
         [MenuItem("Tools/Ashfall Camp/Validate Configs")]
         public static void ValidateConfigs()

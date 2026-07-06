@@ -41,6 +41,8 @@ namespace AshfallCamp.Infrastructure
             FillEnemies(snapshot);
             FillItems(snapshot);
             FillWeapons(snapshot);
+            FillArmor(snapshot);
+            FillUtilities(snapshot);
             FillBuildings(snapshot);
             FillBalance(snapshot);
             Validate(snapshot);
@@ -69,9 +71,13 @@ namespace AshfallCamp.Infrastructure
             if (_database.Survivors == null) return;
             var source = _database.Survivors.StartingSurvivor;
             snapshot.StartingSurvivor.Name = source.Name;
+            snapshot.StartingSurvivor.PortraitId = ResolveAssetId(source.PortraitId, source.Portrait);
             snapshot.StartingSurvivor.BackgroundId = source.BackgroundId;
             snapshot.StartingSurvivor.TraitIds = new List<string>(source.TraitIds);
             snapshot.StartingSurvivor.WeaponItemId = source.WeaponItemId;
+            snapshot.StartingSurvivor.WeaponConfigId = source.WeaponConfigId;
+            snapshot.StartingSurvivor.ArmorConfigId = source.ArmorConfigId;
+            snapshot.StartingSurvivor.UtilityConfigId = source.UtilityConfigId;
             snapshot.StartingSurvivor.Skills = ToDictionary(source.Skills);
 
             foreach (var item in _database.Survivors.RecruitableSurvivors)
@@ -80,9 +86,13 @@ namespace AshfallCamp.Infrastructure
                 {
                     Id = item.Id,
                     Name = item.Name,
+                    PortraitId = ResolveAssetId(item.PortraitId, item.Portrait),
                     BackgroundId = item.BackgroundId,
                     TraitIds = new List<string>(item.TraitIds),
                     WeaponItemId = item.WeaponItemId,
+                    WeaponConfigId = item.WeaponConfigId,
+                    ArmorConfigId = item.ArmorConfigId,
+                    UtilityConfigId = item.UtilityConfigId,
                     Skills = ToDictionary(item.Skills)
                 }, "recruitable survivors");
             }
@@ -175,6 +185,8 @@ namespace AshfallCamp.Infrastructure
                 {
                     Id = item.Id,
                     Name = item.Name,
+                    Kind = item.Kind,
+                    PortraitId = ResolveAssetId(item.PortraitId, item.Portrait),
                     MaxHealth = item.MaxHealth,
                     Armor = item.Armor,
                     Evasion = item.Evasion,
@@ -182,7 +194,10 @@ namespace AshfallCamp.Infrastructure
                     AttackType = item.AttackType,
                     Accuracy = item.Accuracy,
                     AttackIntervalSeconds = item.AttackIntervalSeconds,
-                    XpReward = item.XpReward
+                    XpReward = item.XpReward,
+                    WeaponConfigId = item.WeaponConfigId,
+                    ArmorConfigId = item.ArmorConfigId,
+                    UtilityConfigId = item.UtilityConfigId
                 }, "enemies");
             }
         }
@@ -231,11 +246,64 @@ namespace AshfallCamp.Infrastructure
                     CriticalChance = item.CriticalChance,
                     AmmoCostPerAttack = item.AmmoCostPerAttack,
                     NoisePerAttack = item.NoisePerAttack,
+                    Durability = item.Durability,
                     MaxDurability = item.MaxDurability,
                     RepairCostMultiplier = item.RepairCostMultiplier,
                     SortOrder = item.SortOrder,
                     AttackSoundId = item.AttackSoundId
                 }, "weapons");
+            }
+        }
+
+        private void FillArmor(GameConfigSnapshot snapshot)
+        {
+            if (_database.Armor == null) return;
+            foreach (var item in _database.Armor.Armor)
+            {
+                AddDefinition(snapshot.Armor, item.Id, new ArmorDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Type = item.Type,
+                    Rarity = item.Rarity,
+                    Defense = item.Defense,
+                    EvasionChance = item.EvasionChance,
+                    BonusHealth = item.BonusHealth,
+                    BonusStamina = item.BonusStamina,
+                    SpeedModifier = item.SpeedModifier,
+                    Durability = item.Durability,
+                    MaxDurability = item.MaxDurability,
+                    RepairCostMultiplier = item.RepairCostMultiplier,
+                    SortOrder = item.SortOrder,
+                    EquipSoundId = item.EquipSoundId
+                }, "armor");
+            }
+        }
+
+        private void FillUtilities(GameConfigSnapshot snapshot)
+        {
+            if (_database.Utilities == null) return;
+            foreach (var item in _database.Utilities.Utilities)
+            {
+                AddDefinition(snapshot.Utilities, item.Id, new UtilityDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Type = item.Type,
+                    Rarity = item.Rarity,
+                    Tier = item.Tier,
+                    HealAmount = item.HealAmount,
+                    RepairBonus = item.RepairBonus,
+                    AmmoCapacityBonus = item.AmmoCapacityBonus,
+                    CarryCapacityBonus = item.CarryCapacityBonus,
+                    BonusStamina = item.BonusStamina,
+                    MaxDurability = item.MaxDurability,
+                    RepairCostMultiplier = item.RepairCostMultiplier,
+                    SortOrder = item.SortOrder,
+                    UseSoundId = item.UseSoundId
+                }, "utilities");
             }
         }
 
@@ -354,6 +422,12 @@ namespace AshfallCamp.Infrastructure
             return result;
         }
 
+        private static string ResolveAssetId(string configuredId, UnityEngine.Object asset)
+        {
+            if (!string.IsNullOrWhiteSpace(configuredId)) return configuredId;
+            return asset != null ? asset.name : string.Empty;
+        }
+
         private static void AddDefinition<T>(Dictionary<string, T> items, string id, T value, string label)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new InvalidOperationException("Config catalog has empty id: " + label);
@@ -371,14 +445,18 @@ namespace AshfallCamp.Infrastructure
             RequireAny(snapshot.Enemies, "enemies");
             RequireAny(snapshot.Items, "items");
             RequireAny(snapshot.Weapons, "weapons");
+            RequireAny(snapshot.Armor, "armor");
+            RequireAny(snapshot.Utilities, "utilities");
             RequireAny(snapshot.Buildings, "buildings");
             if (!snapshot.Policies.ContainsKey("balanced")) throw new InvalidOperationException("Policy catalog must include balanced.");
+            if (string.IsNullOrWhiteSpace(snapshot.StartingSurvivor.PortraitId)) throw new InvalidOperationException("Starting survivor portrait is missing.");
             if (!snapshot.Backgrounds.ContainsKey(snapshot.StartingSurvivor.BackgroundId)) throw new InvalidOperationException("Starting survivor background is missing.");
             foreach (var traitId in snapshot.StartingSurvivor.TraitIds)
             {
                 if (!snapshot.Traits.ContainsKey(traitId)) throw new InvalidOperationException("Starting survivor trait is missing: " + traitId);
             }
             if (!snapshot.Items.ContainsKey(snapshot.StartingSurvivor.WeaponItemId)) throw new InvalidOperationException("Starting weapon item is missing.");
+            ValidateEquipmentConfigRefs(snapshot, "Starting survivor", snapshot.StartingSurvivor.Name, snapshot.StartingSurvivor.WeaponConfigId, snapshot.StartingSurvivor.ArmorConfigId, snapshot.StartingSurvivor.UtilityConfigId);
             ValidateResources(snapshot);
             ValidatePolicies(snapshot);
             ValidateExpeditionBalance(snapshot);
@@ -391,6 +469,8 @@ namespace AshfallCamp.Infrastructure
             ValidateEnemies(snapshot);
             ValidateItems(snapshot);
             ValidateWeapons(snapshot);
+            ValidateArmor(snapshot);
+            ValidateUtilities(snapshot);
             ValidateBuildings(snapshot);
             foreach (var zone in snapshot.Zones.Values)
             {
@@ -488,6 +568,7 @@ namespace AshfallCamp.Infrastructure
             foreach (var candidate in snapshot.RecruitableSurvivors.Values)
             {
                 if (string.IsNullOrWhiteSpace(candidate.Name)) throw new InvalidOperationException("Recruitable survivor has empty name: " + candidate.Id);
+                if (string.IsNullOrWhiteSpace(candidate.PortraitId)) throw new InvalidOperationException("Recruitable survivor portrait is missing: " + candidate.Id);
                 if (!names.Add(candidate.Name)) throw new InvalidOperationException("Recruitable survivor has duplicate name: " + candidate.Name);
                 if (!snapshot.Backgrounds.ContainsKey(candidate.BackgroundId)) throw new InvalidOperationException("Recruitable survivor background is missing: " + candidate.Id);
                 foreach (var traitId in candidate.TraitIds)
@@ -496,6 +577,7 @@ namespace AshfallCamp.Infrastructure
                 }
 
                 if (!snapshot.Items.ContainsKey(candidate.WeaponItemId)) throw new InvalidOperationException("Recruitable survivor weapon item is missing: " + candidate.Id);
+                ValidateEquipmentConfigRefs(snapshot, "Recruitable survivor", candidate.Id, candidate.WeaponConfigId, candidate.ArmorConfigId, candidate.UtilityConfigId);
             }
         }
 
@@ -684,11 +766,31 @@ namespace AshfallCamp.Infrastructure
         {
             foreach (var enemy in snapshot.Enemies.Values)
             {
+                if (string.IsNullOrWhiteSpace(enemy.PortraitId)) throw new InvalidOperationException("Enemy portrait is missing: " + enemy.Id);
                 if (enemy.MaxHealth <= 0) throw new InvalidOperationException("Enemy health must be positive: " + enemy.Id);
                 if (enemy.BaseDamage < 0) throw new InvalidOperationException("Enemy damage cannot be negative: " + enemy.Id);
                 if (enemy.Armor < 0) throw new InvalidOperationException("Enemy armor cannot be negative: " + enemy.Id);
                 if (enemy.Evasion < 0 || enemy.Evasion > 1) throw new InvalidOperationException("Enemy evasion must be 0..1: " + enemy.Id);
                 if (enemy.Accuracy < 0 || enemy.Accuracy > 1) throw new InvalidOperationException("Enemy accuracy must be 0..1: " + enemy.Id);
+                ValidateEquipmentConfigRefs(snapshot, "Enemy", enemy.Id, enemy.WeaponConfigId, enemy.ArmorConfigId, enemy.UtilityConfigId);
+            }
+        }
+
+        private static void ValidateEquipmentConfigRefs(GameConfigSnapshot snapshot, string ownerType, string ownerId, string weaponId, string armorId, string utilityId)
+        {
+            if (!string.IsNullOrWhiteSpace(weaponId) && !snapshot.Weapons.ContainsKey(weaponId))
+            {
+                throw new InvalidOperationException(ownerType + " weapon config is missing: " + ownerId + "/" + weaponId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(armorId) && !snapshot.Armor.ContainsKey(armorId))
+            {
+                throw new InvalidOperationException(ownerType + " armor config is missing: " + ownerId + "/" + armorId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(utilityId) && !snapshot.Utilities.ContainsKey(utilityId))
+            {
+                throw new InvalidOperationException(ownerType + " utility config is missing: " + ownerId + "/" + utilityId);
             }
         }
 
@@ -716,6 +818,7 @@ namespace AshfallCamp.Infrastructure
                 if (weapon.CriticalChance < 0 || weapon.CriticalChance > 1) throw new InvalidOperationException("Weapon critical chance must be 0..1: " + weapon.Id);
                 if (weapon.AmmoCostPerAttack < 0) throw new InvalidOperationException("Weapon ammo cost cannot be negative: " + weapon.Id);
                 if (weapon.NoisePerAttack < 0) throw new InvalidOperationException("Weapon noise cannot be negative: " + weapon.Id);
+                if (weapon.Durability < 0 || weapon.Durability > 1) throw new InvalidOperationException("Weapon durability must be 0..1: " + weapon.Id);
                 if (weapon.MaxDurability <= 0) throw new InvalidOperationException("Weapon durability must be positive: " + weapon.Id);
                 if (weapon.RepairCostMultiplier < 0) throw new InvalidOperationException("Weapon repair cost multiplier cannot be negative: " + weapon.Id);
                 if (weapon.Type == WeaponCombatType.Melee && weapon.TargetingRule != WeaponTargetingRule.FrontlineOnly)
@@ -732,6 +835,43 @@ namespace AshfallCamp.Infrastructure
                 {
                     throw new InvalidOperationException("Explosive weapon must use area targeting: " + weapon.Id);
                 }
+            }
+        }
+
+        private static void ValidateArmor(GameConfigSnapshot snapshot)
+        {
+            foreach (var armor in snapshot.Armor.Values)
+            {
+                if (string.IsNullOrWhiteSpace(armor.Name)) throw new InvalidOperationException("Armor name cannot be empty: " + armor.Id);
+                if (armor.Defense < 0) throw new InvalidOperationException("Armor defense cannot be negative: " + armor.Id);
+                if (armor.EvasionChance < 0 || armor.EvasionChance > 1) throw new InvalidOperationException("Armor evasion chance must be 0..1: " + armor.Id);
+                if (armor.BonusHealth < 0) throw new InvalidOperationException("Armor bonus health cannot be negative: " + armor.Id);
+                if (armor.BonusStamina < 0) throw new InvalidOperationException("Armor bonus stamina cannot be negative: " + armor.Id);
+                if (armor.SpeedModifier < -1 || armor.SpeedModifier > 1) throw new InvalidOperationException("Armor speed modifier must be -1..1: " + armor.Id);
+                if (armor.Durability < 0 || armor.Durability > 1) throw new InvalidOperationException("Armor durability must be 0..1: " + armor.Id);
+                if (armor.MaxDurability <= 0) throw new InvalidOperationException("Armor durability must be positive: " + armor.Id);
+                if (armor.RepairCostMultiplier < 0) throw new InvalidOperationException("Armor repair cost multiplier cannot be negative: " + armor.Id);
+            }
+        }
+
+        private static void ValidateUtilities(GameConfigSnapshot snapshot)
+        {
+            foreach (var utility in snapshot.Utilities.Values)
+            {
+                if (string.IsNullOrWhiteSpace(utility.Name)) throw new InvalidOperationException("Utility name cannot be empty: " + utility.Id);
+                if (utility.Tier < 1 || utility.Tier > 5) throw new InvalidOperationException("Utility tier must be 1..5: " + utility.Id);
+                if (utility.HealAmount < 0) throw new InvalidOperationException("Utility heal amount cannot be negative: " + utility.Id);
+                if (utility.RepairBonus < 0) throw new InvalidOperationException("Utility repair bonus cannot be negative: " + utility.Id);
+                if (utility.AmmoCapacityBonus < 0) throw new InvalidOperationException("Utility ammo capacity bonus cannot be negative: " + utility.Id);
+                if (utility.CarryCapacityBonus < 0) throw new InvalidOperationException("Utility carry capacity bonus cannot be negative: " + utility.Id);
+                if (utility.BonusStamina < 0) throw new InvalidOperationException("Utility bonus stamina cannot be negative: " + utility.Id);
+                if (utility.MaxDurability <= 0) throw new InvalidOperationException("Utility durability must be positive: " + utility.Id);
+                if (utility.RepairCostMultiplier < 0) throw new InvalidOperationException("Utility repair cost multiplier cannot be negative: " + utility.Id);
+
+                if (utility.Type == UtilityEquipmentType.Medkit && utility.HealAmount <= 0) throw new InvalidOperationException("Medkit utility must heal: " + utility.Id);
+                if (utility.Type == UtilityEquipmentType.Toolkit && utility.RepairBonus <= 0) throw new InvalidOperationException("Toolkit utility must repair: " + utility.Id);
+                if (utility.Type == UtilityEquipmentType.AmmoPack && utility.AmmoCapacityBonus <= 0) throw new InvalidOperationException("Ammo pack utility must add ammo capacity: " + utility.Id);
+                if (utility.Type == UtilityEquipmentType.Backpack && utility.CarryCapacityBonus <= 0) throw new InvalidOperationException("Backpack utility must add carry capacity: " + utility.Id);
             }
         }
 

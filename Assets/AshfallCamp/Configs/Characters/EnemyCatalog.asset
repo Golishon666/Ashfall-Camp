@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb19bfca34881774a849e662da1514c7, type: 3}
+  m_Name: EnemyCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.EnemyCatalogSO
+  Enemies:
+  - Id: feral_dog
+    Name: Feral Dog
+    Kind: 0
+    PortraitId: ui_character_creature_weak_radiated_hound_01
+    Portrait: {fileID: 21300000, guid: 0ae0b8b30d25f2ee8ebd9070e888c122, type: 3}
+    MaxHealth: 14
+    Armor: 0
+    Evasion: 0.08
+    BaseDamage: 3
+    AttackType: 1
+    Accuracy: 0.75
+    AttackIntervalSeconds: 2
+    XpReward: 4
+    WeaponConfigId: 
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: starving_survivor
+    Name: Starving Survivor
+    Kind: 1
+    PortraitId: ui_character_enemy_weak_scavenger_01
+    Portrait: {fileID: 21300000, guid: 5f8dd924387997744925ec66c57db94a, type: 3}
+    MaxHealth: 18
+    Armor: 0
+    Evasion: 0.04
+    BaseDamage: 4
+    AttackType: 1
+    Accuracy: 0.65
+    AttackIntervalSeconds: 2
+    XpReward: 5
+    WeaponConfigId: weapon_melee_09_nailed_plank
+    ArmorConfigId: armor_01_patched_cloth_jacket
+    UtilityConfigId: utility_backpack_tier_01_torn_scavenger_bag
+  - Id: mutant_stray
+    Name: Mutant Stray
+    Kind: 2
+    PortraitId: ui_character_creature_weak_mutant_rat_01
+    Portrait: {fileID: 21300000, guid: 45c517e7fcdfa712be64f73356a398bd, type: 3}
+    MaxHealth: 26
+    Armor: 1
+    Evasion: 0.03
+    BaseDamage: 5
+    AttackType: 3
+    Accuracy: 0.68
+    AttackIntervalSeconds: 2
+    XpReward: 8
+    WeaponConfigId: 
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: raider
+    Name: Raider
+    Kind: 1
+    PortraitId: ui_character_enemy_raider_01
+    Portrait: {fileID: 21300000, guid: 13a4e5bf2a5548648a90dbefcef22aed, type: 3}
+    MaxHealth: 30
+    Armor: 1
+    Evasion: 0.05
+    BaseDamage: 6
+    AttackType: 2
+    Accuracy: 0.62
+    AttackIntervalSeconds: 2
+    XpReward: 10
+    WeaponConfigId: weapon_firearm_02_pipe_pistol
+    ArmorConfigId: armor_08_raider_leather_armor
+    UtilityConfigId: utility_ammo_pack_tier_01_loose_ammo_pouch
+  - Id: armored_raider
+    Name: Armored Raider
+    Kind: 1
+    PortraitId: ui_character_enemy_elite_tire_shield_mauler_01
+    Portrait: {fileID: 21300000, guid: 9c2d4b0d0cfeb7744b7ac0925e5bb324, type: 3}
+    MaxHealth: 45
+    Armor: 4
+    Evasion: 0.02
+    BaseDamage: 7
+    AttackType: 2
+    Accuracy: 0.6
+    AttackIntervalSeconds: 2
+    XpReward: 14
+    WeaponConfigId: weapon_firearm_07_pump_shotgun
+    ArmorConfigId: armor_18_junkyard_plate_armor
+    UtilityConfigId: utility_medkit_tier_02_field_pouch
+  - Id: mutant_brute
+    Name: Mutant Brute
+    Kind: 2
+    PortraitId: ui_character_creature_elite_tumor_bear_01
+    Portrait: {fileID: 21300000, guid: 6aff24843f6a7c80b1fb659e345aa6bf, type: 3}
+    MaxHealth: 80
+    Armor: 2
+    Evasion: 0.01
+    BaseDamage: 11
+    AttackType: 3
+    Accuracy: 0.7
+    AttackIntervalSeconds: 2
+    XpReward: 24
+    WeaponConfigId: 
+    ArmorConfigId: 
+    UtilityConfigId: 

@@ -14,6 +14,8 @@ namespace AshfallCamp.Infrastructure
         public EnemyCatalogSO Enemies;
         public ItemCatalogSO Items;
         public WeaponCatalogSO Weapons;
+        public ArmorCatalogSO Armor;
+        public UtilityCatalogSO Utilities;
         public BuildingCatalogSO Buildings;
         public BalanceConfigSO Balance;
     }

@@ -1,0 +1,936 @@
+fileFormatVersion: 2
+guid: 99aef8082c1a419b93e1b77b4334f350
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8743143155460288182
+    second: ui_armor_midgame_01_reinforced_scavenger_jacket
+  - first:
+      213: 8590173339991262450
+    second: ui_armor_midgame_02_road_guard_vest
+  - first:
+      213: 5621449570330677539
+    second: ui_armor_midgame_03_patched_kevlar_vest
+  - first:
+      213: 6353391484327025975
+    second: ui_armor_midgame_04_raider_plate_vest
+  - first:
+      213: 8829307965455445782
+    second: ui_armor_midgame_05_guard_patrol_armor
+  - first:
+      213: 8736518210235625815
+    second: ui_armor_midgame_06_scrap_metal_breastplate
+  - first:
+      213: 1616587692479435607
+    second: ui_armor_midgame_07_reinforced_biker_armor
+  - first:
+      213: 7103516532672865014
+    second: ui_armor_midgame_08_wasteland_ranger_coat
+  - first:
+      213: 4050995034930320584
+    second: ui_armor_midgame_09_armored_mechanic_vest
+  - first:
+      213: 6065080419048396973
+    second: ui_armor_midgame_10_plated_leather_coat
+  - first:
+      213: 1082759796207085532
+    second: ui_armor_midgame_11_tire_shoulder_guard
+  - first:
+      213: 5766814862822719659
+    second: ui_armor_midgame_12_police_surplus_armor
+  - first:
+      213: 5961184165637762026
+    second: ui_armor_midgame_13_riot_chest_rig
+  - first:
+      213: 8924259532032163206
+    second: ui_armor_midgame_14_fireproof_responder_coat
+  - first:
+      213: 4167089227403483132
+    second: ui_armor_midgame_15_hunter_scale_vest
+  - first:
+      213: 3090651276061238610
+    second: ui_armor_midgame_16_caravan_guard_armor
+  - first:
+      213: 6256015467350545650
+    second: ui_armor_midgame_17_quarry_worker_armor
+  - first:
+      213: 7468984196802498289
+    second: ui_armor_midgame_18_nomad_lamellar_vest
+  - first:
+      213: 2903632885689852051
+    second: ui_armor_midgame_19_scavenged_hazmat_armor
+  - first:
+      213: 8644815499263690796
+    second: ui_armor_midgame_20_welded_plate_harness
+  - first:
+      213: 8902124537517184476
+    second: ui_armor_midgame_21_armored_poncho
+  - first:
+      213: 8771079749236672901
+    second: ui_armor_midgame_22_highwayman_cuirass
+  - first:
+      213: 3138776140721436617
+    second: ui_armor_midgame_23_reinforced_trench_vest
+  - first:
+      213: 2511077814493731638
+    second: ui_armor_midgame_24_militia_flak_vest
+  - first:
+      213: 8758746561081311192
+    second: ui_armor_midgame_25_mutant_hide_reinforced_vest
+  - first:
+      213: 6315965438795711054
+    second: ui_armor_midgame_26_armored_salvage_coat
+  - first:
+      213: 5300454822671750824
+    second: ui_armor_midgame_27_medium_combat_vest
+  - first:
+      213: 8174069146276577174
+    second: ui_armor_midgame_28_patched_ceramic_vest
+  - first:
+      213: 2871468082330516453
+    second: ui_armor_midgame_29_reinforced_tactical_chest_rig
+  - first:
+      213: 4942491470744078109
+    second: ui_armor_midgame_30_veteran_scavenger_armor
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ui_armor_midgame_01_reinforced_scavenger_jacket
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e8a8cc78ae045fda29eb2e7efd72618
+      internalID: 8743143155460288182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_02_road_guard_vest
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1751e49dbe1a40f5852aee5592018f0d
+      internalID: 8590173339991262450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_03_patched_kevlar_vest
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 223d60edf2c645a399da898d583f6313
+      internalID: 5621449570330677539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_04_raider_plate_vest
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f42a555037c48a3a913c42b7b010daa
+      internalID: 6353391484327025975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_05_guard_patrol_armor
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc278ad3354e46009e242c7d96c6845c
+      internalID: 8829307965455445782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_06_scrap_metal_breastplate
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83076108066c402a8b7575edbe25d32a
+      internalID: 8736518210235625815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_07_reinforced_biker_armor
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91560b3f61f745689c2dd1d1eaba5053
+      internalID: 1616587692479435607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_08_wasteland_ranger_coat
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03264c13a03646dc886434e0b8d1a671
+      internalID: 7103516532672865014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_09_armored_mechanic_vest
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d1a30ecf60c485bbc18cd09fab44629
+      internalID: 4050995034930320584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_10_plated_leather_coat
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8832077e6ec248feadb8a7f7876b3c6e
+      internalID: 6065080419048396973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_11_tire_shoulder_guard
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2df733b0aae409689ef48f0115fb813
+      internalID: 1082759796207085532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_12_police_surplus_armor
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2a1c5b7801a4ff4bc2437c5d6ce501c
+      internalID: 5766814862822719659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_13_riot_chest_rig
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 722bca1e7e9340c39a0d77473dc71e45
+      internalID: 5961184165637762026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_14_fireproof_responder_coat
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 395a83250c73463e9e76ce064836d205
+      internalID: 8924259532032163206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_15_hunter_scale_vest
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 733ac25e030445ae8e1bed1a31678f4f
+      internalID: 4167089227403483132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_16_caravan_guard_armor
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38d1f57cce4e431c8df9a0c038998b5d
+      internalID: 3090651276061238610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_17_quarry_worker_armor
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ae417705f7c4acfb7aacaaa6c05e216
+      internalID: 6256015467350545650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_18_nomad_lamellar_vest
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46c2c72c89b245caa80592cf698129d6
+      internalID: 7468984196802498289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_19_scavenged_hazmat_armor
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6851da07b774703b7c9419555d022d2
+      internalID: 2903632885689852051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_20_welded_plate_harness
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc16209bf5c747ceabcef4c7533bdd68
+      internalID: 8644815499263690796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_21_armored_poncho
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8657c017bedd45a2a408c3412e800f69
+      internalID: 8902124537517184476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_22_highwayman_cuirass
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a28d0eef69a49b1997969b1ce104c99
+      internalID: 8771079749236672901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_23_reinforced_trench_vest
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdb5aa8217b043b6a6e7c97c7e916f42
+      internalID: 3138776140721436617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_24_militia_flak_vest
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ddc684136cf4caaa222ae8f9fd4a425
+      internalID: 2511077814493731638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_25_mutant_hide_reinforced_vest
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b73c052faec423aa99bdafbafd98585
+      internalID: 8758746561081311192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_26_armored_salvage_coat
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e5cdd030d2f4236879d31ec543ba185
+      internalID: 6315965438795711054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_27_medium_combat_vest
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b989bf1c2844f7ba9bdf07891e14a84
+      internalID: 5300454822671750824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_28_patched_ceramic_vest
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a452c3eec494553a6fe3518949f032e
+      internalID: 8174069146276577174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_29_reinforced_tactical_chest_rig
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a35c00a6ae834ae1b023acf02b4e6e1e
+      internalID: 2871468082330516453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_armor_midgame_30_veteran_scavenger_armor
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25a4cb2790b948e08149904cf842c545
+      internalID: 4942491470744078109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 569570a83f9e4a478e5b6b97fef5945d
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ui_armor_midgame_01_reinforced_scavenger_jacket: 8743143155460288182
+      ui_armor_midgame_02_road_guard_vest: 8590173339991262450
+      ui_armor_midgame_03_patched_kevlar_vest: 5621449570330677539
+      ui_armor_midgame_04_raider_plate_vest: 6353391484327025975
+      ui_armor_midgame_05_guard_patrol_armor: 8829307965455445782
+      ui_armor_midgame_06_scrap_metal_breastplate: 8736518210235625815
+      ui_armor_midgame_07_reinforced_biker_armor: 1616587692479435607
+      ui_armor_midgame_08_wasteland_ranger_coat: 7103516532672865014
+      ui_armor_midgame_09_armored_mechanic_vest: 4050995034930320584
+      ui_armor_midgame_10_plated_leather_coat: 6065080419048396973
+      ui_armor_midgame_11_tire_shoulder_guard: 1082759796207085532
+      ui_armor_midgame_12_police_surplus_armor: 5766814862822719659
+      ui_armor_midgame_13_riot_chest_rig: 5961184165637762026
+      ui_armor_midgame_14_fireproof_responder_coat: 8924259532032163206
+      ui_armor_midgame_15_hunter_scale_vest: 4167089227403483132
+      ui_armor_midgame_16_caravan_guard_armor: 3090651276061238610
+      ui_armor_midgame_17_quarry_worker_armor: 6256015467350545650
+      ui_armor_midgame_18_nomad_lamellar_vest: 7468984196802498289
+      ui_armor_midgame_19_scavenged_hazmat_armor: 2903632885689852051
+      ui_armor_midgame_20_welded_plate_harness: 8644815499263690796
+      ui_armor_midgame_21_armored_poncho: 8902124537517184476
+      ui_armor_midgame_22_highwayman_cuirass: 8771079749236672901
+      ui_armor_midgame_23_reinforced_trench_vest: 3138776140721436617
+      ui_armor_midgame_24_militia_flak_vest: 2511077814493731638
+      ui_armor_midgame_25_mutant_hide_reinforced_vest: 8758746561081311192
+      ui_armor_midgame_26_armored_salvage_coat: 6315965438795711054
+      ui_armor_midgame_27_medium_combat_vest: 5300454822671750824
+      ui_armor_midgame_28_patched_ceramic_vest: 8174069146276577174
+      ui_armor_midgame_29_reinforced_tactical_chest_rig: 2871468082330516453
+      ui_armor_midgame_30_veteran_scavenger_armor: 4942491470744078109
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

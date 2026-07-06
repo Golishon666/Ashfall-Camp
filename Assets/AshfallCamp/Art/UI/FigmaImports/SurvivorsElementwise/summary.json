@@ -13,7 +13,8 @@
     "nodeCount": 195,
     "textCount": 95,
     "visualCount": 99,
-    "exportedPngs": 99,
+    "exportedPngs": 69,
+    "dedupedPngs": 30,
     "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/01-camp-dashboard-elementwise.png"
   },
   {
@@ -25,7 +26,8 @@
     "nodeCount": 181,
     "textCount": 96,
     "visualCount": 85,
-    "exportedPngs": 85,
+    "exportedPngs": 33,
+    "dedupedPngs": 52,
     "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/02-buildings-elementwise.png"
   },
   {
@@ -37,7 +39,8 @@
     "nodeCount": 255,
     "textCount": 107,
     "visualCount": 147,
-    "exportedPngs": 147,
+    "exportedPngs": 60,
+    "dedupedPngs": 87,
     "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/03-expedition-planning-elementwise.png"
   },
   {
@@ -49,7 +52,8 @@
     "nodeCount": 230,
     "textCount": 88,
     "visualCount": 142,
-    "exportedPngs": 142,
+    "exportedPngs": 71,
+    "dedupedPngs": 71,
     "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/04-workshop-elementwise.png"
   },
   {
@@ -61,7 +65,8 @@
     "nodeCount": 182,
     "textCount": 82,
     "visualCount": 100,
-    "exportedPngs": 100,
+    "exportedPngs": 69,
+    "dedupedPngs": 31,
     "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/05-world-map-elementwise.png"
   },
   {
@@ -73,7 +78,8 @@
     "nodeCount": 385,
     "textCount": 171,
     "visualCount": 157,
-    "exportedPngs": 157,
+    "exportedPngs": 72,
+    "dedupedPngs": 85,
     "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/06-survivors-elementwise.png"
   },
   {
@@ -85,7 +91,8 @@
     "nodeCount": 242,
     "textCount": 99,
     "visualCount": 117,
-    "exportedPngs": 117,
+    "exportedPngs": 60,
+    "dedupedPngs": 57,
     "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/07-survivor-detail-elementwise.png"
   },
   {
@@ -97,7 +104,8 @@
     "nodeCount": 245,
     "textCount": 91,
     "visualCount": 137,
-    "exportedPngs": 137,
+    "exportedPngs": 86,
+    "dedupedPngs": 51,
     "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/08-radio-recruitment-elementwise.png"
   },
   {
@@ -109,7 +117,8 @@
     "nodeCount": 413,
     "textCount": 131,
     "visualCount": 247,
-    "exportedPngs": 247,
+    "exportedPngs": 94,
+    "dedupedPngs": 153,
     "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/09-expedition-combat-elementwise.png"
   },
   {
@@ -121,7 +130,8 @@
     "nodeCount": 284,
     "textCount": 126,
     "visualCount": 116,
-    "exportedPngs": 116,
+    "exportedPngs": 66,
+    "dedupedPngs": 50,
     "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/10-reports-elementwise.png"
   }
 ]
