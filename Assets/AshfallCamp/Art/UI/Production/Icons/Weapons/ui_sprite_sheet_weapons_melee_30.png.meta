@@ -1,0 +1,935 @@
+fileFormatVersion: 2
+guid: 607a7d1dbc28aa37066a4b2595c0d0c0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3534337016621362014
+    second: ui_weapon_melee_01_survival_knife
+  - first:
+      213: 1918035919683159766
+    second: ui_weapon_melee_02_combat_knife
+  - first:
+      213: 2220249058913730187
+    second: ui_weapon_melee_03_curved_machete
+  - first:
+      213: 3196718004004461070
+    second: ui_weapon_melee_04_small_hatchet
+  - first:
+      213: 3849790817283168967
+    second: ui_weapon_melee_05_fire_axe
+  - first:
+      213: 2194054114848186970
+    second: ui_weapon_melee_06_crowbar
+  - first:
+      213: 3651906966783355729
+    second: ui_weapon_melee_07_pipe_wrench
+  - first:
+      213: 6249461108712407328
+    second: ui_weapon_melee_08_spiked_bat
+  - first:
+      213: 8258033778948148200
+    second: ui_weapon_melee_09_nailed_plank
+  - first:
+      213: 1765432460415841675
+    second: ui_weapon_melee_10_rebar_spear
+  - first:
+      213: 6343342685861179852
+    second: ui_weapon_melee_11_sharpened_shovel
+  - first:
+      213: 1280112971946239311
+    second: ui_weapon_melee_12_sledgehammer
+  - first:
+      213: 5269474981001862747
+    second: ui_weapon_melee_13_carpenter_hammer
+  - first:
+      213: 5451234551181114527
+    second: ui_weapon_melee_14_butcher_cleaver
+  - first:
+      213: 6001371451080492398
+    second: ui_weapon_melee_15_bone_club
+  - first:
+      213: 1623639757713629200
+    second: ui_weapon_melee_16_scrap_sword
+  - first:
+      213: 1545755295818882502
+    second: ui_weapon_melee_17_tire_iron
+  - first:
+      213: 7588259375298342220
+    second: ui_weapon_melee_18_chain_whip
+  - first:
+      213: 1214391322349291469
+    second: ui_weapon_melee_19_rusted_sickle
+  - first:
+      213: 2074403913349588675
+    second: ui_weapon_melee_20_pickaxe
+  - first:
+      213: 3802134526360438819
+    second: ui_weapon_melee_21_kukri
+  - first:
+      213: 7254272067110486548
+    second: ui_weapon_melee_22_metal_pipe
+  - first:
+      213: 2355124032771235523
+    second: ui_weapon_melee_23_spiked_knuckles
+  - first:
+      213: 7759171469118655463
+    second: ui_weapon_melee_24_bottle_shiv
+  - first:
+      213: 1647362158405514427
+    second: ui_weapon_melee_25_harpoon_spear
+  - first:
+      213: 1472149949774072373
+    second: ui_weapon_melee_26_bayonet_staff
+  - first:
+      213: 4415138359930886948
+    second: ui_weapon_melee_27_improvised_chainsaw
+  - first:
+      213: 6087219698547652144
+    second: ui_weapon_melee_28_sawblade_axe
+  - first:
+      213: 2704847301227505041
+    second: ui_weapon_melee_29_claw_gauntlet
+  - first:
+      213: 1929413453501837282
+    second: ui_weapon_melee_30_concrete_maul
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ui_weapon_melee_01_survival_knife
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5751f381386d566b9a58c08a66ddcdda
+      internalID: 3534337016621362014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_02_combat_knife
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 152efd3cb16a5f86317a144b8bc6d8da
+      internalID: 1918035919683159766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_03_curved_machete
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 696e6f262cc1a795fcf7daccb8df1ed2
+      internalID: 2220249058913730187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_04_small_hatchet
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dab294a4553f0c80ca931ad257f97d9
+      internalID: 3196718004004461070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_05_fire_axe
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1508249269dbfd3ed3df2aa093cc5560
+      internalID: 3849790817283168967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_06_crowbar
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df1a56290d6a5f55a22dfeb64a30c53c
+      internalID: 2194054114848186970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_07_pipe_wrench
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 846c86dda7d44cf5d8c1e6d30bd9e733
+      internalID: 3651906966783355729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_08_spiked_bat
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5883ed181a3d866dc44a6141a30620ee
+      internalID: 6249461108712407328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_09_nailed_plank
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 305de3f6ae56a1c4f577ea4a5e8b3283
+      internalID: 8258033778948148200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_10_rebar_spear
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33db9c7c8c89c1925573c8178cecd0f4
+      internalID: 1765432460415841675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_11_sharpened_shovel
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 937052a4f14c6894dcee71edd97e0793
+      internalID: 6343342685861179852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_12_sledgehammer
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0f01b5b1a845dcf5ec6b8df78ad671f
+      internalID: 1280112971946239311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_13_carpenter_hammer
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 102b08b101e454543b8e9d2ff5a6abee
+      internalID: 5269474981001862747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_14_butcher_cleaver
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b9d29aa2d3867a997e7c80080566195
+      internalID: 5451234551181114527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_15_bone_club
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fcf9ab7763fa87a58afb1707362f658
+      internalID: 6001371451080492398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_16_scrap_sword
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 281bb8c2e1c3c8e48a000b3e679feacc
+      internalID: 1623639757713629200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_17_tire_iron
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca4682ff20df5bcb5b448ce5320f0334
+      internalID: 1545755295818882502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_18_chain_whip
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53de1e68d869c092d4ca92ac3dcd288b
+      internalID: 7588259375298342220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_19_rusted_sickle
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ff8aa869674bc157311ba1105e37900
+      internalID: 1214391322349291469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_20_pickaxe
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08926ccbba9ecebddc218762f2cf24ec
+      internalID: 2074403913349588675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_21_kukri
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c3f6129dea634e30ad07ad32eb66542
+      internalID: 3802134526360438819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_22_metal_pipe
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0d49451d576934f283682ca36dd9f18
+      internalID: 7254272067110486548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_23_spiked_knuckles
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 621bad3c7f93761967535f7f2c641896
+      internalID: 2355124032771235523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_24_bottle_shiv
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 378f053091610a0efec0a038fe04c125
+      internalID: 7759171469118655463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_25_harpoon_spear
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1be4130f968df8edebe91d9891227182
+      internalID: 1647362158405514427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_26_bayonet_staff
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5860894b05c4c9ee2c0bd54413e9ef98
+      internalID: 1472149949774072373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_27_improvised_chainsaw
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55a2ec3e6913c9de99140546edbe1e26
+      internalID: 4415138359930886948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_28_sawblade_axe
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5055a5be31cd76d26a1eb4739f9707c7
+      internalID: 6087219698547652144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_29_claw_gauntlet
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8de75997cb66659c20a7f3da6b33dbb4
+      internalID: 2704847301227505041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_melee_30_concrete_maul
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 930f537092bc0813e3bf0dc6fe82d482
+      internalID: 1929413453501837282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 070a99449d645c6e3f79627add6da97a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ui_weapon_melee_01_survival_knife: 3534337016621362014
+      ui_weapon_melee_02_combat_knife: 1918035919683159766
+      ui_weapon_melee_03_curved_machete: 2220249058913730187
+      ui_weapon_melee_04_small_hatchet: 3196718004004461070
+      ui_weapon_melee_05_fire_axe: 3849790817283168967
+      ui_weapon_melee_06_crowbar: 2194054114848186970
+      ui_weapon_melee_07_pipe_wrench: 3651906966783355729
+      ui_weapon_melee_08_spiked_bat: 6249461108712407328
+      ui_weapon_melee_09_nailed_plank: 8258033778948148200
+      ui_weapon_melee_10_rebar_spear: 1765432460415841675
+      ui_weapon_melee_11_sharpened_shovel: 6343342685861179852
+      ui_weapon_melee_12_sledgehammer: 1280112971946239311
+      ui_weapon_melee_13_carpenter_hammer: 5269474981001862747
+      ui_weapon_melee_14_butcher_cleaver: 5451234551181114527
+      ui_weapon_melee_15_bone_club: 6001371451080492398
+      ui_weapon_melee_16_scrap_sword: 1623639757713629200
+      ui_weapon_melee_17_tire_iron: 1545755295818882502
+      ui_weapon_melee_18_chain_whip: 7588259375298342220
+      ui_weapon_melee_19_rusted_sickle: 1214391322349291469
+      ui_weapon_melee_20_pickaxe: 2074403913349588675
+      ui_weapon_melee_21_kukri: 3802134526360438819
+      ui_weapon_melee_22_metal_pipe: 7254272067110486548
+      ui_weapon_melee_23_spiked_knuckles: 2355124032771235523
+      ui_weapon_melee_24_bottle_shiv: 7759171469118655463
+      ui_weapon_melee_25_harpoon_spear: 1647362158405514427
+      ui_weapon_melee_26_bayonet_staff: 1472149949774072373
+      ui_weapon_melee_27_improvised_chainsaw: 4415138359930886948
+      ui_weapon_melee_28_sawblade_axe: 6087219698547652144
+      ui_weapon_melee_29_claw_gauntlet: 2704847301227505041
+      ui_weapon_melee_30_concrete_maul: 1929413453501837282
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

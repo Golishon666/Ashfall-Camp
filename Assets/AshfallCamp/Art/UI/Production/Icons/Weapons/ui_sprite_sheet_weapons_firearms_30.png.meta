@@ -1,0 +1,805 @@
+fileFormatVersion: 2
+guid: 0772a08ceaaeadd702d459a1a5977560
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5342213521482287265
+    second: ui_weapon_firearm_01_service_pistol
+  - first:
+      213: 2146648719599271502
+    second: ui_weapon_firearm_02_pipe_pistol
+  - first:
+      213: 2414343225647071031
+    second: ui_weapon_firearm_03_heavy_revolver
+  - first:
+      213: 8822781427450330454
+    second: ui_weapon_firearm_04_magnum_revolver
+  - first:
+      213: 3993752637608791165
+    second: ui_weapon_firearm_05_flare_pistol
+  - first:
+      213: 4640104940512741735
+    second: ui_weapon_firearm_06_sawed_off_shotgun
+  - first:
+      213: 4546804625575130062
+    second: ui_weapon_firearm_07_pump_shotgun
+  - first:
+      213: 1903934596730672671
+    second: ui_weapon_firearm_08_lever_shotgun
+  - first:
+      213: 6256171432814050853
+    second: ui_weapon_firearm_09_semi_auto_shotgun
+  - first:
+      213: 8271555515328802041
+    second: ui_weapon_firearm_10_wasteland_assault_rifle
+  - first:
+      213: 1780667453840049474
+    second: ui_weapon_firearm_12_suppressed_smg
+  - first:
+      213: 1439802867279317402
+    second: ui_weapon_firearm_13_taped_carbine
+  - first:
+      213: 6902473221739977450
+    second: ui_weapon_firearm_14_hunting_rifle
+  - first:
+      213: 5645039609025157989
+    second: ui_weapon_firearm_15_scoped_bolt_rifle
+  - first:
+      213: 7117748292020459167
+    second: ui_weapon_firearm_16_lever_rifle
+  - first:
+      213: 7123941090127040260
+    second: ui_weapon_firearm_18_battle_rifle
+  - first:
+      213: 6740787338810251370
+    second: ui_weapon_firearm_20_belt_fed_mg
+  - first:
+      213: 6317674571987563811
+    second: ui_weapon_firearm_21_pipe_blunderbuss
+  - first:
+      213: 7842043686042176420
+    second: ui_weapon_firearm_22_single_grenade_launcher
+  - first:
+      213: 3583955492968202153
+    second: ui_weapon_firearm_23_pistol_carbine
+  - first:
+      213: 4715188244979842362
+    second: ui_weapon_firearm_24_nail_gun
+  - first:
+      213: 5655459028468836161
+    second: ui_weapon_firearm_26_red_wrap_auto_rifle
+  - first:
+      213: 5267243941901004426
+    second: ui_weapon_firearm_27_bullpup_rifle
+  - first:
+      213: 1872955464120702436
+    second: ui_weapon_firearm_28_survival_carbine
+  - first:
+      213: 1795768384064002636
+    second: ui_weapon_firearm_29_anti_mutant_rifle
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ui_weapon_firearm_01_service_pistol
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2766d10fd9bd5f6073db6b5e91f08d65
+      internalID: 5342213521482287265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_02_pipe_pistol
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b589a3ee5bef2f1fc08cca19127afca7
+      internalID: 2146648719599271502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_03_heavy_revolver
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1d632dbbc20f843a673256598e43096
+      internalID: 2414343225647071031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_04_magnum_revolver
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a62aaf56799145d23a61218e9c1027d
+      internalID: 8822781427450330454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_05_flare_pistol
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49e2ea53f59cce7f375c5b4b10842743
+      internalID: 3993752637608791165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_06_sawed_off_shotgun
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1352646ee710c925e5fdbedd5fec0493
+      internalID: 4640104940512741735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_07_pump_shotgun
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 840b2ef7e739eeeecbc1a8ba17745d7c
+      internalID: 4546804625575130062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_08_lever_shotgun
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bf38b68bdebc3b9afa88a4cb1bb4c92
+      internalID: 1903934596730672671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_09_semi_auto_shotgun
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 614194d731c830d69323074bd456e858
+      internalID: 6256171432814050853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_10_wasteland_assault_rifle
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ccac57597712f58b35cf5257da3074c
+      internalID: 8271555515328802041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_12_suppressed_smg
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9537d3e719297f355282a8d9642c19f
+      internalID: 1780667453840049474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_13_taped_carbine
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaa1a12880a30613b09d2b68cbdaf00f
+      internalID: 1439802867279317402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_14_hunting_rifle
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73ea324a9099ccfd2e5289b2896ea2f5
+      internalID: 6902473221739977450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_15_scoped_bolt_rifle
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4fcfaf43106780eceaa00c606496423
+      internalID: 5645039609025157989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_16_lever_rifle
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5af5bac207b35d57cf5699f1204df7d1
+      internalID: 7117748292020459167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_18_battle_rifle
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53d51608dacf0553d80b1654c3d4f5f6
+      internalID: 7123941090127040260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_20_belt_fed_mg
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90ee24e090f3d889a6aa15768b38ad03
+      internalID: 6740787338810251370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_21_pipe_blunderbuss
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 643343aaf0194953b40b376d02cfb7b6
+      internalID: 6317674571987563811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_22_single_grenade_launcher
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bba815fa5ef700231aff83dc0ecaf64
+      internalID: 7842043686042176420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_23_pistol_carbine
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6301eb780a607829609e7e38838b101
+      internalID: 3583955492968202153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_24_nail_gun
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abc20a6a6fca4bf09433b8cb64386906
+      internalID: 4715188244979842362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_26_red_wrap_auto_rifle
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2eaab343ef96aa5d738ef1552357b248
+      internalID: 5655459028468836161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_27_bullpup_rifle
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73dff403159e8af47edd86566c83cc13
+      internalID: 5267243941901004426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_28_survival_carbine
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4b04e73b7e0dedb69726c2f8e486598
+      internalID: 1872955464120702436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_29_anti_mutant_rifle
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f80fe5a97f8c3c8d61c57b8c42d9d4ab
+      internalID: 1795768384064002636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 3f34ff94a2d89466b1b0e3a802ed554b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ui_weapon_firearm_01_service_pistol: 5342213521482287265
+      ui_weapon_firearm_02_pipe_pistol: 2146648719599271502
+      ui_weapon_firearm_03_heavy_revolver: 2414343225647071031
+      ui_weapon_firearm_04_magnum_revolver: 8822781427450330454
+      ui_weapon_firearm_05_flare_pistol: 3993752637608791165
+      ui_weapon_firearm_06_sawed_off_shotgun: 4640104940512741735
+      ui_weapon_firearm_07_pump_shotgun: 4546804625575130062
+      ui_weapon_firearm_08_lever_shotgun: 1903934596730672671
+      ui_weapon_firearm_09_semi_auto_shotgun: 6256171432814050853
+      ui_weapon_firearm_10_wasteland_assault_rifle: 8271555515328802041
+      ui_weapon_firearm_12_suppressed_smg: 1780667453840049474
+      ui_weapon_firearm_13_taped_carbine: 1439802867279317402
+      ui_weapon_firearm_14_hunting_rifle: 6902473221739977450
+      ui_weapon_firearm_15_scoped_bolt_rifle: 5645039609025157989
+      ui_weapon_firearm_16_lever_rifle: 7117748292020459167
+      ui_weapon_firearm_18_battle_rifle: 7123941090127040260
+      ui_weapon_firearm_20_belt_fed_mg: 6740787338810251370
+      ui_weapon_firearm_21_pipe_blunderbuss: 6317674571987563811
+      ui_weapon_firearm_22_single_grenade_launcher: 7842043686042176420
+      ui_weapon_firearm_23_pistol_carbine: 3583955492968202153
+      ui_weapon_firearm_24_nail_gun: 4715188244979842362
+      ui_weapon_firearm_26_red_wrap_auto_rifle: 5655459028468836161
+      ui_weapon_firearm_27_bullpup_rifle: 5267243941901004426
+      ui_weapon_firearm_28_survival_carbine: 1872955464120702436
+      ui_weapon_firearm_29_anti_mutant_rifle: 1795768384064002636
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -193,8 +193,8 @@ namespace AshfallCamp.Tests.EditMode
                 Assert.That(bindings.DetailPortrait.gameObject.activeSelf, Is.True);
 
                 var artworkBindings = ReadSurvivorArtworkBindings(survivors);
-                AssertSurvivorArtwork(catalog.SurvivorRosterCardTexture, artworkBindings.FirstCard, "first survivor card");
-                AssertSurvivorArtwork(catalog.SurvivorDetailPanelTexture, artworkBindings.Detail, "survivor detail");
+                AssertSurvivorArtworkUnused(artworkBindings.FirstCard, "first survivor card");
+                AssertSurvivorArtworkUnused(artworkBindings.Detail, "survivor detail");
 
                 state.Survivors.Clear();
                 dashboard.Render(state, config);
@@ -1643,6 +1643,14 @@ namespace AshfallCamp.Tests.EditMode
             Assert.NotNull(binding, "Survivor artwork binding is missing for " + label + ".");
             Assert.AreSame(expected, binding.texture, "Survivor artwork texture mismatch for " + label + ".");
             Assert.That(binding.gameObject.activeSelf, Is.True, "Survivor artwork object is inactive for " + label + ".");
+        }
+
+        private static void AssertSurvivorArtworkUnused(RawImage binding, string label)
+        {
+            if (binding == null) return;
+
+            Assert.That(binding.texture == null, Is.True, "Survivor artwork should not be raster-backed for " + label + ".");
+            Assert.That(binding.gameObject.activeSelf, Is.False, "Survivor artwork object should be inactive for " + label + ".");
         }
 
         private static Button ReadExpeditionLaunchButton(CampDashboardView dashboard)

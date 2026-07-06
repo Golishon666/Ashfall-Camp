@@ -222,8 +222,8 @@ MonoBehaviour:
   SurvivorDetailStopRestButton: STOP REST
   SurvivorDetailRestingLabelFormat: Resting. Fatigue recovers {0}/min
   SurvivorsEmptyPanelTexture: {fileID: 2800000, guid: 3d9e9f1c1be6475cb55315c39300a658, type: 3}
-  SurvivorDetailPanelTexture: {fileID: 2800000, guid: 2d7c527756ed442eab5632edccb17338, type: 3}
-  SurvivorRosterCardTexture: {fileID: 2800000, guid: 1e0d4db6228d440380c358e3aeca4c14, type: 3}
+  SurvivorDetailPanelTexture: {fileID: 0}
+  SurvivorRosterCardTexture: {fileID: 0}
   DefaultSurvivorPortraitId: default
   SurvivorNoWeaponLabel: Unarmed
   SurvivorNoTraitsLabel: None
@@ -461,10 +461,10 @@ MonoBehaviour:
   - RiskTier: DeadZone
     Badge: {fileID: 2800000, guid: 91ea2635dc8e490eae92884761ebc88f, type: 3}
   NavItems:
-  - Id: expeditions
-    Label: EXPEDITIONS
-    Icon: {fileID: 2800000, guid: a597ee356523901408b8d779b765ea1f, type: 3}
-    IsActive: 0
+  - Id: camp
+    Label: CAMP
+    Icon: {fileID: 2800000, guid: b1a3ecc912a823e488d01dd7bb394bde, type: 3}
+    IsActive: 1
   - Id: survivors
     Label: SURVIVORS
     Icon: {fileID: 2800000, guid: 911e2f9b550a95b42b9828e52356a8ca, type: 3}
@@ -472,7 +472,11 @@ MonoBehaviour:
   - Id: buildings
     Label: BUILDINGS
     Icon: {fileID: 2800000, guid: ebb35b604d6d6d243999e5bc29882a7d, type: 3}
-    IsActive: 1
+    IsActive: 0
+  - Id: expeditions
+    Label: EXPEDITIONS
+    Icon: {fileID: 2800000, guid: a597ee356523901408b8d779b765ea1f, type: 3}
+    IsActive: 0
   - Id: workshop
     Label: WORKSHOP
     Icon: {fileID: 2800000, guid: f398bd99595f0214586895e7a61a6bb7, type: 3}

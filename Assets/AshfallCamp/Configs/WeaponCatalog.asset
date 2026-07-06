@@ -1,0 +1,1895 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e17ef503c6e4fd0bccc19ff58ea8b9f, type: 3}
+  m_Name: WeaponCatalog
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.WeaponCatalogSO
+  Weapons:
+  - Id: "weapon_melee_01_survival_knife"
+    Name: "Survival Knife"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 5
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.90
+    ArmorPenetration: 0.05
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 1
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 3534337016621362014, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_02_combat_knife"
+    Name: "Combat Knife"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 5
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.90
+    ArmorPenetration: 0.05
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 2
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 1918035919683159766, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_03_curved_machete"
+    Name: "Curved Machete"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 5
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.90
+    ArmorPenetration: 0.05
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 3
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 2220249058913730187, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_04_small_hatchet"
+    Name: "Small Hatchet"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 9
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.80
+    ArmorPenetration: 0.12
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 4
+    AttackSoundId: "melee_heavy_blade"
+    Icon: {fileID: 3196718004004461070, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_05_fire_axe"
+    Name: "Fire Axe"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 9
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.80
+    ArmorPenetration: 0.12
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 5
+    AttackSoundId: "melee_heavy_blade"
+    Icon: {fileID: 3849790817283168967, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_06_crowbar"
+    Name: "Crowbar"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.82
+    ArmorPenetration: 0.10
+    CriticalChance: 0.04
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 6
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 2194054114848186970, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_07_pipe_wrench"
+    Name: "Pipe Wrench"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.82
+    ArmorPenetration: 0.10
+    CriticalChance: 0.04
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 7
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 3651906966783355729, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_08_spiked_bat"
+    Name: "Spiked Bat"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.82
+    ArmorPenetration: 0.10
+    CriticalChance: 0.04
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 8
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 6249461108712407328, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_09_nailed_plank"
+    Name: "Nailed Plank"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.82
+    ArmorPenetration: 0.10
+    CriticalChance: 0.04
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 9
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 8258033778948148200, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_10_rebar_spear"
+    Name: "Rebar Spear"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 7
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.84
+    ArmorPenetration: 0.08
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 10
+    AttackSoundId: "melee_pierce"
+    Icon: {fileID: 1765432460415841675, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_11_sharpened_shovel"
+    Name: "Sharpened Shovel"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.82
+    ArmorPenetration: 0.10
+    CriticalChance: 0.04
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 11
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 6343342685861179852, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_12_sledgehammer"
+    Name: "Sledgehammer"
+    Description: "A common melee weapon for holding the front line."
+    Type: 0
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.82
+    ArmorPenetration: 0.10
+    CriticalChance: 0.04
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 80
+    RepairCostMultiplier: 1.00
+    SortOrder: 12
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 1280112971946239311, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_13_carpenter_hammer"
+    Name: "Carpenter Hammer"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 13
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.80
+    ArmorPenetration: 0.22
+    CriticalChance: 0.07
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 13
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 5269474981001862747, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_14_butcher_cleaver"
+    Name: "Butcher Cleaver"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 9
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.88
+    ArmorPenetration: 0.12
+    CriticalChance: 0.11
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 14
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 5451234551181114527, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_15_bone_club"
+    Name: "Bone Club"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 13
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.80
+    ArmorPenetration: 0.22
+    CriticalChance: 0.07
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 15
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 6001371451080492398, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_16_scrap_sword"
+    Name: "Scrap Sword"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 9
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.88
+    ArmorPenetration: 0.12
+    CriticalChance: 0.11
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 16
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 1623639757713629200, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_17_tire_iron"
+    Name: "Tire Iron"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 13
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.80
+    ArmorPenetration: 0.22
+    CriticalChance: 0.07
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 17
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 1545755295818882502, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_18_chain_whip"
+    Name: "Chain Whip"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 14
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.78
+    ArmorPenetration: 0.24
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 2
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 18
+    AttackSoundId: "melee_chain"
+    Icon: {fileID: 7588259375298342220, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_19_rusted_sickle"
+    Name: "Rusted Sickle"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 9
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.88
+    ArmorPenetration: 0.12
+    CriticalChance: 0.11
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 19
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 1214391322349291469, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_20_pickaxe"
+    Name: "Pickaxe"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 14
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.78
+    ArmorPenetration: 0.24
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 20
+    AttackSoundId: "melee_heavy_blade"
+    Icon: {fileID: 2074403913349588675, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_21_kukri"
+    Name: "Kukri"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 9
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.88
+    ArmorPenetration: 0.12
+    CriticalChance: 0.11
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 21
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 3802134526360438819, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_22_metal_pipe"
+    Name: "Metal Pipe"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 13
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.80
+    ArmorPenetration: 0.22
+    CriticalChance: 0.07
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 22
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 7254272067110486548, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_23_spiked_knuckles"
+    Name: "Spiked Knuckles"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 10
+    AttacksPerTurn: 3
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.86
+    ArmorPenetration: 0.10
+    CriticalChance: 0.10
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 23
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 2355124032771235523, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_24_bottle_shiv"
+    Name: "Bottle Shiv"
+    Description: "A rare melee weapon for holding the front line."
+    Type: 0
+    Rarity: 1
+    Attack: 9
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.88
+    ArmorPenetration: 0.12
+    CriticalChance: 0.11
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 95
+    RepairCostMultiplier: 1.15
+    SortOrder: 24
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 7759171469118655463, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_25_harpoon_spear"
+    Name: "Harpoon Spear"
+    Description: "A epic melee weapon for holding the front line."
+    Type: 0
+    Rarity: 2
+    Attack: 17
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.80
+    ArmorPenetration: 0.30
+    CriticalChance: 0.11
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 115
+    RepairCostMultiplier: 1.40
+    SortOrder: 25
+    AttackSoundId: "melee_pierce"
+    Icon: {fileID: 1647362158405514427, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_26_bayonet_staff"
+    Name: "Bayonet Staff"
+    Description: "A epic melee weapon for holding the front line."
+    Type: 0
+    Rarity: 2
+    Attack: 17
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.80
+    ArmorPenetration: 0.30
+    CriticalChance: 0.11
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 115
+    RepairCostMultiplier: 1.40
+    SortOrder: 26
+    AttackSoundId: "melee_pierce"
+    Icon: {fileID: 1472149949774072373, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_27_improvised_chainsaw"
+    Name: "Improvised Chainsaw"
+    Description: "A epic melee weapon for holding the front line."
+    Type: 0
+    Rarity: 2
+    Attack: 21
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.38
+    CriticalChance: 0.13
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 2
+    MaxDurability: 115
+    RepairCostMultiplier: 1.40
+    SortOrder: 27
+    AttackSoundId: "melee_chain"
+    Icon: {fileID: 4415138359930886948, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_28_sawblade_axe"
+    Name: "Sawblade Axe"
+    Description: "A epic melee weapon for holding the front line."
+    Type: 0
+    Rarity: 2
+    Attack: 21
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.38
+    CriticalChance: 0.13
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 2
+    MaxDurability: 115
+    RepairCostMultiplier: 1.40
+    SortOrder: 28
+    AttackSoundId: "melee_chain"
+    Icon: {fileID: 6087219698547652144, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_29_claw_gauntlet"
+    Name: "Claw Gauntlet"
+    Description: "A epic melee weapon for holding the front line."
+    Type: 0
+    Rarity: 2
+    Attack: 16
+    AttacksPerTurn: 3
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.84
+    ArmorPenetration: 0.18
+    CriticalChance: 0.14
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 115
+    RepairCostMultiplier: 1.40
+    SortOrder: 29
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 2704847301227505041, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_30_concrete_maul"
+    Name: "Concrete Maul"
+    Description: "A legendary melee weapon for holding the front line."
+    Type: 0
+    Rarity: 3
+    Attack: 29
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.58
+    CriticalChance: 0.14
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 135
+    RepairCostMultiplier: 1.75
+    SortOrder: 30
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 1929413453501837282, guid: 607a7d1dbc28aa37066a4b2595c0d0c0, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_advanced_01_tactical_carbon_knife"
+    Name: "Tactical Carbon Knife"
+    Description: "A epic melee weapon for holding the front line."
+    Type: 0
+    Rarity: 2
+    Attack: 16
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.86
+    ArmorPenetration: 0.22
+    CriticalChance: 0.15
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 115
+    RepairCostMultiplier: 1.40
+    SortOrder: 31
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 5968419832382029276, guid: 48c95293005495ea1e87421bdad53577, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_advanced_02_reinforced_shock_machete"
+    Name: "Reinforced Shock Machete"
+    Description: "A epic melee weapon for holding the front line."
+    Type: 0
+    Rarity: 2
+    Attack: 16
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.86
+    ArmorPenetration: 0.22
+    CriticalChance: 0.15
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 115
+    RepairCostMultiplier: 1.40
+    SortOrder: 32
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 8546328683351361970, guid: 48c95293005495ea1e87421bdad53577, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_advanced_03_hydraulic_fire_axe"
+    Name: "Hydraulic Fire Axe"
+    Description: "A epic melee weapon for holding the front line."
+    Type: 0
+    Rarity: 2
+    Attack: 24
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.38
+    CriticalChance: 0.13
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 115
+    RepairCostMultiplier: 1.40
+    SortOrder: 33
+    AttackSoundId: "melee_heavy_blade"
+    Icon: {fileID: 4269175718022706031, guid: 48c95293005495ea1e87421bdad53577, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_advanced_04_balanced_war_pick"
+    Name: "Balanced War Pick"
+    Description: "A epic melee weapon for holding the front line."
+    Type: 0
+    Rarity: 2
+    Attack: 24
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.38
+    CriticalChance: 0.13
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 115
+    RepairCostMultiplier: 1.40
+    SortOrder: 34
+    AttackSoundId: "melee_heavy_blade"
+    Icon: {fileID: 4314430841328958376, guid: 48c95293005495ea1e87421bdad53577, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_advanced_05_breaching_hammer"
+    Name: "Breaching Hammer"
+    Description: "A legendary melee weapon for holding the front line."
+    Type: 0
+    Rarity: 3
+    Attack: 32
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.58
+    CriticalChance: 0.14
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 135
+    RepairCostMultiplier: 1.75
+    SortOrder: 35
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 8030995641756048644, guid: 48c95293005495ea1e87421bdad53577, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_advanced_06_powered_saw_cleaver"
+    Name: "Powered Saw Cleaver"
+    Description: "A legendary melee weapon for holding the front line."
+    Type: 0
+    Rarity: 3
+    Attack: 22
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.84
+    ArmorPenetration: 0.35
+    CriticalChance: 0.20
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 135
+    RepairCostMultiplier: 1.75
+    SortOrder: 36
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 4233142626901986055, guid: 48c95293005495ea1e87421bdad53577, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_advanced_07_elite_claw_gauntlet"
+    Name: "Elite Claw Gauntlet"
+    Description: "A legendary melee weapon for holding the front line."
+    Type: 0
+    Rarity: 3
+    Attack: 24
+    AttacksPerTurn: 3
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.82
+    ArmorPenetration: 0.30
+    CriticalChance: 0.19
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 135
+    RepairCostMultiplier: 1.75
+    SortOrder: 37
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 1685925486339278579, guid: 48c95293005495ea1e87421bdad53577, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_advanced_08_telescopic_spear"
+    Name: "Telescopic Spear"
+    Description: "A legendary melee weapon for holding the front line."
+    Type: 0
+    Rarity: 3
+    Attack: 26
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.78
+    ArmorPenetration: 0.42
+    CriticalChance: 0.15
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 135
+    RepairCostMultiplier: 1.75
+    SortOrder: 38
+    AttackSoundId: "melee_pierce"
+    Icon: {fileID: 7813879992557448665, guid: 48c95293005495ea1e87421bdad53577, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_advanced_09_monofilament_chain_whip"
+    Name: "Monofilament Chain Whip"
+    Description: "A legendary melee weapon for holding the front line."
+    Type: 0
+    Rarity: 3
+    Attack: 33
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.74
+    ArmorPenetration: 0.55
+    CriticalChance: 0.18
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 2
+    MaxDurability: 135
+    RepairCostMultiplier: 1.75
+    SortOrder: 39
+    AttackSoundId: "melee_chain"
+    Icon: {fileID: 2148508537448373498, guid: 48c95293005495ea1e87421bdad53577, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_melee_advanced_10_crusher_maul"
+    Name: "Crusher Maul"
+    Description: "A legendary melee weapon for holding the front line."
+    Type: 0
+    Rarity: 3
+    Attack: 32
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.58
+    CriticalChance: 0.14
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    MaxDurability: 135
+    RepairCostMultiplier: 1.75
+    SortOrder: 40
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 7082252159350262188, guid: 48c95293005495ea1e87421bdad53577, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_01_service_pistol"
+    Name: "Service Pistol"
+    Description: "A common firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.82
+    ArmorPenetration: 0.04
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 2
+    MaxDurability: 60
+    RepairCostMultiplier: 1.20
+    SortOrder: 41
+    AttackSoundId: "firearm_sidearm"
+    Icon: {fileID: 5342213521482287265, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_02_pipe_pistol"
+    Name: "Pipe Pistol"
+    Description: "A common firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.82
+    ArmorPenetration: 0.04
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 2
+    MaxDurability: 60
+    RepairCostMultiplier: 1.20
+    SortOrder: 42
+    AttackSoundId: "firearm_sidearm"
+    Icon: {fileID: 2146648719599271502, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_03_heavy_revolver"
+    Name: "Heavy Revolver"
+    Description: "A common firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.82
+    ArmorPenetration: 0.04
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 2
+    MaxDurability: 60
+    RepairCostMultiplier: 1.20
+    SortOrder: 43
+    AttackSoundId: "firearm_sidearm"
+    Icon: {fileID: 2414343225647071031, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_04_magnum_revolver"
+    Name: "Magnum Revolver"
+    Description: "A common firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.82
+    ArmorPenetration: 0.04
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 2
+    MaxDurability: 60
+    RepairCostMultiplier: 1.20
+    SortOrder: 44
+    AttackSoundId: "firearm_sidearm"
+    Icon: {fileID: 8822781427450330454, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_05_flare_pistol"
+    Name: "Flare Pistol"
+    Description: "A common firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 0
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.82
+    ArmorPenetration: 0.04
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 2
+    MaxDurability: 60
+    RepairCostMultiplier: 1.20
+    SortOrder: 45
+    AttackSoundId: "firearm_sidearm"
+    Icon: {fileID: 3993752637608791165, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_06_sawed_off_shotgun"
+    Name: "Sawed Off Shotgun"
+    Description: "A common firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 0
+    Attack: 12
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.76
+    ArmorPenetration: 0.05
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 60
+    RepairCostMultiplier: 1.20
+    SortOrder: 46
+    AttackSoundId: "firearm_shotgun"
+    Icon: {fileID: 4640104940512741735, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_07_pump_shotgun"
+    Name: "Pump Shotgun"
+    Description: "A common firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 0
+    Attack: 12
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.76
+    ArmorPenetration: 0.05
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 60
+    RepairCostMultiplier: 1.20
+    SortOrder: 47
+    AttackSoundId: "firearm_shotgun"
+    Icon: {fileID: 4546804625575130062, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_08_lever_shotgun"
+    Name: "Lever Shotgun"
+    Description: "A common firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 0
+    Attack: 12
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.76
+    ArmorPenetration: 0.05
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 60
+    RepairCostMultiplier: 1.20
+    SortOrder: 48
+    AttackSoundId: "firearm_shotgun"
+    Icon: {fileID: 1903934596730672671, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_09_semi_auto_shotgun"
+    Name: "Semi Auto Shotgun"
+    Description: "A common firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 0
+    Attack: 12
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.76
+    ArmorPenetration: 0.05
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 60
+    RepairCostMultiplier: 1.20
+    SortOrder: 49
+    AttackSoundId: "firearm_shotgun"
+    Icon: {fileID: 6256171432814050853, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_10_wasteland_assault_rifle"
+    Name: "Wasteland Assault Rifle"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 15
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.73
+    ArmorPenetration: 0.18
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 5
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 50
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 8271555515328802041, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_12_suppressed_smg"
+    Name: "Suppressed SMG"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 11
+    AttacksPerTurn: 3
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.76
+    ArmorPenetration: 0.10
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 51
+    AttackSoundId: "firearm_smg"
+    Icon: {fileID: 1780667453840049474, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_13_taped_carbine"
+    Name: "Taped Carbine"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 17
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.79
+    ArmorPenetration: 0.24
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 52
+    AttackSoundId: "firearm_rifle"
+    Icon: {fileID: 1439802867279317402, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_14_hunting_rifle"
+    Name: "Hunting Rifle"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 17
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.79
+    ArmorPenetration: 0.24
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 53
+    AttackSoundId: "firearm_rifle"
+    Icon: {fileID: 6902473221739977450, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_15_scoped_bolt_rifle"
+    Name: "Scoped Bolt Rifle"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 22
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.82
+    ArmorPenetration: 0.32
+    CriticalChance: 0.12
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 5
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 54
+    AttackSoundId: "firearm_precision"
+    Icon: {fileID: 5645039609025157989, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_16_lever_rifle"
+    Name: "Lever Rifle"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 17
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.79
+    ArmorPenetration: 0.24
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 55
+    AttackSoundId: "firearm_rifle"
+    Icon: {fileID: 7117748292020459167, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_18_battle_rifle"
+    Name: "Battle Rifle"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 15
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.73
+    ArmorPenetration: 0.18
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 5
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 56
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 7123941090127040260, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_20_belt_fed_mg"
+    Name: "Belt Fed Mg"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 22
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.71
+    ArmorPenetration: 0.32
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 57
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 6740787338810251370, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_21_pipe_blunderbuss"
+    Name: "Pipe Blunderbuss"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 26
+    AttacksPerTurn: 1
+    TargetCount: 3
+    TargetingRule: 1
+    HitChance: 0.72
+    ArmorPenetration: 0.25
+    CriticalChance: 0.10
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 58
+    AttackSoundId: "firearm_shotgun"
+    Icon: {fileID: 6317674571987563811, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_22_single_grenade_launcher"
+    Name: "Single Grenade Launcher"
+    Description: "A epic explosive weapon for damaging clustered enemies."
+    Type: 2
+    Rarity: 2
+    Attack: 38
+    AttacksPerTurn: 1
+    TargetCount: 3
+    TargetingRule: 2
+    HitChance: 0.64
+    ArmorPenetration: 0.50
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 2
+    NoisePerAttack: 8
+    MaxDurability: 85
+    RepairCostMultiplier: 1.90
+    SortOrder: 59
+    AttackSoundId: "explosive_launcher"
+    Icon: {fileID: 7842043686042176420, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_23_pistol_carbine"
+    Name: "Pistol Carbine"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 26
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.77
+    ArmorPenetration: 0.40
+    CriticalChance: 0.13
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 5
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 60
+    AttackSoundId: "firearm_rifle"
+    Icon: {fileID: 3583955492968202153, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_24_nail_gun"
+    Name: "Nail Gun"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 18
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.78
+    ArmorPenetration: 0.22
+    CriticalChance: 0.11
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 61
+    AttackSoundId: "firearm_sidearm"
+    Icon: {fileID: 4715188244979842362, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_26_red_wrap_auto_rifle"
+    Name: "Red Wrap Auto Rifle"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 22
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.71
+    ArmorPenetration: 0.32
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 62
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 5655459028468836161, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_27_bullpup_rifle"
+    Name: "Bullpup Rifle"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 22
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.71
+    ArmorPenetration: 0.32
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 63
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 5267243941901004426, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_28_survival_carbine"
+    Name: "Survival Carbine"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 26
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.77
+    ArmorPenetration: 0.40
+    CriticalChance: 0.13
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 5
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 64
+    AttackSoundId: "firearm_rifle"
+    Icon: {fileID: 1872955464120702436, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_29_anti_mutant_rifle"
+    Name: "Anti Mutant Rifle"
+    Description: "A legendary firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 3
+    Attack: 48
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.78
+    ArmorPenetration: 0.75
+    CriticalChance: 0.24
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 7
+    MaxDurability: 110
+    RepairCostMultiplier: 2.25
+    SortOrder: 65
+    AttackSoundId: "firearm_precision"
+    Icon: {fileID: 1795768384064002636, guid: 0772a08ceaaeadd702d459a1a5977560, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_01_tactical_suppressed_pistol"
+    Name: "Tactical Suppressed Pistol"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 12
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.80
+    ArmorPenetration: 0.12
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 3
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 66
+    AttackSoundId: "firearm_sidearm"
+    Icon: {fileID: 7701058093427722208, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_02_armor_piercing_revolver"
+    Name: "Armor Piercing Revolver"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 12
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.80
+    ArmorPenetration: 0.12
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 3
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 67
+    AttackSoundId: "firearm_sidearm"
+    Icon: {fileID: 1100349872815644930, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_03_machine_pistol"
+    Name: "Machine Pistol"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 11
+    AttacksPerTurn: 3
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.76
+    ArmorPenetration: 0.10
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 68
+    AttackSoundId: "firearm_smg"
+    Icon: {fileID: 7425627232979188815, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_04_compact_pdw"
+    Name: "Compact PDW"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 11
+    AttacksPerTurn: 3
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.76
+    ArmorPenetration: 0.10
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 69
+    AttackSoundId: "firearm_smg"
+    Icon: {fileID: 8333975361139973794, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_05_tactical_smg"
+    Name: "Tactical SMG"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 11
+    AttacksPerTurn: 3
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.76
+    ArmorPenetration: 0.10
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 70
+    AttackSoundId: "firearm_smg"
+    Icon: {fileID: 7871299763300451573, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_06_suppressed_carbine"
+    Name: "Suppressed Carbine"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 17
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.79
+    ArmorPenetration: 0.24
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 4
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 71
+    AttackSoundId: "firearm_rifle"
+    Icon: {fileID: 7350305934805119913, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_07_modern_assault_rifle"
+    Name: "Modern Assault Rifle"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 15
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.73
+    ArmorPenetration: 0.18
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 5
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 72
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 5931135736361338210, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_08_high_grade_ak"
+    Name: "High Grade AK"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 15
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.73
+    ArmorPenetration: 0.18
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 5
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 73
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 8918746529196518220, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_09_compact_tactical_shotgun"
+    Name: "Compact Tactical Shotgun"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 18
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.74
+    ArmorPenetration: 0.14
+    CriticalChance: 0.07
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 5
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 74
+    AttackSoundId: "firearm_shotgun"
+    Icon: {fileID: 5784540036842358665, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_10_drum_combat_shotgun"
+    Name: "Drum Combat Shotgun"
+    Description: "A rare firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 1
+    Attack: 18
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.74
+    ArmorPenetration: 0.14
+    CriticalChance: 0.07
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 5
+    MaxDurability: 75
+    RepairCostMultiplier: 1.45
+    SortOrder: 75
+    AttackSoundId: "firearm_shotgun"
+    Icon: {fileID: 8311804552880188035, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_11_designated_marksman_rifle"
+    Name: "Designated Marksman Rifle"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 34
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.80
+    ArmorPenetration: 0.55
+    CriticalChance: 0.18
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 76
+    AttackSoundId: "firearm_precision"
+    Icon: {fileID: 6482682073337356685, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_12_precision_sniper_rifle"
+    Name: "Precision Sniper Rifle"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 34
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.80
+    ArmorPenetration: 0.55
+    CriticalChance: 0.18
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 77
+    AttackSoundId: "firearm_precision"
+    Icon: {fileID: 8085560046616247338, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_13_anti_materiel_rifle"
+    Name: "Anti Materiel Rifle"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 34
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.80
+    ArmorPenetration: 0.55
+    CriticalChance: 0.18
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 78
+    AttackSoundId: "firearm_precision"
+    Icon: {fileID: 5023900103412933919, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_14_bullpup_assault_rifle"
+    Name: "Bullpup Assault Rifle"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 22
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.71
+    ArmorPenetration: 0.32
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 79
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 6404601354204977482, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_15_high_tier_battle_rifle"
+    Name: "High Tier Battle Rifle"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 22
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.71
+    ArmorPenetration: 0.32
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 80
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 4249550373177239745, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_16_tactical_lmg"
+    Name: "Tactical LMG"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 22
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.71
+    ArmorPenetration: 0.32
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 81
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 2367937904857654692, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_17_compact_support_gun"
+    Name: "Compact Support Gun"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 22
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.71
+    ArmorPenetration: 0.32
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 82
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 2042209871502369650, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_18_heavy_auto_shotgun"
+    Name: "Heavy Auto Shotgun"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 26
+    AttacksPerTurn: 1
+    TargetCount: 3
+    TargetingRule: 1
+    HitChance: 0.72
+    ArmorPenetration: 0.25
+    CriticalChance: 0.10
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 83
+    AttackSoundId: "firearm_shotgun"
+    Icon: {fileID: 5085197421611706342, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_19_breaching_shotgun"
+    Name: "Breaching Shotgun"
+    Description: "A epic firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 2
+    Attack: 26
+    AttacksPerTurn: 1
+    TargetCount: 3
+    TargetingRule: 1
+    HitChance: 0.72
+    ArmorPenetration: 0.25
+    CriticalChance: 0.10
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 90
+    RepairCostMultiplier: 1.80
+    SortOrder: 84
+    AttackSoundId: "firearm_shotgun"
+    Icon: {fileID: 3872008914435937499, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_20_advanced_grenade_launcher"
+    Name: "Advanced Grenade Launcher"
+    Description: "A epic explosive weapon for damaging clustered enemies."
+    Type: 2
+    Rarity: 2
+    Attack: 38
+    AttacksPerTurn: 1
+    TargetCount: 3
+    TargetingRule: 2
+    HitChance: 0.64
+    ArmorPenetration: 0.50
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 2
+    NoisePerAttack: 8
+    MaxDurability: 85
+    RepairCostMultiplier: 1.90
+    SortOrder: 85
+    AttackSoundId: "explosive_launcher"
+    Icon: {fileID: 5989904000425408734, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_22_coil_carbine"
+    Name: "Coil Carbine"
+    Description: "A legendary firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 3
+    Attack: 38
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.75
+    ArmorPenetration: 0.60
+    CriticalChance: 0.18
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 110
+    RepairCostMultiplier: 2.25
+    SortOrder: 86
+    AttackSoundId: "firearm_rifle"
+    Icon: {fileID: 4449280778687614655, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_23_electromagnetic_marksman_rifle"
+    Name: "Electromagnetic Marksman Rifle"
+    Description: "A legendary firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 3
+    Attack: 48
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.78
+    ArmorPenetration: 0.75
+    CriticalChance: 0.24
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 7
+    MaxDurability: 110
+    RepairCostMultiplier: 2.25
+    SortOrder: 87
+    AttackSoundId: "firearm_precision"
+    Icon: {fileID: 5074187589604237160, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_24_suppressed_scout_rifle"
+    Name: "Suppressed Scout Rifle"
+    Description: "A legendary firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 3
+    Attack: 38
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.75
+    ArmorPenetration: 0.60
+    CriticalChance: 0.18
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 110
+    RepairCostMultiplier: 2.25
+    SortOrder: 88
+    AttackSoundId: "firearm_rifle"
+    Icon: {fileID: 3654739347849786269, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_25_high_tier_survival_rifle"
+    Name: "High Tier Survival Rifle"
+    Description: "A legendary firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 3
+    Attack: 38
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.75
+    ArmorPenetration: 0.60
+    CriticalChance: 0.18
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 110
+    RepairCostMultiplier: 2.25
+    SortOrder: 89
+    AttackSoundId: "firearm_rifle"
+    Icon: {fileID: 5081315121000660425, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_26_tactical_launcher"
+    Name: "Tactical Launcher"
+    Description: "A legendary explosive weapon for damaging clustered enemies."
+    Type: 2
+    Rarity: 3
+    Attack: 52
+    AttacksPerTurn: 1
+    TargetCount: 4
+    TargetingRule: 2
+    HitChance: 0.62
+    ArmorPenetration: 0.70
+    CriticalChance: 0.10
+    AmmoCostPerAttack: 2
+    NoisePerAttack: 9
+    MaxDurability: 100
+    RepairCostMultiplier: 2.40
+    SortOrder: 90
+    AttackSoundId: "explosive_launcher"
+    Icon: {fileID: 8650952409989176462, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_27_anti_mutant_cannon"
+    Name: "Anti Mutant Cannon"
+    Description: "A legendary firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 3
+    Attack: 48
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.78
+    ArmorPenetration: 0.75
+    CriticalChance: 0.24
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 7
+    MaxDurability: 110
+    RepairCostMultiplier: 2.25
+    SortOrder: 91
+    AttackSoundId: "firearm_precision"
+    Icon: {fileID: 1349704743573561159, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_28_rotary_microgun"
+    Name: "Rotary Microgun"
+    Description: "A legendary firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 3
+    Attack: 32
+    AttacksPerTurn: 3
+    TargetCount: 3
+    TargetingRule: 1
+    HitChance: 0.69
+    ArmorPenetration: 0.48
+    CriticalChance: 0.12
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 7
+    MaxDurability: 110
+    RepairCostMultiplier: 2.25
+    SortOrder: 92
+    AttackSoundId: "firearm_auto"
+    Icon: {fileID: 2411137856537509173, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_29_energy_projector"
+    Name: "Energy Projector"
+    Description: "A legendary firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 3
+    Attack: 38
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.75
+    ArmorPenetration: 0.60
+    CriticalChance: 0.18
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 6
+    MaxDurability: 110
+    RepairCostMultiplier: 2.25
+    SortOrder: 93
+    AttackSoundId: "firearm_rifle"
+    Icon: {fileID: 1874946438563306748, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_firearm_advanced_30_elite_wasteland_sniper"
+    Name: "Elite Wasteland Sniper"
+    Description: "A legendary firearm that can target any enemy in the group."
+    Type: 1
+    Rarity: 3
+    Attack: 48
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.78
+    ArmorPenetration: 0.75
+    CriticalChance: 0.24
+    AmmoCostPerAttack: 1
+    NoisePerAttack: 7
+    MaxDurability: 110
+    RepairCostMultiplier: 2.25
+    SortOrder: 94
+    AttackSoundId: "firearm_precision"
+    Icon: {fileID: 8622121099221227665, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
+    AttackSound: {fileID: 0}

@@ -7,6 +7,7 @@
     "AshfallCamp.Infrastructure",
     "AshfallCamp.Composition",
     "AshfallCamp.Presentation",
+    "AshfallCamp.Editor",
     "UniTask",
     "Unity.TextMeshPro",
     "UnityEngine.UI",

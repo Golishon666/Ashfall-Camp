@@ -1,0 +1,909 @@
+fileFormatVersion: 2
+guid: e86deaafa456bd48a24a0874a5b6f693
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7701058093427722208
+    second: ui_weapon_firearm_advanced_01_tactical_suppressed_pistol
+  - first:
+      213: 1100349872815644930
+    second: ui_weapon_firearm_advanced_02_armor_piercing_revolver
+  - first:
+      213: 7425627232979188815
+    second: ui_weapon_firearm_advanced_03_machine_pistol
+  - first:
+      213: 8333975361139973794
+    second: ui_weapon_firearm_advanced_04_compact_pdw
+  - first:
+      213: 7871299763300451573
+    second: ui_weapon_firearm_advanced_05_tactical_smg
+  - first:
+      213: 7350305934805119913
+    second: ui_weapon_firearm_advanced_06_suppressed_carbine
+  - first:
+      213: 5931135736361338210
+    second: ui_weapon_firearm_advanced_07_modern_assault_rifle
+  - first:
+      213: 8918746529196518220
+    second: ui_weapon_firearm_advanced_08_high_grade_ak
+  - first:
+      213: 5784540036842358665
+    second: ui_weapon_firearm_advanced_09_compact_tactical_shotgun
+  - first:
+      213: 8311804552880188035
+    second: ui_weapon_firearm_advanced_10_drum_combat_shotgun
+  - first:
+      213: 6482682073337356685
+    second: ui_weapon_firearm_advanced_11_designated_marksman_rifle
+  - first:
+      213: 8085560046616247338
+    second: ui_weapon_firearm_advanced_12_precision_sniper_rifle
+  - first:
+      213: 5023900103412933919
+    second: ui_weapon_firearm_advanced_13_anti_materiel_rifle
+  - first:
+      213: 6404601354204977482
+    second: ui_weapon_firearm_advanced_14_bullpup_assault_rifle
+  - first:
+      213: 4249550373177239745
+    second: ui_weapon_firearm_advanced_15_high_tier_battle_rifle
+  - first:
+      213: 2367937904857654692
+    second: ui_weapon_firearm_advanced_16_tactical_lmg
+  - first:
+      213: 2042209871502369650
+    second: ui_weapon_firearm_advanced_17_compact_support_gun
+  - first:
+      213: 5085197421611706342
+    second: ui_weapon_firearm_advanced_18_heavy_auto_shotgun
+  - first:
+      213: 3872008914435937499
+    second: ui_weapon_firearm_advanced_19_breaching_shotgun
+  - first:
+      213: 5989904000425408734
+    second: ui_weapon_firearm_advanced_20_advanced_grenade_launcher
+  - first:
+      213: 4449280778687614655
+    second: ui_weapon_firearm_advanced_22_coil_carbine
+  - first:
+      213: 5074187589604237160
+    second: ui_weapon_firearm_advanced_23_electromagnetic_marksman_rifle
+  - first:
+      213: 3654739347849786269
+    second: ui_weapon_firearm_advanced_24_suppressed_scout_rifle
+  - first:
+      213: 5081315121000660425
+    second: ui_weapon_firearm_advanced_25_high_tier_survival_rifle
+  - first:
+      213: 8650952409989176462
+    second: ui_weapon_firearm_advanced_26_tactical_launcher
+  - first:
+      213: 1349704743573561159
+    second: ui_weapon_firearm_advanced_27_anti_mutant_cannon
+  - first:
+      213: 2411137856537509173
+    second: ui_weapon_firearm_advanced_28_rotary_microgun
+  - first:
+      213: 1874946438563306748
+    second: ui_weapon_firearm_advanced_29_energy_projector
+  - first:
+      213: 8622121099221227665
+    second: ui_weapon_firearm_advanced_30_elite_wasteland_sniper
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_01_tactical_suppressed_pistol
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adf9ccef1af3d40a31d433e672bae158
+      internalID: 7701058093427722208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_02_armor_piercing_revolver
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8073adeefff60da12ce6c07cdb054b8
+      internalID: 1100349872815644930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_03_machine_pistol
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb1dcca68b477479a0b7a4474824ba60
+      internalID: 7425627232979188815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_04_compact_pdw
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a29cbe6dcdf72e366d902705e8708a5
+      internalID: 8333975361139973794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_05_tactical_smg
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c7b7d455db2d9f921535a1d67896a87
+      internalID: 7871299763300451573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_06_suppressed_carbine
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5af4fd75ac2b585bdd11e1c608e73c10
+      internalID: 7350305934805119913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_07_modern_assault_rifle
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9abd5ba55f8dc8aec2ddb9defc6dc113
+      internalID: 5931135736361338210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_08_high_grade_ak
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03792155ea5b7a20a08ddff6d53d852b
+      internalID: 8918746529196518220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_09_compact_tactical_shotgun
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29da266d8386597c7ac63af555d37ec6
+      internalID: 5784540036842358665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_10_drum_combat_shotgun
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04a1d42a0e40f58c9981586667452a78
+      internalID: 8311804552880188035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_11_designated_marksman_rifle
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a2b7ae79660708ace00a047ae37b15c
+      internalID: 6482682073337356685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_12_precision_sniper_rifle
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88492becb248228c3868debddb6dcd04
+      internalID: 8085560046616247338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_13_anti_materiel_rifle
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d39e457b45ca31bf3d173edadd82e70
+      internalID: 5023900103412933919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_14_bullpup_assault_rifle
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb4ed568cda362666f11cda49a5e377c
+      internalID: 6404601354204977482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_15_high_tier_battle_rifle
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8f0683b9968d33ce50e77b0ad0e5d72
+      internalID: 4249550373177239745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_16_tactical_lmg
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe69ced72395c8b224797a25e596f4fd
+      internalID: 2367937904857654692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_17_compact_support_gun
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c021ceb279f0bbf1847c65ce92fdaad2
+      internalID: 2042209871502369650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_18_heavy_auto_shotgun
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 814b103d3292ba2f25c0da79f646a915
+      internalID: 5085197421611706342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_19_breaching_shotgun
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6b89698e00ee6761e6c380884826610
+      internalID: 3872008914435937499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_20_advanced_grenade_launcher
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a5c221db46a78d84794dbfa2c41932f
+      internalID: 5989904000425408734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_22_coil_carbine
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac94f3b822c73eed2a31492276a82922
+      internalID: 4449280778687614655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_23_electromagnetic_marksman_rifle
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c527e261f5f4dcc8a56e020c152076e
+      internalID: 5074187589604237160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_24_suppressed_scout_rifle
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b3bca32f1cedbb666e6972151d97098
+      internalID: 3654739347849786269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_25_high_tier_survival_rifle
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3581d4ea9a37c7b417e0cdb676cd748
+      internalID: 5081315121000660425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_26_tactical_launcher
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fed761d18a5bb3d570d2c4593ad452dd
+      internalID: 8650952409989176462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_27_anti_mutant_cannon
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d4f0bd033afe923efd59d96de34dc28
+      internalID: 1349704743573561159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_28_rotary_microgun
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfb4cf083efa57eaf85d81bea518f102
+      internalID: 2411137856537509173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_29_energy_projector
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24fb9ebd163cf6e8e811e9f6c0ac58d7
+      internalID: 1874946438563306748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_weapon_firearm_advanced_30_elite_wasteland_sniper
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47a2095d11bcf31a94cce7db947c0e63
+      internalID: 8622121099221227665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: f006cd80fac157079414630f4649dbdc
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ui_weapon_firearm_advanced_01_tactical_suppressed_pistol: 7701058093427722208
+      ui_weapon_firearm_advanced_02_armor_piercing_revolver: 1100349872815644930
+      ui_weapon_firearm_advanced_03_machine_pistol: 7425627232979188815
+      ui_weapon_firearm_advanced_04_compact_pdw: 8333975361139973794
+      ui_weapon_firearm_advanced_05_tactical_smg: 7871299763300451573
+      ui_weapon_firearm_advanced_06_suppressed_carbine: 7350305934805119913
+      ui_weapon_firearm_advanced_07_modern_assault_rifle: 5931135736361338210
+      ui_weapon_firearm_advanced_08_high_grade_ak: 8918746529196518220
+      ui_weapon_firearm_advanced_09_compact_tactical_shotgun: 5784540036842358665
+      ui_weapon_firearm_advanced_10_drum_combat_shotgun: 8311804552880188035
+      ui_weapon_firearm_advanced_11_designated_marksman_rifle: 6482682073337356685
+      ui_weapon_firearm_advanced_12_precision_sniper_rifle: 8085560046616247338
+      ui_weapon_firearm_advanced_13_anti_materiel_rifle: 5023900103412933919
+      ui_weapon_firearm_advanced_14_bullpup_assault_rifle: 6404601354204977482
+      ui_weapon_firearm_advanced_15_high_tier_battle_rifle: 4249550373177239745
+      ui_weapon_firearm_advanced_16_tactical_lmg: 2367937904857654692
+      ui_weapon_firearm_advanced_17_compact_support_gun: 2042209871502369650
+      ui_weapon_firearm_advanced_18_heavy_auto_shotgun: 5085197421611706342
+      ui_weapon_firearm_advanced_19_breaching_shotgun: 3872008914435937499
+      ui_weapon_firearm_advanced_20_advanced_grenade_launcher: 5989904000425408734
+      ui_weapon_firearm_advanced_22_coil_carbine: 4449280778687614655
+      ui_weapon_firearm_advanced_23_electromagnetic_marksman_rifle: 5074187589604237160
+      ui_weapon_firearm_advanced_24_suppressed_scout_rifle: 3654739347849786269
+      ui_weapon_firearm_advanced_25_high_tier_survival_rifle: 5081315121000660425
+      ui_weapon_firearm_advanced_26_tactical_launcher: 8650952409989176462
+      ui_weapon_firearm_advanced_27_anti_mutant_cannon: 1349704743573561159
+      ui_weapon_firearm_advanced_28_rotary_microgun: 2411137856537509173
+      ui_weapon_firearm_advanced_29_energy_projector: 1874946438563306748
+      ui_weapon_firearm_advanced_30_elite_wasteland_sniper: 8622121099221227665
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -74,6 +74,11 @@ namespace AshfallCamp.Presentation
                 if (binding.Button != null)
                 {
                     binding.Button.interactable = !isActive;
+                    var marker = binding.Button.transform.Find("CurrentTabPointer");
+                    if (marker != null)
+                    {
+                        marker.gameObject.SetActive(isActive);
+                    }
                 }
             }
         }
@@ -107,7 +112,7 @@ namespace AshfallCamp.Presentation
         public sealed class NavBinding
         {
             [SerializeField] private string id;
-            [SerializeField] private Image panel;
+            [SerializeField] private Graphic panel;
             [SerializeField] private Button button;
             [SerializeField] private RawImage icon;
             [SerializeField] private TextMeshProUGUI label;
@@ -134,7 +139,7 @@ namespace AshfallCamp.Presentation
             }
 
             public string Id { get { return id; } }
-            public Image Panel { get { return panel; } }
+            public Graphic Panel { get { return panel; } }
             public Button Button { get { return button; } }
             public RawImage Icon { get { return icon; } }
             public TextMeshProUGUI Label { get { return label; } }

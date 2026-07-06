@@ -228,6 +228,47 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void WeaponCatalogAssetContainsImportedIconsAndCombatRules()
+        {
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>("Assets/AshfallCamp/Configs/GameConfigDatabase.asset");
+            Assert.NotNull(database);
+            Assert.NotNull(database.Weapons);
+
+            var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+
+            Assert.AreEqual(94, config.Weapons.Count);
+            Assert.IsTrue(config.Weapons.ContainsKey("weapon_melee_advanced_10_crusher_maul"));
+            Assert.IsTrue(config.Weapons.ContainsKey("weapon_firearm_advanced_30_elite_wasteland_sniper"));
+
+            var meleeCount = 0;
+            var rangedCount = 0;
+            var explosiveCount = 0;
+            foreach (var weapon in database.Weapons.Weapons)
+            {
+                Assert.NotNull(weapon.Icon, weapon.Id + " icon is missing.");
+                if (weapon.Type == WeaponCombatType.Melee)
+                {
+                    meleeCount++;
+                    Assert.AreEqual(WeaponTargetingRule.FrontlineOnly, weapon.TargetingRule, weapon.Id);
+                }
+                else if (weapon.Type == WeaponCombatType.Ranged)
+                {
+                    rangedCount++;
+                    Assert.AreEqual(WeaponTargetingRule.AnyEnemy, weapon.TargetingRule, weapon.Id);
+                }
+                else if (weapon.Type == WeaponCombatType.Explosive)
+                {
+                    explosiveCount++;
+                    Assert.AreEqual(WeaponTargetingRule.AreaAnyEnemies, weapon.TargetingRule, weapon.Id);
+                }
+            }
+
+            Assert.AreEqual(40, meleeCount);
+            Assert.AreEqual(51, rangedCount);
+            Assert.AreEqual(3, explosiveCount);
+        }
+
+        [Test]
         public void ScriptableObjectConfigValidationRejectsUnknownProgressionSkill()
         {
             var database = CreateValidDatabase();
@@ -318,6 +359,26 @@ namespace AshfallCamp.Tests.EditMode
 
             database.Items = ScriptableObject.CreateInstance<ItemCatalogSO>();
             database.Items.Items.Add(new ItemConfigData { Id = "rusty_knife", Name = "Rusty Knife", Slot = ItemSlot.Weapon, WeaponType = WeaponType.Melee, BaseDamage = 4, MaxDurability = 80 });
+
+            database.Weapons = ScriptableObject.CreateInstance<WeaponCatalogSO>();
+            database.Weapons.Weapons.Add(new WeaponConfigData
+            {
+                Id = "rusty_knife",
+                Name = "Rusty Knife",
+                Description = "A dull camp knife kept sharp enough for close work.",
+                Type = WeaponCombatType.Melee,
+                Rarity = WeaponRarity.Common,
+                Attack = 4,
+                AttacksPerTurn = 1,
+                TargetCount = 1,
+                TargetingRule = WeaponTargetingRule.FrontlineOnly,
+                HitChance = 0.86,
+                ArmorPenetration = 0.05,
+                CriticalChance = 0.04,
+                MaxDurability = 80,
+                RepairCostMultiplier = 1.0,
+                AttackSoundId = "melee_blade"
+            });
 
             database.Buildings = ScriptableObject.CreateInstance<BuildingCatalogSO>();
             database.Buildings.Buildings.Add(new BuildingConfigData
@@ -478,6 +539,7 @@ namespace AshfallCamp.Tests.EditMode
             UnityEngine.Object.DestroyImmediate(database.Policies);
             UnityEngine.Object.DestroyImmediate(database.Enemies);
             UnityEngine.Object.DestroyImmediate(database.Items);
+            UnityEngine.Object.DestroyImmediate(database.Weapons);
             UnityEngine.Object.DestroyImmediate(database.Buildings);
             UnityEngine.Object.DestroyImmediate(database.Zones);
             UnityEngine.Object.DestroyImmediate(database.Balance);

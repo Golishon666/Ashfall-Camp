@@ -63,8 +63,6 @@ namespace AshfallCamp.Presentation
             ValidateRequiredTexture(catalog.CampAlertCardTexture, "camp alert card texture", result.Errors);
             ValidateRequiredTexture(catalog.BuildingCardTexture, "building card texture", result.Errors);
             ValidateRequiredTexture(catalog.SurvivorsEmptyPanelTexture, "survivors empty panel texture", result.Errors);
-            ValidateRequiredTexture(catalog.SurvivorDetailPanelTexture, "survivor detail panel texture", result.Errors);
-            ValidateRequiredTexture(catalog.SurvivorRosterCardTexture, "survivor roster card texture", result.Errors);
             ValidateRequiredTexture(catalog.RadioIntelPanelTexture, "radio intel panel texture", result.Errors);
             ValidateRequiredTexture(catalog.RadioBroadcastPanelTexture, "radio broadcast panel texture", result.Errors);
             ValidateRequiredTexture(catalog.RadioEmptyPanelTexture, "radio empty panel texture", result.Errors);

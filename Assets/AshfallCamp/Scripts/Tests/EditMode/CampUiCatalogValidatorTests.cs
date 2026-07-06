@@ -198,20 +198,6 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
-        public void MissingSurvivorRosterCardTextureFailsValidation()
-        {
-            var catalog = CreateMinimalValidCatalog();
-            catalog.SurvivorRosterCardTexture = null;
-
-            var result = CampUiCatalogValidator.Validate(catalog);
-
-            Assert.IsFalse(result.IsValid);
-            StringAssert.Contains("missing required texture: survivor roster card texture", string.Join("; ", result.Errors));
-
-            UnityEngine.Object.DestroyImmediate(catalog);
-        }
-
-        [Test]
         public void MissingRadioCandidateCardTextureFailsValidation()
         {
             var catalog = CreateMinimalValidCatalog();
@@ -297,8 +283,6 @@ namespace AshfallCamp.Tests.EditMode
             catalog.CampAlertCardTexture = Texture2D.whiteTexture;
             catalog.BuildingCardTexture = Texture2D.whiteTexture;
             catalog.SurvivorsEmptyPanelTexture = Texture2D.whiteTexture;
-            catalog.SurvivorDetailPanelTexture = Texture2D.whiteTexture;
-            catalog.SurvivorRosterCardTexture = Texture2D.whiteTexture;
             catalog.RadioIntelPanelTexture = Texture2D.whiteTexture;
             catalog.RadioBroadcastPanelTexture = Texture2D.whiteTexture;
             catalog.RadioEmptyPanelTexture = Texture2D.whiteTexture;

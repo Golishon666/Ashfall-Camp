@@ -40,6 +40,7 @@ namespace AshfallCamp.Infrastructure
             FillZones(snapshot);
             FillEnemies(snapshot);
             FillItems(snapshot);
+            FillWeapons(snapshot);
             FillBuildings(snapshot);
             FillBalance(snapshot);
             Validate(snapshot);
@@ -209,6 +210,35 @@ namespace AshfallCamp.Infrastructure
             }
         }
 
+        private void FillWeapons(GameConfigSnapshot snapshot)
+        {
+            if (_database.Weapons == null) return;
+            foreach (var item in _database.Weapons.Weapons)
+            {
+                AddDefinition(snapshot.Weapons, item.Id, new WeaponDefinition
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Type = item.Type,
+                    Rarity = item.Rarity,
+                    Attack = item.Attack,
+                    AttacksPerTurn = item.AttacksPerTurn,
+                    TargetCount = item.TargetCount,
+                    TargetingRule = item.TargetingRule,
+                    HitChance = item.HitChance,
+                    ArmorPenetration = item.ArmorPenetration,
+                    CriticalChance = item.CriticalChance,
+                    AmmoCostPerAttack = item.AmmoCostPerAttack,
+                    NoisePerAttack = item.NoisePerAttack,
+                    MaxDurability = item.MaxDurability,
+                    RepairCostMultiplier = item.RepairCostMultiplier,
+                    SortOrder = item.SortOrder,
+                    AttackSoundId = item.AttackSoundId
+                }, "weapons");
+            }
+        }
+
         private void FillBuildings(GameConfigSnapshot snapshot)
         {
             if (_database.Buildings == null) return;
@@ -340,6 +370,7 @@ namespace AshfallCamp.Infrastructure
             RequireAny(snapshot.Zones, "zones");
             RequireAny(snapshot.Enemies, "enemies");
             RequireAny(snapshot.Items, "items");
+            RequireAny(snapshot.Weapons, "weapons");
             RequireAny(snapshot.Buildings, "buildings");
             if (!snapshot.Policies.ContainsKey("balanced")) throw new InvalidOperationException("Policy catalog must include balanced.");
             if (!snapshot.Backgrounds.ContainsKey(snapshot.StartingSurvivor.BackgroundId)) throw new InvalidOperationException("Starting survivor background is missing.");
@@ -359,6 +390,7 @@ namespace AshfallCamp.Infrastructure
             ValidateDemoCompletion(snapshot);
             ValidateEnemies(snapshot);
             ValidateItems(snapshot);
+            ValidateWeapons(snapshot);
             ValidateBuildings(snapshot);
             foreach (var zone in snapshot.Zones.Values)
             {
@@ -668,6 +700,38 @@ namespace AshfallCamp.Infrastructure
                 if (item.Armor < 0) throw new InvalidOperationException("Item armor cannot be negative: " + item.Id);
                 if (item.MaxDurability <= 0) throw new InvalidOperationException("Item durability must be positive: " + item.Id);
                 if (item.RepairCostMultiplier < 0) throw new InvalidOperationException("Item repair cost multiplier cannot be negative: " + item.Id);
+            }
+        }
+
+        private static void ValidateWeapons(GameConfigSnapshot snapshot)
+        {
+            foreach (var weapon in snapshot.Weapons.Values)
+            {
+                if (string.IsNullOrWhiteSpace(weapon.Name)) throw new InvalidOperationException("Weapon name cannot be empty: " + weapon.Id);
+                if (weapon.Attack <= 0) throw new InvalidOperationException("Weapon attack must be positive: " + weapon.Id);
+                if (weapon.AttacksPerTurn <= 0) throw new InvalidOperationException("Weapon attacks per turn must be positive: " + weapon.Id);
+                if (weapon.TargetCount < 1 || weapon.TargetCount > 4) throw new InvalidOperationException("Weapon target count must be 1..4: " + weapon.Id);
+                if (weapon.HitChance < 0 || weapon.HitChance > 1) throw new InvalidOperationException("Weapon hit chance must be 0..1: " + weapon.Id);
+                if (weapon.ArmorPenetration < 0 || weapon.ArmorPenetration > 1) throw new InvalidOperationException("Weapon armor penetration must be 0..1: " + weapon.Id);
+                if (weapon.CriticalChance < 0 || weapon.CriticalChance > 1) throw new InvalidOperationException("Weapon critical chance must be 0..1: " + weapon.Id);
+                if (weapon.AmmoCostPerAttack < 0) throw new InvalidOperationException("Weapon ammo cost cannot be negative: " + weapon.Id);
+                if (weapon.NoisePerAttack < 0) throw new InvalidOperationException("Weapon noise cannot be negative: " + weapon.Id);
+                if (weapon.MaxDurability <= 0) throw new InvalidOperationException("Weapon durability must be positive: " + weapon.Id);
+                if (weapon.RepairCostMultiplier < 0) throw new InvalidOperationException("Weapon repair cost multiplier cannot be negative: " + weapon.Id);
+                if (weapon.Type == WeaponCombatType.Melee && weapon.TargetingRule != WeaponTargetingRule.FrontlineOnly)
+                {
+                    throw new InvalidOperationException("Melee weapon must target frontline only: " + weapon.Id);
+                }
+
+                if (weapon.Type == WeaponCombatType.Ranged && weapon.TargetingRule != WeaponTargetingRule.AnyEnemy)
+                {
+                    throw new InvalidOperationException("Ranged weapon must be able to target any enemy: " + weapon.Id);
+                }
+
+                if (weapon.Type == WeaponCombatType.Explosive && weapon.TargetingRule != WeaponTargetingRule.AreaAnyEnemies)
+                {
+                    throw new InvalidOperationException("Explosive weapon must use area targeting: " + weapon.Id);
+                }
             }
         }
 

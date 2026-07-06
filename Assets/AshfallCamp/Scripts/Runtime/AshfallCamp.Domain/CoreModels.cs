@@ -66,6 +66,28 @@ namespace AshfallCamp.Domain
         Mutant
     }
 
+    public enum WeaponCombatType
+    {
+        Melee,
+        Ranged,
+        Explosive
+    }
+
+    public enum WeaponRarity
+    {
+        Common,
+        Rare,
+        Epic,
+        Legendary
+    }
+
+    public enum WeaponTargetingRule
+    {
+        FrontlineOnly,
+        AnyEnemy,
+        AreaAnyEnemies
+    }
+
     public sealed class GameState
     {
         public string Version = GameConstants.CurrentSaveVersion;
@@ -391,6 +413,7 @@ namespace AshfallCamp.Domain
         public Dictionary<string, ZoneDefinition> Zones = new Dictionary<string, ZoneDefinition>(StringComparer.Ordinal);
         public Dictionary<string, EnemyDefinition> Enemies = new Dictionary<string, EnemyDefinition>(StringComparer.Ordinal);
         public Dictionary<string, ItemDefinition> Items = new Dictionary<string, ItemDefinition>(StringComparer.Ordinal);
+        public Dictionary<string, WeaponDefinition> Weapons = new Dictionary<string, WeaponDefinition>(StringComparer.Ordinal);
         public Dictionary<string, BuildingDefinition> Buildings = new Dictionary<string, BuildingDefinition>(StringComparer.Ordinal);
         public Dictionary<string, RecruitableSurvivorDefinition> RecruitableSurvivors = new Dictionary<string, RecruitableSurvivorDefinition>(StringComparer.Ordinal);
         public BalanceDefinition Balance = new BalanceDefinition();
@@ -504,6 +527,28 @@ namespace AshfallCamp.Domain
         public int MaxDurability;
         public double RepairCostMultiplier = 1.0;
         public int CarryCapacityBonus;
+    }
+
+    public sealed class WeaponDefinition
+    {
+        public string Id = string.Empty;
+        public string Name = string.Empty;
+        public string Description = string.Empty;
+        public WeaponCombatType Type;
+        public WeaponRarity Rarity;
+        public int Attack;
+        public int AttacksPerTurn = 1;
+        public int TargetCount = 1;
+        public WeaponTargetingRule TargetingRule = WeaponTargetingRule.FrontlineOnly;
+        public double HitChance = 0.75;
+        public double ArmorPenetration;
+        public double CriticalChance;
+        public int AmmoCostPerAttack;
+        public int NoisePerAttack;
+        public int MaxDurability = 100;
+        public double RepairCostMultiplier = 1.0;
+        public int SortOrder;
+        public string AttackSoundId = string.Empty;
     }
 
     public sealed class BuildingDefinition

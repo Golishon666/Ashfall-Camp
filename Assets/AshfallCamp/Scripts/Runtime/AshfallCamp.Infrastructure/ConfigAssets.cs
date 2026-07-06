@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AshfallCamp.Domain;
+using UnityEngine;
 
 namespace AshfallCamp.Infrastructure
 {
@@ -118,6 +119,31 @@ namespace AshfallCamp.Infrastructure
         public int MaxDurability;
         public double RepairCostMultiplier = 1.0;
         public int CarryCapacityBonus;
+    }
+
+    [Serializable]
+    public sealed class WeaponConfigData
+    {
+        public string Id;
+        public string Name;
+        [TextArea(2, 4)] public string Description;
+        public WeaponCombatType Type;
+        public WeaponRarity Rarity;
+        public int Attack;
+        public int AttacksPerTurn = 1;
+        [Range(1, 4)] public int TargetCount = 1;
+        public WeaponTargetingRule TargetingRule = WeaponTargetingRule.FrontlineOnly;
+        public double HitChance = 0.75;
+        public double ArmorPenetration;
+        public double CriticalChance;
+        public int AmmoCostPerAttack;
+        public int NoisePerAttack;
+        public int MaxDurability = 100;
+        public double RepairCostMultiplier = 1.0;
+        public int SortOrder;
+        public string AttackSoundId;
+        public Sprite Icon;
+        public AudioClip AttackSound;
     }
 
     [Serializable]

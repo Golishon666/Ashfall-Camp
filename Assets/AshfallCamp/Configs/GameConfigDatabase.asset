@@ -20,5 +20,6 @@ MonoBehaviour:
   Zones: {fileID: 11400000, guid: 182fc8e0e17646e459793e3dda08f827, type: 2}
   Enemies: {fileID: 11400000, guid: 0aa6fed55dd771c41b6dc845b8f60eff, type: 2}
   Items: {fileID: 11400000, guid: 54b618f851928504f81a16593375e72f, type: 2}
+  Weapons: {fileID: 11400000, guid: 6d49fb4f1bbe4fa6880d478181056678, type: 2}
   Buildings: {fileID: 11400000, guid: a82d14719c5f7bc41af7b2202eccedbb, type: 2}
   Balance: {fileID: 11400000, guid: cca856b3737632a4da90d85583ee7aa4, type: 2}

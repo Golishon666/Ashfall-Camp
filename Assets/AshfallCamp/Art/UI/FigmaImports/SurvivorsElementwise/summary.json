@@ -1,0 +1,127 @@
+[
+  {
+    "key": "resourceBar",
+    "slug": "00-resource-bar-elementwise",
+    "missing": true
+  },
+  {
+    "key": "campDashboard",
+    "slug": "01-camp-dashboard-elementwise",
+    "frameName": "Ashfall Camp - Full HD Elements / 01 Camp Dashboard Elementwise",
+    "frameId": "45:11759",
+    "frameSize": "1920x1080",
+    "nodeCount": 195,
+    "textCount": 95,
+    "visualCount": 99,
+    "exportedPngs": 99,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/01-camp-dashboard-elementwise.png"
+  },
+  {
+    "key": "buildings",
+    "slug": "02-buildings-elementwise",
+    "frameName": "Ashfall Camp - Full HD Elements / 02 Buildings Elementwise",
+    "frameId": "45:11957",
+    "frameSize": "1920x1080",
+    "nodeCount": 181,
+    "textCount": 96,
+    "visualCount": 85,
+    "exportedPngs": 85,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/02-buildings-elementwise.png"
+  },
+  {
+    "key": "expeditionPlanning",
+    "slug": "03-expedition-planning-elementwise",
+    "frameName": "Ashfall Camp - Full HD Elements / 03 Expedition Planning Elementwise",
+    "frameId": "45:12157",
+    "frameSize": "1920x1080",
+    "nodeCount": 255,
+    "textCount": 107,
+    "visualCount": 147,
+    "exportedPngs": 147,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/03-expedition-planning-elementwise.png"
+  },
+  {
+    "key": "workshop",
+    "slug": "04-workshop-elementwise",
+    "frameName": "Ashfall Camp - Full HD Elements / 04 Workshop Elementwise",
+    "frameId": "45:12415",
+    "frameSize": "1920x1080",
+    "nodeCount": 230,
+    "textCount": 88,
+    "visualCount": 142,
+    "exportedPngs": 142,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/04-workshop-elementwise.png"
+  },
+  {
+    "key": "worldMap",
+    "slug": "05-world-map-elementwise",
+    "frameName": "Ashfall Camp - Full HD Elements / 05 World Map Elementwise",
+    "frameId": "45:12650",
+    "frameSize": "1920x1080",
+    "nodeCount": 182,
+    "textCount": 82,
+    "visualCount": 100,
+    "exportedPngs": 100,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/05-world-map-elementwise.png"
+  },
+  {
+    "key": "survivors",
+    "slug": "06-survivors-elementwise",
+    "frameName": "Ashfall Camp - Full HD Elements / 06 Survivors Elementwise",
+    "frameId": "72:21614",
+    "frameSize": "1920x1080",
+    "nodeCount": 385,
+    "textCount": 171,
+    "visualCount": 157,
+    "exportedPngs": 157,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/06-survivors-elementwise.png"
+  },
+  {
+    "key": "survivorDetail",
+    "slug": "07-survivor-detail-elementwise",
+    "frameName": "Ashfall Camp - Full HD Elements / 07 Survivor Detail Elementwise",
+    "frameId": "72:22012",
+    "frameSize": "1920x1080",
+    "nodeCount": 242,
+    "textCount": 99,
+    "visualCount": 117,
+    "exportedPngs": 117,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/07-survivor-detail-elementwise.png"
+  },
+  {
+    "key": "radioRecruitment",
+    "slug": "08-radio-recruitment-elementwise",
+    "frameName": "Ashfall Camp - Full HD Elements / 08 Radio Recruitment Elementwise",
+    "frameId": "97:30504",
+    "frameSize": "1920x1080",
+    "nodeCount": 245,
+    "textCount": 91,
+    "visualCount": 137,
+    "exportedPngs": 137,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/08-radio-recruitment-elementwise.png"
+  },
+  {
+    "key": "expeditionCombat",
+    "slug": "09-expedition-combat-elementwise",
+    "frameName": "Ashfall Camp - Full HD Elements / 09 Expedition Combat Elementwise",
+    "frameId": "97:30770",
+    "frameSize": "1920x1080",
+    "nodeCount": 413,
+    "textCount": 131,
+    "visualCount": 247,
+    "exportedPngs": 247,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/09-expedition-combat-elementwise.png"
+  },
+  {
+    "key": "reports",
+    "slug": "10-reports-elementwise",
+    "frameName": "Ashfall Camp - Full HD Elements / 10 Reports Elementwise",
+    "frameId": "97:31198",
+    "frameSize": "1920x1080",
+    "nodeCount": 284,
+    "textCount": 126,
+    "visualCount": 116,
+    "exportedPngs": 116,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/10-reports-elementwise.png"
+  }
+]

@@ -309,6 +309,12 @@ namespace AshfallCamp.Presentation
                     string.IsNullOrEmpty(survivor.Name) ? string.Empty : survivor.Name.Substring(0, 1).ToUpperInvariant(),
                     Format(catalog.SurvivorCardStateFormat, survivor.State, survivor.Level),
                     FormatTopSkill(survivor, catalog),
+                    "LEVEL " + Math.Max(1, survivor.Level).ToString(CultureInfo.InvariantCulture),
+                    CalculateSurvivorPower(survivor).ToString("N0", CultureInfo.InvariantCulture),
+                    CalculateHealthValue(survivor),
+                    CalculateFatigueValue(survivor),
+                    FormatSurvivorHealth(survivor),
+                    FormatSurvivorFatigue(survivor),
                     ResolveSurvivorPortrait(survivor, catalog)));
             }
 
@@ -330,6 +336,15 @@ namespace AshfallCamp.Presentation
                 Weapon = FormatWeapon(survivor, state, config, catalog),
                 Treatment = FormatTreatment(survivor, state, config, catalog),
                 Stats = Format(catalog.SurvivorDetailStatsFormat, survivor.Health, survivor.MaxHealth, survivor.Morale, survivor.Fatigue, survivor.Xp),
+                LevelText = "LEVEL " + Math.Max(1, survivor.Level).ToString(CultureInfo.InvariantCulture),
+                XpText = Math.Max(0, survivor.Xp).ToString("N0", CultureInfo.InvariantCulture) + " XP",
+                StatusText = survivor.State.ToString(),
+                HealthValue = CalculateHealthValue(survivor),
+                FatigueValue = CalculateFatigueValue(survivor),
+                MoraleValue = CalculateMoraleValue(survivor),
+                HealthText = FormatSurvivorHealth(survivor),
+                FatigueText = FormatSurvivorFatigue(survivor),
+                MoraleText = FormatSurvivorMorale(survivor),
                 MedicineCost = Format(catalog.SurvivorDetailMedicineCostFormat, FormatResourceAmounts(HealingSystem.CalculateMedicineCost(config), config, catalog)),
                 MedicineButton = catalog.SurvivorDetailUseMedicineButton,
                 ActionCost = string.Empty,
@@ -800,6 +815,65 @@ namespace AshfallCamp.Presentation
             }
 
             return ToWholePercent(total / (double)state.Survivors.Count);
+        }
+
+        private static int CalculateSurvivorPower(SurvivorState survivor)
+        {
+            if (survivor == null) return 0;
+
+            var skills = 0;
+            foreach (var skill in survivor.Skills)
+            {
+                skills += Math.Max(0, skill.Value);
+            }
+
+            return Math.Max(0, survivor.Level) * 100 +
+                   Math.Max(0, survivor.Health) +
+                   Math.Max(0, survivor.Morale) +
+                   skills * 30;
+        }
+
+        private static float CalculateHealthValue(SurvivorState survivor)
+        {
+            if (survivor == null || survivor.MaxHealth <= 0) return 0f;
+            return Clamp01(survivor.Health / (float)survivor.MaxHealth);
+        }
+
+        private static float CalculateFatigueValue(SurvivorState survivor)
+        {
+            return survivor == null ? 0f : Clamp01(survivor.Fatigue / 100f);
+        }
+
+        private static float CalculateMoraleValue(SurvivorState survivor)
+        {
+            return survivor == null ? 0f : Clamp01(survivor.Morale / 100f);
+        }
+
+        private static string FormatSurvivorHealth(SurvivorState survivor)
+        {
+            if (survivor == null) return "0 / 0";
+            return Math.Max(0, survivor.Health).ToString(CultureInfo.InvariantCulture) + " / " +
+                   Math.Max(0, survivor.MaxHealth).ToString(CultureInfo.InvariantCulture);
+        }
+
+        private static string FormatSurvivorFatigue(SurvivorState survivor)
+        {
+            return survivor == null
+                ? "0 / 100"
+                : Math.Max(0, survivor.Fatigue).ToString(CultureInfo.InvariantCulture) + " / 100";
+        }
+
+        private static string FormatSurvivorMorale(SurvivorState survivor)
+        {
+            return survivor == null
+                ? "0 / 100"
+                : Math.Max(0, survivor.Morale).ToString(CultureInfo.InvariantCulture) + " / 100";
+        }
+
+        private static float Clamp01(float value)
+        {
+            if (value <= 0f) return 0f;
+            return value >= 1f ? 1f : value;
         }
 
         private static int CalculateSafetyPercent(GameState state, int unavailableSurvivors, int activeExpeditions)
@@ -1961,20 +2035,49 @@ namespace AshfallCamp.Presentation
         public readonly string Avatar;
         public readonly string State;
         public readonly string Skill;
+        public readonly string LevelText;
+        public readonly string PowerText;
+        public readonly float HealthValue;
+        public readonly float FatigueValue;
+        public readonly string HealthText;
+        public readonly string FatigueText;
         public readonly Texture2D Portrait;
 
         public CampSurvivorCardPresentation(string survivorId, string name, string avatar, string state, string skill)
-            : this(survivorId, name, avatar, state, skill, null)
+            : this(survivorId, name, avatar, state, skill, string.Empty, string.Empty, 0f, 0f, string.Empty, string.Empty, null)
         {
         }
 
         public CampSurvivorCardPresentation(string survivorId, string name, string avatar, string state, string skill, Texture2D portrait)
+            : this(survivorId, name, avatar, state, skill, string.Empty, string.Empty, 0f, 0f, string.Empty, string.Empty, portrait)
+        {
+        }
+
+        public CampSurvivorCardPresentation(
+            string survivorId,
+            string name,
+            string avatar,
+            string state,
+            string skill,
+            string levelText,
+            string powerText,
+            float healthValue,
+            float fatigueValue,
+            string healthText,
+            string fatigueText,
+            Texture2D portrait)
         {
             SurvivorId = survivorId ?? string.Empty;
             Name = name ?? string.Empty;
             Avatar = avatar ?? string.Empty;
             State = state ?? string.Empty;
             Skill = skill ?? string.Empty;
+            LevelText = levelText ?? string.Empty;
+            PowerText = powerText ?? string.Empty;
+            HealthValue = healthValue;
+            FatigueValue = fatigueValue;
+            HealthText = healthText ?? string.Empty;
+            FatigueText = fatigueText ?? string.Empty;
             Portrait = portrait;
         }
     }
@@ -1995,6 +2098,15 @@ namespace AshfallCamp.Presentation
         public string Weapon = string.Empty;
         public string Treatment = string.Empty;
         public string Stats = string.Empty;
+        public string LevelText = string.Empty;
+        public string XpText = string.Empty;
+        public string StatusText = string.Empty;
+        public float HealthValue;
+        public float FatigueValue;
+        public float MoraleValue;
+        public string HealthText = string.Empty;
+        public string FatigueText = string.Empty;
+        public string MoraleText = string.Empty;
         public string MedicineCost = string.Empty;
         public string MedicineButton = string.Empty;
         public string ActionCost = string.Empty;
