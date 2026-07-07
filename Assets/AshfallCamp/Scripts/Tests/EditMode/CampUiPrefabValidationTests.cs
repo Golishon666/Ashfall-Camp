@@ -263,6 +263,108 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void CampDashboardPrefabExpeditionsNavShowsWorldMapImport()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DashboardPrefabPath);
+            var catalogAsset = AssetDatabase.LoadAssetAtPath<CampUiCatalogSO>(CampUiCatalogPath);
+            var configDatabase = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
+
+            Assert.NotNull(prefab, DashboardPrefabPath + " is missing.");
+            Assert.NotNull(catalogAsset, CampUiCatalogPath + " is missing.");
+            Assert.NotNull(configDatabase, GameConfigDatabasePath + " is missing.");
+
+            var instance = Object.Instantiate(prefab);
+            var catalog = Object.Instantiate(catalogAsset);
+
+            try
+            {
+                catalog.ScreenTransition.Enabled = false;
+
+                var configProvider = new ScriptableObjectGameConfigProvider(configDatabase);
+                var config = configProvider.LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+                var state = GameStateFactory.CreateNew(config, 0);
+                var dashboard = instance.GetComponent<CampDashboardView>();
+
+                Assert.NotNull(dashboard, DashboardPrefabPath + " does not contain CampDashboardView.");
+
+                dashboard.SetCatalog(catalog);
+                dashboard.Render(state, config);
+
+                var navButtons = ReadNavButtons(dashboard);
+                var screenRoots = ReadScreenRoots(dashboard);
+                var expeditionsNavId = FindNavIdByLabel(catalog, catalog.ExpeditionScreenTitle);
+
+                Assert.That(navButtons.ContainsKey(expeditionsNavId), Is.True, "Missing expeditions nav binding.");
+                navButtons[expeditionsNavId].onClick.Invoke();
+
+                Assert.That(screenRoots.ContainsKey(expeditionsNavId), Is.True, "Missing expeditions screen root.");
+                Assert.That(screenRoots[expeditionsNavId], Is.Not.Empty, "Expeditions screen has no roots.");
+
+                var mapRoot = FindDescendant(screenRoots[expeditionsNavId][0].transform, "WorldMapFigma");
+                Assert.NotNull(mapRoot, "Expeditions nav must show the imported world map, not the old planning screen.");
+                Assert.NotNull(FindDescendant(mapRoot, "WorldMapArea"), "Imported world map is missing the location map area.");
+            }
+            finally
+            {
+                Object.DestroyImmediate(instance);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void CampDashboardPrefabWorkshopNavShowsImportedLayerImmediately()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DashboardPrefabPath);
+            var catalogAsset = AssetDatabase.LoadAssetAtPath<CampUiCatalogSO>(CampUiCatalogPath);
+            var configDatabase = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
+
+            Assert.NotNull(prefab, DashboardPrefabPath + " is missing.");
+            Assert.NotNull(catalogAsset, CampUiCatalogPath + " is missing.");
+            Assert.NotNull(configDatabase, GameConfigDatabasePath + " is missing.");
+
+            var instance = Object.Instantiate(prefab);
+            var catalog = Object.Instantiate(catalogAsset);
+
+            try
+            {
+                catalog.ScreenTransition.Enabled = true;
+                catalog.ScreenTransition.DurationSeconds = 0.16f;
+
+                var configProvider = new ScriptableObjectGameConfigProvider(configDatabase);
+                var config = configProvider.LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+                var state = GameStateFactory.CreateNew(config, 0);
+                var dashboard = instance.GetComponent<CampDashboardView>();
+
+                Assert.NotNull(dashboard, DashboardPrefabPath + " does not contain CampDashboardView.");
+
+                dashboard.SetCatalog(catalog);
+                dashboard.Render(state, config);
+
+                var navButtons = ReadNavButtons(dashboard);
+                var screenRoots = ReadScreenRoots(dashboard);
+                var workshopNavId = FindNavIdByLabel(catalog, catalog.WorkshopScreenTitle);
+
+                Assert.That(navButtons.ContainsKey(workshopNavId), Is.True, "Missing workshop nav binding.");
+                navButtons[workshopNavId].onClick.Invoke();
+
+                Assert.That(screenRoots.ContainsKey(workshopNavId), Is.True, "Missing workshop screen root.");
+                Assert.That(screenRoots[workshopNavId], Is.Not.Empty, "Workshop screen has no roots.");
+
+                var workshopRoot = screenRoots[workshopNavId][0];
+                var canvasGroup = workshopRoot.GetComponent<CanvasGroup>();
+                Assert.NotNull(canvasGroup, "Workshop screen root must have a CanvasGroup.");
+                Assert.That(workshopRoot.activeSelf, Is.True, "Workshop screen root should become active immediately.");
+                Assert.That(canvasGroup.alpha, Is.EqualTo(1f).Within(0.001f), "Workshop screen should not stay visually empty after nav click.");
+                Assert.NotNull(FindDescendant(workshopRoot.transform, "WorkshopFigma"), "Workshop screen is missing the imported Figma layer.");
+            }
+            finally
+            {
+                Object.DestroyImmediate(instance);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
         public void CampDashboardPrefabLaunchButtonStartsExpeditionThroughPresenter()
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DashboardPrefabPath);
@@ -2487,6 +2589,23 @@ namespace AshfallCamp.Tests.EditMode
             }
 
             Assert.Fail("No configured building level can raise survivor cap above current survivor count.");
+        }
+
+        private static Transform FindDescendant(Transform root, string name)
+        {
+            if (root == null || string.IsNullOrWhiteSpace(name)) return null;
+            if (root.name == name) return root;
+
+            for (var i = 0; i < root.childCount; i++)
+            {
+                var match = FindDescendant(root.GetChild(i), name);
+                if (match != null)
+                {
+                    return match;
+                }
+            }
+
+            return null;
         }
 
         private static string FindNavIdByLabel(CampUiCatalogSO catalog, string label)

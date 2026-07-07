@@ -794,16 +794,256 @@ namespace AshfallCamp.Tests.EditMode
             Assert.GreaterOrEqual(CombatResolver.CalculateDamage(1, 0, 1, 1.75, false, 999, ref rng), 1);
 
             var config = TestConfigFactory.Create();
+            config.StartingSurvivor.WeaponConfigId = "test_revolver";
             var state = GameStateFactory.CreateNew(config, 0);
-            var revolver = new InventoryItemState { Uid = "item_revolver", ItemId = "rusty_revolver", Durability = 60, MaxDurability = 60, EquippedBySurvivorId = "survivor_1" };
-            state.Inventory.Add(revolver);
-            state.Survivors[0].Equipment.WeaponItemUid = revolver.Uid;
             var expedition = new ExpeditionState { Id = "expedition_test", ZoneId = "abandoned_store", RandomState = 77 };
             expedition.SurvivorIds.Add("survivor_1");
 
             CombatResolver.ResolveCombat(state, config, expedition, "feral_dog");
 
             Assert.Greater(expedition.Noise, 0);
+        }
+
+        [Test]
+        public void CombatLogUsesRichTextColorsForKeyCombatValues()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.StartingSurvivor.WeaponConfigId = "test_revolver";
+            config.Weapons["test_revolver"].Attack = 20;
+            config.Enemies["feral_dog"].MaxHealth = 1;
+            config.Enemies["feral_dog"].BaseDamage = 0;
+            var state = GameStateFactory.CreateNew(config, 0);
+            var expedition = CreateCombatExpedition(18, "survivor_1");
+
+            CombatResolver.ResolveCombat(state, config, expedition, config.Zones["abandoned_store"]);
+
+            var hitIndex = IndexOfLogContaining(expedition, "Mara hits", 0);
+            Assert.GreaterOrEqual(hitIndex, 0);
+            var richMessage = expedition.Log[hitIndex].Message;
+            StringAssert.Contains("<color=#7F9397>00:00</color>", richMessage);
+            StringAssert.Contains("<color=#E8C66B>Mara</color>", richMessage);
+            StringAssert.Contains("<color=#79B8FF>Test Revolver</color>", richMessage);
+            StringAssert.Contains("<color=#FF5C5C>", richMessage);
+            StringAssert.Contains("<color=#C792EA>", richMessage);
+            StringAssert.Contains("<color=#9EE6FF>", richMessage);
+            StringAssert.Contains("Mara hits Feral Dog with Test Revolver", PlainLogMessage(richMessage));
+        }
+
+        [Test]
+        public void TurnBasedCombatUsesSpeedOrderAndRebuildsQueueEachRound()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.StartingSurvivor.BaseSpeed = 20;
+            config.StartingSurvivor.BaseAttack = 1;
+            config.Weapons["test_knife"].Attack = 1;
+            config.RecruitableSurvivors["elias"].BaseSpeed = 5;
+            config.RecruitableSurvivors["elias"].BaseAttack = 1;
+            config.Enemies["feral_dog"].MaxHealth = 40;
+            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Enemies["feral_dog"].BaseSpeed = 10;
+            config.Enemies["feral_dog"].Evasion = 0;
+            var state = GameStateFactory.CreateNew(config, 0);
+            AddRecruitableSurvivor(state, config, "survivor_2", "elias");
+            var expedition = CreateCombatExpedition(77, "survivor_1", "survivor_2");
+
+            CombatResolver.ResolveCombat(state, config, expedition, config.Zones["abandoned_store"]);
+
+            var firstMara = IndexOfLogContaining(expedition, "Mara hits", 0);
+            var firstDog = IndexOfLogContaining(expedition, "Feral Dog hits", firstMara + 1);
+            var firstElias = IndexOfLogContaining(expedition, "Elias hits", firstDog + 1);
+            var secondMara = IndexOfLogContaining(expedition, "Mara hits", firstElias + 1);
+            Assert.GreaterOrEqual(firstMara, 0);
+            Assert.Greater(firstDog, firstMara);
+            Assert.Greater(firstElias, firstDog);
+            Assert.Greater(secondMara, firstElias);
+        }
+
+        [Test]
+        public void CombatUsesZoneEnemyCountBounds()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.Enemies["feral_dog"].MaxHealth = 1;
+            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Weapons["test_knife"].Attack = 20;
+            var state = GameStateFactory.CreateNew(config, 0);
+            var expedition = CreateCombatExpedition(10, "survivor_1");
+            var zone = config.Zones["abandoned_store"];
+            zone.MinEnemyCount = 1;
+            zone.MaxEnemyCount = 1;
+
+            CombatResolver.ResolveCombat(state, config, expedition, zone);
+
+            Assert.AreEqual(1, CountDefeated(expedition));
+            Assert.GreaterOrEqual(IndexOfLogContaining(expedition, "1 enemy", 0), 0);
+        }
+
+        [Test]
+        public void CombatCapsZoneEnemiesAtFour()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.Enemies["feral_dog"].MaxHealth = 1;
+            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Weapons["test_knife"].Attack = 20;
+            var state = GameStateFactory.CreateNew(config, 0);
+            var expedition = CreateCombatExpedition(11, "survivor_1");
+            var zone = config.Zones["abandoned_store"];
+            zone.MinEnemyCount = 4;
+            zone.MaxEnemyCount = 4;
+
+            CombatResolver.ResolveCombat(state, config, expedition, zone);
+
+            Assert.AreEqual(4, CountDefeated(expedition));
+        }
+
+        [Test]
+        public void MeleeTargetsFrontlineBeforeVulnerableBackline()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.StartingSurvivor.BaseAttack = 0;
+            config.Weapons["test_knife"].Attack = 2;
+            config.Enemies["front_guard"] = Enemy("front_guard", "Front Guard", 30, 0, 1);
+            config.Enemies["back_wounded"] = Enemy("back_wounded", "Back Wounded", 1, 0, 1);
+            var zone = TwoEnemyZone("front_guard", "back_wounded");
+            var state = GameStateFactory.CreateNew(config, 0);
+            var expedition = CreateCombatExpedition(256, "survivor_1");
+
+            CombatResolver.ResolveCombat(state, config, expedition, zone);
+
+            var firstHit = IndexOfLogContaining(expedition, "Mara hits", 0);
+            Assert.GreaterOrEqual(firstHit, 0);
+            StringAssert.Contains("Front Guard", PlainLogMessage(expedition.Log[firstHit].Message));
+        }
+
+        [Test]
+        public void RangedTargetsMostVulnerableEnemy()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.StartingSurvivor.WeaponConfigId = "test_revolver";
+            config.StartingSurvivor.BaseAttack = 0;
+            config.Weapons["test_revolver"].Attack = 2;
+            config.Enemies["front_guard"] = Enemy("front_guard", "Front Guard", 30, 0, 1);
+            config.Enemies["back_wounded"] = Enemy("back_wounded", "Back Wounded", 1, 0, 1);
+            var zone = TwoEnemyZone("front_guard", "back_wounded");
+            var state = GameStateFactory.CreateNew(config, 0);
+            var expedition = CreateCombatExpedition(256, "survivor_1");
+
+            CombatResolver.ResolveCombat(state, config, expedition, zone);
+
+            var firstHit = IndexOfLogContaining(expedition, "Mara hits", 0);
+            Assert.GreaterOrEqual(firstHit, 0);
+            StringAssert.Contains("Back Wounded", PlainLogMessage(expedition.Log[firstHit].Message));
+        }
+
+        [Test]
+        public void SurvivorWithoutWeaponConfigAttacksWithBaseAttack()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.StartingSurvivor.WeaponConfigId = string.Empty;
+            config.StartingSurvivor.BaseAttack = 5;
+            config.Enemies["feral_dog"].MaxHealth = 4;
+            config.Enemies["feral_dog"].BaseDamage = 0;
+            var state = GameStateFactory.CreateNew(config, 0);
+            var expedition = CreateCombatExpedition(12, "survivor_1");
+
+            var won = CombatResolver.ResolveCombat(state, config, expedition, config.Zones["abandoned_store"]);
+
+            Assert.IsTrue(won);
+            Assert.AreEqual(1, CountDefeated(expedition));
+        }
+
+        [Test]
+        public void CombatTurnsAdvanceExpeditionElapsedSeconds()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.Balance.AttackTurnSeconds = 2;
+            config.Enemies["feral_dog"].MaxHealth = 1;
+            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Weapons["test_knife"].Attack = 20;
+            var state = GameStateFactory.CreateNew(config, 0);
+            var expedition = CreateCombatExpedition(13, "survivor_1");
+
+            CombatResolver.ResolveCombat(state, config, expedition, config.Zones["abandoned_store"]);
+
+            Assert.GreaterOrEqual(expedition.ElapsedSeconds, 2);
+            Assert.Greater(expedition.Progress, 0);
+        }
+
+        [Test]
+        public void SurvivorMedkitBelowTwentyPercentHealsAndSkipsAttack()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.Enemies["feral_dog"].MaxHealth = 20;
+            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Weapons["test_knife"].Attack = 2;
+            config.Utilities["test_medkit"].HealAmount = 10;
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Survivors[0].Health = 5;
+            state.Survivors[0].MaxHealth = 30;
+            var expedition = CreateCombatExpedition(14, "survivor_1");
+
+            CombatResolver.ResolveCombat(state, config, expedition, config.Zones["abandoned_store"]);
+
+            var useIndex = IndexOfLogContaining(expedition, "uses Test Medkit", 0);
+            var hitIndex = IndexOfLogContaining(expedition, "Mara hits", 0);
+            Assert.GreaterOrEqual(useIndex, 0);
+            Assert.Greater(hitIndex, useIndex);
+        }
+
+        [Test]
+        public void ArmorDefenseAndSpeedModifierAffectTurnCombat()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.StartingSurvivor.BaseSpeed = 20;
+            config.StartingSurvivor.ArmorConfigId = "test_heavy";
+            config.Armor["test_heavy"].Defense = 100;
+            config.Armor["test_heavy"].SpeedModifier = -0.9;
+            config.Enemies["feral_dog"].MaxHealth = 30;
+            config.Enemies["feral_dog"].BaseDamage = 5;
+            config.Enemies["feral_dog"].BaseSpeed = 10;
+            var state = GameStateFactory.CreateNew(config, 0);
+            var expedition = CreateCombatExpedition(15, "survivor_1");
+
+            CombatResolver.ResolveCombat(state, config, expedition, config.Zones["abandoned_store"]);
+
+            var firstDog = IndexOfLogContaining(expedition, "Feral Dog hits Mara", 0);
+            var firstMara = IndexOfLogContaining(expedition, "Mara hits", 0);
+            Assert.GreaterOrEqual(firstDog, 0);
+            Assert.Greater(firstMara, firstDog);
+            StringAssert.Contains("for 1 damage", PlainLogMessage(expedition.Log[firstDog].Message));
+        }
+
+        [Test]
+        public void TurnBasedCombatIsDeterministicForSameSeed()
+        {
+            var config = TestConfigFactory.Create();
+            MakeCombatDeterministic(config);
+            config.Enemies["feral_dog"].MaxHealth = 8;
+            config.Enemies["feral_dog"].BaseDamage = 0;
+            var first = GameStateFactory.CreateNew(config, 0);
+            var second = GameStateFactory.CreateNew(config, 0);
+            var firstExpedition = CreateCombatExpedition(999, "survivor_1");
+            var secondExpedition = CreateCombatExpedition(999, "survivor_1");
+
+            CombatResolver.ResolveCombat(first, config, firstExpedition, config.Zones["abandoned_store"]);
+            CombatResolver.ResolveCombat(second, config, secondExpedition, config.Zones["abandoned_store"]);
+
+            Assert.AreEqual(firstExpedition.Log.Count, secondExpedition.Log.Count);
+            Assert.AreEqual(firstExpedition.ElapsedSeconds, secondExpedition.ElapsedSeconds);
+            Assert.AreEqual(CountDefeated(firstExpedition), CountDefeated(secondExpedition));
+            for (var i = 0; i < firstExpedition.Log.Count; i++)
+            {
+                Assert.AreEqual(firstExpedition.Log[i].Message, secondExpedition.Log[i].Message);
+            }
         }
 
         [Test]
@@ -1076,6 +1316,134 @@ namespace AshfallCamp.Tests.EditMode
             Assert.NotNull(result.State.Expeditions);
         }
 
+        private static void MakeCombatDeterministic(GameConfigSnapshot config)
+        {
+            config.Balance.MinHitChance = 1;
+            config.Balance.MaxHitChance = 1;
+            config.Balance.BaseCritChance = 0;
+            config.Balance.CritMultiplier = 1;
+            foreach (var enemy in config.Enemies.Values)
+            {
+                enemy.Evasion = 0;
+                enemy.Accuracy = 1;
+            }
+        }
+
+        private static SurvivorState AddRecruitableSurvivor(GameState state, GameConfigSnapshot config, string survivorId, string candidateId)
+        {
+            var candidate = config.RecruitableSurvivors[candidateId];
+            var survivor = GameStateFactory.CreateSurvivorState(
+                survivorId,
+                candidate.Name,
+                candidate.BackgroundId,
+                candidate.TraitIds,
+                candidate.Skills,
+                config);
+            state.Survivors.Add(survivor);
+            return survivor;
+        }
+
+        private static ExpeditionState CreateCombatExpedition(uint seed, params string[] survivorIds)
+        {
+            var expedition = new ExpeditionState
+            {
+                Id = "expedition_test",
+                ZoneId = "abandoned_store",
+                RandomState = seed,
+                ExpectedDurationSeconds = 600
+            };
+
+            for (var i = 0; i < survivorIds.Length; i++)
+            {
+                expedition.SurvivorIds.Add(survivorIds[i]);
+            }
+
+            return expedition;
+        }
+
+        private static EnemyDefinition Enemy(string id, string name, int health, int damage, int speed)
+        {
+            return new EnemyDefinition
+            {
+                Id = id,
+                Name = name,
+                MaxHealth = health,
+                BaseDamage = damage,
+                BaseSpeed = speed,
+                AttackType = WeaponType.Melee,
+                Accuracy = 1,
+                XpReward = 1
+            };
+        }
+
+        private static ZoneDefinition TwoEnemyZone(string firstEnemyId, string secondEnemyId)
+        {
+            var zone = new ZoneDefinition
+            {
+                Id = "test_two_enemy_zone",
+                Name = "Test Two Enemy Zone",
+                MinEnemyCount = 2,
+                MaxEnemyCount = 2
+            };
+            zone.EnemyTable.Add(new WeightedEntry { Id = firstEnemyId, Weight = 1 });
+            zone.EnemyTable.Add(new WeightedEntry { Id = secondEnemyId, Weight = 1 });
+            return zone;
+        }
+
+        private static int CountDefeated(ExpeditionState expedition)
+        {
+            var total = 0;
+            foreach (var pair in expedition.EnemiesDefeated)
+            {
+                total += pair.Value;
+            }
+
+            return total;
+        }
+
+        private static int IndexOfLogContaining(ExpeditionState expedition, string text, int startIndex)
+        {
+            for (var i = Math.Max(0, startIndex); i < expedition.Log.Count; i++)
+            {
+                if (PlainLogMessage(expedition.Log[i].Message).IndexOf(text, StringComparison.Ordinal) >= 0)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        private static string PlainLogMessage(string message)
+        {
+            if (string.IsNullOrEmpty(message)) return string.Empty;
+
+            var result = string.Empty;
+            var inTag = false;
+            for (var i = 0; i < message.Length; i++)
+            {
+                var c = message[i];
+                if (c == '<')
+                {
+                    inTag = true;
+                    continue;
+                }
+
+                if (c == '>')
+                {
+                    inTag = false;
+                    continue;
+                }
+
+                if (!inTag)
+                {
+                    result += c;
+                }
+            }
+
+            return result;
+        }
+
         private static LaunchExpeditionRequest Request(string zoneId, uint seed)
         {
             return new LaunchExpeditionRequest
@@ -1155,6 +1523,11 @@ namespace AshfallCamp.Tests.EditMode
             config.StartingSurvivor.BackgroundId = "scavenger";
             config.StartingSurvivor.TraitIds.Add("careful");
             config.StartingSurvivor.WeaponItemId = "rusty_knife";
+            config.StartingSurvivor.WeaponConfigId = "test_knife";
+            config.StartingSurvivor.ArmorConfigId = "test_cloth";
+            config.StartingSurvivor.UtilityConfigId = "test_medkit";
+            config.StartingSurvivor.BaseAttack = 2;
+            config.StartingSurvivor.BaseSpeed = 10;
             config.StartingSurvivor.Skills["scavenging"] = 4;
             config.StartingSurvivor.Skills["melee"] = 1;
             config.StartingSurvivor.Skills["firearms"] = 0;
@@ -1168,6 +1541,11 @@ namespace AshfallCamp.Tests.EditMode
                 BackgroundId = "scavenger",
                 TraitIds = new List<string> { "careful" },
                 WeaponItemId = "rusty_knife",
+                WeaponConfigId = "test_knife",
+                ArmorConfigId = "test_cloth",
+                UtilityConfigId = "test_medkit",
+                BaseAttack = 2,
+                BaseSpeed = 8,
                 Skills = new Dictionary<string, int>
                 {
                     { "scavenging", 1 },
@@ -1183,7 +1561,13 @@ namespace AshfallCamp.Tests.EditMode
             config.Policies["aggressive"] = new ExpeditionPolicyDefinition { Id = "aggressive", Name = "Aggressive", RiskModifier = 1.2, LootModifier = 1.1, DurationModifier = 0.9, PowerModifier = 1.1, NoiseModifier = 1, DurabilityModifier = 1 };
             config.Items["rusty_knife"] = new ItemDefinition { Id = "rusty_knife", Name = "Rusty Knife", Slot = ItemSlot.Weapon, WeaponType = WeaponType.Melee, BaseDamage = 4, AccuracyBonus = 0.02, CritBonus = 0.01, MaxDurability = 80 };
             config.Items["rusty_revolver"] = new ItemDefinition { Id = "rusty_revolver", Name = "Rusty Revolver", Slot = ItemSlot.Weapon, WeaponType = WeaponType.Firearm, BaseDamage = 10, AccuracyBonus = -0.03, CritBonus = 0.04, NoisePerAttack = 3, MaxDurability = 60 };
-            config.Enemies["feral_dog"] = new EnemyDefinition { Id = "feral_dog", Name = "Feral Dog", MaxHealth = 14, Armor = 0, Evasion = 0.08, BaseDamage = 3, AttackType = WeaponType.Melee, Accuracy = 0.75, XpReward = 4 };
+            config.Weapons["test_knife"] = new WeaponDefinition { Id = "test_knife", Name = "Test Knife", Type = WeaponCombatType.Melee, Attack = 4, AttacksPerTurn = 1, TargetCount = 1, TargetingRule = WeaponTargetingRule.FrontlineOnly, HitChance = 0.9, CriticalChance = 0.01, MaxDurability = 80 };
+            config.Weapons["test_revolver"] = new WeaponDefinition { Id = "test_revolver", Name = "Test Revolver", Type = WeaponCombatType.Ranged, Attack = 10, AttacksPerTurn = 1, TargetCount = 1, TargetingRule = WeaponTargetingRule.AnyEnemy, HitChance = 0.9, CriticalChance = 0.04, NoisePerAttack = 3, MaxDurability = 60 };
+            config.Weapons["test_grenade"] = new WeaponDefinition { Id = "test_grenade", Name = "Test Grenade", Type = WeaponCombatType.Explosive, Attack = 8, AttacksPerTurn = 1, TargetCount = 2, TargetingRule = WeaponTargetingRule.AreaAnyEnemies, HitChance = 0.9, CriticalChance = 0.02, NoisePerAttack = 5, MaxDurability = 1 };
+            config.Armor["test_cloth"] = new ArmorDefinition { Id = "test_cloth", Name = "Test Cloth", Type = ArmorType.Light, Defense = 0, EvasionChance = 0, BonusHealth = 0, BonusStamina = 0, SpeedModifier = 0, MaxDurability = 50 };
+            config.Armor["test_heavy"] = new ArmorDefinition { Id = "test_heavy", Name = "Test Heavy Armor", Type = ArmorType.Heavy, Defense = 5, EvasionChance = 0, BonusHealth = 10, BonusStamina = 0, SpeedModifier = -0.2, MaxDurability = 100 };
+            config.Utilities["test_medkit"] = new UtilityDefinition { Id = "test_medkit", Name = "Test Medkit", Type = UtilityEquipmentType.Medkit, Rarity = WeaponRarity.Common, Tier = 1, HealAmount = 10, MaxDurability = 5 };
+            config.Enemies["feral_dog"] = new EnemyDefinition { Id = "feral_dog", Name = "Feral Dog", MaxHealth = 14, Armor = 0, Evasion = 0.08, BaseDamage = 3, BaseSpeed = 12, AttackType = WeaponType.Melee, Accuracy = 0.75, XpReward = 4 };
             config.Zones["abandoned_store"] = Zone("abandoned_store", 45, 1, 0, 5, Array.Empty<UnlockCondition>());
             config.Zones["dry_suburb"] = Zone("dry_suburb", 90, 1, 1, 8, new[] { new UnlockCondition { Type = GameConditionTypes.ZoneCompletions, Id = "abandoned_store", Value = 2 } });
             config.Zones["police_outpost"] = Zone("police_outpost", 120, 1, 1, 8, new[] { new UnlockCondition { Type = GameConditionTypes.BuildingLevel, Id = "workshop", Value = 1 } });
@@ -1224,7 +1608,9 @@ namespace AshfallCamp.Tests.EditMode
                 FoodCostPerSurvivor = food,
                 WaterCostPerSurvivor = water,
                 RecommendedPower = power,
-                DurabilityPressure = 1
+                DurabilityPressure = 1,
+                MinEnemyCount = 1,
+                MaxEnemyCount = 1
             };
             zone.EnemyTable.Add(new WeightedEntry { Id = "feral_dog", Weight = 100 });
             zone.LootTable.Add(new LootTableEntry { ResourceId = "scrap", Min = 4, Max = 10, Weight = 100 });

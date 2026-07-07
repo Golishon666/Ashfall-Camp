@@ -78,7 +78,7 @@ namespace AshfallCamp.Presentation
             state.Resources.TryGetValue(entry.Id, out amount);
 
             ResourceDefinition definition;
-            if (config.Resources.TryGetValue(entry.Id, out definition) && definition.HasCap)
+            if (config.TryGetResource(entry.Id, out definition) && definition.HasCap)
             {
                 int cap;
                 if (!state.ResourceCaps.TryGetValue(entry.Id, out cap))

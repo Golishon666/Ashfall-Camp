@@ -3,6 +3,47 @@ using System.Collections.Generic;
 
 namespace AshfallCamp.Domain
 {
+    internal static class ExpeditionLogMarkup
+    {
+        public const string Time = "#7F9397";
+        public const string Survivor = "#E8C66B";
+        public const string Enemy = "#E26D5A";
+        public const string Weapon = "#79B8FF";
+        public const string Damage = "#FF5C5C";
+        public const string Heal = "#77D982";
+        public const string Miss = "#A7ADB2";
+        public const string Crit = "#FFD166";
+        public const string Noise = "#C792EA";
+        public const string Hp = "#9EE6FF";
+        public const string Wound = "#FF9A76";
+        public const string Loot = "#8BE08B";
+        public const string Success = "#7DDE92";
+        public const string Warning = "#F2A65A";
+        public const string Info = "#C7D0D4";
+
+        public static string Color(string value, string color)
+        {
+            if (string.IsNullOrEmpty(value)) return string.Empty;
+            return "<color=" + color + ">" + Sanitize(value) + "</color>";
+        }
+
+        public static string Number(int value, string color)
+        {
+            return Color(value.ToString(), color);
+        }
+
+        public static string Percent(double value)
+        {
+            var percent = ((int)Math.Round(GameMath.Clamp(value, 0, 1) * 100)).ToString() + "%";
+            return Color(percent, Info);
+        }
+
+        private static string Sanitize(string value)
+        {
+            return value.Replace("<", "[").Replace(">", "]");
+        }
+    }
+
     public static class GameMath
     {
         public static double Clamp(double value, double min, double max)
@@ -62,7 +103,12 @@ namespace AshfallCamp.Domain
     {
         public static readonly string[] SkillIds =
         {
-            "scavenging", "melee", "firearms", "survival", "mechanics", "medicine"
+            GameIds.Skills.Scavenging,
+            GameIds.Skills.Melee,
+            GameIds.Skills.Firearms,
+            GameIds.Skills.Survival,
+            GameIds.Skills.Mechanics,
+            GameIds.Skills.Medicine
         };
 
         public static GameState CreateNew(GameConfigSnapshot config, long nowUnixMs)
@@ -163,7 +209,7 @@ namespace AshfallCamp.Domain
         public static InventoryItemState CreateItemState(string itemId, GameConfigSnapshot config, string uid)
         {
             ItemDefinition item;
-            if (!config.Items.TryGetValue(itemId, out item))
+            if (!config.TryGetItem(itemId, out item))
             {
                 item = new ItemDefinition { Id = itemId, MaxDurability = 1 };
             }
@@ -180,7 +226,7 @@ namespace AshfallCamp.Domain
         private static void ApplyBackground(SurvivorState survivor, GameConfigSnapshot config)
         {
             BackgroundDefinition background;
-            if (!config.Backgrounds.TryGetValue(survivor.BackgroundId, out background)) return;
+            if (!config.TryGetBackground(survivor.BackgroundId, out background)) return;
             foreach (var pair in background.SkillBonuses)
             {
                 var current = survivor.Skills.ContainsKey(pair.Key) ? survivor.Skills[pair.Key] : 0;
@@ -195,7 +241,7 @@ namespace AshfallCamp.Domain
             foreach (var traitId in survivor.TraitIds)
             {
                 TraitDefinition trait;
-                if (config.Traits.TryGetValue(traitId, out trait))
+                if (config.TryGetTrait(traitId, out trait))
                 {
                     ApplyStats(survivor, trait.StatModifiers);
                 }
@@ -206,12 +252,12 @@ namespace AshfallCamp.Domain
         {
             foreach (var pair in stats)
             {
-                if (pair.Key == "max_health")
+                if (pair.Key == GameIds.Stats.MaxHealth)
                 {
                     survivor.MaxHealth += pair.Value;
                     survivor.Health += pair.Value;
                 }
-                else if (pair.Key == "morale" || pair.Key == "combat_morale")
+                else if (pair.Key == GameIds.Stats.Morale || pair.Key == GameIds.Stats.CombatMorale)
                 {
                     survivor.Morale += pair.Value;
                 }
@@ -561,7 +607,7 @@ namespace AshfallCamp.Domain
             }
 
             RecruitableSurvivorDefinition candidate;
-            if (!config.RecruitableSurvivors.TryGetValue(candidateId, out candidate) || IsAlreadyRecruited(state, candidate))
+            if (!config.TryGetRecruitableSurvivor(candidateId, out candidate) || IsAlreadyRecruited(state, candidate))
             {
                 result.Errors.Add("Selected survivor signal is unavailable.");
             }
@@ -764,7 +810,7 @@ namespace AshfallCamp.Domain
             if (!EnsureRecruitmentState(state).PendingCandidateIds.Contains(candidateId)) return null;
 
             RecruitableSurvivorDefinition candidate;
-            if (!config.RecruitableSurvivors.TryGetValue(candidateId, out candidate)) return null;
+            if (!config.TryGetRecruitableSurvivor(candidateId, out candidate)) return null;
             return IsAlreadyRecruited(state, candidate) ? null : candidate;
         }
 
@@ -848,7 +894,8 @@ namespace AshfallCamp.Domain
                 return result;
             }
 
-            if (!config.Items.ContainsKey(item.ItemId))
+            ItemDefinition itemDefinition;
+            if (!config.TryGetItem(item.ItemId, out itemDefinition))
             {
                 result.Errors.Add("Item definition is missing.");
                 return result;
@@ -896,7 +943,7 @@ namespace AshfallCamp.Domain
             if (item == null) return cost;
 
             ItemDefinition definition;
-            if (!config.Items.TryGetValue(item.ItemId, out definition)) return cost;
+            if (!config.TryGetItem(item.ItemId, out definition)) return cost;
 
             var missingDurability = Math.Max(0, item.MaxDurability - item.Durability);
             if (missingDurability <= 0) return cost;
@@ -940,7 +987,7 @@ namespace AshfallCamp.Domain
             }
 
             ItemDefinition definition;
-            if (!config.Items.TryGetValue(item.ItemId, out definition))
+            if (!config.TryGetItem(item.ItemId, out definition))
             {
                 result.Errors.Add("Item definition is missing.");
                 return result;
@@ -974,7 +1021,7 @@ namespace AshfallCamp.Domain
                 return result;
             }
 
-            var definition = config.Items[result.Item.ItemId];
+            var definition = config.RequireItem(result.Item.ItemId);
             result.PreviouslyEquippedItem = FindItem(state, GetEquippedUid(result.Survivor, definition.Slot));
             if (result.PreviouslyEquippedItem != null)
             {
@@ -1075,7 +1122,7 @@ namespace AshfallCamp.Domain
             }
 
             BuildingDefinition definition;
-            if (!config.Buildings.TryGetValue(buildingId, out definition))
+            if (!config.TryGetBuilding(buildingId, out definition))
             {
                 result.Errors.Add("Unknown building.");
                 return result;
@@ -1117,7 +1164,7 @@ namespace AshfallCamp.Domain
                 return result;
             }
 
-            var definition = config.Buildings[buildingId];
+            var definition = config.RequireBuilding(buildingId);
             var building = state.Buildings[buildingId];
             var nextLevel = GetLevel(definition, building.Level + 1);
             ResourceSystem.TrySpend(state, nextLevel.Cost);
@@ -1155,7 +1202,7 @@ namespace AshfallCamp.Domain
             {
                 if (!building.IsUnlocked) continue;
                 BuildingDefinition definition;
-                if (!config.Buildings.TryGetValue(building.Id, out definition)) continue;
+                if (!config.TryGetBuilding(building.Id, out definition)) continue;
                 var level = GetLevel(definition, building.Level);
                 if (level == null) continue;
 
@@ -1192,7 +1239,7 @@ namespace AshfallCamp.Domain
             {
                 if (!building.IsUnlocked) continue;
                 BuildingDefinition definition;
-                if (!config.Buildings.TryGetValue(building.Id, out definition)) continue;
+                if (!config.TryGetBuilding(building.Id, out definition)) continue;
                 if (string.IsNullOrWhiteSpace(definition.ProducedResourceId)) continue;
 
                 var level = GetLevel(definition, building.Level);
@@ -1452,7 +1499,7 @@ namespace AshfallCamp.Domain
         {
             var result = new ValidationResult();
             ZoneDefinition zone;
-            if (!config.Zones.TryGetValue(request.ZoneId, out zone))
+            if (!config.TryGetZone(request.ZoneId, out zone))
             {
                 result.Errors.Add("Unknown zone.");
                 return result;
@@ -1556,7 +1603,7 @@ namespace AshfallCamp.Domain
         private static ExpeditionPolicyDefinition GetPolicy(GameConfigSnapshot config, string policyId)
         {
             ExpeditionPolicyDefinition policy;
-            return config.Policies.TryGetValue(policyId, out policy) ? policy : new ExpeditionPolicyDefinition();
+            return config.TryGetPolicy(policyId, out policy) ? policy : new ExpeditionPolicyDefinition();
         }
 
         internal static SurvivorState FindSurvivor(GameState state, string survivorId)
@@ -1580,8 +1627,9 @@ namespace AshfallCamp.Domain
                 return result;
             }
 
-            var zone = config.Zones[request.ZoneId];
-            var policy = config.Policies.ContainsKey(request.PolicyId) ? config.Policies[request.PolicyId] : new ExpeditionPolicyDefinition();
+            var zone = config.RequireZone(request.ZoneId);
+            ExpeditionPolicyDefinition policy;
+            if (!config.TryGetPolicy(request.PolicyId, out policy)) policy = new ExpeditionPolicyDefinition();
             ResourceSystem.TrySpend(state, ExpeditionValidator.CalculateCost(config, zone, policy, request.SurvivorIds.Count));
 
             var expedition = new ExpeditionState
@@ -1611,7 +1659,7 @@ namespace AshfallCamp.Domain
 
         private static double CalculateDuration(GameState state, GameConfigSnapshot config, ZoneDefinition zone, ExpeditionPolicyDefinition policy, List<string> survivorIds)
         {
-            var averageSurvival = AverageSkill(state, survivorIds, "survival");
+            var averageSurvival = AverageSkill(state, survivorIds, GameIds.Skills.Survival);
             ZoneState zoneState;
             var familiarity = state.Zones.TryGetValue(zone.Id, out zoneState) ? zoneState.Familiarity : 0;
             var survivalBonus = averageSurvival * 0.003;
@@ -1646,7 +1694,7 @@ namespace AshfallCamp.Domain
             }
 
             ExpeditionPolicyDefinition policy;
-            var modifier = config.Policies.TryGetValue(policyId, out policy) ? policy.PowerModifier : 1.0;
+            var modifier = config.TryGetPolicy(policyId, out policy) ? policy.PowerModifier : 1.0;
             return total * modifier;
         }
 
@@ -1656,8 +1704,8 @@ namespace AshfallCamp.Domain
             var armor = GetEquippedItem(state, config, survivor.Equipment.ArmorItemUid);
             var weaponDamage = weapon != null ? weapon.BaseDamage : 1;
             var armorValue = armor != null ? armor.Armor : 0;
-            var melee = survivor.Skills.ContainsKey("melee") ? survivor.Skills["melee"] : 0;
-            var firearms = survivor.Skills.ContainsKey("firearms") ? survivor.Skills["firearms"] : 0;
+            var melee = survivor.Skills.ContainsKey(GameIds.Skills.Melee) ? survivor.Skills[GameIds.Skills.Melee] : 0;
+            var firearms = survivor.Skills.ContainsKey(GameIds.Skills.Firearms) ? survivor.Skills[GameIds.Skills.Firearms] : 0;
             var fatiguePenalty = survivor.Fatigue >= 75 ? 5 : survivor.Fatigue >= 50 ? 2 : 0;
             return survivor.MaxHealth * 0.15 + melee * 0.7 + firearms * 0.7 + weaponDamage * 2 + armorValue * 4 + survivor.Level * 2 - fatiguePenalty;
         }
@@ -1670,7 +1718,7 @@ namespace AshfallCamp.Domain
                 if (state.Inventory[i].Uid != itemUid) continue;
                 if (state.Inventory[i].Durability <= 0) return null;
                 ItemDefinition definition;
-                return config.Items.TryGetValue(state.Inventory[i].ItemId, out definition) ? definition : null;
+                return config.TryGetItem(state.Inventory[i].ItemId, out definition) ? definition : null;
             }
 
             return null;
@@ -1679,6 +1727,57 @@ namespace AshfallCamp.Domain
 
     public static class CombatResolver
     {
+        private const int MaxCombatantsPerSide = 4;
+        private const int CombatTurnSafetyLimit = 10000;
+        private const int DefaultSurvivorBaseAttack = 2;
+        private const int DefaultSurvivorBaseSpeed = 10;
+        private const int DefaultEnemyBaseSpeed = 8;
+
+        private enum CombatSide
+        {
+            Survivor,
+            Enemy
+        }
+
+        private sealed class SurvivorCombatLoadout
+        {
+            public int BaseAttack = DefaultSurvivorBaseAttack;
+            public int BaseSpeed = DefaultSurvivorBaseSpeed;
+            public string WeaponConfigId = string.Empty;
+            public string ArmorConfigId = string.Empty;
+            public string UtilityConfigId = string.Empty;
+        }
+
+        private sealed class CombatUnit
+        {
+            public CombatSide Side;
+            public string Id = string.Empty;
+            public string DefinitionId = string.Empty;
+            public string Name = string.Empty;
+            public int SlotIndex;
+            public int Hp;
+            public int MaxHp;
+            public int BaseAttack;
+            public int Level = 1;
+            public int SkillLevel;
+            public int Defense;
+            public double Evasion;
+            public double BaseSpeed = DefaultSurvivorBaseSpeed;
+            public WeaponType FallbackAttackType = WeaponType.Melee;
+            public double FallbackAccuracy = 0.75;
+            public WeaponDefinition Weapon;
+            public ArmorDefinition Armor;
+            public UtilityDefinition Utility;
+            public SurvivorState Survivor;
+            public EnemyDefinition Enemy;
+            public bool UtilityUsed;
+
+            public bool IsAlive
+            {
+                get { return Hp > 0; }
+            }
+        }
+
         public static double CalculateHitChance(double baseAccuracy, int skillLevel, double weaponAccuracyBonus, double targetEvasion, double min, double max)
         {
             return GameMath.Clamp(baseAccuracy + skillLevel * 0.003 + weaponAccuracyBonus - targetEvasion, min, max);
@@ -1696,94 +1795,610 @@ namespace AshfallCamp.Domain
 
         public static bool ResolveCombat(GameState state, GameConfigSnapshot config, ExpeditionState expedition, string enemyId)
         {
-            EnemyDefinition enemy;
-            if (!config.Enemies.TryGetValue(enemyId, out enemy)) return true;
-            var rng = new SeededRandom(expedition.RandomState);
-            var enemyHp = enemy.MaxHealth;
-            var survivorHp = new Dictionary<string, int>(StringComparer.Ordinal);
-            foreach (var survivorId in expedition.SurvivorIds)
+            var zone = new ZoneDefinition
             {
-                var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
-                if (survivor != null) survivorHp[survivorId] = Math.Max(1, survivor.Health);
+                Id = expedition != null ? expedition.ZoneId : string.Empty,
+                Name = "Combat",
+                MinEnemyCount = 1,
+                MaxEnemyCount = 1
+            };
+            zone.EnemyTable.Add(new WeightedEntry { Id = enemyId, Weight = 100 });
+            return ResolveCombat(state, config, expedition, zone);
+        }
+
+        public static bool ResolveCombat(GameState state, GameConfigSnapshot config, ExpeditionState expedition, ZoneDefinition zone)
+        {
+            if (state == null || config == null || expedition == null || zone == null) return true;
+            var rng = new SeededRandom(expedition.RandomState);
+            var survivors = BuildSurvivorUnits(state, config, expedition);
+            var enemies = BuildEnemyUnits(config, zone, ref rng);
+            if (survivors.Count == 0 || enemies.Count == 0)
+            {
+                expedition.RandomState = rng.State;
+                return true;
             }
 
-            for (var round = 0; round < 20 && enemyHp > 0 && AnyAlive(survivorHp); round++)
-            {
-                foreach (var survivorId in expedition.SurvivorIds)
-                {
-                    if (!survivorHp.ContainsKey(survivorId) || survivorHp[survivorId] <= 0 || enemyHp <= 0) continue;
-                    var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
-                    if (survivor == null) continue;
-                    var weapon = SquadPowerSystem.GetEquippedItem(state, config, survivor.Equipment.WeaponItemUid) ?? new ItemDefinition { WeaponType = WeaponType.Melee, BaseDamage = 1 };
-                    var skillId = weapon.WeaponType == WeaponType.Firearm ? "firearms" : "melee";
-                    var skill = survivor.Skills.ContainsKey(skillId) ? survivor.Skills[skillId] : 0;
-                    var baseAccuracy = weapon.WeaponType == WeaponType.Firearm ? config.Balance.BaseAccuracyFirearms : config.Balance.BaseAccuracyMelee;
-                    var hitChance = CalculateHitChance(baseAccuracy, skill, weapon.AccuracyBonus, enemy.Evasion, config.Balance.MinHitChance, config.Balance.MaxHitChance);
-                    expedition.Noise += weapon.NoisePerAttack;
-                    if (rng.NextDouble() <= hitChance)
-                    {
-                        var critChance = GameMath.Clamp(config.Balance.BaseCritChance + skill * 0.001 + weapon.CritBonus, 0.02, 0.35);
-                        var isCrit = rng.NextDouble() <= critChance;
-                        var damage = CalculateDamage(Math.Max(1, weapon.BaseDamage), skill, survivor.Level, config.Balance.CritMultiplier, isCrit, enemy.Armor, ref rng);
-                        enemyHp -= damage;
-                        expedition.Log.Add(new ExpeditionLogEntry { AtSeconds = expedition.ElapsedSeconds, Message = survivor.Name + " hits " + enemy.Name + " for " + damage + " damage." });
-                    }
-                    else
-                    {
-                        expedition.Log.Add(new ExpeditionLogEntry { AtSeconds = expedition.ElapsedSeconds, Message = survivor.Name + " misses " + enemy.Name + "." });
-                    }
-                }
+            AddCombatLog(
+                expedition,
+                ExpeditionLogMarkup.Color("combat starts", ExpeditionLogMarkup.Warning) +
+                " against " + ExpeditionLogMarkup.Color(FormatEnemyCount(enemies.Count), ExpeditionLogMarkup.Enemy) +
+                ": " + FormatUnitRoster(enemies) + ".");
 
-                if (enemyHp <= 0) break;
-                var targetId = FirstAlive(survivorHp);
-                if (targetId.Length == 0) break;
-                var target = ExpeditionValidator.FindSurvivor(state, targetId);
-                var enemyHit = CalculateHitChance(enemy.Accuracy, 0, 0, 0, config.Balance.MinHitChance, config.Balance.MaxHitChance);
-                if (rng.NextDouble() <= enemyHit)
+            var turns = 0;
+            while (AnyAlive(survivors) && AnyAlive(enemies) && turns < CombatTurnSafetyLimit)
+            {
+                var queue = BuildTurnQueue(survivors, enemies);
+                for (var i = 0; i < queue.Count; i++)
                 {
-                    survivorHp[targetId] -= Math.Max(1, enemy.BaseDamage);
-                    expedition.Log.Add(new ExpeditionLogEntry { AtSeconds = expedition.ElapsedSeconds, Message = enemy.Name + " hits " + (target != null ? target.Name : targetId) + "." });
-                    if (survivorHp[targetId] <= 0 && !expedition.WoundedSurvivorIds.Contains(targetId))
+                    var actor = queue[i];
+                    if (!actor.IsAlive) continue;
+
+                    var opponents = actor.Side == CombatSide.Survivor ? enemies : survivors;
+                    if (!AnyAlive(opponents)) break;
+
+                    if (TryUseMedkit(actor, expedition))
                     {
-                        expedition.WoundedSurvivorIds.Add(targetId);
+                        AdvanceCombatTurn(config, expedition);
+                        turns++;
+                        continue;
                     }
+
+                    ResolveUnitAttack(actor, opponents, config, expedition, ref rng);
+                    AdvanceCombatTurn(config, expedition);
+                    turns++;
+
+                    if (!AnyAlive(opponents)) break;
+                    if (turns >= CombatTurnSafetyLimit) break;
                 }
             }
 
             expedition.RandomState = rng.State;
-            if (enemyHp <= 0)
+            UpdateExpeditionProgress(expedition);
+
+            if (!AnyAlive(survivors))
             {
-                if (!expedition.EnemiesDefeated.ContainsKey(enemy.Id)) expedition.EnemiesDefeated[enemy.Id] = 0;
-                expedition.EnemiesDefeated[enemy.Id]++;
+                AddCombatLog(expedition, ExpeditionLogMarkup.Color("combat lost", ExpeditionLogMarkup.Wound) + "; the squad is overwhelmed.");
+                state.Statistics.CombatsLost++;
+                return false;
+            }
+
+            if (turns >= CombatTurnSafetyLimit && AnyAlive(enemies))
+            {
+                AddCombatLog(expedition, ExpeditionLogMarkup.Color("combat stalled", ExpeditionLogMarkup.Warning) + " in the ash.");
+                state.Statistics.CombatsLost++;
+                return false;
+            }
+
+            for (var i = 0; i < enemies.Count; i++)
+            {
+                var enemy = enemies[i];
+                if (enemy.IsAlive) continue;
+                if (!expedition.EnemiesDefeated.ContainsKey(enemy.DefinitionId)) expedition.EnemiesDefeated[enemy.DefinitionId] = 0;
+                expedition.EnemiesDefeated[enemy.DefinitionId]++;
                 foreach (var survivorId in expedition.SurvivorIds)
                 {
                     var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
-                    ProgressionSystem.GrantSurvivorXp(survivor, enemy.XpReward, config.Balance);
+                    ProgressionSystem.GrantSurvivorXp(survivor, enemy.Enemy != null ? enemy.Enemy.XpReward : 0, config.Balance);
                 }
-                state.Statistics.CombatsWon++;
-                return true;
             }
 
-            state.Statistics.CombatsLost++;
+            AddCombatLog(
+                expedition,
+                ExpeditionLogMarkup.Color("combat won", ExpeditionLogMarkup.Success) +
+                "; defeated " + ExpeditionLogMarkup.Color(FormatEnemyCount(CountDefeatedEnemies(enemies)), ExpeditionLogMarkup.Enemy) +
+                FormatWoundedSummary(expedition) + ".");
+            state.Statistics.CombatsWon++;
+            return true;
+        }
+
+        private static List<CombatUnit> BuildSurvivorUnits(GameState state, GameConfigSnapshot config, ExpeditionState expedition)
+        {
+            var units = new List<CombatUnit>();
+            for (var i = 0; i < expedition.SurvivorIds.Count && units.Count < MaxCombatantsPerSide; i++)
+            {
+                var survivor = ExpeditionValidator.FindSurvivor(state, expedition.SurvivorIds[i]);
+                if (survivor == null) continue;
+
+                var loadout = ResolveSurvivorLoadout(survivor, config);
+                var armor = ResolveArmor(config, loadout.ArmorConfigId);
+                var weapon = ResolveWeapon(config, loadout.WeaponConfigId);
+                var utility = ResolveUtility(config, loadout.UtilityConfigId);
+                var bonusHealth = armor != null ? Math.Max(0, armor.BonusHealth) : 0;
+                var maxHp = Math.Max(1, survivor.MaxHealth + bonusHealth);
+                var hp = GameMath.Clamp(Math.Max(1, survivor.Health) + bonusHealth, 1, maxHp);
+
+                var unit = new CombatUnit
+                {
+                    Side = CombatSide.Survivor,
+                    Id = survivor.Id,
+                    DefinitionId = survivor.Id,
+                    Name = string.IsNullOrWhiteSpace(survivor.Name) ? survivor.Id : survivor.Name,
+                    SlotIndex = units.Count,
+                    Hp = hp,
+                    MaxHp = maxHp,
+                    BaseAttack = Math.Max(0, loadout.BaseAttack),
+                    BaseSpeed = Math.Max(1, loadout.BaseSpeed),
+                    Level = Math.Max(1, survivor.Level),
+                    Weapon = weapon,
+                    Armor = armor,
+                    Utility = utility,
+                    Survivor = survivor,
+                    Defense = armor != null ? Math.Max(0, armor.Defense) : 0,
+                    Evasion = armor != null ? GameMath.Clamp(armor.EvasionChance, 0, 1) : 0,
+                    FallbackAttackType = WeaponType.Melee,
+                    FallbackAccuracy = config.Balance.BaseAccuracyMelee
+                };
+                unit.SkillLevel = GetSkillLevel(survivor, GetSkillId(unit));
+                units.Add(unit);
+            }
+
+            return units;
+        }
+
+        private static List<CombatUnit> BuildEnemyUnits(GameConfigSnapshot config, ZoneDefinition zone, ref SeededRandom rng)
+        {
+            var units = new List<CombatUnit>();
+            if (zone.EnemyTable.Count == 0) return units;
+
+            var min = GameMath.Clamp(zone.MinEnemyCount <= 0 ? 1 : zone.MinEnemyCount, 1, MaxCombatantsPerSide);
+            var max = GameMath.Clamp(zone.MaxEnemyCount <= 0 ? min : zone.MaxEnemyCount, min, MaxCombatantsPerSide);
+            var count = rng.RangeInclusive(min, max);
+            for (var i = 0; i < count; i++)
+            {
+                var enemyId = PickWeightedEnemy(zone.EnemyTable, ref rng);
+                EnemyDefinition enemy;
+                if (!config.TryGetEnemy(enemyId, out enemy)) continue;
+
+                var armor = ResolveArmor(config, enemy.ArmorConfigId);
+                var weapon = ResolveWeapon(config, enemy.WeaponConfigId);
+                var utility = ResolveUtility(config, enemy.UtilityConfigId);
+                var bonusHealth = armor != null ? Math.Max(0, armor.BonusHealth) : 0;
+                var maxHp = Math.Max(1, enemy.MaxHealth + bonusHealth);
+                var unit = new CombatUnit
+                {
+                    Side = CombatSide.Enemy,
+                    Id = enemy.Id + "_" + i,
+                    DefinitionId = enemy.Id,
+                    Name = string.IsNullOrWhiteSpace(enemy.Name) ? enemy.Id : enemy.Name,
+                    SlotIndex = units.Count,
+                    Hp = maxHp,
+                    MaxHp = maxHp,
+                    BaseAttack = Math.Max(0, enemy.BaseDamage),
+                    BaseSpeed = Math.Max(1, enemy.BaseSpeed <= 0 ? DefaultEnemyBaseSpeed : enemy.BaseSpeed),
+                    Level = 1,
+                    Weapon = weapon,
+                    Armor = armor,
+                    Utility = utility,
+                    Enemy = enemy,
+                    Defense = Math.Max(0, enemy.Armor) + (armor != null ? Math.Max(0, armor.Defense) : 0),
+                    Evasion = GameMath.Clamp(enemy.Evasion + (armor != null ? armor.EvasionChance : 0), 0, 1),
+                    FallbackAttackType = enemy.AttackType,
+                    FallbackAccuracy = enemy.Accuracy
+                };
+                units.Add(unit);
+            }
+
+            return units;
+        }
+
+        private static SurvivorCombatLoadout ResolveSurvivorLoadout(SurvivorState survivor, GameConfigSnapshot config)
+        {
+            var loadout = new SurvivorCombatLoadout();
+            if (survivor == null || config == null) return loadout;
+
+            if (string.Equals(survivor.Name, config.StartingSurvivor.Name, StringComparison.Ordinal))
+            {
+                loadout.BaseAttack = config.StartingSurvivor.BaseAttack;
+                loadout.BaseSpeed = config.StartingSurvivor.BaseSpeed;
+                loadout.WeaponConfigId = config.StartingSurvivor.WeaponConfigId;
+                loadout.ArmorConfigId = config.StartingSurvivor.ArmorConfigId;
+                loadout.UtilityConfigId = config.StartingSurvivor.UtilityConfigId;
+                return loadout;
+            }
+
+            foreach (var candidate in config.RecruitableSurvivors.Values)
+            {
+                if (!string.Equals(survivor.Name, candidate.Name, StringComparison.Ordinal)) continue;
+                loadout.BaseAttack = candidate.BaseAttack;
+                loadout.BaseSpeed = candidate.BaseSpeed;
+                loadout.WeaponConfigId = candidate.WeaponConfigId;
+                loadout.ArmorConfigId = candidate.ArmorConfigId;
+                loadout.UtilityConfigId = candidate.UtilityConfigId;
+                return loadout;
+            }
+
+            return loadout;
+        }
+
+        private static WeaponDefinition ResolveWeapon(GameConfigSnapshot config, string weaponId)
+        {
+            if (config == null || string.IsNullOrWhiteSpace(weaponId)) return null;
+            WeaponDefinition weapon;
+            return config.TryGetWeapon(weaponId, out weapon) ? weapon : null;
+        }
+
+        private static ArmorDefinition ResolveArmor(GameConfigSnapshot config, string armorId)
+        {
+            if (config == null || string.IsNullOrWhiteSpace(armorId)) return null;
+            ArmorDefinition armor;
+            return config.TryGetArmor(armorId, out armor) ? armor : null;
+        }
+
+        private static UtilityDefinition ResolveUtility(GameConfigSnapshot config, string utilityId)
+        {
+            if (config == null || string.IsNullOrWhiteSpace(utilityId)) return null;
+            UtilityDefinition utility;
+            return config.TryGetUtility(utilityId, out utility) ? utility : null;
+        }
+
+        private static List<CombatUnit> BuildTurnQueue(List<CombatUnit> survivors, List<CombatUnit> enemies)
+        {
+            var queue = new List<CombatUnit>();
+            AddLiving(queue, survivors);
+            AddLiving(queue, enemies);
+            queue.Sort(CompareTurnOrder);
+            return queue;
+        }
+
+        private static void AddLiving(List<CombatUnit> queue, List<CombatUnit> units)
+        {
+            for (var i = 0; i < units.Count; i++)
+            {
+                if (units[i].IsAlive) queue.Add(units[i]);
+            }
+        }
+
+        private static int CompareTurnOrder(CombatUnit left, CombatUnit right)
+        {
+            var speed = GetFinalSpeed(right).CompareTo(GetFinalSpeed(left));
+            if (speed != 0) return speed;
+            if (left.Side != right.Side) return left.Side == CombatSide.Survivor ? -1 : 1;
+            return left.SlotIndex.CompareTo(right.SlotIndex);
+        }
+
+        private static double GetFinalSpeed(CombatUnit unit)
+        {
+            var modifier = unit != null && unit.Armor != null ? unit.Armor.SpeedModifier : 0;
+            return Math.Max(1, (unit != null ? unit.BaseSpeed : 1) * (1 + modifier));
+        }
+
+        private static bool TryUseMedkit(CombatUnit actor, ExpeditionState expedition)
+        {
+            if (actor == null || actor.Side != CombatSide.Survivor || actor.UtilityUsed || actor.Utility == null) return false;
+            if (actor.Utility.Type != UtilityEquipmentType.Medkit || actor.Utility.HealAmount <= 0) return false;
+            if (actor.Hp > Math.Floor(actor.MaxHp * 0.2)) return false;
+
+            var before = actor.Hp;
+            actor.Hp = GameMath.Clamp(actor.Hp + actor.Utility.HealAmount, 1, actor.MaxHp);
+            actor.UtilityUsed = true;
+            AddCombatLog(
+                expedition,
+                FormatUnitName(actor) + " uses " + ExpeditionLogMarkup.Color(actor.Utility.Name, ExpeditionLogMarkup.Heal) +
+                " at " + ExpeditionLogMarkup.Color(FormatHp(before, actor.MaxHp), ExpeditionLogMarkup.Hp) +
+                " HP and recovers " + ExpeditionLogMarkup.Number(actor.Hp - before, ExpeditionLogMarkup.Heal) +
+                " HP (" + ExpeditionLogMarkup.Color(FormatHp(actor), ExpeditionLogMarkup.Hp) + " HP).");
+            return true;
+        }
+
+        private static void ResolveUnitAttack(CombatUnit actor, List<CombatUnit> opponents, GameConfigSnapshot config, ExpeditionState expedition, ref SeededRandom rng)
+        {
+            var attacks = Math.Max(1, actor.Weapon != null ? actor.Weapon.AttacksPerTurn : 1);
+            for (var attack = 0; attack < attacks; attack++)
+            {
+                var targets = SelectTargets(actor, opponents);
+                if (targets.Count == 0) return;
+
+                for (var i = 0; i < targets.Count; i++)
+                {
+                    var target = targets[i];
+                    if (!actor.IsAlive || !target.IsAlive) continue;
+
+                    var noiseAdded = Math.Max(0, actor.Weapon != null ? actor.Weapon.NoisePerAttack : 0);
+                    expedition.Noise += noiseAdded;
+                    var hitChance = CalculateUnitHitChance(actor, target, config);
+                    if (rng.NextDouble() <= hitChance)
+                    {
+                        var critChance = CalculateUnitCritChance(actor, config);
+                        var isCrit = rng.NextDouble() <= critChance;
+                        var damage = CalculateUnitDamage(actor, target, config, isCrit, ref rng);
+                        target.Hp = Math.Max(0, target.Hp - damage);
+                        AddCombatLog(
+                            expedition,
+                            FormatUnitName(actor) + " hits " + FormatUnitName(target) + " with " + FormatAttackName(actor) +
+                            " for " + ExpeditionLogMarkup.Number(damage, ExpeditionLogMarkup.Damage) + " damage" +
+                            FormatAttackDetails(hitChance, isCrit, noiseAdded, expedition, target) + ".");
+                        LogUnitDefeatedIfNeeded(target, expedition);
+                    }
+                    else
+                    {
+                        AddCombatLog(
+                            expedition,
+                            FormatUnitName(actor) + " " + ExpeditionLogMarkup.Color("misses", ExpeditionLogMarkup.Miss) +
+                            " " + FormatUnitName(target) + " with " + FormatAttackName(actor) +
+                            FormatAttackDetails(hitChance, false, noiseAdded, expedition, target) + ".");
+                    }
+                }
+            }
+        }
+
+        private static List<CombatUnit> SelectTargets(CombatUnit actor, List<CombatUnit> opponents)
+        {
+            var targets = new List<CombatUnit>();
+            var rule = GetTargetingRule(actor);
+            if (rule == WeaponTargetingRule.FrontlineOnly)
+            {
+                var frontline = FirstLivingBySlot(opponents);
+                if (frontline != null) targets.Add(frontline);
+                return targets;
+            }
+
+            var vulnerable = new List<CombatUnit>();
+            AddLiving(vulnerable, opponents);
+            vulnerable.Sort(CompareVulnerability);
+            var targetCount = Math.Max(1, actor.Weapon != null ? actor.Weapon.TargetCount : 1);
+            targetCount = GameMath.Clamp(targetCount, 1, MaxCombatantsPerSide);
+            for (var i = 0; i < vulnerable.Count && targets.Count < targetCount; i++)
+            {
+                targets.Add(vulnerable[i]);
+            }
+
+            return targets;
+        }
+
+        private static WeaponTargetingRule GetTargetingRule(CombatUnit actor)
+        {
+            if (actor.Weapon != null) return actor.Weapon.TargetingRule;
+            return actor.FallbackAttackType == WeaponType.Firearm ? WeaponTargetingRule.AnyEnemy : WeaponTargetingRule.FrontlineOnly;
+        }
+
+        private static CombatUnit FirstLivingBySlot(List<CombatUnit> units)
+        {
+            CombatUnit best = null;
+            for (var i = 0; i < units.Count; i++)
+            {
+                var unit = units[i];
+                if (!unit.IsAlive) continue;
+                if (best == null || unit.SlotIndex < best.SlotIndex) best = unit;
+            }
+
+            return best;
+        }
+
+        private static int CompareVulnerability(CombatUnit left, CombatUnit right)
+        {
+            var ratio = GetHealthRatio(left).CompareTo(GetHealthRatio(right));
+            if (ratio != 0) return ratio;
+            var hp = left.Hp.CompareTo(right.Hp);
+            if (hp != 0) return hp;
+            return left.SlotIndex.CompareTo(right.SlotIndex);
+        }
+
+        private static double GetHealthRatio(CombatUnit unit)
+        {
+            return unit == null || unit.MaxHp <= 0 ? 1 : unit.Hp / (double)unit.MaxHp;
+        }
+
+        private static double CalculateUnitHitChance(CombatUnit actor, CombatUnit target, GameConfigSnapshot config)
+        {
+            var baseAccuracy = actor.Weapon != null ? actor.Weapon.HitChance : GetFallbackAccuracy(actor, config);
+            return CalculateHitChance(baseAccuracy, actor.SkillLevel, 0, target.Evasion, config.Balance.MinHitChance, config.Balance.MaxHitChance);
+        }
+
+        private static double GetFallbackAccuracy(CombatUnit actor, GameConfigSnapshot config)
+        {
+            if (actor.Side == CombatSide.Enemy) return actor.FallbackAccuracy;
+            return actor.FallbackAttackType == WeaponType.Firearm ? config.Balance.BaseAccuracyFirearms : config.Balance.BaseAccuracyMelee;
+        }
+
+        private static double CalculateUnitCritChance(CombatUnit actor, GameConfigSnapshot config)
+        {
+            var weaponCrit = actor.Weapon != null ? actor.Weapon.CriticalChance : 0;
+            return GameMath.Clamp(config.Balance.BaseCritChance + actor.SkillLevel * 0.001 + weaponCrit, 0.02, 0.35);
+        }
+
+        private static int CalculateUnitDamage(CombatUnit actor, CombatUnit target, GameConfigSnapshot config, bool isCrit, ref SeededRandom rng)
+        {
+            var weaponAttack = actor.Weapon != null ? Math.Max(0, actor.Weapon.Attack) : 0;
+            var attack = Math.Max(0, actor.BaseAttack) + weaponAttack;
+            var skillMultiplier = 1 + actor.SkillLevel * 0.006;
+            var levelMultiplier = 1 + Math.Max(1, actor.Level) * 0.015;
+            var randomMultiplier = rng.Range(0.85, 1.15);
+            var raw = (attack + 1) * skillMultiplier * levelMultiplier * randomMultiplier;
+            if (isCrit) raw *= config.Balance.CritMultiplier;
+
+            var penetration = actor.Weapon != null ? GameMath.Clamp(actor.Weapon.ArmorPenetration, 0, 1) : 0;
+            var effectiveArmor = target.Defense * (1 - penetration);
+            return Math.Max(1, (int)Math.Floor(raw - effectiveArmor));
+        }
+
+        private static string GetSkillId(CombatUnit actor)
+        {
+            if (actor.Weapon != null)
+            {
+                return actor.Weapon.Type == WeaponCombatType.Melee ? GameIds.Skills.Melee : GameIds.Skills.Firearms;
+            }
+
+            return actor.FallbackAttackType == WeaponType.Firearm ? GameIds.Skills.Firearms : GameIds.Skills.Melee;
+        }
+
+        private static int GetSkillLevel(SurvivorState survivor, string skillId)
+        {
+            if (survivor == null || string.IsNullOrWhiteSpace(skillId)) return 0;
+            int value;
+            return survivor.Skills.TryGetValue(skillId, out value) ? value : 0;
+        }
+
+        private static void LogUnitDefeatedIfNeeded(CombatUnit target, ExpeditionState expedition)
+        {
+            if (target == null || target.Hp > 0 || expedition == null) return;
+
+            if (target.Side == CombatSide.Survivor)
+            {
+                if (!expedition.WoundedSurvivorIds.Contains(target.Id))
+                {
+                    expedition.WoundedSurvivorIds.Add(target.Id);
+                    AddCombatLog(expedition, FormatUnitName(target) + " is " + ExpeditionLogMarkup.Color("downed", ExpeditionLogMarkup.Wound) + " and will need treatment if the squad makes it home.");
+                }
+
+                return;
+            }
+
+            AddCombatLog(expedition, FormatUnitName(target) + " is " + ExpeditionLogMarkup.Color("defeated", ExpeditionLogMarkup.Success) + ".");
+        }
+
+        private static void AdvanceCombatTurn(GameConfigSnapshot config, ExpeditionState expedition)
+        {
+            expedition.ElapsedSeconds += Math.Max(0, config.Balance.AttackTurnSeconds);
+            UpdateExpeditionProgress(expedition);
+        }
+
+        private static void UpdateExpeditionProgress(ExpeditionState expedition)
+        {
+            if (expedition == null) return;
+            expedition.Progress = GameMath.Clamp(expedition.ElapsedSeconds / Math.Max(1, expedition.ExpectedDurationSeconds) * 100, 0, 100);
+        }
+
+        private static bool AnyAlive(List<CombatUnit> units)
+        {
+            for (var i = 0; i < units.Count; i++)
+            {
+                if (units[i].IsAlive) return true;
+            }
+
             return false;
         }
 
-        private static bool AnyAlive(Dictionary<string, int> hp)
+        private static string PickWeightedEnemy(List<WeightedEntry> entries, ref SeededRandom rng)
         {
-            foreach (var pair in hp)
+            var total = 0;
+            foreach (var entry in entries) total += Math.Max(0, entry.Weight);
+            if (total <= 0) return entries[0].Id;
+            var roll = rng.RangeInclusive(1, total);
+            var cursor = 0;
+            foreach (var entry in entries)
             {
-                if (pair.Value > 0) return true;
+                cursor += Math.Max(0, entry.Weight);
+                if (roll <= cursor) return entry.Id;
             }
-            return false;
+
+            return entries[entries.Count - 1].Id;
         }
 
-        private static string FirstAlive(Dictionary<string, int> hp)
+        private static void AddCombatLog(ExpeditionState expedition, string message)
         {
-            foreach (var pair in hp)
+            if (expedition == null || string.IsNullOrWhiteSpace(message)) return;
+            expedition.Log.Add(new ExpeditionLogEntry
             {
-                if (pair.Value > 0) return pair.Key;
+                AtSeconds = expedition.ElapsedSeconds,
+                Message = ExpeditionLogMarkup.Color(FormatLogTime(expedition.ElapsedSeconds), ExpeditionLogMarkup.Time) + ": " + message
+            });
+        }
+
+        private static string FormatUnitName(CombatUnit unit)
+        {
+            if (unit == null) return ExpeditionLogMarkup.Color("Unknown", ExpeditionLogMarkup.Info);
+            var color = unit.Side == CombatSide.Survivor ? ExpeditionLogMarkup.Survivor : ExpeditionLogMarkup.Enemy;
+            return ExpeditionLogMarkup.Color(string.IsNullOrWhiteSpace(unit.Name) ? unit.Id : unit.Name, color);
+        }
+
+        private static string FormatAttackName(CombatUnit actor)
+        {
+            if (actor == null) return ExpeditionLogMarkup.Color("an attack", ExpeditionLogMarkup.Weapon);
+            if (actor.Weapon != null && !string.IsNullOrWhiteSpace(actor.Weapon.Name)) return ExpeditionLogMarkup.Color(actor.Weapon.Name, ExpeditionLogMarkup.Weapon);
+            if (actor.Weapon != null && !string.IsNullOrWhiteSpace(actor.Weapon.Id)) return ExpeditionLogMarkup.Color(actor.Weapon.Id, ExpeditionLogMarkup.Weapon);
+            if (actor.FallbackAttackType == WeaponType.Firearm) return ExpeditionLogMarkup.Color("ranged attack", ExpeditionLogMarkup.Weapon);
+            if (actor.Side == CombatSide.Enemy) return ExpeditionLogMarkup.Color("melee attack", ExpeditionLogMarkup.Weapon);
+            return ExpeditionLogMarkup.Color("bare hands", ExpeditionLogMarkup.Weapon);
+        }
+
+        private static string FormatAttackDetails(double hitChance, bool isCrit, int noiseAdded, ExpeditionState expedition, CombatUnit target)
+        {
+            var details = new List<string>();
+            details.Add("hit " + ExpeditionLogMarkup.Percent(hitChance));
+            if (isCrit) details.Add(ExpeditionLogMarkup.Color("critical", ExpeditionLogMarkup.Crit));
+            if (target != null && target.Defense > 0) details.Add("armor " + ExpeditionLogMarkup.Number(target.Defense, ExpeditionLogMarkup.Warning));
+            if (noiseAdded > 0)
+            {
+                details.Add(
+                    "noise +" + ExpeditionLogMarkup.Number(noiseAdded, ExpeditionLogMarkup.Noise) +
+                    ", total " + ExpeditionLogMarkup.Number(Math.Max(0, expedition != null ? expedition.Noise : 0), ExpeditionLogMarkup.Noise));
             }
-            return string.Empty;
+
+            if (target != null) details.Add(FormatUnitName(target) + " " + ExpeditionLogMarkup.Color(FormatHp(target), ExpeditionLogMarkup.Hp) + " HP");
+            return " (" + string.Join(", ", details.ToArray()) + ")";
+        }
+
+        private static string FormatHp(CombatUnit unit)
+        {
+            if (unit == null) return "0/0";
+            return FormatHp(unit.Hp, unit.MaxHp);
+        }
+
+        private static string FormatHp(int hp, int maxHp)
+        {
+            return Math.Max(0, hp) + "/" + Math.Max(1, maxHp);
+        }
+
+        private static string FormatEnemyCount(int count)
+        {
+            return Math.Max(0, count) + (count == 1 ? " enemy" : " enemies");
+        }
+
+        private static int CountDefeatedEnemies(List<CombatUnit> enemies)
+        {
+            var count = 0;
+            if (enemies == null) return count;
+            for (var i = 0; i < enemies.Count; i++)
+            {
+                if (!enemies[i].IsAlive) count++;
+            }
+
+            return count;
+        }
+
+        private static string FormatWoundedSummary(ExpeditionState expedition)
+        {
+            var count = expedition != null && expedition.WoundedSurvivorIds != null ? expedition.WoundedSurvivorIds.Count : 0;
+            if (count <= 0) return string.Empty;
+            return ", " + ExpeditionLogMarkup.Number(count, ExpeditionLogMarkup.Wound) + (count == 1 ? " survivor downed" : " survivors downed");
+        }
+
+        private static string FormatUnitRoster(List<CombatUnit> units)
+        {
+            if (units == null || units.Count == 0) return "none";
+
+            var counts = new Dictionary<string, int>(StringComparer.Ordinal);
+            var order = new List<string>();
+            for (var i = 0; i < units.Count; i++)
+            {
+                var name = units[i] != null && !string.IsNullOrWhiteSpace(units[i].Name) ? units[i].Name : "Unknown";
+                if (!counts.ContainsKey(name))
+                {
+                    counts[name] = 0;
+                    order.Add(name);
+                }
+
+                counts[name]++;
+            }
+
+            var parts = new List<string>();
+            for (var i = 0; i < order.Count; i++)
+            {
+                var name = order[i];
+                var count = counts[name];
+                var coloredName = ExpeditionLogMarkup.Color(name, ExpeditionLogMarkup.Enemy);
+                parts.Add(count > 1 ? coloredName + " x" + ExpeditionLogMarkup.Number(count, ExpeditionLogMarkup.Enemy) : coloredName);
+            }
+
+            return string.Join(", ", parts.ToArray());
+        }
+
+        private static string FormatLogTime(double elapsedSeconds)
+        {
+            var totalSeconds = Math.Max(0, (int)Math.Floor(elapsedSeconds));
+            var minutes = totalSeconds / 60;
+            var seconds = totalSeconds % 60;
+            return minutes.ToString("00") + ":" + seconds.ToString("00");
         }
     }
 
@@ -2153,7 +2768,7 @@ namespace AshfallCamp.Domain
         {
             if (expedition.Status != ExpeditionStatus.Active) return;
             ZoneDefinition zone;
-            if (!config.Zones.TryGetValue(expedition.ZoneId, out zone))
+            if (!config.TryGetZone(expedition.ZoneId, out zone))
             {
                 expedition.Status = ExpeditionStatus.Failed;
                 return;
@@ -2182,9 +2797,8 @@ namespace AshfallCamp.Domain
             expedition.RandomState = rng.State;
             if (roll < 35 && zone.EnemyTable.Count > 0)
             {
-                var enemyId = PickWeighted(zone.EnemyTable, ref rng);
                 expedition.RandomState = rng.State;
-                if (!CombatResolver.ResolveCombat(state, config, expedition, enemyId))
+                if (!CombatResolver.ResolveCombat(state, config, expedition, zone))
                 {
                     expedition.Status = ExpeditionStatus.Failed;
                     Fail(state, config, expedition);
@@ -2197,7 +2811,7 @@ namespace AshfallCamp.Domain
             }
             else if (roll < 85)
             {
-                expedition.Log.Add(new ExpeditionLogEntry { AtSeconds = expedition.ElapsedSeconds, Message = "The squad handles a small obstacle." });
+                AddExpeditionLog(expedition, "the squad handles a " + ExpeditionLogMarkup.Color("small obstacle", ExpeditionLogMarkup.Warning) + ".");
                 foreach (var survivorId in expedition.SurvivorIds)
                 {
                     var survivor = ExpeditionValidator.FindSurvivor(state, survivorId);
@@ -2206,7 +2820,7 @@ namespace AshfallCamp.Domain
             }
             else
             {
-                expedition.Log.Add(new ExpeditionLogEntry { AtSeconds = expedition.ElapsedSeconds, Message = "Quiet travel through the ash." });
+                AddExpeditionLog(expedition, ExpeditionLogMarkup.Color("quiet travel", ExpeditionLogMarkup.Info) + " through the ash.");
             }
         }
 
@@ -2214,16 +2828,21 @@ namespace AshfallCamp.Domain
         {
             var entry = PickWeightedLoot(zone.LootTable, ref rng);
             if (entry == null) return;
-            var averageScavenging = AverageSkill(state, expedition.SurvivorIds, "scavenging");
+            var averageScavenging = AverageSkill(state, expedition.SurvivorIds, GameIds.Skills.Scavenging);
             ZoneState zoneState;
             var familiarity = state.Zones.TryGetValue(zone.Id, out zoneState) ? zoneState.Familiarity : 0;
             ExpeditionPolicyDefinition policy;
-            var policyBonus = config.Policies.TryGetValue(expedition.PolicyId, out policy) ? policy.LootModifier : 1.0;
+            var policyBonus = config.TryGetPolicy(expedition.PolicyId, out policy) ? policy.LootModifier : 1.0;
             var amount = (int)Math.Floor(rng.RangeInclusive(entry.Min, entry.Max) * (1 + averageScavenging * 0.015) * policyBonus * (1 + familiarity * 0.003));
             amount = Math.Max(1, amount);
             if (!expedition.AccumulatedLoot.ContainsKey(entry.ResourceId)) expedition.AccumulatedLoot[entry.ResourceId] = 0;
             expedition.AccumulatedLoot[entry.ResourceId] += amount;
-            expedition.Log.Add(new ExpeditionLogEntry { AtSeconds = expedition.ElapsedSeconds, Message = "Found " + amount + " " + entry.ResourceId + "." });
+            ResourceDefinition resource;
+            var resourceName = config.TryGetResource(entry.ResourceId, out resource) ? resource.Name : entry.ResourceId;
+            AddExpeditionLog(
+                expedition,
+                "found " + ExpeditionLogMarkup.Number(amount, ExpeditionLogMarkup.Loot) +
+                " " + ExpeditionLogMarkup.Color(resourceName, ExpeditionLogMarkup.Loot) + ".");
         }
 
         public static void Complete(GameState state, GameConfigSnapshot config, ExpeditionState expedition)
@@ -2259,7 +2878,7 @@ namespace AshfallCamp.Domain
             if (state.Zones.TryGetValue(expedition.ZoneId, out zoneState))
             {
                 zoneState.Completions++;
-                zoneState.Familiarity = GameMath.Clamp(zoneState.Familiarity + 5 + AverageSkill(state, expedition.SurvivorIds, "survival") * 0.05, 0, 100);
+                zoneState.Familiarity = GameMath.Clamp(zoneState.Familiarity + 5 + AverageSkill(state, expedition.SurvivorIds, GameIds.Skills.Survival) * 0.05, 0, 100);
                 if (zoneState.BestClearTimeSeconds <= 0 || expedition.ElapsedSeconds < zoneState.BestClearTimeSeconds)
                 {
                     zoneState.BestClearTimeSeconds = expedition.ElapsedSeconds;
@@ -2283,9 +2902,9 @@ namespace AshfallCamp.Domain
         {
             if (state == null || config == null || expedition == null) return;
             ZoneDefinition zone;
-            if (!config.Zones.TryGetValue(expedition.ZoneId, out zone)) return;
+            if (!config.TryGetZone(expedition.ZoneId, out zone)) return;
             ExpeditionPolicyDefinition policy;
-            config.Policies.TryGetValue(expedition.PolicyId, out policy);
+            config.TryGetPolicy(expedition.PolicyId, out policy);
 
             var damagedItems = new HashSet<string>(StringComparer.Ordinal);
             foreach (var survivorId in expedition.SurvivorIds)
@@ -2308,7 +2927,7 @@ namespace AshfallCamp.Domain
             foreach (var traitId in survivor.TraitIds)
             {
                 TraitDefinition trait;
-                if (!config.Traits.TryGetValue(traitId, out trait)) continue;
+                if (!config.TryGetTrait(traitId, out trait)) continue;
                 int modifier;
                 if (trait.StatModifiers.TryGetValue(config.Balance.DurabilityTraitModifierId, out modifier))
                 {
@@ -2400,6 +3019,24 @@ namespace AshfallCamp.Domain
                 if (roll <= cursor) return entry;
             }
             return entries[entries.Count - 1];
+        }
+
+        private static void AddExpeditionLog(ExpeditionState expedition, string message)
+        {
+            if (expedition == null || string.IsNullOrWhiteSpace(message)) return;
+            expedition.Log.Add(new ExpeditionLogEntry
+            {
+                AtSeconds = expedition.ElapsedSeconds,
+                Message = ExpeditionLogMarkup.Color(FormatLogTime(expedition.ElapsedSeconds), ExpeditionLogMarkup.Time) + ": " + message
+            });
+        }
+
+        private static string FormatLogTime(double elapsedSeconds)
+        {
+            var totalSeconds = Math.Max(0, (int)Math.Floor(elapsedSeconds));
+            var minutes = totalSeconds / 60;
+            var seconds = totalSeconds % 60;
+            return minutes.ToString("00") + ":" + seconds.ToString("00");
         }
 
         private static double AverageSkill(GameState state, List<string> survivorIds, string skillId)

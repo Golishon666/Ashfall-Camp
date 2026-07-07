@@ -23,6 +23,8 @@ MonoBehaviour:
     WeaponConfigId: weapon_melee_01_survival_knife
     ArmorConfigId: armor_01_patched_cloth_jacket
     UtilityConfigId: utility_medkit_tier_01_rag_bundle
+    BaseAttack: 2
+    BaseSpeed: 10
     Skills:
     - Id: scavenging
       Value: 4
@@ -48,6 +50,8 @@ MonoBehaviour:
     WeaponConfigId: weapon_firearm_03_heavy_revolver
     ArmorConfigId: armor_11_police_tactical_vest
     UtilityConfigId: utility_ammo_pack_tier_02_leather_ammo_bag
+    BaseAttack: 2
+    BaseSpeed: 10
     Skills:
     - Id: scavenging
       Value: 1
@@ -72,6 +76,8 @@ MonoBehaviour:
     WeaponConfigId: weapon_melee_07_pipe_wrench
     ArmorConfigId: armor_midgame_09_armored_mechanic_vest
     UtilityConfigId: utility_toolkit_tier_03_scrap_toolbox
+    BaseAttack: 2
+    BaseSpeed: 9
     Skills:
     - Id: scavenging
       Value: 1
@@ -96,6 +102,8 @@ MonoBehaviour:
     WeaponConfigId: weapon_melee_01_survival_knife
     ArmorConfigId: armor_02_leather_jacket
     UtilityConfigId: utility_medkit_tier_03_trauma_bag
+    BaseAttack: 1
+    BaseSpeed: 11
     Skills:
     - Id: scavenging
       Value: 1
@@ -120,6 +128,8 @@ MonoBehaviour:
     WeaponConfigId: weapon_melee_22_metal_pipe
     ArmorConfigId: armor_05_biker_vest
     UtilityConfigId: utility_backpack_tier_02_field_backpack
+    BaseAttack: 4
+    BaseSpeed: 8
     Skills:
     - Id: scavenging
       Value: 0
@@ -144,6 +154,8 @@ MonoBehaviour:
     WeaponConfigId: weapon_firearm_14_hunting_rifle
     ArmorConfigId: armor_midgame_15_hunter_scale_vest
     UtilityConfigId: utility_ammo_pack_tier_03_canvas_ammo_pack
+    BaseAttack: 2
+    BaseSpeed: 10
     Skills:
     - Id: scavenging
       Value: 1
@@ -168,6 +180,8 @@ MonoBehaviour:
     WeaponConfigId: weapon_melee_03_curved_machete
     ArmorConfigId: armor_08_raider_leather_armor
     UtilityConfigId: utility_backpack_tier_01_torn_scavenger_bag
+    BaseAttack: 2
+    BaseSpeed: 11
     Skills:
     - Id: scavenging
       Value: 3

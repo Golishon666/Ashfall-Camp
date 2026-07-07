@@ -78,6 +78,8 @@ namespace AshfallCamp.Infrastructure
             snapshot.StartingSurvivor.WeaponConfigId = source.WeaponConfigId;
             snapshot.StartingSurvivor.ArmorConfigId = source.ArmorConfigId;
             snapshot.StartingSurvivor.UtilityConfigId = source.UtilityConfigId;
+            snapshot.StartingSurvivor.BaseAttack = source.BaseAttack;
+            snapshot.StartingSurvivor.BaseSpeed = source.BaseSpeed;
             snapshot.StartingSurvivor.Skills = ToDictionary(source.Skills);
 
             foreach (var item in _database.Survivors.RecruitableSurvivors)
@@ -93,6 +95,8 @@ namespace AshfallCamp.Infrastructure
                     WeaponConfigId = item.WeaponConfigId,
                     ArmorConfigId = item.ArmorConfigId,
                     UtilityConfigId = item.UtilityConfigId,
+                    BaseAttack = item.BaseAttack,
+                    BaseSpeed = item.BaseSpeed,
                     Skills = ToDictionary(item.Skills)
                 }, "recruitable survivors");
             }
@@ -166,6 +170,8 @@ namespace AshfallCamp.Infrastructure
                     RecommendedPower = item.RecommendedPower,
                     BaseAmbushChance = item.BaseAmbushChance,
                     DurabilityPressure = item.DurabilityPressure,
+                    MinEnemyCount = item.MinEnemyCount,
+                    MaxEnemyCount = item.MaxEnemyCount,
                     RequiredBuildingLevels = ToDictionary(item.RequiredBuildingLevels)
                 };
                 foreach (var entry in item.EnemyTable) zone.EnemyTable.Add(new WeightedEntry { Id = entry.Id, Weight = entry.Weight });
@@ -191,6 +197,7 @@ namespace AshfallCamp.Infrastructure
                     Armor = item.Armor,
                     Evasion = item.Evasion,
                     BaseDamage = item.BaseDamage,
+                    BaseSpeed = item.BaseSpeed,
                     AttackType = item.AttackType,
                     Accuracy = item.Accuracy,
                     AttackIntervalSeconds = item.AttackIntervalSeconds,
@@ -346,6 +353,7 @@ namespace AshfallCamp.Infrastructure
                 MaxOfflineSeconds = source.MaxOfflineSeconds,
                 SimulationTickSeconds = source.SimulationTickSeconds,
                 CombatTickSeconds = source.CombatTickSeconds,
+                AttackTurnSeconds = source.AttackTurnSeconds,
                 ExpeditionStepSeconds = source.ExpeditionStepSeconds,
                 AutosaveSeconds = source.AutosaveSeconds,
                 OfflineReportMinimumSeconds = source.OfflineReportMinimumSeconds,
@@ -450,6 +458,8 @@ namespace AshfallCamp.Infrastructure
             RequireAny(snapshot.Buildings, "buildings");
             if (!snapshot.Policies.ContainsKey("balanced")) throw new InvalidOperationException("Policy catalog must include balanced.");
             if (string.IsNullOrWhiteSpace(snapshot.StartingSurvivor.PortraitId)) throw new InvalidOperationException("Starting survivor portrait is missing.");
+            if (snapshot.StartingSurvivor.BaseAttack < 0) throw new InvalidOperationException("Starting survivor base attack cannot be negative.");
+            if (snapshot.StartingSurvivor.BaseSpeed <= 0) throw new InvalidOperationException("Starting survivor base speed must be positive.");
             if (!snapshot.Backgrounds.ContainsKey(snapshot.StartingSurvivor.BackgroundId)) throw new InvalidOperationException("Starting survivor background is missing.");
             foreach (var traitId in snapshot.StartingSurvivor.TraitIds)
             {
@@ -478,6 +488,10 @@ namespace AshfallCamp.Infrastructure
                 if (zone.MinDurationSeconds <= 0 || zone.MaxDurationSeconds < zone.MinDurationSeconds) throw new InvalidOperationException("Zone duration bounds are invalid: " + zone.Id);
                 if (zone.FoodCostPerSurvivor < 0 || zone.WaterCostPerSurvivor < 0) throw new InvalidOperationException("Zone costs cannot be negative: " + zone.Id);
                 if (zone.DurabilityPressure < 0) throw new InvalidOperationException("Zone durability pressure cannot be negative: " + zone.Id);
+                if (zone.MinEnemyCount < 1 || zone.MaxEnemyCount > 4 || zone.MinEnemyCount > zone.MaxEnemyCount)
+                {
+                    throw new InvalidOperationException("Zone enemy count bounds must be 1..4: " + zone.Id);
+                }
                 foreach (var requirement in zone.RequiredBuildingLevels)
                 {
                     if (!snapshot.Buildings.ContainsKey(requirement.Key)) throw new InvalidOperationException("Zone requirement references unknown building: " + requirement.Key);
@@ -534,6 +548,7 @@ namespace AshfallCamp.Infrastructure
 
             if (snapshot.Balance.MaxOfflineSeconds <= 0) throw new InvalidOperationException("Max offline seconds must be positive.");
             if (snapshot.Balance.SimulationTickSeconds <= 0) throw new InvalidOperationException("Simulation tick seconds must be positive.");
+            if (snapshot.Balance.AttackTurnSeconds <= 0) throw new InvalidOperationException("Attack turn seconds must be positive.");
             if (snapshot.Balance.ExpeditionStepSeconds <= 0) throw new InvalidOperationException("Expedition step seconds must be positive.");
             if (snapshot.Balance.OfflineReportMinimumSeconds < 0) throw new InvalidOperationException("Offline report minimum seconds cannot be negative.");
             if (snapshot.Balance.MinHitChance < 0 || snapshot.Balance.MaxHitChance > 1 || snapshot.Balance.MinHitChance > snapshot.Balance.MaxHitChance)
@@ -569,6 +584,8 @@ namespace AshfallCamp.Infrastructure
             {
                 if (string.IsNullOrWhiteSpace(candidate.Name)) throw new InvalidOperationException("Recruitable survivor has empty name: " + candidate.Id);
                 if (string.IsNullOrWhiteSpace(candidate.PortraitId)) throw new InvalidOperationException("Recruitable survivor portrait is missing: " + candidate.Id);
+                if (candidate.BaseAttack < 0) throw new InvalidOperationException("Recruitable survivor base attack cannot be negative: " + candidate.Id);
+                if (candidate.BaseSpeed <= 0) throw new InvalidOperationException("Recruitable survivor base speed must be positive: " + candidate.Id);
                 if (!names.Add(candidate.Name)) throw new InvalidOperationException("Recruitable survivor has duplicate name: " + candidate.Name);
                 if (!snapshot.Backgrounds.ContainsKey(candidate.BackgroundId)) throw new InvalidOperationException("Recruitable survivor background is missing: " + candidate.Id);
                 foreach (var traitId in candidate.TraitIds)
@@ -769,6 +786,7 @@ namespace AshfallCamp.Infrastructure
                 if (string.IsNullOrWhiteSpace(enemy.PortraitId)) throw new InvalidOperationException("Enemy portrait is missing: " + enemy.Id);
                 if (enemy.MaxHealth <= 0) throw new InvalidOperationException("Enemy health must be positive: " + enemy.Id);
                 if (enemy.BaseDamage < 0) throw new InvalidOperationException("Enemy damage cannot be negative: " + enemy.Id);
+                if (enemy.BaseSpeed <= 0) throw new InvalidOperationException("Enemy base speed must be positive: " + enemy.Id);
                 if (enemy.Armor < 0) throw new InvalidOperationException("Enemy armor cannot be negative: " + enemy.Id);
                 if (enemy.Evasion < 0 || enemy.Evasion > 1) throw new InvalidOperationException("Enemy evasion must be 0..1: " + enemy.Id);
                 if (enemy.Accuracy < 0 || enemy.Accuracy > 1) throw new InvalidOperationException("Enemy accuracy must be 0..1: " + enemy.Id);

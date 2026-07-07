@@ -31,7 +31,7 @@ namespace AshfallCamp.Presentation
             {
                 if (!building.IsUnlocked) continue;
                 BuildingDefinition definition;
-                if (!config.Buildings.TryGetValue(building.Id, out definition)) continue;
+                if (!config.TryGetBuilding(building.Id, out definition)) continue;
                 if (definition.ProducedResourceId != resourceId) continue;
                 var level = BuildingSystem.GetLevel(definition, building.Level);
                 if (level != null) perMinute += level.ResourcePerMinute;

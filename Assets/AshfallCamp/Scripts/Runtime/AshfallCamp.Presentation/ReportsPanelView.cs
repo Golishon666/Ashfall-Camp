@@ -214,6 +214,7 @@ namespace AshfallCamp.Presentation
                 UiText.Set(afterActionXp, report.AfterActionXp);
                 UiText.Set(afterActionWounds, report.AfterActionWounds);
                 UiText.Set(afterActionEnemies, report.AfterActionEnemies);
+                if (afterActionEvents != null) afterActionEvents.richText = true;
                 UiText.Set(afterActionEvents, report.AfterActionEvents);
                 UiText.Set(afterActionSendAgainButtonLabel, report.AfterActionSendAgainButton);
                 _afterActionSendAgainRequest = report.AfterActionSendAgainRequest;

@@ -375,6 +375,93 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void GameIdsMatchProductionConfigCatalogs()
+        {
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
+            Assert.NotNull(database);
+
+            var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+
+            AssertIdsMatch("resources", config.Resources.Keys, GameIds.Resources.All);
+            AssertIdsMatch("skills", GameStateFactory.SkillIds, GameIds.Skills.All);
+            AssertIdsMatch("buildings", config.Buildings.Keys, GameIds.Buildings.All);
+            AssertIdsMatch("zones", config.Zones.Keys, GameIds.Zones.All);
+            AssertIdsMatch("policies", config.Policies.Keys, GameIds.Policies.All);
+            AssertIdsMatch("backgrounds", config.Backgrounds.Keys, GameIds.Backgrounds.All);
+            AssertIdsMatch("traits", config.Traits.Keys, GameIds.Traits.All);
+            AssertIdsMatch("recruitable survivors", config.RecruitableSurvivors.Keys, GameIds.RecruitableSurvivors.All);
+            AssertIdsMatch("enemies", config.Enemies.Keys, GameIds.Enemies.All);
+            AssertIdsMatch("weapons", config.Weapons.Keys, GameIds.Weapons.All);
+            AssertIdsMatch("armor", config.Armor.Keys, GameIds.Armor.All);
+            AssertIdsMatch("utilities", config.Utilities.Keys, GameIds.Utilities.All);
+            AssertIdsMatch("legacy items", config.Items.Keys, GameIds.Items.All);
+            AssertIdsMatch("status effects", new[] { config.Balance.HealingDefaultWoundId }, GameIds.StatusEffects.All);
+            AssertIdsMatch("sounds", CollectUsedSoundIds(config), GameIds.Sounds.All);
+        }
+
+        [Test]
+        public void GameConfigLookupExtensionsResolveProductionIds()
+        {
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
+            Assert.NotNull(database);
+
+            var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+
+            ResourceDefinition resource;
+            Assert.IsTrue(config.TryGetResource(GameIds.Resources.Scrap, out resource));
+            Assert.AreSame(resource, config.RequireResource(GameIds.Resources.Scrap));
+
+            BackgroundDefinition background;
+            Assert.IsTrue(config.TryGetBackground(GameIds.Backgrounds.Scavenger, out background));
+            Assert.AreSame(background, config.RequireBackground(GameIds.Backgrounds.Scavenger));
+
+            TraitDefinition trait;
+            Assert.IsTrue(config.TryGetTrait(GameIds.Traits.Careful, out trait));
+            Assert.AreSame(trait, config.RequireTrait(GameIds.Traits.Careful));
+
+            ExpeditionPolicyDefinition policy;
+            Assert.IsTrue(config.TryGetPolicy(GameIds.Policies.Balanced, out policy));
+            Assert.AreSame(policy, config.RequirePolicy(GameIds.Policies.Balanced));
+
+            ZoneDefinition zone;
+            Assert.IsTrue(config.TryGetZone(GameIds.Zones.AbandonedStore, out zone));
+            Assert.AreSame(zone, config.RequireZone(GameIds.Zones.AbandonedStore));
+
+            EnemyDefinition enemy;
+            Assert.IsTrue(config.TryGetEnemy(GameIds.Enemies.FeralDog, out enemy));
+            Assert.AreSame(enemy, config.RequireEnemy(GameIds.Enemies.FeralDog));
+
+            ItemDefinition item;
+            Assert.IsTrue(config.TryGetItem(GameIds.Items.RustyKnife, out item));
+            Assert.AreSame(item, config.RequireItem(GameIds.Items.RustyKnife));
+
+            WeaponDefinition weapon;
+            Assert.IsTrue(config.TryGetWeapon(GameIds.Weapons.Melee01SurvivalKnife, out weapon));
+            Assert.AreSame(weapon, config.RequireWeapon(GameIds.Weapons.Melee01SurvivalKnife));
+
+            ArmorDefinition armor;
+            Assert.IsTrue(config.TryGetArmor(GameIds.Armor.PatchedClothJacket, out armor));
+            Assert.AreSame(armor, config.RequireArmor(GameIds.Armor.PatchedClothJacket));
+
+            UtilityDefinition utility;
+            Assert.IsTrue(config.TryGetUtility(GameIds.Utilities.MedkitTier01RagBundle, out utility));
+            Assert.AreSame(utility, config.RequireUtility(GameIds.Utilities.MedkitTier01RagBundle));
+
+            BuildingDefinition building;
+            Assert.IsTrue(config.TryGetBuilding(GameIds.Buildings.Barracks, out building));
+            Assert.AreSame(building, config.RequireBuilding(GameIds.Buildings.Barracks));
+
+            RecruitableSurvivorDefinition survivor;
+            Assert.IsTrue(config.TryGetRecruitableSurvivor(GameIds.RecruitableSurvivors.Elias, out survivor));
+            Assert.AreSame(survivor, config.RequireRecruitableSurvivor(GameIds.RecruitableSurvivors.Elias));
+
+            Assert.IsFalse(config.TryGetWeapon("missing_weapon", out weapon));
+            Assert.IsNull(weapon);
+            var ex = Assert.Throws<InvalidOperationException>(() => config.RequireWeapon("missing_weapon"));
+            StringAssert.Contains("Weapon config is missing: missing_weapon", ex.Message);
+        }
+
+        [Test]
         public void ScriptableObjectConfigValidationRejectsUnknownProgressionSkill()
         {
             var database = CreateValidDatabase();
@@ -420,6 +507,58 @@ namespace AshfallCamp.Tests.EditMode
 
             StringAssert.Contains("Rest fatigue recovery", ex.Message);
             DestroyDatabase(database);
+        }
+
+        private static void AssertIdsMatch(string label, IEnumerable<string> configIds, string[] gameIds)
+        {
+            var configSet = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var id in configIds)
+            {
+                if (!string.IsNullOrWhiteSpace(id)) configSet.Add(id);
+            }
+
+            var gameIdSet = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var id in gameIds)
+            {
+                Assert.IsFalse(string.IsNullOrWhiteSpace(id), label + " contains an empty GameIds entry.");
+                Assert.IsTrue(gameIdSet.Add(id), label + " contains duplicate GameIds entry: " + id);
+            }
+
+            foreach (var id in configSet)
+            {
+                Assert.IsTrue(gameIdSet.Contains(id), label + " missing GameIds entry: " + id);
+            }
+
+            foreach (var id in gameIdSet)
+            {
+                Assert.IsTrue(configSet.Contains(id), label + " has stale GameIds entry: " + id);
+            }
+        }
+
+        private static IEnumerable<string> CollectUsedSoundIds(GameConfigSnapshot config)
+        {
+            var ids = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var weapon in config.Weapons.Values)
+            {
+                AddId(ids, weapon.AttackSoundId);
+            }
+
+            foreach (var armor in config.Armor.Values)
+            {
+                AddId(ids, armor.EquipSoundId);
+            }
+
+            foreach (var utility in config.Utilities.Values)
+            {
+                AddId(ids, utility.UseSoundId);
+            }
+
+            return ids;
+        }
+
+        private static void AddId(HashSet<string> ids, string id)
+        {
+            if (!string.IsNullOrWhiteSpace(id)) ids.Add(id);
         }
 
         private static GameConfigDatabaseSO CreateValidDatabase()

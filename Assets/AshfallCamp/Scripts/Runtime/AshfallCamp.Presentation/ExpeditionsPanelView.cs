@@ -324,6 +324,7 @@ namespace AshfallCamp.Presentation
             UiText.Set(monitorProgress, monitor.Progress);
             UiText.Set(monitorLoot, monitor.Loot);
             UiText.Set(monitorNoise, monitor.Noise);
+            if (monitorLog != null) monitorLog.richText = true;
             UiText.Set(monitorLog, monitor.Log);
         }
 

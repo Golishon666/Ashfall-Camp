@@ -23,7 +23,7 @@ namespace AshfallCamp.Editor.FigmaImport
 
         private static readonly FigmaPanelIntegration[] ProductionPanels =
         {
-            new FigmaPanelIntegration("expeditionPlanning", ExpeditionsPrefabPath, "ExpeditionsScreen", "expeditions", "expeditionsPanel", typeof(ExpeditionsPanelView), "ExpeditionsFigma"),
+            new FigmaPanelIntegration("worldMap", ExpeditionsPrefabPath, "ExpeditionsScreen", "expeditions", "expeditionsPanel", typeof(ExpeditionsPanelView), "WorldMapFigma"),
             new FigmaPanelIntegration("workshop", WorkshopPrefabPath, "WorkshopScreen", "workshop", "workshopPanel", typeof(WorkshopPanelView), "WorkshopFigma"),
             new FigmaPanelIntegration("reports", ReportsPrefabPath, "ReportsScreen", "reports", "reportsPanel", typeof(ReportsPanelView), "ReportsFigma"),
             new FigmaPanelIntegration("radioRecruitment", RadioPrefabPath, "RadioScreen", "radio", "radioPanel", typeof(RadioPanelView), "RadioRecruitmentFigma")

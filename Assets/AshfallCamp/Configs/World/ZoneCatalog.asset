@@ -24,6 +24,8 @@ MonoBehaviour:
     RecommendedPower: 5
     BaseAmbushChance: 0.05
     DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
     RequiredBuildingLevels: []
     EnemyTable:
     - Id: feral_dog
@@ -52,6 +54,8 @@ MonoBehaviour:
     RecommendedPower: 8
     BaseAmbushChance: 0.05
     DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
     RequiredBuildingLevels: []
     EnemyTable:
     - Id: feral_dog
@@ -83,6 +87,8 @@ MonoBehaviour:
     RecommendedPower: 14
     BaseAmbushChance: 0.12
     DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 3
     RequiredBuildingLevels: []
     EnemyTable:
     - Id: starving_survivor
@@ -114,6 +120,8 @@ MonoBehaviour:
     RecommendedPower: 22
     BaseAmbushChance: 0.12
     DurabilityPressure: 3
+    MinEnemyCount: 2
+    MaxEnemyCount: 3
     RequiredBuildingLevels: []
     EnemyTable:
     - Id: raider
@@ -145,6 +153,8 @@ MonoBehaviour:
     RecommendedPower: 36
     BaseAmbushChance: 0.2
     DurabilityPressure: 4
+    MinEnemyCount: 2
+    MaxEnemyCount: 4
     RequiredBuildingLevels: []
     EnemyTable:
     - Id: mutant_stray

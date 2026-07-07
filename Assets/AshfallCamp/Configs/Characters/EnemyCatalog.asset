@@ -22,6 +22,7 @@ MonoBehaviour:
     Armor: 0
     Evasion: 0.08
     BaseDamage: 3
+    BaseSpeed: 12
     AttackType: 1
     Accuracy: 0.75
     AttackIntervalSeconds: 2
@@ -38,6 +39,7 @@ MonoBehaviour:
     Armor: 0
     Evasion: 0.04
     BaseDamage: 4
+    BaseSpeed: 9
     AttackType: 1
     Accuracy: 0.65
     AttackIntervalSeconds: 2
@@ -54,6 +56,7 @@ MonoBehaviour:
     Armor: 1
     Evasion: 0.03
     BaseDamage: 5
+    BaseSpeed: 11
     AttackType: 3
     Accuracy: 0.68
     AttackIntervalSeconds: 2
@@ -70,6 +73,7 @@ MonoBehaviour:
     Armor: 1
     Evasion: 0.05
     BaseDamage: 6
+    BaseSpeed: 10
     AttackType: 2
     Accuracy: 0.62
     AttackIntervalSeconds: 2
@@ -86,6 +90,7 @@ MonoBehaviour:
     Armor: 4
     Evasion: 0.02
     BaseDamage: 7
+    BaseSpeed: 7
     AttackType: 2
     Accuracy: 0.6
     AttackIntervalSeconds: 2
@@ -102,6 +107,7 @@ MonoBehaviour:
     Armor: 2
     Evasion: 0.01
     BaseDamage: 11
+    BaseSpeed: 6
     AttackType: 3
     Accuracy: 0.7
     AttackIntervalSeconds: 2

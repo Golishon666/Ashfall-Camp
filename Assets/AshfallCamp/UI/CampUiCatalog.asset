@@ -390,37 +390,37 @@ MonoBehaviour:
   - BuildingId: barracks
     Description: Population capacity and squad size.
     Icon: {fileID: 2800000, guid: 911e2f9b550a95b42b9828e52356a8ca, type: 3}
-    Image: {fileID: 0}
+    Image: {fileID: 2800000, guid: b38a27803972b4e4485ae056e8d571cb, type: 3}
     OverviewLeftPercent: 10
     OverviewTopPercent: 18
   - BuildingId: workshop
     Description: Crafting, repairs, and route unlocks.
     Icon: {fileID: 2800000, guid: f398bd99595f0214586895e7a61a6bb7, type: 3}
-    Image: {fileID: 0}
+    Image: {fileID: 2800000, guid: 433997682b1e1f24788cb4d4d0b7ad37, type: 3}
     OverviewLeftPercent: 42
     OverviewTopPercent: 44
   - BuildingId: water_collector
     Description: Water storage and passive production.
     Icon: {fileID: 2800000, guid: d0efb0f2f4a881a43993b2caecd76a1b, type: 3}
-    Image: {fileID: 0}
+    Image: {fileID: 2800000, guid: ca98d17e461065544b9e2a814c42fa73, type: 3}
     OverviewLeftPercent: 8
     OverviewTopPercent: 68
   - BuildingId: mushroom_beds
     Description: Food storage and passive production.
     Icon: {fileID: 2800000, guid: b99b3830405b85f4b82a76d60e9f0015, type: 3}
-    Image: {fileID: 0}
+    Image: {fileID: 2800000, guid: 798f9063b96b764419568b0feb9e2af0, type: 3}
     OverviewLeftPercent: 32
     OverviewTopPercent: 70
   - BuildingId: infirmary
     Description: Medicine storage and recovery room.
     Icon: {fileID: 2800000, guid: 1fbf16eba429c26428801995f9a42d7c, type: 3}
-    Image: {fileID: 0}
+    Image: {fileID: 2800000, guid: 82d628d4349f3c046954263b50a4fe55, type: 3}
     OverviewLeftPercent: 56
     OverviewTopPercent: 64
   - BuildingId: radio_tower
     Description: Signals, intel range, and mission unlocks.
     Icon: {fileID: 2800000, guid: d6bc12cd4c798af4a9e4011919711632, type: 3}
-    Image: {fileID: 0}
+    Image: {fileID: 2800000, guid: cb6c2278f716c6240b31bf35aa212097, type: 3}
     OverviewLeftPercent: 60
     OverviewTopPercent: 20
   Alerts:
@@ -442,15 +442,15 @@ MonoBehaviour:
     Status: Need clears
   ExpeditionZoneArtwork:
   - ZoneId: abandoned_store
-    Thumbnail: {fileID: 2800000, guid: 5f8fa38ec55045428b6c0df6585a9dd3, type: 3}
+    Thumbnail: {fileID: 2800000, guid: c294c4e152f128448bbdf17180a589a2, type: 3}
   - ZoneId: dry_suburb
-    Thumbnail: {fileID: 2800000, guid: 678760d3a4854afbbc176a1acd5e214c, type: 3}
+    Thumbnail: {fileID: 2800000, guid: d0fec6e94a534df468254c1f1ca38d7c, type: 3}
   - ZoneId: ruined_clinic
-    Thumbnail: {fileID: 2800000, guid: 088c8dc05f5d403b9007d71dc61caa63, type: 3}
+    Thumbnail: {fileID: 2800000, guid: 8818007d3a5d35c43980fdbaa2c54409, type: 3}
   - ZoneId: police_outpost
-    Thumbnail: {fileID: 2800000, guid: bd033d2ffed44ac89e1048463a9771a4, type: 3}
+    Thumbnail: {fileID: 2800000, guid: b559152bf9640b24fad94e24493564a6, type: 3}
   - ZoneId: mutant_tunnel
-    Thumbnail: {fileID: 2800000, guid: a7199af999844370ab51401df8511742, type: 3}
+    Thumbnail: {fileID: 2800000, guid: 87eef30c761c12d4088f82262e283490, type: 3}
   ExpeditionRiskArtwork:
   - RiskTier: Safe
     Badge: {fileID: 2800000, guid: 23e8b506593c439cbb374abfde7e43b4, type: 3}

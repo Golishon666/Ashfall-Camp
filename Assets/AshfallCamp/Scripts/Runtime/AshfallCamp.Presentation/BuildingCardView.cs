@@ -83,7 +83,7 @@ namespace AshfallCamp.Presentation
 
             BuildingDefinition definition;
             BuildingState building;
-            var hasDefinition = config.Buildings.TryGetValue(buildingId, out definition);
+            var hasDefinition = config.TryGetBuilding(buildingId, out definition);
             var hasState = state.Buildings.TryGetValue(buildingId, out building);
             gameObject.SetActive(hasDefinition && hasState);
             if (!hasDefinition || !hasState) return;

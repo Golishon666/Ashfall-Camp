@@ -79,9 +79,9 @@ namespace AshfallCamp.Presentation
             {
                 if (expedition.Status != ExpeditionStatus.Active && expedition.Status != ExpeditionStatus.Returning) continue;
                 ZoneDefinition zone;
-                config.Zones.TryGetValue(expedition.ZoneId, out zone);
+                config.TryGetZone(expedition.ZoneId, out zone);
                 ExpeditionPolicyDefinition policy;
-                config.Policies.TryGetValue(expedition.PolicyId, out policy);
+                config.TryGetPolicy(expedition.PolicyId, out policy);
 
                 var remainingSeconds = Math.Max(0, expedition.ExpectedDurationSeconds - expedition.ElapsedSeconds);
                 var title = zone != null ? zone.Name : expedition.ZoneId;
@@ -101,7 +101,7 @@ namespace AshfallCamp.Presentation
             {
                 if (!zoneState.IsUnlocked) continue;
                 ZoneDefinition zone;
-                if (!config.Zones.TryGetValue(zoneState.Id, out zone)) continue;
+                if (!config.TryGetZone(zoneState.Id, out zone)) continue;
                 var title = zone.Name;
                 var subtitle = Format(
                     catalog.ExpeditionRouteSubtitleFormat,
@@ -286,7 +286,7 @@ namespace AshfallCamp.Presentation
             foreach (var candidateId in pendingCandidateIds)
             {
                 RecruitableSurvivorDefinition candidate;
-                if (!config.RecruitableSurvivors.TryGetValue(candidateId, out candidate)) continue;
+                if (!config.TryGetRecruitableSurvivor(candidateId, out candidate)) continue;
                 if (IsCandidateRecruited(state, candidate)) continue;
 
                 var candidateValidation = RecruitmentSystem.ValidateRecruitSelection(state, config, candidateId);
@@ -376,7 +376,7 @@ namespace AshfallCamp.Presentation
             foreach (var item in state.Inventory)
             {
                 ItemDefinition definition;
-                var itemName = config.Items.TryGetValue(item.ItemId, out definition) ? definition.Name : item.ItemId;
+                var itemName = config.TryGetItem(item.ItemId, out definition) ? definition.Name : item.ItemId;
                 var cost = WorkshopSystem.CalculateRepairCost(state, config, item.Uid);
                 var repairCost = GetCostAmount(cost, config.Balance.WorkshopRepairResourceId);
                 var equippedLabel = string.IsNullOrWhiteSpace(item.EquippedBySurvivorId)
@@ -420,7 +420,7 @@ namespace AshfallCamp.Presentation
             if (expedition != null)
             {
                 ZoneDefinition zone;
-                config.Zones.TryGetValue(expedition.ZoneId, out zone);
+                config.TryGetZone(expedition.ZoneId, out zone);
                 var zoneName = zone != null ? zone.Name : expedition.ZoneId;
                 var outcome = expedition.Status == ExpeditionStatus.Completed ? catalog.AfterActionSuccessLabel : catalog.AfterActionFailureLabel;
                 presentation.HasAfterAction = true;
@@ -534,7 +534,7 @@ namespace AshfallCamp.Presentation
             if (count == 0 || first == null) return;
 
             ZoneDefinition zone;
-            config.Zones.TryGetValue(first.ZoneId, out zone);
+            config.TryGetZone(first.ZoneId, out zone);
             var zoneName = zone != null ? zone.Name : first.ZoneId;
             output.Add(new CampAlertPresentation(
                 Format(catalog.ActiveExpeditionAlertTitleFormat, count),
@@ -922,7 +922,7 @@ namespace AshfallCamp.Presentation
             foreach (var traitId in traitIds)
             {
                 TraitDefinition trait;
-                names.Add(config.Traits.TryGetValue(traitId, out trait) ? trait.Name : traitId);
+                names.Add(config.TryGetTrait(traitId, out trait) ? trait.Name : traitId);
             }
 
             return string.Join(catalog.ReportListSeparator, names.ToArray());
@@ -937,7 +937,7 @@ namespace AshfallCamp.Presentation
             }
 
             ItemDefinition definition;
-            var itemName = config.Items.TryGetValue(item.ItemId, out definition) ? definition.Name : item.ItemId;
+            var itemName = config.TryGetItem(item.ItemId, out definition) ? definition.Name : item.ItemId;
             return Format(catalog.SurvivorDetailWeaponFormat, itemName, item.Durability, item.MaxDurability);
         }
 
@@ -1047,13 +1047,13 @@ namespace AshfallCamp.Presentation
         private static string GetBackgroundName(string backgroundId, GameConfigSnapshot config)
         {
             BackgroundDefinition background;
-            return config.Backgrounds.TryGetValue(backgroundId, out background) ? background.Name : backgroundId;
+            return config.TryGetBackground(backgroundId, out background) ? background.Name : backgroundId;
         }
 
         private static string GetItemName(string itemId, GameConfigSnapshot config)
         {
             ItemDefinition item;
-            return config.Items.TryGetValue(itemId, out item) ? item.Name : itemId;
+            return config.TryGetItem(itemId, out item) ? item.Name : itemId;
         }
 
         private static string GetBestSkillId(Dictionary<string, int> skills)
@@ -1202,13 +1202,13 @@ namespace AshfallCamp.Presentation
             if (config != null && (type == GameConditionTypes.ZoneCompletions || type == GameConditionTypes.ZoneUnlocked))
             {
                 ZoneDefinition zone;
-                if (config.Zones.TryGetValue(id, out zone)) return FormatConfiguredName(id, zone.Name);
+                if (config.TryGetZone(id, out zone)) return FormatConfiguredName(id, zone.Name);
             }
 
             if (config != null && type == GameConditionTypes.BuildingLevel)
             {
                 BuildingDefinition building;
-                if (config.Buildings.TryGetValue(id, out building)) return FormatConfiguredName(id, building.Name);
+                if (config.TryGetBuilding(id, out building)) return FormatConfiguredName(id, building.Name);
             }
 
             return FormatConfiguredName(completionId, string.Empty);
@@ -1284,7 +1284,7 @@ namespace AshfallCamp.Presentation
         {
             if (output == null || string.IsNullOrWhiteSpace(zoneId)) return;
             ZoneDefinition zone;
-            if (!config.Zones.TryGetValue(zoneId, out zone)) return;
+            if (!config.TryGetZone(zoneId, out zone)) return;
 
             ZoneState zoneState;
             state.Zones.TryGetValue(zone.Id, out zoneState);
@@ -1336,7 +1336,7 @@ namespace AshfallCamp.Presentation
             if (expedition == null) return;
 
             ZoneDefinition zone;
-            config.Zones.TryGetValue(expedition.ZoneId, out zone);
+            config.TryGetZone(expedition.ZoneId, out zone);
             var remainingSeconds = Math.Max(0, expedition.ExpectedDurationSeconds - expedition.ElapsedSeconds);
             output.Monitor = new CampExpeditionMonitorPresentation
             {
@@ -1366,7 +1366,8 @@ namespace AshfallCamp.Presentation
 
         private static string ResolveSelectedZoneId(GameState state, GameConfigSnapshot config, string selectedZoneId)
         {
-            if (!string.IsNullOrWhiteSpace(selectedZoneId) && config.Zones.ContainsKey(selectedZoneId))
+            ZoneDefinition selectedZone;
+            if (!string.IsNullOrWhiteSpace(selectedZoneId) && config.TryGetZone(selectedZoneId, out selectedZone))
             {
                 return selectedZoneId;
             }
@@ -1405,7 +1406,8 @@ namespace AshfallCamp.Presentation
         {
             if (config == null || expedition == null) return null;
             if (string.IsNullOrWhiteSpace(expedition.ZoneId)) return null;
-            if (!config.Zones.ContainsKey(expedition.ZoneId)) return null;
+            ZoneDefinition zone;
+            if (!config.TryGetZone(expedition.ZoneId, out zone)) return null;
             if (expedition.SurvivorIds.Count == 0) return null;
 
             var policyId = ResolvePolicyId(config, expedition.PolicyId);
@@ -1455,7 +1457,7 @@ namespace AshfallCamp.Presentation
         private static ExpeditionPolicyDefinition GetExpeditionPolicy(GameConfigSnapshot config, string policyId)
         {
             ExpeditionPolicyDefinition policy;
-            if (!string.IsNullOrWhiteSpace(policyId) && config.Policies.TryGetValue(policyId, out policy))
+            if (!string.IsNullOrWhiteSpace(policyId) && config.TryGetPolicy(policyId, out policy))
             {
                 return policy;
             }
@@ -1519,7 +1521,7 @@ namespace AshfallCamp.Presentation
             foreach (var loot in zone.LootTable)
             {
                 ResourceDefinition definition;
-                var name = config.Resources.TryGetValue(loot.ResourceId, out definition) ? definition.Name : loot.ResourceId;
+                var name = config.TryGetResource(loot.ResourceId, out definition) ? definition.Name : loot.ResourceId;
                 entries.Add(Format(catalog.ExpeditionLootRangeFormat, name, loot.Min, loot.Max));
             }
 
@@ -1534,7 +1536,7 @@ namespace AshfallCamp.Presentation
             foreach (var entry in zone.EnemyTable)
             {
                 EnemyDefinition definition;
-                names.Add(config.Enemies.TryGetValue(entry.Id, out definition) ? definition.Name : entry.Id);
+                names.Add(config.TryGetEnemy(entry.Id, out definition) ? definition.Name : entry.Id);
             }
 
             return names.Count > 0 ? string.Join(catalog.ReportListSeparator, names.ToArray()) : catalog.ReportNoneLabel;
@@ -1549,13 +1551,13 @@ namespace AshfallCamp.Presentation
                 if (condition.Type == GameConditionTypes.ZoneCompletions)
                 {
                     ZoneDefinition requiredZone;
-                    var name = config.Zones.TryGetValue(condition.Id, out requiredZone) ? requiredZone.Name : condition.Id;
+                    var name = config.TryGetZone(condition.Id, out requiredZone) ? requiredZone.Name : condition.Id;
                     entries.Add(Format(catalog.ReportCountFormat, name, condition.Value));
                 }
                 else if (condition.Type == GameConditionTypes.BuildingLevel)
                 {
                     BuildingDefinition building;
-                    var name = config.Buildings.TryGetValue(condition.Id, out building) ? building.Name : condition.Id;
+                    var name = config.TryGetBuilding(condition.Id, out building) ? building.Name : condition.Id;
                     entries.Add(Format(catalog.ExpeditionUnlockRequirementFormat, Format(catalog.LevelLabelFormat, condition.Value), name));
                 }
             }
@@ -1563,7 +1565,7 @@ namespace AshfallCamp.Presentation
             foreach (var requirement in zone.RequiredBuildingLevels)
             {
                 BuildingDefinition building;
-                var name = config.Buildings.TryGetValue(requirement.Key, out building) ? building.Name : requirement.Key;
+                var name = config.TryGetBuilding(requirement.Key, out building) ? building.Name : requirement.Key;
                 entries.Add(Format(catalog.ExpeditionUnlockRequirementFormat, Format(catalog.LevelLabelFormat, requirement.Value), name));
             }
 
@@ -1579,7 +1581,7 @@ namespace AshfallCamp.Presentation
             {
                 if (pair.Value <= 0) continue;
                 ResourceDefinition definition;
-                var name = config.Resources.TryGetValue(pair.Key, out definition) ? definition.Name : pair.Key;
+                var name = config.TryGetResource(pair.Key, out definition) ? definition.Name : pair.Key;
                 entries.Add(Format(catalog.ReportCountFormat, name, pair.Value));
             }
 
@@ -1614,7 +1616,7 @@ namespace AshfallCamp.Presentation
             {
                 if (pair.Value <= 0) continue;
                 EnemyDefinition definition;
-                var name = config.Enemies.TryGetValue(pair.Key, out definition) ? definition.Name : pair.Key;
+                var name = config.TryGetEnemy(pair.Key, out definition) ? definition.Name : pair.Key;
                 entries.Add(Format(catalog.ReportCountFormat, name, pair.Value));
             }
 
@@ -1650,7 +1652,7 @@ namespace AshfallCamp.Presentation
                 }
 
                 ZoneDefinition zone;
-                names.Add(config.Zones.TryGetValue(expedition.ZoneId, out zone) ? zone.Name : expedition.ZoneId);
+                names.Add(config.TryGetZone(expedition.ZoneId, out zone) ? zone.Name : expedition.ZoneId);
             }
 
             return names.Count > 0 ? string.Join(catalog.ReportListSeparator, names.ToArray()) : catalog.ReportNoneLabel;
@@ -1869,7 +1871,7 @@ namespace AshfallCamp.Presentation
             foreach (var pair in counts)
             {
                 ItemDefinition definition;
-                var name = config.Items.TryGetValue(pair.Key, out definition) ? definition.Name : pair.Key;
+                var name = config.TryGetItem(pair.Key, out definition) ? definition.Name : pair.Key;
                 entries.Add(Format(catalog.ReportCountFormat, name, pair.Value));
             }
 
@@ -1893,7 +1895,7 @@ namespace AshfallCamp.Presentation
             foreach (var pair in expedition.EnemiesDefeated)
             {
                 EnemyDefinition enemy;
-                if (config.Enemies.TryGetValue(pair.Key, out enemy))
+                if (config.TryGetEnemy(pair.Key, out enemy))
                 {
                     xp += Math.Max(0, enemy.XpReward) * Math.Max(0, pair.Value);
                 }
@@ -2009,7 +2011,7 @@ namespace AshfallCamp.Presentation
             foreach (var reward in config.Balance.EmergencyScavengeRewards)
             {
                 ResourceDefinition resource;
-                if (!config.Resources.TryGetValue(reward.Key, out resource) || !resource.HasCap) continue;
+                if (!config.TryGetResource(reward.Key, out resource) || !resource.HasCap) continue;
 
                 int amount;
                 state.Resources.TryGetValue(resource.Id, out amount);

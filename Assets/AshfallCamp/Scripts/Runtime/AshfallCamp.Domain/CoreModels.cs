@@ -259,7 +259,7 @@ namespace AshfallCamp.Domain
         public string Id = string.Empty;
         public string ZoneId = string.Empty;
         public List<string> SurvivorIds = new List<string>();
-        public string PolicyId = "balanced";
+        public string PolicyId = GameIds.Policies.Balanced;
         public long StartedAtUnixMs;
         public double ExpectedDurationSeconds;
         public double ElapsedSeconds;
@@ -294,7 +294,7 @@ namespace AshfallCamp.Domain
     {
         public string ZoneId = string.Empty;
         public List<string> SurvivorIds = new List<string>();
-        public string PolicyId = "balanced";
+        public string PolicyId = GameIds.Policies.Balanced;
         public uint Seed;
         public long NowUnixMs;
         public bool ConfirmWarnings;
@@ -470,7 +470,7 @@ namespace AshfallCamp.Domain
 
     public sealed class ExpeditionPolicyDefinition
     {
-        public string Id = "balanced";
+        public string Id = GameIds.Policies.Balanced;
         public string Name = "Balanced";
         public double RiskModifier = 1.0;
         public double LootModifier = 1.0;
@@ -495,6 +495,8 @@ namespace AshfallCamp.Domain
         public int RecommendedPower;
         public double BaseAmbushChance;
         public int DurabilityPressure;
+        public int MinEnemyCount = 1;
+        public int MaxEnemyCount = 1;
         public Dictionary<string, int> RequiredBuildingLevels = new Dictionary<string, int>(StringComparer.Ordinal);
         public List<WeightedEntry> EnemyTable = new List<WeightedEntry>();
         public List<LootTableEntry> LootTable = new List<LootTableEntry>();
@@ -533,6 +535,7 @@ namespace AshfallCamp.Domain
         public int Armor;
         public double Evasion;
         public int BaseDamage;
+        public int BaseSpeed = 8;
         public WeaponType AttackType = WeaponType.Melee;
         public double Accuracy = 0.75;
         public double AttackIntervalSeconds = 2;
@@ -645,6 +648,7 @@ namespace AshfallCamp.Domain
         public int MaxOfflineSeconds = 43200;
         public double SimulationTickSeconds = 1;
         public double CombatTickSeconds = 2;
+        public double AttackTurnSeconds = 2;
         public double ExpeditionStepSeconds = 10;
         public double AutosaveSeconds = 30;
         public double OfflineReportMinimumSeconds = 60;
@@ -655,20 +659,20 @@ namespace AshfallCamp.Domain
         public double MaxHitChance = 0.95;
         public double BaseCritChance = 0.05;
         public double CritMultiplier = 1.75;
-        public string RecruitmentRequiredBuildingId = "radio_tower";
+        public string RecruitmentRequiredBuildingId = GameIds.Buildings.RadioTower;
         public int RecruitmentRequiredBuildingLevel;
-        public string RecruitmentScrapResourceId = "scrap";
-        public string RecruitmentFoodResourceId = "food";
-        public string RecruitmentWaterResourceId = "water";
-        public string ExpeditionFoodResourceId = "food";
-        public string ExpeditionWaterResourceId = "water";
+        public string RecruitmentScrapResourceId = GameIds.Resources.Scrap;
+        public string RecruitmentFoodResourceId = GameIds.Resources.Food;
+        public string RecruitmentWaterResourceId = GameIds.Resources.Water;
+        public string ExpeditionFoodResourceId = GameIds.Resources.Food;
+        public string ExpeditionWaterResourceId = GameIds.Resources.Water;
         public int ExpeditionCompletionXp = 5;
-        public string ExpeditionCompletionSkillId = "survival";
+        public string ExpeditionCompletionSkillId = GameIds.Skills.Survival;
         public int ExpeditionCompletionSkillXp = 3;
         public double CampUpkeepIntervalSeconds = 300;
-        public string CampUpkeepFoodResourceId = "food";
+        public string CampUpkeepFoodResourceId = GameIds.Resources.Food;
         public int CampUpkeepFoodPerSurvivor = 1;
-        public string CampUpkeepWaterResourceId = "water";
+        public string CampUpkeepWaterResourceId = GameIds.Resources.Water;
         public int CampUpkeepWaterPerSurvivor = 1;
         public int CampUpkeepShortageMoralePenalty = 4;
         public int CampUpkeepShortageFatigue = 2;
@@ -687,17 +691,17 @@ namespace AshfallCamp.Domain
         public int RecruitmentBaseWater = 2;
         public int RecruitmentWaterDivisor = 3;
         public int RecruitmentCandidateCount = 2;
-        public string WorkshopRequiredBuildingId = "workshop";
+        public string WorkshopRequiredBuildingId = GameIds.Buildings.Workshop;
         public int WorkshopRequiredBuildingLevel = 1;
-        public string WorkshopRepairResourceId = "weapon_parts";
+        public string WorkshopRepairResourceId = GameIds.Resources.WeaponParts;
         public int WorkshopRepairDurabilityBlock = 10;
-        public string DurabilityTraitModifierId = "durability_loss";
-        public string HealingRequiredBuildingId = "infirmary";
+        public string DurabilityTraitModifierId = GameIds.Stats.DurabilityLoss;
+        public string HealingRequiredBuildingId = GameIds.Buildings.Infirmary;
         public int HealingRequiredBuildingLevel = 1;
-        public string HealingDefaultWoundId = "cuts";
+        public string HealingDefaultWoundId = GameIds.StatusEffects.Cuts;
         public double HealingDefaultWoundDurationSeconds = 300;
         public int HealingHealthOnWounded = 1;
-        public string HealingMedicineResourceId = "medicine";
+        public string HealingMedicineResourceId = GameIds.Resources.Medicine;
         public int HealingMedicineCost = 1;
         public double HealingMedicineSeconds = 300;
         public double EmergencyScavengeDurationSeconds = 60;
@@ -711,12 +715,14 @@ namespace AshfallCamp.Domain
     {
         public string Name = "Mara";
         public string PortraitId = string.Empty;
-        public string BackgroundId = "scavenger";
+        public string BackgroundId = GameIds.Backgrounds.Scavenger;
         public List<string> TraitIds = new List<string>();
-        public string WeaponItemId = "rusty_knife";
+        public string WeaponItemId = GameIds.Items.RustyKnife;
         public string WeaponConfigId = string.Empty;
         public string ArmorConfigId = string.Empty;
         public string UtilityConfigId = string.Empty;
+        public int BaseAttack = 2;
+        public int BaseSpeed = 10;
         public Dictionary<string, int> Skills = new Dictionary<string, int>(StringComparer.Ordinal);
     }
 
@@ -731,6 +737,8 @@ namespace AshfallCamp.Domain
         public string WeaponConfigId = string.Empty;
         public string ArmorConfigId = string.Empty;
         public string UtilityConfigId = string.Empty;
+        public int BaseAttack = 2;
+        public int BaseSpeed = 10;
         public Dictionary<string, int> Skills = new Dictionary<string, int>(StringComparer.Ordinal);
     }
 }

@@ -432,14 +432,7 @@ namespace AshfallCamp.Presentation
                 if (active)
                 {
                     root.SetActive(true);
-                    group.alpha = 0;
-                    group.interactable = true;
-                    group.blocksRaycasts = true;
-                    DOTween.To(() => group.alpha, value => group.alpha = value, 1, transition.DurationSeconds)
-                        .SetEase(transition.Ease)
-                        .SetUpdate(transition.UseUnscaledTime)
-                        .SetTarget(group)
-                        .SetLink(root);
+                    ApplyCanvasState(group, true);
                 }
                 else
                 {

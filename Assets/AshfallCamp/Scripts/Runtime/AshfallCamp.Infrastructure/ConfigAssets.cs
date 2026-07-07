@@ -27,6 +27,8 @@ namespace AshfallCamp.Infrastructure
         public string WeaponConfigId;
         public string ArmorConfigId;
         public string UtilityConfigId;
+        public int BaseAttack = 2;
+        public int BaseSpeed = 10;
         public List<IntPairData> Skills = new List<IntPairData>();
     }
 
@@ -43,6 +45,8 @@ namespace AshfallCamp.Infrastructure
         public string WeaponConfigId;
         public string ArmorConfigId;
         public string UtilityConfigId;
+        public int BaseAttack = 2;
+        public int BaseSpeed = 10;
         public List<IntPairData> Skills = new List<IntPairData>();
     }
 
@@ -92,6 +96,8 @@ namespace AshfallCamp.Infrastructure
         public int RecommendedPower;
         public double BaseAmbushChance;
         public int DurabilityPressure;
+        [Range(1, 4)] public int MinEnemyCount = 1;
+        [Range(1, 4)] public int MaxEnemyCount = 1;
         public List<IntPairData> RequiredBuildingLevels = new List<IntPairData>();
         public List<WeightedEntryData> EnemyTable = new List<WeightedEntryData>();
         public List<LootTableEntryData> LootTable = new List<LootTableEntryData>();
@@ -111,6 +117,7 @@ namespace AshfallCamp.Infrastructure
         public int Armor;
         public double Evasion;
         public int BaseDamage;
+        public int BaseSpeed = 8;
         public WeaponType AttackType = WeaponType.Melee;
         public double Accuracy = 0.75;
         public double AttackIntervalSeconds = 2;
@@ -236,6 +243,7 @@ namespace AshfallCamp.Infrastructure
         public int MaxOfflineSeconds = 43200;
         public double SimulationTickSeconds = 1;
         public double CombatTickSeconds = 2;
+        public double AttackTurnSeconds = 2;
         public double ExpeditionStepSeconds = 10;
         public double AutosaveSeconds = 30;
         public double OfflineReportMinimumSeconds = 60;

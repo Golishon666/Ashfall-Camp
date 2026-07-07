@@ -16,6 +16,7 @@ MonoBehaviour:
     MaxOfflineSeconds: 43200
     SimulationTickSeconds: 1
     CombatTickSeconds: 2
+    AttackTurnSeconds: 2
     ExpeditionStepSeconds: 10
     AutosaveSeconds: 30
     OfflineReportMinimumSeconds: 60
