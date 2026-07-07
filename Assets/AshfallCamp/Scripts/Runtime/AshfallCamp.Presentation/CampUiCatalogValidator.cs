@@ -50,6 +50,7 @@ namespace AshfallCamp.Presentation
             ValidateUniqueIds(catalog.NextGoals, "next goals", entry => entry != null ? entry.Id : string.Empty, result.Errors, false);
             ValidateUniqueIds(catalog.ExpeditionZoneArtwork, "expedition zone artwork", entry => entry != null ? entry.ZoneId : string.Empty, result.Errors, false);
             ValidateUniqueIds(catalog.ExpeditionRiskArtwork, "expedition risk artwork", entry => entry != null ? entry.RiskTier : string.Empty, result.Errors, false);
+            ValidateUniqueIds(catalog.Alerts, "alerts", entry => entry != null ? entry.Id : string.Empty, result.Errors, true);
             ValidateUniqueIds(catalog.SurvivorSkillLabels, "survivor skill labels", entry => entry != null ? entry.Id : string.Empty, result.Errors, false);
             ValidateUniqueIds(catalog.SurvivorPortraits, "survivor portraits", entry => entry != null ? entry.Id : string.Empty, result.Errors, false);
             ValidateUniqueIds(catalog.ToastMessages, "toast messages", entry => entry != null ? entry.Id : string.Empty, result.Errors, true);

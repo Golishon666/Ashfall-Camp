@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using AshfallCamp.Domain;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,13 @@ namespace AshfallCamp.Presentation
     [DisallowMultipleComponent]
     public sealed class RadioPanelView : MonoBehaviour
     {
+        private const float MinimumFrequencyMhz = 100f;
+        private const float MaximumFrequencyMhz = 120f;
+        private const float FrequencyStepMhz = 0.05f;
+        private const float TargetFrequencyMhz = 107.45f;
+        private const float SignalLockThresholdMhz = 0.15f;
+        private const float SignalFalloffMhz = 1.75f;
+
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private RawImage intelPanelArtwork;
         [SerializeField] private TextMeshProUGUI intelTitle;
@@ -26,13 +34,26 @@ namespace AshfallCamp.Presentation
         [SerializeField] private RawImage emptyPanelArtwork;
         [SerializeField] private TextMeshProUGUI emptyTitle;
         [SerializeField] private TextMeshProUGUI emptyBody;
+        [SerializeField] private RecruitCardView recruitCardPrefab;
+        [SerializeField] private RectTransform candidateCardContainer;
         [SerializeField] private List<CandidateCardBinding> candidateCards = new List<CandidateCardBinding>();
+        [SerializeField] private Button frequencyDownButton;
+        [SerializeField] private Button frequencyUpButton;
+        [SerializeField] private TextMeshProUGUI frequencyLabel;
+        [SerializeField] private TextMeshProUGUI signalStateLabel;
+        [SerializeField] private Slider signalStrengthSlider;
+        [SerializeField] private List<Image> tunerSignalBars = new List<Image>();
+        [SerializeField] private float currentFrequencyMhz = TargetFrequencyMhz;
 
         private Action<RecruitSurvivorViewRequest> _recruitRequested;
         private Action _broadcastRequested;
         private Action _skipRequested;
         private UnityAction _broadcastClick;
+        private UnityAction _frequencyDownClick;
+        private UnityAction _frequencyUpClick;
         private bool _useSkipAction;
+        private readonly List<RecruitCardView> _dynamicCards = new List<RecruitCardView>();
+        private readonly List<float> _signalBarBaseHeights = new List<float>();
 
         public void ConfigureBindings(
             TextMeshProUGUI titleLabel,
@@ -88,15 +109,59 @@ namespace AshfallCamp.Presentation
             WireBroadcastButton();
         }
 
+        public void ConfigureDynamicRecruitment(RecruitCardView cardPrefab, RectTransform cardContainer)
+        {
+            recruitCardPrefab = cardPrefab;
+            candidateCardContainer = cardContainer;
+            WireDynamicCards();
+        }
+
+        public void ConfigureTunerBindings(
+            Button frequencyDown,
+            Button frequencyUp,
+            TextMeshProUGUI frequencyValueLabel,
+            TextMeshProUGUI signalState,
+            Slider signalStrength,
+            IEnumerable<Image> signalBars)
+        {
+            ClearFrequencyButtons();
+            frequencyDownButton = frequencyDown;
+            frequencyUpButton = frequencyUp;
+            frequencyLabel = frequencyValueLabel;
+            signalStateLabel = signalState;
+            signalStrengthSlider = signalStrength;
+            tunerSignalBars.Clear();
+            if (signalBars != null)
+            {
+                tunerSignalBars.AddRange(signalBars);
+            }
+
+            CaptureSignalBarHeights();
+            WireFrequencyButtons();
+            RenderTuner();
+        }
+
         private void Awake()
         {
             WireBroadcastButton();
+            WireFrequencyButtons();
+            CaptureSignalBarHeights();
+            RenderTuner();
         }
 
         private void OnDestroy()
         {
             ClearBroadcastButton();
+            ClearFrequencyButtons();
             foreach (var card in candidateCards)
+            {
+                if (card != null)
+                {
+                    card.Clear();
+                }
+            }
+
+            foreach (var card in _dynamicCards)
             {
                 if (card != null)
                 {
@@ -109,6 +174,7 @@ namespace AshfallCamp.Presentation
         {
             _recruitRequested = recruitRequested;
             WireCandidateCards();
+            WireDynamicCards();
         }
 
         public void SetBroadcastHandler(Action broadcastRequested)
@@ -144,22 +210,46 @@ namespace AshfallCamp.Presentation
             if (broadcastButton != null)
             {
                 _useSkipAction = radio.CanSkipCandidates;
+                var signalLocked = IsSignalLocked();
                 broadcastButton.interactable = radio.CanSkipCandidates
                     ? _skipRequested != null
-                    : radio.CanBroadcast && _broadcastRequested != null;
+                    : radio.CanBroadcast && signalLocked && _broadcastRequested != null;
             }
 
             if (broadcastStatus != null)
             {
-                broadcastStatus.color = radio.CanBroadcast || radio.CanSkipCandidates ? catalog.Theme.Sage : catalog.Theme.Rust;
+                var canAct = radio.CanSkipCandidates || (radio.CanBroadcast && IsSignalLocked());
+                if (radio.CanBroadcast && !IsSignalLocked())
+                {
+                    UiText.Set(broadcastStatus, "Tune signal");
+                }
+
+                broadcastStatus.color = canAct ? catalog.Theme.Sage : catalog.Theme.Rust;
             }
 
             var hasCandidates = radio.Candidates.Count > 0;
             UiText.SetActive(emptyPanel, !hasCandidates);
             ApplyArtwork(emptyPanelArtwork, hasCandidates ? null : catalog.RadioEmptyPanelTexture);
+
+            if (UseDynamicCards())
+            {
+                RenderLegacyCards(null, catalog);
+                RenderDynamicCards(radio.Candidates, catalog);
+            }
+            else
+            {
+                RenderLegacyCards(radio.Candidates, catalog);
+            }
+
+            RenderTuner();
+        }
+
+        private void RenderLegacyCards(IReadOnlyList<CampRadioCandidatePresentation> candidates, CampUiCatalogSO catalog)
+        {
             for (var i = 0; i < candidateCards.Count; i++)
             {
-                candidateCards[i].Render(i < radio.Candidates.Count ? radio.Candidates[i] : null, catalog);
+                var candidate = candidates != null && i < candidates.Count ? candidates[i] : null;
+                candidateCards[i].Render(candidate, catalog);
             }
         }
 
@@ -170,9 +260,35 @@ namespace AshfallCamp.Presentation
             broadcastButton.onClick.AddListener(_broadcastClick);
         }
 
+        private void WireFrequencyButtons()
+        {
+            if (frequencyDownButton != null && _frequencyDownClick == null)
+            {
+                _frequencyDownClick = () => AdjustFrequency(-FrequencyStepMhz);
+                frequencyDownButton.onClick.AddListener(_frequencyDownClick);
+            }
+
+            if (frequencyUpButton != null && _frequencyUpClick == null)
+            {
+                _frequencyUpClick = () => AdjustFrequency(FrequencyStepMhz);
+                frequencyUpButton.onClick.AddListener(_frequencyUpClick);
+            }
+        }
+
         private void WireCandidateCards()
         {
             foreach (var card in candidateCards)
+            {
+                if (card != null)
+                {
+                    card.Wire(OnCandidateClicked);
+                }
+            }
+        }
+
+        private void WireDynamicCards()
+        {
+            foreach (var card in _dynamicCards)
             {
                 if (card != null)
                 {
@@ -191,6 +307,22 @@ namespace AshfallCamp.Presentation
             _broadcastClick = null;
         }
 
+        private void ClearFrequencyButtons()
+        {
+            if (frequencyDownButton != null && _frequencyDownClick != null)
+            {
+                frequencyDownButton.onClick.RemoveListener(_frequencyDownClick);
+            }
+
+            if (frequencyUpButton != null && _frequencyUpClick != null)
+            {
+                frequencyUpButton.onClick.RemoveListener(_frequencyUpClick);
+            }
+
+            _frequencyDownClick = null;
+            _frequencyUpClick = null;
+        }
+
         private void OnBroadcastClicked()
         {
             if (_useSkipAction)
@@ -200,6 +332,97 @@ namespace AshfallCamp.Presentation
             }
 
             _broadcastRequested?.Invoke();
+        }
+
+        private void AdjustFrequency(float deltaMhz)
+        {
+            currentFrequencyMhz = Mathf.Clamp(currentFrequencyMhz + deltaMhz, MinimumFrequencyMhz, MaximumFrequencyMhz);
+            RenderTuner();
+        }
+
+        private bool IsSignalLocked()
+        {
+            return Mathf.Abs(currentFrequencyMhz - TargetFrequencyMhz) <= SignalLockThresholdMhz;
+        }
+
+        private void RenderTuner()
+        {
+            currentFrequencyMhz = Mathf.Clamp(currentFrequencyMhz, MinimumFrequencyMhz, MaximumFrequencyMhz);
+            UiText.Set(frequencyLabel, currentFrequencyMhz.ToString("0.00", CultureInfo.InvariantCulture) + " MHz");
+
+            var strength = CalculateSignalStrength();
+            if (signalStrengthSlider != null)
+            {
+                signalStrengthSlider.SetValueWithoutNotify(strength);
+            }
+
+            UiText.Set(signalStateLabel, IsSignalLocked() ? "SIGNAL LOCKED" : "TUNING...");
+            UpdateSignalBars(strength);
+        }
+
+        private float CalculateSignalStrength()
+        {
+            var distance = Mathf.Abs(currentFrequencyMhz - TargetFrequencyMhz);
+            return Mathf.Clamp01(1f - distance / SignalFalloffMhz);
+        }
+
+        private void CaptureSignalBarHeights()
+        {
+            if (_signalBarBaseHeights.Count == tunerSignalBars.Count) return;
+
+            _signalBarBaseHeights.Clear();
+            foreach (var bar in tunerSignalBars)
+            {
+                var rect = bar != null ? bar.rectTransform : null;
+                _signalBarBaseHeights.Add(rect != null ? Mathf.Max(8f, rect.sizeDelta.y) : 16f);
+            }
+        }
+
+        private void UpdateSignalBars(float strength)
+        {
+            CaptureSignalBarHeights();
+            for (var i = 0; i < tunerSignalBars.Count; i++)
+            {
+                var bar = tunerSignalBars[i];
+                if (bar == null) continue;
+
+                var phase = Mathf.Abs(Mathf.Sin((i + 1) * 1.73f));
+                var baseHeight = i < _signalBarBaseHeights.Count ? _signalBarBaseHeights[i] : 16f;
+                var rect = bar.rectTransform;
+                var size = rect.sizeDelta;
+                size.y = Mathf.Lerp(6f, Mathf.Max(baseHeight, 28f) * (0.7f + phase * 0.6f), strength);
+                rect.sizeDelta = size;
+
+                var alpha = Mathf.Lerp(0.25f, 1f, strength);
+                bar.color = new Color(0.62f, 0.82f, 0.46f, alpha);
+            }
+        }
+
+        private bool UseDynamicCards()
+        {
+            return recruitCardPrefab != null && candidateCardContainer != null;
+        }
+
+        private void RenderDynamicCards(IReadOnlyList<CampRadioCandidatePresentation> candidates, CampUiCatalogSO catalog)
+        {
+            var count = candidates != null ? Mathf.Min(candidates.Count, RecruitmentSystem.MaxCandidateCount) : 0;
+            EnsureDynamicCardCount(count);
+            for (var i = 0; i < _dynamicCards.Count; i++)
+            {
+                _dynamicCards[i].Render(i < count ? candidates[i] : null, catalog);
+            }
+        }
+
+        private void EnsureDynamicCardCount(int count)
+        {
+            count = Mathf.Clamp(count, 0, RecruitmentSystem.MaxCandidateCount);
+            while (_dynamicCards.Count < count)
+            {
+                var card = Instantiate(recruitCardPrefab, candidateCardContainer);
+                card.name = recruitCardPrefab.name + "_" + (_dynamicCards.Count + 1).ToString("00", CultureInfo.InvariantCulture);
+                card.Wire(OnCandidateClicked);
+                _dynamicCards.Add(card);
+            }
         }
 
         private void OnCandidateClicked(string candidateId)

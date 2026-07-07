@@ -1,0 +1,170 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8566cd15c27044c791881993b1b13ae1, type: 3}
+  m_Name: MushroomBedsBuildingConfig
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.BuildingConfigSO
+  Building:
+    Id: mushroom_beds
+    Name: Mushroom Beds
+    StartingLevel: 0
+    StartsUnlocked: 1
+    AffectedResourceId: food
+    ProducedResourceId: food
+    Levels:
+    - Level: 0
+      Cost: []
+      UpgradeDurationSeconds: 0
+      WorkerCapacity: 0
+      DefaultWorkers: 0
+      DefaultConditionPercent: 0
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 50
+      ResourcePerMinute: 0
+    - Level: 1
+      Cost:
+      - Id: scrap
+        Value: 30
+      UpgradeDurationSeconds: 6
+      WorkerCapacity: 3
+      DefaultWorkers: 2
+      DefaultConditionPercent: 84
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 70
+      ResourcePerMinute: 1
+    - Level: 2
+      Cost:
+      - Id: scrap
+        Value: 75
+      - Id: weapon_parts
+        Value: 5
+      UpgradeDurationSeconds: 12
+      WorkerCapacity: 4
+      DefaultWorkers: 3
+      DefaultConditionPercent: 86
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 110
+      ResourcePerMinute: 2
+    - Level: 3
+      Cost:
+      - Id: scrap
+        Value: 160
+      - Id: weapon_parts
+        Value: 15
+      UpgradeDurationSeconds: 18
+      WorkerCapacity: 4
+      DefaultWorkers: 4
+      DefaultConditionPercent: 88
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 160
+      ResourcePerMinute: 3
+    - Level: 4
+      Cost:
+      - Id: scrap
+        Value: 280
+      - Id: weapon_parts
+        Value: 30
+      UpgradeDurationSeconds: 24
+      WorkerCapacity: 5
+      DefaultWorkers: 4
+      DefaultConditionPercent: 90
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 240
+      ResourcePerMinute: 4
+    - Level: 5
+      Cost:
+      - Id: scrap
+        Value: 420
+      - Id: weapon_parts
+        Value: 45
+      UpgradeDurationSeconds: 30
+      WorkerCapacity: 6
+      DefaultWorkers: 5
+      DefaultConditionPercent: 91
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 340
+      ResourcePerMinute: 5
+    - Level: 6
+      Cost:
+      - Id: scrap
+        Value: 620
+      - Id: weapon_parts
+        Value: 65
+      UpgradeDurationSeconds: 36
+      WorkerCapacity: 7
+      DefaultWorkers: 6
+      DefaultConditionPercent: 92
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 460
+      ResourcePerMinute: 6
+    - Level: 7
+      Cost:
+      - Id: scrap
+        Value: 860
+      - Id: weapon_parts
+        Value: 90
+      UpgradeDurationSeconds: 42
+      WorkerCapacity: 8
+      DefaultWorkers: 7
+      DefaultConditionPercent: 93
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 620
+      ResourcePerMinute: 7
+    - Level: 8
+      Cost:
+      - Id: scrap
+        Value: 1120
+      - Id: weapon_parts
+        Value: 120
+      UpgradeDurationSeconds: 48
+      WorkerCapacity: 9
+      DefaultWorkers: 8
+      DefaultConditionPercent: 94
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 800
+      ResourcePerMinute: 8
+    - Level: 9
+      Cost:
+      - Id: scrap
+        Value: 1450
+      - Id: weapon_parts
+        Value: 155
+      UpgradeDurationSeconds: 54
+      WorkerCapacity: 10
+      DefaultWorkers: 9
+      DefaultConditionPercent: 95
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 1000
+      ResourcePerMinute: 9
+    - Level: 10
+      Cost:
+      - Id: scrap
+        Value: 1850
+      - Id: weapon_parts
+        Value: 200
+      UpgradeDurationSeconds: 60
+      WorkerCapacity: 11
+      DefaultWorkers: 10
+      DefaultConditionPercent: 96
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 1250
+      ResourcePerMinute: 10

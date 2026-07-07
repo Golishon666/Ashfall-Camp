@@ -162,41 +162,225 @@ namespace AshfallCamp.Domain
 
         public static class RecruitableSurvivors
         {
-            public const string Elias = "elias";
-            public const string Nika = "nika";
-            public const string June = "june";
-            public const string Tomas = "tomas";
-            public const string Rhea = "rhea";
-            public const string Kade = "kade";
+            public const string Survivor02 = "survivor_02";
+            public const string Survivor03 = "survivor_03";
+            public const string Survivor04 = "survivor_04";
+            public const string Survivor05 = "survivor_05";
+            public const string Survivor06 = "survivor_06";
+            public const string Survivor07 = "survivor_07";
+            public const string Survivor08 = "survivor_08";
+            public const string Survivor09 = "survivor_09";
+            public const string Survivor10 = "survivor_10";
+            public const string Survivor11 = "survivor_11";
+            public const string Survivor12 = "survivor_12";
+            public const string Survivor13 = "survivor_13";
+            public const string Survivor14 = "survivor_14";
+            public const string Survivor15 = "survivor_15";
+            public const string Survivor16 = "survivor_16";
+            public const string Survivor17 = "survivor_17";
+            public const string Survivor18 = "survivor_18";
+            public const string Survivor19 = "survivor_19";
+            public const string Survivor20 = "survivor_20";
+            public const string Survivor21 = "survivor_21";
+            public const string Survivor22 = "survivor_22";
+            public const string Survivor23 = "survivor_23";
+            public const string Survivor24 = "survivor_24";
+            public const string Survivor25 = "survivor_25";
+            public const string Survivor26 = "survivor_26";
+            public const string Survivor27 = "survivor_27";
+            public const string Survivor28 = "survivor_28";
+            public const string Survivor29 = "survivor_29";
+            public const string Survivor30 = "survivor_30";
+            public const string Survivor31 = "survivor_31";
+            public const string Survivor32 = "survivor_32";
+            public const string Survivor33 = "survivor_33";
+            public const string Survivor34 = "survivor_34";
+            public const string Survivor35 = "survivor_35";
+            public const string Survivor36 = "survivor_36";
+            public const string Survivor37 = "survivor_37";
+            public const string Survivor38 = "survivor_38";
+            public const string Survivor39 = "survivor_39";
+            public const string Survivor40 = "survivor_40";
+            public const string Survivor41 = "survivor_41";
+            public const string Survivor42 = "survivor_42";
+            public const string Survivor43 = "survivor_43";
+            public const string Survivor44 = "survivor_44";
 
             public static readonly string[] All =
             {
-                Elias,
-                Nika,
-                June,
-                Tomas,
-                Rhea,
-                Kade,
+                Survivor02,
+                Survivor03,
+                Survivor04,
+                Survivor05,
+                Survivor06,
+                Survivor07,
+                Survivor08,
+                Survivor09,
+                Survivor10,
+                Survivor11,
+                Survivor12,
+                Survivor13,
+                Survivor14,
+                Survivor15,
+                Survivor16,
+                Survivor17,
+                Survivor18,
+                Survivor19,
+                Survivor20,
+                Survivor21,
+                Survivor22,
+                Survivor23,
+                Survivor24,
+                Survivor25,
+                Survivor26,
+                Survivor27,
+                Survivor28,
+                Survivor29,
+                Survivor30,
+                Survivor31,
+                Survivor32,
+                Survivor33,
+                Survivor34,
+                Survivor35,
+                Survivor36,
+                Survivor37,
+                Survivor38,
+                Survivor39,
+                Survivor40,
+                Survivor41,
+                Survivor42,
+                Survivor43,
+                Survivor44,
             };
         }
 
         public static class Enemies
         {
-            public const string FeralDog = "feral_dog";
-            public const string StarvingSurvivor = "starving_survivor";
-            public const string MutantStray = "mutant_stray";
-            public const string Raider = "raider";
-            public const string ArmoredRaider = "armored_raider";
-            public const string MutantBrute = "mutant_brute";
+            public const string EnemyBossAshQueen = "enemy_boss_ash_queen";
+            public const string EnemyBossAshfallWarlord = "enemy_boss_ashfall_warlord";
+            public const string EnemyBossCrawlerLord = "enemy_boss_crawler_lord";
+            public const string EnemyBossFurnaceBrute = "enemy_boss_furnace_brute";
+            public const string EnemyBossHiveMatriarch = "enemy_boss_hive_matriarch";
+            public const string EnemyBossPlatedCrusher = "enemy_boss_plated_crusher";
+            public const string EnemyBossSpineGunner = "enemy_boss_spine_gunner";
+            public const string EnemyBossStormButcher = "enemy_boss_storm_butcher";
+            public const string EnemyBossWarPriest = "enemy_boss_war_priest";
+            public const string EnemyEliteAcidSprayer = "enemy_elite_acid_sprayer";
+            public const string EnemyEliteAutoGunner = "enemy_elite_auto_gunner";
+            public const string EnemyEliteBoneCarver = "enemy_elite_bone_carver";
+            public const string EnemyEliteChitinCrossbowman = "enemy_elite_chitin_crossbowman";
+            public const string EnemyEliteHarpoonBrute = "enemy_elite_harpoon_brute";
+            public const string EnemyEliteSawtoothRaider = "enemy_elite_sawtooth_raider";
+            public const string EnemyEliteSirenMutant = "enemy_elite_siren_mutant";
+            public const string EnemyEliteTireShieldMauler = "enemy_elite_tire_shield_mauler";
+            public const string EnemyMidBlisterRusher = "enemy_mid_blister_rusher";
+            public const string EnemyMidPistolDuelist = "enemy_mid_pistol_duelist";
+            public const string EnemyMidRebarLancer = "enemy_mid_rebar_lancer";
+            public const string EnemyMidShotgunButcher = "enemy_mid_shotgun_butcher";
+            public const string EnemyMidSplinterThrower = "enemy_mid_splinter_thrower";
+            public const string EnemyMidThornStabber = "enemy_mid_thorn_stabber";
+            public const string EnemyMidWeldingSlasher = "enemy_mid_welding_slasher";
+            public const string EnemyRaider = "enemy_raider";
+            public const string EnemyWeakAshGnawer = "enemy_weak_ash_gnawer";
+            public const string EnemyWeakAshShrieker = "enemy_weak_ash_shrieker";
+            public const string EnemyWeakNeedleRaider = "enemy_weak_needle_raider";
+            public const string EnemyWeakRustClaw = "enemy_weak_rust_claw";
+            public const string EnemyWeakScavenger = "enemy_weak_scavenger";
+            public const string EnemyWeakSporeBiter = "enemy_weak_spore_biter";
+            public const string CreatureBossApexClawTitan = "creature_boss_apex_claw_titan";
+            public const string CreatureBossAshWidow = "creature_boss_ash_widow";
+            public const string CreatureBossBoneCrownedBehemoth = "creature_boss_bone_crowned_behemoth";
+            public const string CreatureBossFurnaceAbomination = "creature_boss_furnace_abomination";
+            public const string CreatureBossTunnelKing = "creature_boss_tunnel_king";
+            public const string CreatureBossWastelandApex = "creature_boss_wasteland_apex";
+            public const string CreatureEliteAcidbackLurker = "creature_elite_acidback_lurker";
+            public const string CreatureEliteBlindHarvester = "creature_elite_blind_harvester";
+            public const string CreatureEliteChitinMauler = "creature_elite_chitin_mauler";
+            public const string CreatureEliteGraveGhoulMatriarch = "creature_elite_grave_ghoul_matriarch";
+            public const string CreatureEliteHornedAlpha = "creature_elite_horned_alpha";
+            public const string CreatureEliteIronhideRavager = "creature_elite_ironhide_ravager";
+            public const string CreatureEliteSporeColossus = "creature_elite_spore_colossus";
+            public const string CreatureEliteTumorBear = "creature_elite_tumor_bear";
+            public const string CreatureMidAshBoar = "creature_mid_ash_boar";
+            public const string CreatureMidBonebackHound = "creature_mid_boneback_hound";
+            public const string CreatureMidGlassSpitter = "creature_mid_glass_spitter";
+            public const string CreatureMidPlagueGhoul = "creature_mid_plague_ghoul";
+            public const string CreatureMidRadstagBruiser = "creature_mid_radstag_bruiser";
+            public const string CreatureMidScrapShellCrawler = "creature_mid_scrap_shell_crawler";
+            public const string CreatureMidScreamerGhoul = "creature_mid_screamer_ghoul";
+            public const string CreatureMidStalkerRat = "creature_mid_stalker_rat";
+            public const string CreatureWeakAshRoach = "creature_weak_ash_roach";
+            public const string CreatureWeakBloatToad = "creature_weak_bloat_toad";
+            public const string CreatureWeakFeralGhoul = "creature_weak_feral_ghoul";
+            public const string CreatureWeakMireLeech = "creature_weak_mire_leech";
+            public const string CreatureWeakMutantRat = "creature_weak_mutant_rat";
+            public const string CreatureWeakRadiatedHound = "creature_weak_radiated_hound";
+            public const string CreatureWeakShardBat = "creature_weak_shard_bat";
+            public const string CreatureWeakSpineMole = "creature_weak_spine_mole";
 
             public static readonly string[] All =
             {
-                FeralDog,
-                StarvingSurvivor,
-                MutantStray,
-                Raider,
-                ArmoredRaider,
-                MutantBrute,
+                EnemyBossAshQueen,
+                EnemyBossAshfallWarlord,
+                EnemyBossCrawlerLord,
+                EnemyBossFurnaceBrute,
+                EnemyBossHiveMatriarch,
+                EnemyBossPlatedCrusher,
+                EnemyBossSpineGunner,
+                EnemyBossStormButcher,
+                EnemyBossWarPriest,
+                EnemyEliteAcidSprayer,
+                EnemyEliteAutoGunner,
+                EnemyEliteBoneCarver,
+                EnemyEliteChitinCrossbowman,
+                EnemyEliteHarpoonBrute,
+                EnemyEliteSawtoothRaider,
+                EnemyEliteSirenMutant,
+                EnemyEliteTireShieldMauler,
+                EnemyMidBlisterRusher,
+                EnemyMidPistolDuelist,
+                EnemyMidRebarLancer,
+                EnemyMidShotgunButcher,
+                EnemyMidSplinterThrower,
+                EnemyMidThornStabber,
+                EnemyMidWeldingSlasher,
+                EnemyRaider,
+                EnemyWeakAshGnawer,
+                EnemyWeakAshShrieker,
+                EnemyWeakNeedleRaider,
+                EnemyWeakRustClaw,
+                EnemyWeakScavenger,
+                EnemyWeakSporeBiter,
+                CreatureBossApexClawTitan,
+                CreatureBossAshWidow,
+                CreatureBossBoneCrownedBehemoth,
+                CreatureBossFurnaceAbomination,
+                CreatureBossTunnelKing,
+                CreatureBossWastelandApex,
+                CreatureEliteAcidbackLurker,
+                CreatureEliteBlindHarvester,
+                CreatureEliteChitinMauler,
+                CreatureEliteGraveGhoulMatriarch,
+                CreatureEliteHornedAlpha,
+                CreatureEliteIronhideRavager,
+                CreatureEliteSporeColossus,
+                CreatureEliteTumorBear,
+                CreatureMidAshBoar,
+                CreatureMidBonebackHound,
+                CreatureMidGlassSpitter,
+                CreatureMidPlagueGhoul,
+                CreatureMidRadstagBruiser,
+                CreatureMidScrapShellCrawler,
+                CreatureMidScreamerGhoul,
+                CreatureMidStalkerRat,
+                CreatureWeakAshRoach,
+                CreatureWeakBloatToad,
+                CreatureWeakFeralGhoul,
+                CreatureWeakMireLeech,
+                CreatureWeakMutantRat,
+                CreatureWeakRadiatedHound,
+                CreatureWeakShardBat,
+                CreatureWeakSpineMole,
             };
         }
 
@@ -296,6 +480,36 @@ namespace AshfallCamp.Domain
             public const string FirearmAdvanced28RotaryMicrogun = "weapon_firearm_advanced_28_rotary_microgun";
             public const string FirearmAdvanced29EnergyProjector = "weapon_firearm_advanced_29_energy_projector";
             public const string FirearmAdvanced30EliteWastelandSniper = "weapon_firearm_advanced_30_elite_wasteland_sniper";
+            public const string CreatureBossApexClawTitanApexTitanClaws = "weapon_creature_boss_apex_claw_titan_apex_titan_claws";
+            public const string CreatureBossAshWidowVenomFangs = "weapon_creature_boss_ash_widow_venom_fangs";
+            public const string CreatureBossBoneCrownedBehemothBehemothBoneSlam = "weapon_creature_boss_bone_crowned_behemoth_behemoth_bone_slam";
+            public const string CreatureBossFurnaceAbominationBurningBreath = "weapon_creature_boss_furnace_abomination_burning_breath";
+            public const string CreatureBossTunnelKingTunnelCaveIn = "weapon_creature_boss_tunnel_king_tunnel_cave_in";
+            public const string CreatureBossWastelandApexWastelandApexLunge = "weapon_creature_boss_wasteland_apex_wasteland_apex_lunge";
+            public const string CreatureEliteAcidbackLurkerAcidSpray = "weapon_creature_elite_acidback_lurker_acid_spray";
+            public const string CreatureEliteBlindHarvesterHookClaws = "weapon_creature_elite_blind_harvester_hook_claws";
+            public const string CreatureEliteChitinMaulerChitinMaul = "weapon_creature_elite_chitin_mauler_chitin_maul";
+            public const string CreatureEliteGraveGhoulMatriarchPlagueCloud = "weapon_creature_elite_grave_ghoul_matriarch_plague_cloud";
+            public const string CreatureEliteHornedAlphaHornGore = "weapon_creature_elite_horned_alpha_horn_gore";
+            public const string CreatureEliteIronhideRavagerIronhideSlam = "weapon_creature_elite_ironhide_ravager_ironhide_slam";
+            public const string CreatureEliteSporeColossusSporeBurst = "weapon_creature_elite_spore_colossus_spore_burst";
+            public const string CreatureEliteTumorBearTumorBearMaul = "weapon_creature_elite_tumor_bear_tumor_bear_maul";
+            public const string CreatureMidAshBoarBoarCharge = "weapon_creature_mid_ash_boar_boar_charge";
+            public const string CreatureMidBonebackHoundHoundPackBite = "weapon_creature_mid_boneback_hound_hound_pack_bite";
+            public const string CreatureMidGlassSpitterAcidSpit = "weapon_creature_mid_glass_spitter_acid_spit";
+            public const string CreatureMidPlagueGhoulClawSwipe = "weapon_creature_mid_plague_ghoul_claw_swipe";
+            public const string CreatureMidRadstagBruiserStagGore = "weapon_creature_mid_radstag_bruiser_stag_gore";
+            public const string CreatureMidScrapShellCrawlerPincerCrush = "weapon_creature_mid_scrap_shell_crawler_pincer_crush";
+            public const string CreatureMidScreamerGhoulSonicScream = "weapon_creature_mid_screamer_ghoul_sonic_scream";
+            public const string CreatureMidStalkerRatAmbushBite = "weapon_creature_mid_stalker_rat_ambush_bite";
+            public const string CreatureWeakAshRoachRoachMandibles = "weapon_creature_weak_ash_roach_roach_mandibles";
+            public const string CreatureWeakBloatToadToadTongueStrike = "weapon_creature_weak_bloat_toad_toad_tongue_strike";
+            public const string CreatureWeakFeralGhoulGhoulRake = "weapon_creature_weak_feral_ghoul_ghoul_rake";
+            public const string CreatureWeakMireLeechLeechLatch = "weapon_creature_weak_mire_leech_leech_latch";
+            public const string CreatureWeakMutantRatBite = "weapon_creature_weak_mutant_rat_bite";
+            public const string CreatureWeakRadiatedHoundPounce = "weapon_creature_weak_radiated_hound_pounce";
+            public const string CreatureWeakShardBatBatSwoop = "weapon_creature_weak_shard_bat_bat_swoop";
+            public const string CreatureWeakSpineMoleSpineStab = "weapon_creature_weak_spine_mole_spine_stab";
 
             public static readonly string[] All =
             {
@@ -393,6 +607,36 @@ namespace AshfallCamp.Domain
                 FirearmAdvanced28RotaryMicrogun,
                 FirearmAdvanced29EnergyProjector,
                 FirearmAdvanced30EliteWastelandSniper,
+                CreatureBossApexClawTitanApexTitanClaws,
+                CreatureBossAshWidowVenomFangs,
+                CreatureBossBoneCrownedBehemothBehemothBoneSlam,
+                CreatureBossFurnaceAbominationBurningBreath,
+                CreatureBossTunnelKingTunnelCaveIn,
+                CreatureBossWastelandApexWastelandApexLunge,
+                CreatureEliteAcidbackLurkerAcidSpray,
+                CreatureEliteBlindHarvesterHookClaws,
+                CreatureEliteChitinMaulerChitinMaul,
+                CreatureEliteGraveGhoulMatriarchPlagueCloud,
+                CreatureEliteHornedAlphaHornGore,
+                CreatureEliteIronhideRavagerIronhideSlam,
+                CreatureEliteSporeColossusSporeBurst,
+                CreatureEliteTumorBearTumorBearMaul,
+                CreatureMidAshBoarBoarCharge,
+                CreatureMidBonebackHoundHoundPackBite,
+                CreatureMidGlassSpitterAcidSpit,
+                CreatureMidPlagueGhoulClawSwipe,
+                CreatureMidRadstagBruiserStagGore,
+                CreatureMidScrapShellCrawlerPincerCrush,
+                CreatureMidScreamerGhoulSonicScream,
+                CreatureMidStalkerRatAmbushBite,
+                CreatureWeakAshRoachRoachMandibles,
+                CreatureWeakBloatToadToadTongueStrike,
+                CreatureWeakFeralGhoulGhoulRake,
+                CreatureWeakMireLeechLeechLatch,
+                CreatureWeakMutantRatBite,
+                CreatureWeakRadiatedHoundPounce,
+                CreatureWeakShardBatBatSwoop,
+                CreatureWeakSpineMoleSpineStab,
             };
         }
 

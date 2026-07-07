@@ -240,7 +240,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.IsFalse(capped.IsValid);
             Assert.Contains("Survivor cap reached.", capped.Errors);
 
-            BuildingSystem.Upgrade(state, config, "barracks");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
             state.Resources["scrap"] = 0;
             var unaffordable = RecruitmentSystem.ValidateBroadcast(state, config);
 
@@ -256,24 +256,24 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
-            BuildingSystem.Upgrade(state, config, "barracks");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
 
             var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1, NowUnixMs = 25 });
 
             Assert.IsTrue(broadcast.Validation.IsValid);
             Assert.AreEqual(1, broadcast.CandidateIds.Count);
-            Assert.AreEqual("elias", broadcast.CandidateIds[0]);
+            Assert.AreEqual("survivor_02", broadcast.CandidateIds[0]);
             Assert.AreEqual(55, state.Resources["scrap"]);
             Assert.AreEqual(14, state.Resources["food"]);
             Assert.AreEqual(18, state.Resources["water"]);
             Assert.AreEqual(1, state.Recruitment.PendingCandidateIds.Count);
 
-            var result = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = "elias", NowUnixMs = 50 });
+            var result = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = "survivor_02", NowUnixMs = 50 });
 
             Assert.IsTrue(result.Validation.IsValid);
             Assert.NotNull(result.Survivor);
             Assert.AreEqual(2, state.Survivors.Count);
-            Assert.AreEqual("Elias", state.Survivors[1].Name);
+            Assert.AreEqual("Bram", state.Survivors[1].Name);
             Assert.AreEqual("rusty_knife", result.Weapon.ItemId);
             Assert.AreEqual(result.Weapon.Uid, result.Survivor.Equipment.WeaponItemUid);
             Assert.AreEqual(55, state.Resources["scrap"]);
@@ -291,10 +291,10 @@ namespace AshfallCamp.Tests.EditMode
         public void RecruitmentBroadcastUsesConfiguredCandidateCount()
         {
             var config = TestConfigFactory.Create();
-            config.RecruitableSurvivors["nora"] = new RecruitableSurvivorDefinition
+            config.RecruitableSurvivors["survivor_03"] = new RecruitableSurvivorDefinition
             {
-                Id = "nora",
-                Name = "Nora",
+                Id = "survivor_03",
+                Name = "Cora",
                 BackgroundId = "scavenger",
                 TraitIds = new List<string> { "careful" },
                 WeaponItemId = "rusty_knife",
@@ -312,13 +312,13 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
-            BuildingSystem.Upgrade(state, config, "barracks");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
 
             var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1 });
 
             Assert.IsTrue(broadcast.Validation.IsValid);
             Assert.AreEqual(config.Balance.RecruitmentCandidateCount, broadcast.CandidateIds.Count);
-            CollectionAssert.AreEquivalent(new[] { "elias", "nora" }, broadcast.CandidateIds);
+            CollectionAssert.AreEquivalent(new[] { "survivor_02", "survivor_03" }, broadcast.CandidateIds);
         }
 
         [Test]
@@ -329,13 +329,13 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
-            BuildingSystem.Upgrade(state, config, "barracks");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
 
             var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 999 });
             var result = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = broadcast.CandidateIds[0] });
 
             Assert.IsTrue(result.Validation.IsValid);
-            Assert.AreEqual("Elias", result.Survivor.Name);
+            Assert.AreEqual("Bram", result.Survivor.Name);
             Assert.AreEqual(2, state.Survivors.Count);
         }
 
@@ -347,9 +347,9 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
-            BuildingSystem.Upgrade(state, config, "barracks");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
 
-            var withoutBroadcast = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = "elias" });
+            var withoutBroadcast = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = "survivor_02" });
             var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1 });
             var result = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = "missing_signal" });
 
@@ -369,14 +369,14 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
-            BuildingSystem.Upgrade(state, config, "barracks");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
 
             var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1 });
             var skipped = RecruitmentSystem.SkipCandidates(state);
 
             Assert.IsTrue(broadcast.Validation.IsValid);
             Assert.IsTrue(skipped.Validation.IsValid);
-            Assert.AreEqual("elias", skipped.SkippedCandidateIds[0]);
+            Assert.AreEqual("survivor_02", skipped.SkippedCandidateIds[0]);
             Assert.AreEqual(0, state.Recruitment.PendingCandidateIds.Count);
             Assert.IsTrue(RecruitmentSystem.ValidateBroadcast(state, config).IsValid);
         }
@@ -389,7 +389,7 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
-            BuildingSystem.Upgrade(state, config, "barracks");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
             var store = new GameStateStore();
             store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
             var broadcastUseCase = new BroadcastRecruitmentUseCase(store, new StaticConfigProvider(config));
@@ -401,7 +401,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.IsTrue(broadcast.Validation.IsValid);
             Assert.IsTrue(result.Validation.IsValid);
             Assert.AreEqual(2, store.State.CurrentValue.Survivors.Count);
-            Assert.AreEqual("Elias", store.State.CurrentValue.Survivors[1].Name);
+            Assert.AreEqual("Bram", store.State.CurrentValue.Survivors[1].Name);
         }
 
         [Test]
@@ -417,7 +417,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.Contains("Workshop repair is locked.", locked.Errors);
 
             state.Resources["scrap"] = 100;
-            BuildingSystem.Upgrade(state, config, "workshop");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "workshop");
             state.Resources["weapon_parts"] = 0;
             var unaffordable = WorkshopSystem.ValidateRepair(state, config, new RepairItemRequest { ItemUid = state.Inventory[0].Uid });
             Assert.IsFalse(unaffordable.IsValid);
@@ -437,7 +437,7 @@ namespace AshfallCamp.Tests.EditMode
             var state = GameStateFactory.CreateNew(config, 0);
             state.Resources["scrap"] = 100;
             state.Resources["weapon_parts"] = 5;
-            BuildingSystem.Upgrade(state, config, "workshop");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "workshop");
             state.Inventory[0].Durability = 50;
 
             var result = WorkshopSystem.Repair(state, config, new RepairItemRequest { ItemUid = state.Inventory[0].Uid });
@@ -504,7 +504,7 @@ namespace AshfallCamp.Tests.EditMode
             var state = GameStateFactory.CreateNew(config, 0);
             state.Resources["scrap"] = 100;
             state.Resources["weapon_parts"] = 5;
-            BuildingSystem.Upgrade(state, config, "workshop");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "workshop");
             state.Inventory[0].Durability = 50;
             var store = new GameStateStore();
             store.MutateAsync(_ => state, CancellationToken.None).GetAwaiter().GetResult();
@@ -799,7 +799,7 @@ namespace AshfallCamp.Tests.EditMode
             var expedition = new ExpeditionState { Id = "expedition_test", ZoneId = "abandoned_store", RandomState = 77 };
             expedition.SurvivorIds.Add("survivor_1");
 
-            CombatResolver.ResolveCombat(state, config, expedition, "feral_dog");
+            CombatResolver.ResolveCombat(state, config, expedition, "creature_weak_radiated_hound");
 
             Assert.Greater(expedition.Noise, 0);
         }
@@ -811,8 +811,8 @@ namespace AshfallCamp.Tests.EditMode
             MakeCombatDeterministic(config);
             config.StartingSurvivor.WeaponConfigId = "test_revolver";
             config.Weapons["test_revolver"].Attack = 20;
-            config.Enemies["feral_dog"].MaxHealth = 1;
-            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Enemies["creature_weak_radiated_hound"].MaxHealth = 1;
+            config.Enemies["creature_weak_radiated_hound"].BaseDamage = 0;
             var state = GameStateFactory.CreateNew(config, 0);
             var expedition = CreateCombatExpedition(18, "survivor_1");
 
@@ -821,13 +821,13 @@ namespace AshfallCamp.Tests.EditMode
             var hitIndex = IndexOfLogContaining(expedition, "Mara hits", 0);
             Assert.GreaterOrEqual(hitIndex, 0);
             var richMessage = expedition.Log[hitIndex].Message;
-            StringAssert.Contains("<color=#7F9397>00:00</color>", richMessage);
+            StringAssert.Contains("<color=#7F9397>00:02</color>", richMessage);
             StringAssert.Contains("<color=#E8C66B>Mara</color>", richMessage);
             StringAssert.Contains("<color=#79B8FF>Test Revolver</color>", richMessage);
             StringAssert.Contains("<color=#FF5C5C>", richMessage);
             StringAssert.Contains("<color=#C792EA>", richMessage);
             StringAssert.Contains("<color=#9EE6FF>", richMessage);
-            StringAssert.Contains("Mara hits Feral Dog with Test Revolver", PlainLogMessage(richMessage));
+            StringAssert.Contains("Mara hits Radiated Hound with Test Revolver", PlainLogMessage(richMessage));
         }
 
         [Test]
@@ -838,26 +838,26 @@ namespace AshfallCamp.Tests.EditMode
             config.StartingSurvivor.BaseSpeed = 20;
             config.StartingSurvivor.BaseAttack = 1;
             config.Weapons["test_knife"].Attack = 1;
-            config.RecruitableSurvivors["elias"].BaseSpeed = 5;
-            config.RecruitableSurvivors["elias"].BaseAttack = 1;
-            config.Enemies["feral_dog"].MaxHealth = 40;
-            config.Enemies["feral_dog"].BaseDamage = 0;
-            config.Enemies["feral_dog"].BaseSpeed = 10;
-            config.Enemies["feral_dog"].Evasion = 0;
+            config.RecruitableSurvivors["survivor_02"].BaseSpeed = 5;
+            config.RecruitableSurvivors["survivor_02"].BaseAttack = 1;
+            config.Enemies["creature_weak_radiated_hound"].MaxHealth = 40;
+            config.Enemies["creature_weak_radiated_hound"].BaseDamage = 0;
+            config.Enemies["creature_weak_radiated_hound"].BaseSpeed = 10;
+            config.Enemies["creature_weak_radiated_hound"].Evasion = 0;
             var state = GameStateFactory.CreateNew(config, 0);
-            AddRecruitableSurvivor(state, config, "survivor_2", "elias");
+            AddRecruitableSurvivor(state, config, "survivor_2", "survivor_02");
             var expedition = CreateCombatExpedition(77, "survivor_1", "survivor_2");
 
             CombatResolver.ResolveCombat(state, config, expedition, config.Zones["abandoned_store"]);
 
             var firstMara = IndexOfLogContaining(expedition, "Mara hits", 0);
-            var firstDog = IndexOfLogContaining(expedition, "Feral Dog hits", firstMara + 1);
-            var firstElias = IndexOfLogContaining(expedition, "Elias hits", firstDog + 1);
-            var secondMara = IndexOfLogContaining(expedition, "Mara hits", firstElias + 1);
+            var firstDog = IndexOfLogContaining(expedition, "Radiated Hound hits", firstMara + 1);
+            var firstBram = IndexOfLogContaining(expedition, "Bram hits", firstDog + 1);
+            var secondMara = IndexOfLogContaining(expedition, "Mara hits", firstBram + 1);
             Assert.GreaterOrEqual(firstMara, 0);
             Assert.Greater(firstDog, firstMara);
-            Assert.Greater(firstElias, firstDog);
-            Assert.Greater(secondMara, firstElias);
+            Assert.Greater(firstBram, firstDog);
+            Assert.Greater(secondMara, firstBram);
         }
 
         [Test]
@@ -865,8 +865,8 @@ namespace AshfallCamp.Tests.EditMode
         {
             var config = TestConfigFactory.Create();
             MakeCombatDeterministic(config);
-            config.Enemies["feral_dog"].MaxHealth = 1;
-            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Enemies["creature_weak_radiated_hound"].MaxHealth = 1;
+            config.Enemies["creature_weak_radiated_hound"].BaseDamage = 0;
             config.Weapons["test_knife"].Attack = 20;
             var state = GameStateFactory.CreateNew(config, 0);
             var expedition = CreateCombatExpedition(10, "survivor_1");
@@ -885,8 +885,8 @@ namespace AshfallCamp.Tests.EditMode
         {
             var config = TestConfigFactory.Create();
             MakeCombatDeterministic(config);
-            config.Enemies["feral_dog"].MaxHealth = 1;
-            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Enemies["creature_weak_radiated_hound"].MaxHealth = 1;
+            config.Enemies["creature_weak_radiated_hound"].BaseDamage = 0;
             config.Weapons["test_knife"].Attack = 20;
             var state = GameStateFactory.CreateNew(config, 0);
             var expedition = CreateCombatExpedition(11, "survivor_1");
@@ -947,8 +947,8 @@ namespace AshfallCamp.Tests.EditMode
             MakeCombatDeterministic(config);
             config.StartingSurvivor.WeaponConfigId = string.Empty;
             config.StartingSurvivor.BaseAttack = 5;
-            config.Enemies["feral_dog"].MaxHealth = 4;
-            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Enemies["creature_weak_radiated_hound"].MaxHealth = 4;
+            config.Enemies["creature_weak_radiated_hound"].BaseDamage = 0;
             var state = GameStateFactory.CreateNew(config, 0);
             var expedition = CreateCombatExpedition(12, "survivor_1");
 
@@ -964,8 +964,8 @@ namespace AshfallCamp.Tests.EditMode
             var config = TestConfigFactory.Create();
             MakeCombatDeterministic(config);
             config.Balance.AttackTurnSeconds = 2;
-            config.Enemies["feral_dog"].MaxHealth = 1;
-            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Enemies["creature_weak_radiated_hound"].MaxHealth = 1;
+            config.Enemies["creature_weak_radiated_hound"].BaseDamage = 0;
             config.Weapons["test_knife"].Attack = 20;
             var state = GameStateFactory.CreateNew(config, 0);
             var expedition = CreateCombatExpedition(13, "survivor_1");
@@ -981,8 +981,8 @@ namespace AshfallCamp.Tests.EditMode
         {
             var config = TestConfigFactory.Create();
             MakeCombatDeterministic(config);
-            config.Enemies["feral_dog"].MaxHealth = 20;
-            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Enemies["creature_weak_radiated_hound"].MaxHealth = 20;
+            config.Enemies["creature_weak_radiated_hound"].BaseDamage = 0;
             config.Weapons["test_knife"].Attack = 2;
             config.Utilities["test_medkit"].HealAmount = 10;
             var state = GameStateFactory.CreateNew(config, 0);
@@ -1007,15 +1007,15 @@ namespace AshfallCamp.Tests.EditMode
             config.StartingSurvivor.ArmorConfigId = "test_heavy";
             config.Armor["test_heavy"].Defense = 100;
             config.Armor["test_heavy"].SpeedModifier = -0.9;
-            config.Enemies["feral_dog"].MaxHealth = 30;
-            config.Enemies["feral_dog"].BaseDamage = 5;
-            config.Enemies["feral_dog"].BaseSpeed = 10;
+            config.Enemies["creature_weak_radiated_hound"].MaxHealth = 30;
+            config.Enemies["creature_weak_radiated_hound"].BaseDamage = 5;
+            config.Enemies["creature_weak_radiated_hound"].BaseSpeed = 10;
             var state = GameStateFactory.CreateNew(config, 0);
             var expedition = CreateCombatExpedition(15, "survivor_1");
 
             CombatResolver.ResolveCombat(state, config, expedition, config.Zones["abandoned_store"]);
 
-            var firstDog = IndexOfLogContaining(expedition, "Feral Dog hits Mara", 0);
+            var firstDog = IndexOfLogContaining(expedition, "Radiated Hound hits Mara", 0);
             var firstMara = IndexOfLogContaining(expedition, "Mara hits", 0);
             Assert.GreaterOrEqual(firstDog, 0);
             Assert.Greater(firstMara, firstDog);
@@ -1027,8 +1027,8 @@ namespace AshfallCamp.Tests.EditMode
         {
             var config = TestConfigFactory.Create();
             MakeCombatDeterministic(config);
-            config.Enemies["feral_dog"].MaxHealth = 8;
-            config.Enemies["feral_dog"].BaseDamage = 0;
+            config.Enemies["creature_weak_radiated_hound"].MaxHealth = 8;
+            config.Enemies["creature_weak_radiated_hound"].BaseDamage = 0;
             var first = GameStateFactory.CreateNew(config, 0);
             var second = GameStateFactory.CreateNew(config, 0);
             var firstExpedition = CreateCombatExpedition(999, "survivor_1");
@@ -1175,7 +1175,7 @@ namespace AshfallCamp.Tests.EditMode
             state.Survivors[0].StatusEffects.Add(new StatusEffectState { Id = "sprained_ankle", RemainingSeconds = 120 });
             state.RestFatigueRecoveryRemainders["survivor_1"] = 0.5;
             state.CampEvents.Add(new CampEventState { Id = "event_1", EventId = GameEventIds.SurvivorJoined, SubjectId = "survivor_1", SubjectName = "Mara", DetailId = "scavenger", AtUnixMs = 25 });
-            state.Recruitment.PendingCandidateIds.Add("elias");
+            state.Recruitment.PendingCandidateIds.Add("survivor_02");
             state.Recruitment.LastBroadcastAtUnixMs = 25;
             state.Recovery.EmergencyScavengeActive = true;
             state.Recovery.EmergencyScavengeRemainingSeconds = 17;
@@ -1227,7 +1227,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(1, loaded.State.CampEvents.Count);
             Assert.AreEqual(GameEventIds.SurvivorJoined, loaded.State.CampEvents[0].EventId);
             Assert.AreEqual("Mara", loaded.State.CampEvents[0].SubjectName);
-            Assert.AreEqual("elias", loaded.State.Recruitment.PendingCandidateIds[0]);
+            Assert.AreEqual("survivor_02", loaded.State.Recruitment.PendingCandidateIds[0]);
             Assert.AreEqual(25, loaded.State.Recruitment.LastBroadcastAtUnixMs);
             Assert.IsTrue(loaded.State.Recovery.EmergencyScavengeActive);
             Assert.AreEqual(17, loaded.State.Recovery.EmergencyScavengeRemainingSeconds);
@@ -1500,6 +1500,20 @@ namespace AshfallCamp.Tests.EditMode
         }
     }
 
+    internal static class TestBuildingUpgrades
+    {
+        public static BuildingUpgradeResult UpgradeAndComplete(GameState state, GameConfigSnapshot config, string buildingId)
+        {
+            var result = BuildingSystem.Upgrade(state, config, buildingId, 1000);
+            if (result.Validation.IsValid)
+            {
+                BuildingSystem.CompleteReadyUpgrades(state, config, long.MaxValue);
+            }
+
+            return result;
+        }
+    }
+
     internal static class TestConfigFactory
     {
         public static GameConfigSnapshot Create()
@@ -1534,10 +1548,10 @@ namespace AshfallCamp.Tests.EditMode
             config.StartingSurvivor.Skills["survival"] = 2;
             config.StartingSurvivor.Skills["mechanics"] = 0;
             config.StartingSurvivor.Skills["medicine"] = 0;
-            config.RecruitableSurvivors["elias"] = new RecruitableSurvivorDefinition
+            config.RecruitableSurvivors["survivor_02"] = new RecruitableSurvivorDefinition
             {
-                Id = "elias",
-                Name = "Elias",
+                Id = "survivor_02",
+                Name = "Bram",
                 BackgroundId = "scavenger",
                 TraitIds = new List<string> { "careful" },
                 WeaponItemId = "rusty_knife",
@@ -1567,7 +1581,7 @@ namespace AshfallCamp.Tests.EditMode
             config.Armor["test_cloth"] = new ArmorDefinition { Id = "test_cloth", Name = "Test Cloth", Type = ArmorType.Light, Defense = 0, EvasionChance = 0, BonusHealth = 0, BonusStamina = 0, SpeedModifier = 0, MaxDurability = 50 };
             config.Armor["test_heavy"] = new ArmorDefinition { Id = "test_heavy", Name = "Test Heavy Armor", Type = ArmorType.Heavy, Defense = 5, EvasionChance = 0, BonusHealth = 10, BonusStamina = 0, SpeedModifier = -0.2, MaxDurability = 100 };
             config.Utilities["test_medkit"] = new UtilityDefinition { Id = "test_medkit", Name = "Test Medkit", Type = UtilityEquipmentType.Medkit, Rarity = WeaponRarity.Common, Tier = 1, HealAmount = 10, MaxDurability = 5 };
-            config.Enemies["feral_dog"] = new EnemyDefinition { Id = "feral_dog", Name = "Feral Dog", MaxHealth = 14, Armor = 0, Evasion = 0.08, BaseDamage = 3, BaseSpeed = 12, AttackType = WeaponType.Melee, Accuracy = 0.75, XpReward = 4 };
+            config.Enemies["creature_weak_radiated_hound"] = new EnemyDefinition { Id = "creature_weak_radiated_hound", Name = "Radiated Hound", MaxHealth = 14, Armor = 0, Evasion = 0.08, BaseDamage = 3, BaseSpeed = 12, AttackType = WeaponType.Melee, Accuracy = 0.75, XpReward = 4 };
             config.Zones["abandoned_store"] = Zone("abandoned_store", 45, 1, 0, 5, Array.Empty<UnlockCondition>());
             config.Zones["dry_suburb"] = Zone("dry_suburb", 90, 1, 1, 8, new[] { new UnlockCondition { Type = GameConditionTypes.ZoneCompletions, Id = "abandoned_store", Value = 2 } });
             config.Zones["police_outpost"] = Zone("police_outpost", 120, 1, 1, 8, new[] { new UnlockCondition { Type = GameConditionTypes.BuildingLevel, Id = "workshop", Value = 1 } });
@@ -1612,7 +1626,7 @@ namespace AshfallCamp.Tests.EditMode
                 MinEnemyCount = 1,
                 MaxEnemyCount = 1
             };
-            zone.EnemyTable.Add(new WeightedEntry { Id = "feral_dog", Weight = 100 });
+            zone.EnemyTable.Add(new WeightedEntry { Id = "creature_weak_radiated_hound", Weight = 100 });
             zone.LootTable.Add(new LootTableEntry { ResourceId = "scrap", Min = 4, Max = 10, Weight = 100 });
             zone.LootTable.Add(new LootTableEntry { ResourceId = "food", Min = 1, Max = 4, Weight = 70 });
             foreach (var unlock in unlocks) zone.UnlockConditions.Add(unlock);

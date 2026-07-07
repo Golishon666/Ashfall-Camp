@@ -345,15 +345,17 @@ namespace AshfallCamp.Infrastructure
             public bool IsUnlocked;
             public long UpgradeStartedAtUnixMs;
             public long UpgradeFinishedAtUnixMs;
+            public int AssignedWorkers;
+            public int ConditionPercent;
 
             public static BuildingSaveData FromState(BuildingState state)
             {
-                return new BuildingSaveData { Id = state.Id, Level = state.Level, IsUnlocked = state.IsUnlocked, UpgradeStartedAtUnixMs = state.UpgradeStartedAtUnixMs, UpgradeFinishedAtUnixMs = state.UpgradeFinishedAtUnixMs };
+                return new BuildingSaveData { Id = state.Id, Level = state.Level, IsUnlocked = state.IsUnlocked, UpgradeStartedAtUnixMs = state.UpgradeStartedAtUnixMs, UpgradeFinishedAtUnixMs = state.UpgradeFinishedAtUnixMs, AssignedWorkers = state.AssignedWorkers, ConditionPercent = state.ConditionPercent };
             }
 
             public BuildingState ToState()
             {
-                return new BuildingState { Id = Id, Level = Level, IsUnlocked = IsUnlocked, UpgradeStartedAtUnixMs = UpgradeStartedAtUnixMs, UpgradeFinishedAtUnixMs = UpgradeFinishedAtUnixMs };
+                return new BuildingState { Id = Id, Level = Level, IsUnlocked = IsUnlocked, UpgradeStartedAtUnixMs = UpgradeStartedAtUnixMs, UpgradeFinishedAtUnixMs = UpgradeFinishedAtUnixMs, AssignedWorkers = AssignedWorkers, ConditionPercent = ConditionPercent };
             }
         }
 
@@ -634,6 +636,7 @@ namespace AshfallCamp.Infrastructure
             public List<IntPairData> ResourcesGained = new List<IntPairData>();
             public List<IntPairData> ResourcesSpent = new List<IntPairData>();
             public List<string> CompletedExpeditionIds = new List<string>();
+            public List<string> CompletedBuildingIds = new List<string>();
             public List<string> WoundedSurvivorIds = new List<string>();
             public List<string> HealedSurvivorIds = new List<string>();
 
@@ -647,6 +650,7 @@ namespace AshfallCamp.Infrastructure
                     ResourcesGained = state.ResourcesGained != null ? FromDictionary(state.ResourcesGained) : new List<IntPairData>(),
                     ResourcesSpent = state.ResourcesSpent != null ? FromDictionary(state.ResourcesSpent) : new List<IntPairData>(),
                     CompletedExpeditionIds = state.CompletedExpeditionIds != null ? new List<string>(state.CompletedExpeditionIds) : new List<string>(),
+                    CompletedBuildingIds = state.CompletedBuildingIds != null ? new List<string>(state.CompletedBuildingIds) : new List<string>(),
                     WoundedSurvivorIds = state.WoundedSurvivorIds != null ? new List<string>(state.WoundedSurvivorIds) : new List<string>(),
                     HealedSurvivorIds = state.HealedSurvivorIds != null ? new List<string>(state.HealedSurvivorIds) : new List<string>()
                 };
@@ -661,6 +665,7 @@ namespace AshfallCamp.Infrastructure
                     ResourcesGained = ToDictionary(ResourcesGained),
                     ResourcesSpent = ToDictionary(ResourcesSpent),
                     CompletedExpeditionIds = CompletedExpeditionIds != null ? new List<string>(CompletedExpeditionIds) : new List<string>(),
+                    CompletedBuildingIds = CompletedBuildingIds != null ? new List<string>(CompletedBuildingIds) : new List<string>(),
                     WoundedSurvivorIds = WoundedSurvivorIds != null ? new List<string>(WoundedSurvivorIds) : new List<string>(),
                     HealedSurvivorIds = HealedSurvivorIds != null ? new List<string>(HealedSurvivorIds) : new List<string>()
                 };

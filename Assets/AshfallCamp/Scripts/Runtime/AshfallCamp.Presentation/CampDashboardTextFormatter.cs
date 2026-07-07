@@ -8,6 +8,29 @@ namespace AshfallCamp.Presentation
 {
     public static class CampDashboardTextFormatter
     {
+        private const string AlertIdSurvivorJoined = "survivor_joined";
+        private const string AlertIdDemoCompleted = "demo_completed";
+        private const string AlertIdEmergencyScavengeCompleted = "emergency_scavenge_completed";
+        private const string AlertIdActiveExpedition = "active_expedition";
+        private const string AlertIdWoundedSurvivors = "wounded_survivors";
+        private const string AlertIdIdleSurvivors = "idle_survivors";
+        private const string AlertIdEmergencyScavenge = "emergency_scavenge";
+        private const string AlertIdLowResource = "low_resource";
+        private const string AlertIdUpgradeAvailable = "upgrade_available";
+        private const string AlertIdNoAlerts = "no_alerts";
+
+        private const string AlertCategoryEvents = "events";
+        private const string AlertCategoryExpeditions = "expeditions";
+        private const string AlertCategorySurvivors = "survivors";
+        private const string AlertCategorySupplies = "supplies";
+        private const string AlertCategoryBuildings = "buildings";
+        private const string AlertCategorySystem = "system";
+
+        private const string ScreenIdSurvivors = "survivors";
+        private const string ScreenIdBuildings = "buildings";
+        private const string ScreenIdExpeditions = "expeditions";
+        private const string ScreenIdReports = "reports";
+
         public static List<CampAlertPresentation> BuildAlerts(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
         {
             var result = new List<CampAlertPresentation>();
@@ -16,13 +39,26 @@ namespace AshfallCamp.Presentation
             AddCampEventAlert(result, state, config, catalog);
             AddActiveExpeditionAlert(result, state, config, catalog);
             AddWoundedAlert(result, state, catalog);
+            AddIdleSurvivorsAlert(result, state, catalog);
             AddEmergencyScavengeAlert(result, state, config, catalog);
             AddLowResourceAlert(result, state, config, catalog);
             AddUpgradeAlert(result, state, config, catalog);
+            SortAndDeduplicateAlerts(result);
 
             if (result.Count == 0 && (!string.IsNullOrWhiteSpace(catalog.NoAlertsTitle) || !string.IsNullOrWhiteSpace(catalog.NoAlertsBody)))
             {
-                result.Add(new CampAlertPresentation(catalog.NoAlertsTitle, catalog.NoAlertsBody, catalog.Theme.Sage));
+                result.Add(CreateAlert(
+                    catalog,
+                    AlertIdNoAlerts,
+                    catalog.NoAlertsTitle,
+                    catalog.NoAlertsBody,
+                    catalog.Theme.Sage,
+                    CampAlertSeverity.Info,
+                    0,
+                    AlertCategorySystem,
+                    CampAlertAction.None,
+                    string.Empty,
+                    string.Empty));
             }
 
             return result;
@@ -285,6 +321,7 @@ namespace AshfallCamp.Presentation
 
             foreach (var candidateId in pendingCandidateIds)
             {
+                if (presentation.Candidates.Count >= RecruitmentSystem.MaxCandidateCount) break;
                 RecruitableSurvivorDefinition candidate;
                 if (!config.TryGetRecruitableSurvivor(candidateId, out candidate)) continue;
                 if (IsCandidateRecruited(state, candidate)) continue;
@@ -498,26 +535,50 @@ namespace AshfallCamp.Presentation
             if (string.Equals(campEvent.EventId, GameEventIds.DemoCompleted, StringComparison.Ordinal))
             {
                 var completionName = GetDemoCompletionName(config, campEvent);
-                output.Add(new CampAlertPresentation(
+                output.Add(CreateAlert(
+                    catalog,
+                    AlertIdDemoCompleted,
                     Format(catalog.DemoCompletedAlertTitleFormat, completionName),
                     Format(catalog.DemoCompletedAlertBodyFormat, completionName),
-                    catalog.Theme.Amber));
+                    catalog.Theme.Amber,
+                    CampAlertSeverity.Success,
+                    1000,
+                    AlertCategoryEvents,
+                    CampAlertAction.OpenScreen,
+                    ScreenIdReports,
+                    "VIEW"));
                 return;
             }
 
             if (string.Equals(campEvent.EventId, GameEventIds.EmergencyScavengeCompleted, StringComparison.Ordinal))
             {
-                output.Add(new CampAlertPresentation(
+                output.Add(CreateAlert(
+                    catalog,
+                    AlertIdEmergencyScavengeCompleted,
                     catalog.EmergencyScavengeCompletedAlertTitle,
                     Format(catalog.EmergencyScavengeCompletedAlertBodyFormat, FormatResourceAmounts(RecoverySystem.CalculateEmergencyScavengeRewards(config), config, catalog)),
-                    catalog.Theme.Sage));
+                    catalog.Theme.Sage,
+                    CampAlertSeverity.Success,
+                    1000,
+                    AlertCategoryEvents,
+                    CampAlertAction.OpenScreen,
+                    ScreenIdReports,
+                    "VIEW"));
                 return;
             }
 
-            output.Add(new CampAlertPresentation(
+            output.Add(CreateAlert(
+                catalog,
+                AlertIdSurvivorJoined,
                 Format(catalog.SurvivorJoinedAlertTitleFormat, GetCampEventSubjectName(state, campEvent)),
                 Format(catalog.SurvivorJoinedAlertBodyFormat, GetCampEventSubjectName(state, campEvent), state.Survivors.Count, Math.Max(1, state.SurvivorCap)),
-                catalog.Theme.Sage));
+                catalog.Theme.Sage,
+                CampAlertSeverity.Success,
+                1000,
+                AlertCategoryEvents,
+                CampAlertAction.OpenScreen,
+                ScreenIdReports,
+                "VIEW"));
         }
 
         private static void AddActiveExpeditionAlert(List<CampAlertPresentation> output, GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
@@ -536,10 +597,18 @@ namespace AshfallCamp.Presentation
             ZoneDefinition zone;
             config.TryGetZone(first.ZoneId, out zone);
             var zoneName = zone != null ? zone.Name : first.ZoneId;
-            output.Add(new CampAlertPresentation(
+            output.Add(CreateAlert(
+                catalog,
+                AlertIdActiveExpedition,
                 Format(catalog.ActiveExpeditionAlertTitleFormat, count),
                 Format(catalog.ActiveExpeditionAlertBodyFormat, zoneName, ToWholePercent(first.Progress)),
-                catalog.Theme.Teal));
+                catalog.Theme.Teal,
+                CampAlertSeverity.Info,
+                650,
+                AlertCategoryExpeditions,
+                CampAlertAction.OpenScreen,
+                ScreenIdExpeditions,
+                "VIEW"));
         }
 
         private static void AddWoundedAlert(List<CampAlertPresentation> output, GameState state, CampUiCatalogSO catalog)
@@ -555,10 +624,43 @@ namespace AshfallCamp.Presentation
 
             if (count == 0 || first == null) return;
 
-            output.Add(new CampAlertPresentation(
+            output.Add(CreateAlert(
+                catalog,
+                AlertIdWoundedSurvivors,
                 Format(catalog.WoundedAlertTitleFormat, count),
                 Format(catalog.WoundedAlertBodyFormat, first.Name),
-                catalog.Theme.Rust));
+                catalog.Theme.Rust,
+                CampAlertSeverity.Critical,
+                900,
+                AlertCategorySurvivors,
+                CampAlertAction.OpenScreen,
+                ScreenIdSurvivors,
+                "VIEW"));
+        }
+
+        private static void AddIdleSurvivorsAlert(List<CampAlertPresentation> output, GameState state, CampUiCatalogSO catalog)
+        {
+            var idle = UiStateQueries.CountIdleSurvivors(state);
+            if (idle <= 0) return;
+
+            var title = string.IsNullOrWhiteSpace(catalog.IdleSurvivorsAlertTitleFormat)
+                ? Format("{0} IDLE SURVIVORS", idle)
+                : Format(catalog.IdleSurvivorsAlertTitleFormat, idle);
+            var body = string.IsNullOrWhiteSpace(catalog.IdleSurvivorsAlertBodyFormat)
+                ? Format("{0} survivors are ready for expeditions or camp work.", idle)
+                : Format(catalog.IdleSurvivorsAlertBodyFormat, idle);
+            output.Add(CreateAlert(
+                catalog,
+                AlertIdIdleSurvivors,
+                title,
+                body,
+                catalog.Theme.Amber,
+                CampAlertSeverity.Warning,
+                500,
+                AlertCategorySurvivors,
+                CampAlertAction.OpenScreen,
+                ScreenIdExpeditions,
+                "MANAGE"));
         }
 
         private static void AddEmergencyScavengeAlert(List<CampAlertPresentation> output, GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
@@ -567,10 +669,18 @@ namespace AshfallCamp.Presentation
 
             if (state.Recovery.EmergencyScavengeActive)
             {
-                output.Add(new CampAlertPresentation(
+                output.Add(CreateAlert(
+                    catalog,
+                    AlertIdEmergencyScavenge,
                     catalog.EmergencyScavengeAlertTitle,
                     Format(catalog.EmergencyScavengeActiveBodyFormat, FormatSecondsCeil(state.Recovery.EmergencyScavengeRemainingSeconds)),
-                    catalog.Theme.Teal));
+                    catalog.Theme.Teal,
+                    CampAlertSeverity.Info,
+                    850,
+                    AlertCategorySupplies,
+                    CampAlertAction.None,
+                    string.Empty,
+                    string.Empty));
                 return;
             }
 
@@ -578,19 +688,34 @@ namespace AshfallCamp.Presentation
 
             if (state.Recovery.EmergencyScavengeCooldownRemainingSeconds > 0)
             {
-                output.Add(new CampAlertPresentation(
+                output.Add(CreateAlert(
+                    catalog,
+                    AlertIdEmergencyScavenge,
                     catalog.EmergencyScavengeAlertTitle,
                     Format(catalog.EmergencyScavengeCooldownBodyFormat, FormatSecondsCeil(state.Recovery.EmergencyScavengeCooldownRemainingSeconds)),
-                    catalog.Theme.Amber));
+                    catalog.Theme.Amber,
+                    CampAlertSeverity.Warning,
+                    850,
+                    AlertCategorySupplies,
+                    CampAlertAction.None,
+                    string.Empty,
+                    string.Empty));
                 return;
             }
 
             var rewards = RecoverySystem.CalculateEmergencyScavengeRewards(config);
             var canStart = RecoverySystem.ValidateEmergencyScavenge(state, config, new EmergencyScavengeRequest()).IsValid;
-            output.Add(new CampAlertPresentation(
+            output.Add(CreateAlert(
+                catalog,
+                AlertIdEmergencyScavenge,
                 catalog.EmergencyScavengeAlertTitle,
                 Format(catalog.EmergencyScavengeReadyBodyFormat, FormatSecondsCeil(config.Balance.EmergencyScavengeDurationSeconds), FormatResourceAmounts(rewards, config, catalog)),
                 catalog.Theme.Rust,
+                CampAlertSeverity.Critical,
+                850,
+                AlertCategorySupplies,
+                canStart ? CampAlertAction.StartEmergencyScavenge : CampAlertAction.None,
+                string.Empty,
                 catalog.EmergencyScavengeButton,
                 canStart));
         }
@@ -623,10 +748,18 @@ namespace AshfallCamp.Presentation
 
             if (selected == null) return;
 
-            output.Add(new CampAlertPresentation(
+            output.Add(CreateAlert(
+                catalog,
+                AlertIdLowResource,
                 Format(catalog.LowResourceAlertTitleFormat, selected.Name),
                 Format(catalog.LowResourceAlertBodyFormat, selectedAmount, selectedCap),
-                catalog.Theme.Rust));
+                catalog.Theme.Rust,
+                CampAlertSeverity.Critical,
+                800,
+                AlertCategorySupplies,
+                CampAlertAction.OpenScreen,
+                ScreenIdExpeditions,
+                "VIEW"));
         }
 
         private static void AddUpgradeAlert(List<CampAlertPresentation> output, GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
@@ -641,12 +774,147 @@ namespace AshfallCamp.Presentation
                 if (nextLevel == null) continue;
                 if (!BuildingSystem.ValidateUpgrade(state, config, definition.Id).IsValid) continue;
 
-                output.Add(new CampAlertPresentation(
+                output.Add(CreateAlert(
+                    catalog,
+                    AlertIdUpgradeAvailable,
                     Format(catalog.UpgradeAvailableAlertTitleFormat, definition.Name),
                     Format(catalog.UpgradeAvailableAlertBodyFormat, nextLevel.Level),
-                    catalog.Theme.Amber));
+                    catalog.Theme.Amber,
+                    CampAlertSeverity.Warning,
+                    450,
+                    AlertCategoryBuildings,
+                    CampAlertAction.OpenScreen,
+                    ScreenIdBuildings,
+                    "VIEW"));
                 return;
             }
+        }
+
+        private static CampAlertPresentation CreateAlert(
+            CampUiCatalogSO catalog,
+            string id,
+            string title,
+            string body,
+            Color fallbackTone,
+            CampAlertSeverity defaultSeverity,
+            int defaultPriority,
+            string defaultCategory,
+            CampAlertAction defaultAction,
+            string defaultTargetScreenId,
+            string defaultActionLabel,
+            bool canInvokeAction = true)
+        {
+            var config = FindAlertConfig(catalog, id);
+            var severity = config != null ? config.Severity : defaultSeverity;
+            var priority = config != null && config.Priority != 0 ? config.Priority : defaultPriority;
+            var category = config != null && !string.IsNullOrWhiteSpace(config.Category) ? config.Category : defaultCategory;
+            var action = defaultAction != CampAlertAction.None && config != null && config.Action != CampAlertAction.None
+                ? config.Action
+                : defaultAction;
+            var targetScreenId = config != null && !string.IsNullOrWhiteSpace(config.TargetScreenId)
+                ? config.TargetScreenId
+                : defaultTargetScreenId;
+            var actionLabel = config != null && !string.IsNullOrWhiteSpace(config.ButtonLabel)
+                ? config.ButtonLabel
+                : defaultActionLabel;
+            var buttonView = config != null ? config.ButtonView : CampAlertButtonView.Text;
+            if (action == CampAlertAction.None)
+            {
+                buttonView = CampAlertButtonView.Hidden;
+                actionLabel = string.Empty;
+                canInvokeAction = false;
+            }
+
+            var tone = ResolveAlertTone(catalog, config, fallbackTone, severity);
+            return new CampAlertPresentation(
+                id,
+                title,
+                body,
+                tone,
+                severity,
+                priority,
+                category,
+                action,
+                targetScreenId,
+                actionLabel,
+                buttonView,
+                config != null ? config.Icon : null,
+                config != null ? config.ActionIcon : null,
+                canInvokeAction);
+        }
+
+        private static AlertUiEntry FindAlertConfig(CampUiCatalogSO catalog, string id)
+        {
+            if (catalog == null || catalog.Alerts == null || string.IsNullOrWhiteSpace(id)) return null;
+            foreach (var entry in catalog.Alerts)
+            {
+                if (entry != null && string.Equals(entry.Id, id, StringComparison.Ordinal))
+                {
+                    return entry;
+                }
+            }
+
+            return null;
+        }
+
+        private static Color ResolveAlertTone(CampUiCatalogSO catalog, AlertUiEntry config, Color fallbackTone, CampAlertSeverity severity)
+        {
+            if (config != null && config.ToneColor != Color.white)
+            {
+                return config.ToneColor;
+            }
+
+            if (catalog == null || catalog.Theme == null) return fallbackTone;
+            switch (severity)
+            {
+                case CampAlertSeverity.Critical:
+                    return catalog.Theme.Rust;
+                case CampAlertSeverity.Warning:
+                    return catalog.Theme.Amber;
+                case CampAlertSeverity.Success:
+                    return catalog.Theme.Sage;
+                default:
+                    return fallbackTone;
+            }
+        }
+
+        private static void SortAndDeduplicateAlerts(List<CampAlertPresentation> alerts)
+        {
+            if (alerts == null || alerts.Count <= 1) return;
+
+            for (var i = alerts.Count - 1; i >= 0; i--)
+            {
+                var current = alerts[i];
+                if (current == null || string.IsNullOrWhiteSpace(current.Id)) continue;
+
+                for (var j = 0; j < i; j++)
+                {
+                    var previous = alerts[j];
+                    if (previous == null || !string.Equals(previous.Id, current.Id, StringComparison.Ordinal)) continue;
+
+                    if (CompareAlertPriority(current, previous) > 0)
+                    {
+                        alerts[j] = current;
+                    }
+
+                    alerts.RemoveAt(i);
+                    break;
+                }
+            }
+
+            alerts.Sort((left, right) => -CompareAlertPriority(left, right));
+        }
+
+        private static int CompareAlertPriority(CampAlertPresentation left, CampAlertPresentation right)
+        {
+            if (ReferenceEquals(left, right)) return 0;
+            if (left == null) return -1;
+            if (right == null) return 1;
+            var priority = left.Priority.CompareTo(right.Priority);
+            if (priority != 0) return priority;
+            var severity = left.Severity.CompareTo(right.Severity);
+            if (severity != 0) return severity;
+            return string.Compare(left.Id, right.Id, StringComparison.Ordinal);
         }
 
         private static bool IsGoalComplete(GameState state, CampNextGoalEntry goal)
@@ -2388,24 +2656,91 @@ namespace AshfallCamp.Presentation
 
     public sealed class CampAlertPresentation
     {
+        public readonly string Id;
         public readonly string Title;
         public readonly string Body;
         public readonly Color ToneColor;
+        public readonly CampAlertSeverity Severity;
+        public readonly int Priority;
+        public readonly string Category;
+        public readonly CampAlertAction Action;
+        public readonly string TargetScreenId;
         public readonly string ActionLabel;
-        public readonly bool CanStartEmergencyScavenge;
+        public readonly CampAlertButtonView ButtonView;
+        public readonly Texture2D Icon;
+        public readonly Texture2D ActionIcon;
+        public readonly bool CanInvokeAction;
+
+        public bool HasAction
+        {
+            get
+            {
+                return CanInvokeAction &&
+                       Action != CampAlertAction.None &&
+                       ButtonView != CampAlertButtonView.Hidden &&
+                       !string.IsNullOrWhiteSpace(ActionLabel);
+            }
+        }
+
+        public bool CanStartEmergencyScavenge
+        {
+            get { return HasAction && Action == CampAlertAction.StartEmergencyScavenge; }
+        }
 
         public CampAlertPresentation(string title, string body, Color toneColor)
-            : this(title, body, toneColor, string.Empty, false)
+            : this(string.Empty, title, body, toneColor, CampAlertSeverity.Info, 0, string.Empty, CampAlertAction.None, string.Empty, string.Empty, CampAlertButtonView.Hidden, null, null, false)
         {
         }
 
         public CampAlertPresentation(string title, string body, Color toneColor, string actionLabel, bool canStartEmergencyScavenge)
+            : this(
+                string.Empty,
+                title,
+                body,
+                toneColor,
+                canStartEmergencyScavenge ? CampAlertSeverity.Critical : CampAlertSeverity.Info,
+                0,
+                string.Empty,
+                canStartEmergencyScavenge ? CampAlertAction.StartEmergencyScavenge : CampAlertAction.None,
+                string.Empty,
+                actionLabel,
+                string.IsNullOrWhiteSpace(actionLabel) ? CampAlertButtonView.Hidden : CampAlertButtonView.Text,
+                null,
+                null,
+                canStartEmergencyScavenge)
         {
+        }
+
+        public CampAlertPresentation(
+            string id,
+            string title,
+            string body,
+            Color toneColor,
+            CampAlertSeverity severity,
+            int priority,
+            string category,
+            CampAlertAction action,
+            string targetScreenId,
+            string actionLabel,
+            CampAlertButtonView buttonView,
+            Texture2D icon,
+            Texture2D actionIcon,
+            bool canInvokeAction)
+        {
+            Id = id ?? string.Empty;
             Title = title ?? string.Empty;
             Body = body ?? string.Empty;
             ToneColor = toneColor;
+            Severity = severity;
+            Priority = priority;
+            Category = category ?? string.Empty;
+            Action = action;
+            TargetScreenId = targetScreenId ?? string.Empty;
             ActionLabel = actionLabel ?? string.Empty;
-            CanStartEmergencyScavenge = canStartEmergencyScavenge && !string.IsNullOrWhiteSpace(ActionLabel);
+            ButtonView = buttonView;
+            Icon = icon;
+            ActionIcon = actionIcon;
+            CanInvokeAction = canInvokeAction;
         }
     }
 

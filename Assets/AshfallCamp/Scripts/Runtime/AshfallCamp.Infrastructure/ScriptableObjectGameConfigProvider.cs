@@ -317,8 +317,9 @@ namespace AshfallCamp.Infrastructure
         private void FillBuildings(GameConfigSnapshot snapshot)
         {
             if (_database.Buildings == null) return;
-            foreach (var item in _database.Buildings.Buildings)
+            foreach (var item in EnumerateBuildingConfigs(_database.Buildings))
             {
+                if (item == null) continue;
                 var building = new BuildingDefinition
                 {
                     Id = item.Id,
@@ -334,6 +335,10 @@ namespace AshfallCamp.Infrastructure
                     {
                         Level = level.Level,
                         Cost = ToDictionary(level.Cost),
+                        UpgradeDurationSeconds = level.UpgradeDurationSeconds,
+                        WorkerCapacity = level.WorkerCapacity,
+                        DefaultWorkers = level.DefaultWorkers,
+                        DefaultConditionPercent = level.DefaultConditionPercent,
                         SurvivorCap = level.SurvivorCap,
                         SquadSize = level.SquadSize,
                         ResourceCap = level.ResourceCap,
@@ -341,6 +346,24 @@ namespace AshfallCamp.Infrastructure
                     });
                 }
                 AddDefinition(snapshot.Buildings, item.Id, building, "buildings");
+            }
+        }
+
+        private static IEnumerable<BuildingConfigData> EnumerateBuildingConfigs(BuildingCatalogSO catalog)
+        {
+            if (catalog.BuildingAssets != null && catalog.BuildingAssets.Count > 0)
+            {
+                foreach (var asset in catalog.BuildingAssets)
+                {
+                    if (asset != null) yield return asset.Building;
+                }
+
+                yield break;
+            }
+
+            foreach (var building in catalog.Buildings)
+            {
+                yield return building;
             }
         }
 
@@ -913,7 +936,10 @@ namespace AshfallCamp.Infrastructure
                 {
                     if (level.Level < 0) throw new InvalidOperationException("Building level cannot be negative: " + building.Id);
                     if (!levels.Add(level.Level)) throw new InvalidOperationException("Building has duplicate level: " + building.Id + "/" + level.Level);
-                    if (level.SurvivorCap < 0 || level.SquadSize < 0 || level.ResourceCap < 0 || level.ResourcePerMinute < 0) throw new InvalidOperationException("Building level values cannot be negative: " + building.Id);
+                    if (level.SurvivorCap < 0 || level.SquadSize < 0 || level.ResourceCap < 0 || level.ResourcePerMinute < 0 || level.WorkerCapacity < 0 || level.DefaultWorkers < 0 || level.DefaultConditionPercent < 0) throw new InvalidOperationException("Building level values cannot be negative: " + building.Id);
+                    if (level.DefaultWorkers > level.WorkerCapacity) throw new InvalidOperationException("Building workers exceed capacity: " + building.Id + "/" + level.Level);
+                    if (level.DefaultConditionPercent > 100) throw new InvalidOperationException("Building condition exceeds 100: " + building.Id + "/" + level.Level);
+                    if (level.Level > 0 && level.UpgradeDurationSeconds <= 0) throw new InvalidOperationException("Building upgrade duration must be positive: " + building.Id + "/" + level.Level);
                     foreach (var cost in level.Cost)
                     {
                         if (!snapshot.Resources.ContainsKey(cost.Key)) throw new InvalidOperationException("Building cost references unknown resource: " + cost.Key);
@@ -924,6 +950,14 @@ namespace AshfallCamp.Infrastructure
                 if (BuildingSystem.GetLevel(building, building.StartingLevel) == null)
                 {
                     throw new InvalidOperationException("Building starting level is missing: " + building.Id);
+                }
+
+                for (var level = 0; level <= 10; level++)
+                {
+                    if (BuildingSystem.GetLevel(building, level) == null)
+                    {
+                        throw new InvalidOperationException("Building must define levels 0-10: " + building.Id);
+                    }
                 }
             }
         }

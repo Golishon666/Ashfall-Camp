@@ -44,6 +44,20 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void DuplicateAlertIdsFailValidation()
+        {
+            var catalog = CreateMinimalValidCatalog();
+            catalog.Alerts.Add(new AlertUiEntry { Id = "status", Title = "Duplicate", Body = "Duplicate" });
+
+            var result = CampUiCatalogValidator.Validate(catalog);
+
+            Assert.IsFalse(result.IsValid);
+            StringAssert.Contains("duplicate id in alerts: status", string.Join("; ", result.Errors));
+
+            UnityEngine.Object.DestroyImmediate(catalog);
+        }
+
+        [Test]
         public void MultipleActiveNavigationItemsFailValidation()
         {
             var catalog = CreateMinimalValidCatalog();
@@ -274,6 +288,7 @@ namespace AshfallCamp.Tests.EditMode
             catalog.Buildings.Add(new BuildingUiEntry { BuildingId = "barracks", Description = "Beds", Icon = Texture2D.whiteTexture });
             catalog.NavItems.Add(new NavUiEntry { Id = "buildings", Label = "Buildings", IsActive = true });
             catalog.NavItems.Add(new NavUiEntry { Id = "reports", Label = "Reports" });
+            catalog.Alerts.Add(new AlertUiEntry { Id = "status", Title = "Status", Body = "Status" });
             catalog.ReportsScreenId = "reports";
             catalog.ExpeditionDetailPanelTexture = Texture2D.whiteTexture;
             catalog.ExpeditionMonitorPanelTexture = Texture2D.whiteTexture;

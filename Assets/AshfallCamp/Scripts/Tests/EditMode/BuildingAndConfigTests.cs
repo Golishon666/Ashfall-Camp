@@ -42,7 +42,7 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
 
-            var first = BuildingSystem.Upgrade(state, config, "barracks");
+            var first = TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
             Assert.IsTrue(first.Validation.IsValid);
             Assert.AreEqual(1, state.Buildings["barracks"].Level);
             Assert.AreEqual(75, state.Resources["scrap"]);
@@ -50,7 +50,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(2, state.SurvivorCap);
             Assert.AreEqual(1, state.SquadSize);
 
-            var second = BuildingSystem.Upgrade(state, config, "barracks");
+            var second = TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
             Assert.IsTrue(second.Validation.IsValid);
             Assert.AreEqual(2, state.Buildings["barracks"].Level);
             Assert.AreEqual(15, state.Resources["scrap"]);
@@ -60,13 +60,62 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void BuildingUpgradeStartsTimerAndBlocksDuplicateUpgrade()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["food"] = 20;
+
+            var result = BuildingSystem.Upgrade(state, config, "barracks", 1000);
+
+            Assert.IsTrue(result.Validation.IsValid);
+            Assert.IsTrue(result.Started);
+            Assert.AreEqual(1, result.TargetLevel);
+            Assert.Greater(result.DurationSeconds, 0);
+            Assert.AreEqual(0, state.Buildings["barracks"].Level);
+            Assert.AreEqual(75, state.Resources["scrap"]);
+            Assert.AreEqual(16, state.Resources["food"]);
+            Assert.AreEqual(1000, state.Buildings["barracks"].UpgradeStartedAtUnixMs);
+            Assert.Greater(state.Buildings["barracks"].UpgradeFinishedAtUnixMs, state.Buildings["barracks"].UpgradeStartedAtUnixMs);
+
+            var duplicate = BuildingSystem.ValidateUpgrade(state, config, "barracks");
+            Assert.IsFalse(duplicate.IsValid);
+            Assert.Contains("Building upgrade is already in progress.", duplicate.Errors);
+        }
+
+        [Test]
+        public void BuildingUpgradeCompletesOnlyAfterTimerFinishes()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["food"] = 20;
+
+            BuildingSystem.Upgrade(state, config, "barracks", 1000);
+            var finishAt = state.Buildings["barracks"].UpgradeFinishedAtUnixMs;
+
+            var early = BuildingSystem.CompleteReadyUpgrades(state, config, finishAt - 1);
+            Assert.AreEqual(0, early.Count);
+            Assert.AreEqual(0, state.Buildings["barracks"].Level);
+
+            var completed = BuildingSystem.CompleteReadyUpgrades(state, config, finishAt);
+            Assert.AreEqual(1, completed.Count);
+            Assert.AreEqual("barracks", completed[0]);
+            Assert.AreEqual(1, state.Buildings["barracks"].Level);
+            Assert.AreEqual(0, state.Buildings["barracks"].UpgradeStartedAtUnixMs);
+            Assert.AreEqual(0, state.Buildings["barracks"].UpgradeFinishedAtUnixMs);
+            Assert.AreEqual(2, state.SurvivorCap);
+        }
+
+        [Test]
         public void WaterCollectorUpgradeRaisesCapAndProducesWater()
         {
             var config = TestConfigFactory.Create();
             var state = GameStateFactory.CreateNew(config, 0);
             state.Resources["scrap"] = 100;
 
-            var result = BuildingSystem.Upgrade(state, config, "water_collector");
+            var result = TestBuildingUpgrades.UpgradeAndComplete(state, config, "water_collector");
             Assert.IsTrue(result.Validation.IsValid);
             Assert.AreEqual(60, state.ResourceCaps["water"]);
 
@@ -86,7 +135,7 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 49;
 
-            var result = BuildingSystem.Upgrade(state, config, "mushroom_beds");
+            var result = TestBuildingUpgrades.UpgradeAndComplete(state, config, "mushroom_beds");
             Assert.IsTrue(result.Validation.IsValid, string.Join(", ", result.Validation.Errors));
             Assert.AreEqual(1, state.Buildings["mushroom_beds"].Level);
             Assert.AreEqual(70, state.ResourceCaps["food"]);
@@ -105,7 +154,7 @@ namespace AshfallCamp.Tests.EditMode
 
             Assert.IsFalse(state.Zones["police_outpost"].IsUnlocked);
 
-            var result = BuildingSystem.Upgrade(state, config, "workshop");
+            var result = TestBuildingUpgrades.UpgradeAndComplete(state, config, "workshop");
 
             Assert.IsTrue(result.Validation.IsValid);
             Assert.IsTrue(state.Zones["police_outpost"].IsUnlocked);
@@ -125,7 +174,30 @@ namespace AshfallCamp.Tests.EditMode
             var result = useCase.ExecuteAsync("barracks", CancellationToken.None).GetAwaiter().GetResult();
 
             Assert.IsTrue(result.Validation.IsValid);
+            BuildingSystem.CompleteReadyUpgrades(store.State.CurrentValue, config, long.MaxValue);
             Assert.AreEqual(1, store.State.CurrentValue.Buildings["barracks"].Level);
+        }
+
+        [Test]
+        public void BuildingConfigAssetsDefineLevelsZeroThroughTen()
+        {
+            var database = AssetDatabase.LoadAssetAtPath<GameConfigDatabaseSO>(GameConfigDatabasePath);
+            Assert.NotNull(database);
+
+            var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+
+            foreach (var building in config.Buildings.Values)
+            {
+                for (var level = 0; level <= 10; level++)
+                {
+                    var definition = BuildingSystem.GetLevel(building, level);
+                    Assert.NotNull(definition, building.Id + " level " + level + " is missing.");
+                    if (level > 0)
+                    {
+                        Assert.Greater(definition.UpgradeDurationSeconds, 0, building.Id + " level " + level + " duration");
+                    }
+                }
+            }
         }
 
         [Test]
@@ -182,16 +254,16 @@ namespace AshfallCamp.Tests.EditMode
             AssertResource(config, "food", 8, true, 50);
             AssertResource(config, "water", 6, true, 40);
             AssertResource(config, "medicine", 1, true, 20);
-            Assert.AreEqual("Mara", config.StartingSurvivor.Name);
+            Assert.AreEqual("Asha", config.StartingSurvivor.Name);
             Assert.IsFalse(string.IsNullOrWhiteSpace(config.StartingSurvivor.PortraitId));
             Assert.AreEqual("rusty_knife", config.StartingSurvivor.WeaponItemId);
             Assert.IsTrue(config.Weapons.ContainsKey(config.StartingSurvivor.WeaponConfigId));
             Assert.IsTrue(config.Armor.ContainsKey(config.StartingSurvivor.ArmorConfigId));
             Assert.IsTrue(config.Utilities.ContainsKey(config.StartingSurvivor.UtilityConfigId));
-            Assert.GreaterOrEqual(config.RecruitableSurvivors.Count, 6);
-            Assert.GreaterOrEqual(config.Enemies.Count, 6);
+            Assert.AreEqual(43, config.RecruitableSurvivors.Count);
+            Assert.AreEqual(61, config.Enemies.Count);
             Assert.GreaterOrEqual(config.Items.Count, 10);
-            Assert.AreEqual(94, config.Weapons.Count);
+            Assert.AreEqual(124, config.Weapons.Count);
             Assert.AreEqual(60, config.Armor.Count);
             Assert.AreEqual(20, config.Utilities.Count);
             Assert.GreaterOrEqual(config.Buildings.Count, 6);
@@ -199,8 +271,10 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(60, config.Balance.EmergencyScavengeDurationSeconds);
             Assert.AreEqual(300, config.Balance.EmergencyScavengeCooldownSeconds);
             Assert.AreEqual(3, config.Balance.EmergencyScavengeRewards["scrap"]);
-            Assert.AreEqual(2, config.Balance.EmergencyScavengeRewards["food"]);
-            Assert.AreEqual(2, config.Balance.EmergencyScavengeRewards["water"]);
+            Assert.AreEqual(8, config.Balance.EmergencyScavengeRewards["food"]);
+            Assert.AreEqual(8, config.Balance.EmergencyScavengeRewards["water"]);
+            Assert.AreEqual(1, config.Balance.EmergencyScavengeRewards["weapon_parts"]);
+            Assert.AreEqual(1, config.Balance.EmergencyScavengeRewards["medicine"]);
             Assert.AreEqual(5, config.Balance.ExpeditionCompletionXp);
             Assert.AreEqual("survival", config.Balance.ExpeditionCompletionSkillId);
             Assert.AreEqual(3, config.Balance.ExpeditionCompletionSkillXp);
@@ -222,7 +296,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(-1, config.Policies["cautious"].DurabilityModifier);
             Assert.AreEqual(1, config.Policies["aggressive"].DurabilityModifier);
             Assert.AreEqual(1, config.Traits["clumsy"].StatModifiers["durability_loss"]);
-            Assert.IsTrue(config.RecruitableSurvivors.ContainsKey("elias"));
+            Assert.IsTrue(config.RecruitableSurvivors.ContainsKey("survivor_02"));
             Assert.IsTrue(config.Buildings.ContainsKey("barracks"));
             Assert.IsTrue(config.Buildings.ContainsKey("workshop"));
             Assert.IsTrue(config.Buildings.ContainsKey("water_collector"));
@@ -245,9 +319,10 @@ namespace AshfallCamp.Tests.EditMode
 
             var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
 
-            Assert.AreEqual(94, config.Weapons.Count);
+            Assert.AreEqual(124, config.Weapons.Count);
             Assert.IsTrue(config.Weapons.ContainsKey("weapon_melee_advanced_10_crusher_maul"));
             Assert.IsTrue(config.Weapons.ContainsKey("weapon_firearm_advanced_30_elite_wasteland_sniper"));
+            Assert.IsTrue(config.Weapons.ContainsKey("weapon_creature_boss_apex_claw_titan_apex_titan_claws"));
 
             var meleeCount = 0;
             var rangedCount = 0;
@@ -274,9 +349,9 @@ namespace AshfallCamp.Tests.EditMode
                 }
             }
 
-            Assert.AreEqual(40, meleeCount);
-            Assert.AreEqual(51, rangedCount);
-            Assert.AreEqual(3, explosiveCount);
+            Assert.AreEqual(62, meleeCount);
+            Assert.AreEqual(56, rangedCount);
+            Assert.AreEqual(6, explosiveCount);
         }
 
         [Test]
@@ -347,6 +422,10 @@ namespace AshfallCamp.Tests.EditMode
             var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
 
             Assert.NotNull(database.Survivors.StartingSurvivor.Portrait);
+            var usedPortraits = new HashSet<Sprite>();
+            Assert.IsTrue(usedPortraits.Add(database.Survivors.StartingSurvivor.Portrait), "Starting survivor portrait is reused.");
+            Assert.AreEqual(43, database.Survivors.RecruitableSurvivors.Count);
+            Assert.AreEqual(61, database.Enemies.Enemies.Count);
             Assert.IsTrue(config.Weapons.ContainsKey(config.StartingSurvivor.WeaponConfigId));
             Assert.IsTrue(config.Armor.ContainsKey(config.StartingSurvivor.ArmorConfigId));
             Assert.IsTrue(config.Utilities.ContainsKey(config.StartingSurvivor.UtilityConfigId));
@@ -354,24 +433,32 @@ namespace AshfallCamp.Tests.EditMode
             foreach (var survivor in database.Survivors.RecruitableSurvivors)
             {
                 Assert.NotNull(survivor.Portrait, survivor.Id + " portrait is missing.");
+                Assert.IsTrue(usedPortraits.Add(survivor.Portrait), survivor.Id + " portrait is reused.");
                 Assert.IsTrue(config.Weapons.ContainsKey(survivor.WeaponConfigId), survivor.Id + " weapon config is missing.");
                 Assert.IsTrue(config.Armor.ContainsKey(survivor.ArmorConfigId), survivor.Id + " armor config is missing.");
                 Assert.IsTrue(config.Utilities.ContainsKey(survivor.UtilityConfigId), survivor.Id + " utility config is missing.");
             }
 
             var humanEnemyCount = 0;
+            var creatureEnemyCount = 0;
             foreach (var enemy in database.Enemies.Enemies)
             {
                 Assert.NotNull(enemy.Portrait, enemy.Id + " portrait is missing.");
-                if (enemy.Kind != EnemyKind.Human) continue;
+                Assert.IsTrue(usedPortraits.Add(enemy.Portrait), enemy.Id + " portrait is reused.");
+                Assert.IsTrue(config.Weapons.ContainsKey(enemy.WeaponConfigId), enemy.Id + " weapon config is missing.");
+                if (enemy.Kind != EnemyKind.Human)
+                {
+                    creatureEnemyCount++;
+                    continue;
+                }
 
                 humanEnemyCount++;
-                Assert.IsTrue(config.Weapons.ContainsKey(enemy.WeaponConfigId), enemy.Id + " weapon config is missing.");
                 Assert.IsTrue(config.Armor.ContainsKey(enemy.ArmorConfigId), enemy.Id + " armor config is missing.");
                 Assert.IsTrue(config.Utilities.ContainsKey(enemy.UtilityConfigId), enemy.Id + " utility config is missing.");
             }
 
             Assert.Greater(humanEnemyCount, 0);
+            Assert.Greater(creatureEnemyCount, 0);
         }
 
         [Test]
@@ -428,8 +515,8 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreSame(zone, config.RequireZone(GameIds.Zones.AbandonedStore));
 
             EnemyDefinition enemy;
-            Assert.IsTrue(config.TryGetEnemy(GameIds.Enemies.FeralDog, out enemy));
-            Assert.AreSame(enemy, config.RequireEnemy(GameIds.Enemies.FeralDog));
+            Assert.IsTrue(config.TryGetEnemy(GameIds.Enemies.CreatureWeakRadiatedHound, out enemy));
+            Assert.AreSame(enemy, config.RequireEnemy(GameIds.Enemies.CreatureWeakRadiatedHound));
 
             ItemDefinition item;
             Assert.IsTrue(config.TryGetItem(GameIds.Items.RustyKnife, out item));
@@ -452,8 +539,8 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreSame(building, config.RequireBuilding(GameIds.Buildings.Barracks));
 
             RecruitableSurvivorDefinition survivor;
-            Assert.IsTrue(config.TryGetRecruitableSurvivor(GameIds.RecruitableSurvivors.Elias, out survivor));
-            Assert.AreSame(survivor, config.RequireRecruitableSurvivor(GameIds.RecruitableSurvivors.Elias));
+            Assert.IsTrue(config.TryGetRecruitableSurvivor(GameIds.RecruitableSurvivors.Survivor02, out survivor));
+            Assert.AreSame(survivor, config.RequireRecruitableSurvivor(GameIds.RecruitableSurvivors.Survivor02));
 
             Assert.IsFalse(config.TryGetWeapon("missing_weapon", out weapon));
             Assert.IsNull(weapon);
@@ -586,8 +673,8 @@ namespace AshfallCamp.Tests.EditMode
             };
             database.Survivors.RecruitableSurvivors.Add(new RecruitableSurvivorConfigData
             {
-                Id = "elias",
-                Name = "Elias",
+                Id = "survivor_02",
+                Name = "Bram",
                 PortraitId = "ui_character_battle_survivor_02",
                 BackgroundId = "scavenger",
                 TraitIds = new List<string> { "careful" },
@@ -608,7 +695,7 @@ namespace AshfallCamp.Tests.EditMode
             database.Policies.Policies.Add(new ExpeditionPolicyConfigData { Id = "balanced", Name = "Balanced" });
 
             database.Enemies = ScriptableObject.CreateInstance<EnemyCatalogSO>();
-            database.Enemies.Enemies.Add(new EnemyConfigData { Id = "feral_dog", Name = "Feral Dog", Kind = EnemyKind.Creature, PortraitId = "ui_character_creature_weak_radiated_hound_01", MaxHealth = 14, BaseDamage = 3, Accuracy = 0.75 });
+            database.Enemies.Enemies.Add(new EnemyConfigData { Id = "creature_weak_radiated_hound", Name = "Radiated Hound", Kind = EnemyKind.Creature, PortraitId = "ui_character_creature_weak_radiated_hound_01", MaxHealth = 14, BaseDamage = 3, Accuracy = 0.75 });
 
             database.Items = ScriptableObject.CreateInstance<ItemCatalogSO>();
             database.Items.Items.Add(new ItemConfigData { Id = "rusty_knife", Name = "Rusty Knife", Slot = ItemSlot.Weapon, WeaponType = WeaponType.Melee, BaseDamage = 4, MaxDurability = 80 });
@@ -677,7 +764,7 @@ namespace AshfallCamp.Tests.EditMode
                 Levels = new List<BuildingLevelConfigData>
                 {
                     new BuildingLevelConfigData { Level = 0, SurvivorCap = 1, SquadSize = 1 },
-                    new BuildingLevelConfigData { Level = 1, Cost = new List<IntPairData> { new IntPairData("scrap", 25) }, SurvivorCap = 2, SquadSize = 1 }
+                    new BuildingLevelConfigData { Level = 1, Cost = new List<IntPairData> { new IntPairData("scrap", 25) }, UpgradeDurationSeconds = 30, SurvivorCap = 2, SquadSize = 1 }
                 }
             });
             database.Buildings.Buildings.Add(new BuildingConfigData
@@ -698,7 +785,7 @@ namespace AshfallCamp.Tests.EditMode
                 Levels = new List<BuildingLevelConfigData>
                 {
                     new BuildingLevelConfigData { Level = 0 },
-                    new BuildingLevelConfigData { Level = 1, Cost = new List<IntPairData> { new IntPairData("scrap", 35) } }
+                    new BuildingLevelConfigData { Level = 1, Cost = new List<IntPairData> { new IntPairData("scrap", 35) }, UpgradeDurationSeconds = 30 }
                 }
             });
             database.Buildings.Buildings.Add(new BuildingConfigData
@@ -710,9 +797,10 @@ namespace AshfallCamp.Tests.EditMode
                 Levels = new List<BuildingLevelConfigData>
                 {
                     new BuildingLevelConfigData { Level = 0, ResourceCap = 20 },
-                    new BuildingLevelConfigData { Level = 1, Cost = new List<IntPairData> { new IntPairData("scrap", 50), new IntPairData("medicine", 2) }, ResourceCap = 30 }
+                    new BuildingLevelConfigData { Level = 1, Cost = new List<IntPairData> { new IntPairData("scrap", 50), new IntPairData("medicine", 2) }, UpgradeDurationSeconds = 30, ResourceCap = 30 }
                 }
             });
+            EnsureBuildingLevelsZeroThroughTen(database.Buildings);
 
             database.Zones = ScriptableObject.CreateInstance<ZoneCatalogSO>();
             database.Zones.Zones.Add(new ZoneConfigData
@@ -724,7 +812,7 @@ namespace AshfallCamp.Tests.EditMode
                 MaxDurationSeconds = 90,
                 FoodCostPerSurvivor = 1,
                 RecommendedPower = 5,
-                EnemyTable = new List<WeightedEntryData> { new WeightedEntryData("feral_dog", 100) },
+                EnemyTable = new List<WeightedEntryData> { new WeightedEntryData("creature_weak_radiated_hound", 100) },
                 LootTable = new List<LootTableEntryData> { new LootTableEntryData("scrap", 4, 10, 100) }
             });
 
@@ -734,6 +822,38 @@ namespace AshfallCamp.Tests.EditMode
             database.Balance.Balance.EmergencyScavengeRewards.Add(new IntPairData("food", 2));
             database.Balance.Balance.EmergencyScavengeRewards.Add(new IntPairData("water", 2));
             return database;
+        }
+
+        private static void EnsureBuildingLevelsZeroThroughTen(BuildingCatalogSO catalog)
+        {
+            foreach (var building in catalog.Buildings)
+            {
+                for (var level = 0; level <= 10; level++)
+                {
+                    if (HasBuildingLevel(building, level)) continue;
+
+                    var previous = building.Levels.Count > 0 ? building.Levels[building.Levels.Count - 1] : new BuildingLevelConfigData();
+                    building.Levels.Add(new BuildingLevelConfigData
+                    {
+                        Level = level,
+                        UpgradeDurationSeconds = level > 0 ? 30 : 0,
+                        SurvivorCap = previous.SurvivorCap,
+                        SquadSize = previous.SquadSize,
+                        ResourceCap = previous.ResourceCap,
+                        ResourcePerMinute = previous.ResourcePerMinute
+                    });
+                }
+            }
+        }
+
+        private static bool HasBuildingLevel(BuildingConfigData building, int level)
+        {
+            foreach (var candidate in building.Levels)
+            {
+                if (candidate.Level == level) return true;
+            }
+
+            return false;
         }
 
         private static void RenameResource(GameConfigDatabaseSO database, string oldId, string newId, string newName)

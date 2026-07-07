@@ -28,9 +28,9 @@ MonoBehaviour:
     MaxEnemyCount: 1
     RequiredBuildingLevels: []
     EnemyTable:
-    - Id: feral_dog
+    - Id: creature_weak_mire_leech
       Weight: 60
-    - Id: starving_survivor
+    - Id: creature_weak_ash_roach
       Weight: 40
     LootTable:
     - ResourceId: scrap
@@ -58,10 +58,14 @@ MonoBehaviour:
     MaxEnemyCount: 2
     RequiredBuildingLevels: []
     EnemyTable:
-    - Id: feral_dog
-      Weight: 50
-    - Id: mutant_stray
-      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 35
+    - Id: enemy_weak_rust_claw
+      Weight: 25
+    - Id: enemy_weak_needle_raider
+      Weight: 20
+    - Id: creature_weak_bloat_toad
+      Weight: 20
     LootTable:
     - ResourceId: scrap
       Min: 5
@@ -91,10 +95,16 @@ MonoBehaviour:
     MaxEnemyCount: 3
     RequiredBuildingLevels: []
     EnemyTable:
-    - Id: starving_survivor
-      Weight: 50
-    - Id: raider
-      Weight: 50
+    - Id: enemy_weak_spore_biter
+      Weight: 25
+    - Id: creature_weak_feral_ghoul
+      Weight: 25
+    - Id: creature_mid_plague_ghoul
+      Weight: 20
+    - Id: enemy_mid_blister_rusher
+      Weight: 15
+    - Id: enemy_mid_splinter_thrower
+      Weight: 15
     LootTable:
     - ResourceId: medicine
       Min: 1
@@ -124,10 +134,18 @@ MonoBehaviour:
     MaxEnemyCount: 3
     RequiredBuildingLevels: []
     EnemyTable:
-    - Id: raider
-      Weight: 70
-    - Id: armored_raider
-      Weight: 30
+    - Id: enemy_raider
+      Weight: 25
+    - Id: enemy_mid_pistol_duelist
+      Weight: 20
+    - Id: enemy_mid_shotgun_butcher
+      Weight: 20
+    - Id: enemy_elite_auto_gunner
+      Weight: 12
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 10
+    - Id: enemy_boss_spine_gunner
+      Weight: 3
     LootTable:
     - ResourceId: weapon_parts
       Min: 2
@@ -157,10 +175,26 @@ MonoBehaviour:
     MaxEnemyCount: 4
     RequiredBuildingLevels: []
     EnemyTable:
-    - Id: mutant_stray
-      Weight: 70
-    - Id: mutant_brute
-      Weight: 30
+    - Id: creature_mid_stalker_rat
+      Weight: 14
+    - Id: creature_mid_glass_spitter
+      Weight: 12
+    - Id: creature_mid_scrap_shell_crawler
+      Weight: 12
+    - Id: creature_elite_acidback_lurker
+      Weight: 10
+    - Id: creature_elite_ironhide_ravager
+      Weight: 10
+    - Id: creature_elite_spore_colossus
+      Weight: 8
+    - Id: creature_boss_ash_widow
+      Weight: 3
+    - Id: creature_boss_tunnel_king
+      Weight: 2
+    - Id: creature_boss_wasteland_apex
+      Weight: 2
+    - Id: creature_boss_apex_claw_titan
+      Weight: 1
     LootTable:
     - ResourceId: medicine
       Min: 2

@@ -1,0 +1,170 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8566cd15c27044c791881993b1b13ae1, type: 3}
+  m_Name: WorkshopBuildingConfig
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.BuildingConfigSO
+  Building:
+    Id: workshop
+    Name: Workshop
+    StartingLevel: 0
+    StartsUnlocked: 1
+    AffectedResourceId: 
+    ProducedResourceId: 
+    Levels:
+    - Level: 0
+      Cost: []
+      UpgradeDurationSeconds: 0
+      WorkerCapacity: 0
+      DefaultWorkers: 0
+      DefaultConditionPercent: 0
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 1
+      Cost:
+      - Id: scrap
+        Value: 35
+      UpgradeDurationSeconds: 6
+      WorkerCapacity: 4
+      DefaultWorkers: 3
+      DefaultConditionPercent: 76
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 2
+      Cost:
+      - Id: scrap
+        Value: 90
+      - Id: weapon_parts
+        Value: 4
+      UpgradeDurationSeconds: 12
+      WorkerCapacity: 5
+      DefaultWorkers: 4
+      DefaultConditionPercent: 78
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 3
+      Cost:
+      - Id: scrap
+        Value: 200
+      - Id: weapon_parts
+        Value: 12
+      UpgradeDurationSeconds: 18
+      WorkerCapacity: 6
+      DefaultWorkers: 5
+      DefaultConditionPercent: 80
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 4
+      Cost:
+      - Id: scrap
+        Value: 360
+      - Id: weapon_parts
+        Value: 28
+      UpgradeDurationSeconds: 24
+      WorkerCapacity: 7
+      DefaultWorkers: 6
+      DefaultConditionPercent: 82
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 5
+      Cost:
+      - Id: scrap
+        Value: 540
+      - Id: weapon_parts
+        Value: 45
+      UpgradeDurationSeconds: 30
+      WorkerCapacity: 8
+      DefaultWorkers: 7
+      DefaultConditionPercent: 84
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 6
+      Cost:
+      - Id: scrap
+        Value: 780
+      - Id: weapon_parts
+        Value: 65
+      UpgradeDurationSeconds: 36
+      WorkerCapacity: 9
+      DefaultWorkers: 8
+      DefaultConditionPercent: 86
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 7
+      Cost:
+      - Id: scrap
+        Value: 1080
+      - Id: weapon_parts
+        Value: 90
+      UpgradeDurationSeconds: 42
+      WorkerCapacity: 10
+      DefaultWorkers: 9
+      DefaultConditionPercent: 88
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 8
+      Cost:
+      - Id: scrap
+        Value: 1450
+      - Id: weapon_parts
+        Value: 120
+      UpgradeDurationSeconds: 48
+      WorkerCapacity: 11
+      DefaultWorkers: 10
+      DefaultConditionPercent: 90
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 9
+      Cost:
+      - Id: scrap
+        Value: 1900
+      - Id: weapon_parts
+        Value: 155
+      UpgradeDurationSeconds: 54
+      WorkerCapacity: 12
+      DefaultWorkers: 11
+      DefaultConditionPercent: 92
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0
+    - Level: 10
+      Cost:
+      - Id: scrap
+        Value: 2400
+      - Id: weapon_parts
+        Value: 200
+      UpgradeDurationSeconds: 60
+      WorkerCapacity: 13
+      DefaultWorkers: 12
+      DefaultConditionPercent: 94
+      SurvivorCap: 0
+      SquadSize: 0
+      ResourceCap: 0
+      ResourcePerMinute: 0

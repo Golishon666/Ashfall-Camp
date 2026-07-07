@@ -10530,6 +10530,7 @@ GameObject:
   - component: {fileID: 7092997329945924522}
   - component: {fileID: 202038238138283918}
   - component: {fileID: 5296195094774337497}
+  - component: {fileID: 3012345678901234569}
   - component: {fileID: 2050409080257414348}
   m_Layer: 0
   m_Name: Panel_RecentAlerts
@@ -10550,6 +10551,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3012345678901234568}
   - {fileID: 3903098771186944199}
   - {fileID: 5421036351817268536}
   - {fileID: 1030227516984589956}
@@ -10610,6 +10612,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &3012345678901234569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844040125128384099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ScrollRect
+  m_Content: {fileID: 3012345678901234568}
+  m_Horizontal: 0
+  m_Vertical: 1
+  m_MovementType: 2
+  m_Elasticity: 0.1
+  m_Inertia: 1
+  m_DecelerationRate: 0.135
+  m_ScrollSensitivity: 18
+  m_Viewport: {fileID: 9029048264672041846}
+  m_HorizontalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 0}
+  m_HorizontalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 0
+  m_HorizontalScrollbarSpacing: 0
+  m_VerticalScrollbarSpacing: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2050409080257414348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10645,6 +10677,50 @@ MonoBehaviour:
     body: {fileID: 7838635260424607650}
     actionButton: {fileID: 116732609023800776}
     actionButtonLabel: {fileID: 5242806916854484509}
+  alertRowPrefab: {fileID: 7067411093582109695, guid: be088d898690ef7428edddfdd635fbcc, type: 3}
+  alertContentRoot: {fileID: 3012345678901234568}
+  scrollRect: {fileID: 3012345678901234569}
+  firstRowTopOffset: 67
+  rowLeftOffset: 26
+  rowRightOffset: 26
+  rowHeight: 52
+  rowSpacing: 7
+  bottomPadding: 12
+--- !u!1 &3012345678901234567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3012345678901234568}
+  m_Layer: 0
+  m_Name: AlertScrollContent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3012345678901234568
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3012345678901234567}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9029048264672041846}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &845948880293456220
 GameObject:
   m_ObjectHideFlags: 0
@@ -46368,6 +46444,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: AshfallCamp.Presentation::AshfallCamp.Presentation.BuildingGridView
   title: {fileID: 8659230417208016882}
+  cardContainer: {fileID: 7076988691234152493}
+  cardPrefab: {fileID: 5824380762284064511, guid: 4b4d10024963fe843a899e1d88166088, type: 3}
+  gridLayout: {fileID: 0}
   filters:
   - id: all
     panel: {fileID: 5845835707710567591}

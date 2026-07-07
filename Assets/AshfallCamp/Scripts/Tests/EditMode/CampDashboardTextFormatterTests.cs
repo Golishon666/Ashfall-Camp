@@ -27,6 +27,10 @@ namespace AshfallCamp.Tests.EditMode
 
             Assert.AreEqual("WOUNDED 1", alerts[0].Title);
             Assert.AreEqual("Mara needs treatment", alerts[0].Body);
+            Assert.AreEqual("wounded_survivors", alerts[0].Id);
+            Assert.AreEqual(CampAlertSeverity.Critical, alerts[0].Severity);
+            Assert.AreEqual(CampAlertAction.OpenScreen, alerts[0].Action);
+            Assert.AreEqual("survivors", alerts[0].TargetScreenId);
             Assert.AreEqual("SCAVENGE", alerts[1].Title);
             Assert.AreEqual("60:Scrap x3, Food x2, Water x2", alerts[1].Body);
             Assert.AreEqual("Go", alerts[1].ActionLabel);
@@ -35,6 +39,60 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("1/50", alerts[2].Body);
             Assert.AreEqual("UP workshop", alerts[3].Title);
             Assert.AreEqual("Level 1", alerts[3].Body);
+
+            Object.DestroyImmediate(catalog);
+        }
+
+        [Test]
+        public void IdleSurvivorAlertUsesExpeditionAction()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            var catalog = CreateCatalog();
+            FillCappedResources(state, config);
+
+            var alerts = CampDashboardTextFormatter.BuildAlerts(state, config, catalog);
+            var idle = FindAlert(alerts, "idle_survivors");
+
+            Assert.NotNull(idle);
+            Assert.AreEqual(CampAlertAction.OpenScreen, idle.Action);
+            Assert.AreEqual("expeditions", idle.TargetScreenId);
+            Assert.AreEqual("MANAGE", idle.ActionLabel);
+            Assert.AreEqual(CampAlertButtonView.Text, idle.ButtonView);
+
+            Object.DestroyImmediate(catalog);
+        }
+
+        [Test]
+        public void AlertConfigOverridesPriorityAndActionMetadata()
+        {
+            var config = TestConfigFactory.Create();
+            var state = GameStateFactory.CreateNew(config, 0);
+            var catalog = CreateCatalog();
+            FillCappedResources(state, config);
+            state.Resources["scrap"] = 100;
+            catalog.Alerts.Add(new AlertUiEntry
+            {
+                Id = "upgrade_available",
+                Severity = CampAlertSeverity.Warning,
+                Priority = 1200,
+                Category = "buildings",
+                Action = CampAlertAction.OpenScreen,
+                TargetScreenId = "buildings",
+                ButtonLabel = "GO",
+                ButtonView = CampAlertButtonView.Text,
+                ToneColor = Color.yellow
+            });
+
+            var alerts = CampDashboardTextFormatter.BuildAlerts(state, config, catalog);
+
+            Assert.That(alerts.Count, Is.GreaterThan(0));
+            Assert.AreEqual("upgrade_available", alerts[0].Id);
+            Assert.AreEqual(1200, alerts[0].Priority);
+            Assert.AreEqual("buildings", alerts[0].Category);
+            Assert.AreEqual(CampAlertAction.OpenScreen, alerts[0].Action);
+            Assert.AreEqual("buildings", alerts[0].TargetScreenId);
+            Assert.AreEqual("GO", alerts[0].ActionLabel);
 
             Object.DestroyImmediate(catalog);
         }
@@ -339,6 +397,7 @@ namespace AshfallCamp.Tests.EditMode
                 catalog.Theme.AlertPanelAlpha = 0.19f;
                 catalog.Alerts.Add(new AlertUiEntry
                 {
+                    Id = "static",
                     Title = "Static",
                     Body = "Ready",
                     ToneColor = new Color(0.2f, 0.3f, 0.4f, 1f)
@@ -484,7 +543,7 @@ namespace AshfallCamp.Tests.EditMode
                     CreateText("Traits", radioButton.transform),
                     radioButton,
                     CreateText("Recruit", radioButton.transform));
-                radio.Render(new CampRadioCandidatePresentation("candidate", "Elias", "E", "Scout", "Surv", "Calm", "Recruit", true), catalog);
+                radio.Render(new CampRadioCandidatePresentation("candidate", "Bram", "E", "Scout", "Surv", "Calm", "Recruit", true), catalog);
                 Assert.AreEqual(0.61f, radioButton.GetComponent<Image>().color.a, 0.0001f);
 
                 var workshop = new WorkshopPanelView.WorkshopItemBinding(
@@ -622,13 +681,13 @@ namespace AshfallCamp.Tests.EditMode
                     recruitButton,
                     CreateText("RecruitLabel", recruitButton.transform));
 
-                candidate.Render(new CampRadioCandidatePresentation("elias", "Elias", "E", "Ex-Cop", "FIRE 7", "Traits Brave", "Recruit", true, texture), catalog);
+                candidate.Render(new CampRadioCandidatePresentation("survivor_02", "Bram", "E", "Ex-Cop", "FIRE 7", "Traits Brave", "Recruit", true, texture), catalog);
 
                 Assert.IsTrue(portrait.gameObject.activeSelf);
                 Assert.AreSame(texture, portrait.texture);
                 Assert.IsFalse(avatar.gameObject.activeSelf);
 
-                candidate.Render(new CampRadioCandidatePresentation("elias", "Elias", "E", "Ex-Cop", "FIRE 7", "Traits Brave", "Recruit", true), catalog);
+                candidate.Render(new CampRadioCandidatePresentation("survivor_02", "Bram", "E", "Ex-Cop", "FIRE 7", "Traits Brave", "Recruit", true), catalog);
 
                 Assert.IsFalse(portrait.gameObject.activeSelf);
                 Assert.IsTrue(avatar.gameObject.activeSelf);
@@ -773,7 +832,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("abandoned_store * Balanced", screen.Selected.Title);
             Assert.AreEqual("Duration 1 Cost 1/0 Power", screen.Selected.Details.Substring(0, 25));
             Assert.AreEqual("Loot Scrap 4-10, Food 1-4", screen.Selected.Loot);
-            Assert.AreEqual("Threats Feral Dog", screen.Selected.Enemies);
+            Assert.AreEqual("Threats Radiated Hound", screen.Selected.Enemies);
             Assert.AreEqual("Warnings None", screen.Selected.Warnings);
             Assert.AreEqual("LAUNCH", screen.Selected.LaunchButton);
             Assert.IsTrue(screen.Selected.CanLaunch);
@@ -793,7 +852,7 @@ namespace AshfallCamp.Tests.EditMode
             launched.Expedition.ExpectedDurationSeconds = 132;
             launched.Expedition.Noise = 3;
             launched.Expedition.AccumulatedLoot["scrap"] = 8;
-            launched.Expedition.EnemiesDefeated["feral_dog"] = 2;
+            launched.Expedition.EnemiesDefeated["creature_weak_radiated_hound"] = 2;
             launched.Expedition.WoundedSurvivorIds.Add("survivor_1");
             launched.Expedition.FoundItems.Add(new InventoryItemState { Uid = "found_1", ItemId = "rusty_knife", Level = 1, Durability = 40, MaxDurability = 80 });
             launched.Expedition.Log.Add(new ExpeditionLogEntry { AtSeconds = 4, Message = "First event" });
@@ -807,7 +866,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("Progress 42", active.Monitor.Progress);
             Assert.AreEqual("Loot Scrap x8", active.Monitor.Loot);
             Assert.AreEqual("Noise MED/3", active.Monitor.Noise);
-            Assert.AreEqual("Log Threat Feral Dog x2, Wounds Mara, Finds Rusty Knife x1, First event, Second event", active.Monitor.Log);
+            Assert.AreEqual("Log Threat Radiated Hound x2, Wounds Mara, Finds Rusty Knife x1, First event, Second event", active.Monitor.Log);
 
             Object.DestroyImmediate(catalog);
         }
@@ -848,7 +907,7 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
-            var recruited = RecruitWithBroadcast(state, config, "elias");
+            var recruited = RecruitWithBroadcast(state, config, "survivor_02");
             Assert.IsTrue(recruited.Validation.IsValid);
 
             catalog.ExpeditionSelectedDetailsFormat = "{3}/{4} {6}";
@@ -877,11 +936,11 @@ namespace AshfallCamp.Tests.EditMode
             var state = GameStateFactory.CreateNew(config, 0);
             var catalog = CreateCatalog();
             var portrait = new Texture2D(1, 1);
-            catalog.SurvivorPortraits.Add(new SurvivorPortraitUiEntry { Id = "elias", Portrait = portrait });
+            catalog.SurvivorPortraits.Add(new SurvivorPortraitUiEntry { Id = "survivor_02", Portrait = portrait });
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
-            BuildingSystem.Upgrade(state, config, "barracks");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
 
             var radio = CampDashboardTextFormatter.BuildRadioScreen(state, config, catalog);
 
@@ -908,9 +967,9 @@ namespace AshfallCamp.Tests.EditMode
             Assert.IsFalse(pending.CanBroadcast);
             Assert.IsTrue(pending.CanSkipCandidates);
             Assert.AreEqual(1, pending.Candidates.Count);
-            Assert.AreEqual("elias", pending.Candidates[0].CandidateId);
-            Assert.AreEqual("Elias", pending.Candidates[0].Name);
-            Assert.AreEqual("E", pending.Candidates[0].Avatar);
+            Assert.AreEqual("survivor_02", pending.Candidates[0].CandidateId);
+            Assert.AreEqual("Bram", pending.Candidates[0].Name);
+            Assert.AreEqual("B", pending.Candidates[0].Avatar);
             Assert.AreSame(portrait, pending.Candidates[0].Portrait);
             Assert.AreEqual("Scavenger/Rusty Knife", pending.Candidates[0].Meta);
             Assert.AreEqual("scavenging 1", pending.Candidates[0].Skill);
@@ -939,19 +998,19 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
-            BuildingSystem.Upgrade(state, config, "barracks");
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
 
-            var recruited = RecruitWithBroadcast(state, config, "elias", 500);
+            var recruited = RecruitWithBroadcast(state, config, "survivor_02", 500);
 
             Assert.IsTrue(recruited.Validation.IsValid);
             var alerts = CampDashboardTextFormatter.BuildAlerts(state, config, catalog);
-            Assert.AreEqual("JOIN Elias", alerts[0].Title);
+            Assert.AreEqual("JOIN Bram", alerts[0].Title);
             Assert.AreEqual("Roster 2/2", alerts[0].Body);
 
             var reports = CampDashboardTextFormatter.BuildReports(state, config, catalog);
             Assert.IsTrue(reports.HasCampEvent);
             Assert.AreEqual("Notes", reports.CampEventPanelTitle);
-            Assert.AreEqual("Elias joined", reports.CampEventTitle);
+            Assert.AreEqual("Bram joined", reports.CampEventTitle);
             Assert.AreEqual("Scavenger:2/2", reports.CampEventBody);
             Assert.IsTrue(reports.HasAnyReport);
 
@@ -1049,7 +1108,7 @@ namespace AshfallCamp.Tests.EditMode
 
             state.Buildings["barracks"].Level = 1;
             state.SurvivorCap = 2;
-            state.Survivors.Add(new SurvivorState { Id = "survivor_2", Name = "Elias" });
+            state.Survivors.Add(new SurvivorState { Id = "survivor_2", Name = "Bram" });
             state.Buildings["workshop"].Level = 1;
             state.Buildings["radio_tower"].Level = 2;
             state.Progress.DemoCompleted = true;
@@ -1078,7 +1137,7 @@ namespace AshfallCamp.Tests.EditMode
             launched.Expedition.ElapsedSeconds = 125;
             state.Inventory[0].Durability = 1;
             launched.Expedition.AccumulatedLoot["scrap"] = 8;
-            launched.Expedition.EnemiesDefeated["feral_dog"] = 1;
+            launched.Expedition.EnemiesDefeated["creature_weak_radiated_hound"] = 1;
             launched.Expedition.WoundedSurvivorIds.Add("survivor_1");
             launched.Expedition.Log.Add(new ExpeditionLogEntry { AtSeconds = 12, Message = "Mara opened a cache." });
             ExpeditionSimulator.Complete(state, config, launched.Expedition);
@@ -1097,7 +1156,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("Loot Scrap x8", reports.AfterActionLoot);
             Assert.AreEqual("XP 9", reports.AfterActionXp);
             Assert.AreEqual("Wounds Mara", reports.AfterActionWounds);
-            Assert.AreEqual("Enemies Feral Dog x1", reports.AfterActionEnemies);
+            Assert.AreEqual("Enemies Radiated Hound x1", reports.AfterActionEnemies);
             Assert.That(reports.AfterActionEvents, Does.Contain("Skill XP Survival x3"));
             Assert.That(reports.AfterActionEvents, Does.Contain("Gear Rusty Knife -1"));
             Assert.That(reports.AfterActionEvents, Does.Contain("Broken Rusty Knife"));
@@ -1186,6 +1245,30 @@ namespace AshfallCamp.Tests.EditMode
             return RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = candidateId, NowUnixMs = nowUnixMs });
         }
 
+        private static CampAlertPresentation FindAlert(IEnumerable<CampAlertPresentation> alerts, string id)
+        {
+            foreach (var alert in alerts)
+            {
+                if (alert != null && alert.Id == id)
+                {
+                    return alert;
+                }
+            }
+
+            return null;
+        }
+
+        private static void FillCappedResources(GameState state, GameConfigSnapshot config)
+        {
+            foreach (var resource in config.Resources.Values)
+            {
+                if (!resource.HasCap) continue;
+                int cap;
+                if (!state.ResourceCaps.TryGetValue(resource.Id, out cap)) cap = resource.StartCap;
+                state.Resources[resource.Id] = cap;
+            }
+        }
+
         private static TextMeshProUGUI CreateText(string name, Transform parent)
         {
             var go = new GameObject(name, typeof(RectTransform));
@@ -1255,6 +1338,8 @@ namespace AshfallCamp.Tests.EditMode
             catalog.LowResourceAlertBodyFormat = "{0}/{1}";
             catalog.WoundedAlertTitleFormat = "WOUNDED {0}";
             catalog.WoundedAlertBodyFormat = "{0} needs treatment";
+            catalog.IdleSurvivorsAlertTitleFormat = "IDLE {0}";
+            catalog.IdleSurvivorsAlertBodyFormat = "{0} ready";
             catalog.EmergencyScavengeAlertTitle = "SCAVENGE";
             catalog.EmergencyScavengeReadyBodyFormat = "{0}:{1}";
             catalog.EmergencyScavengeActiveBodyFormat = "Active {0}";

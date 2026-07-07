@@ -13,105 +13,1040 @@ MonoBehaviour:
   m_Name: EnemyCatalog
   m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.EnemyCatalogSO
   Enemies:
-  - Id: feral_dog
-    Name: Feral Dog
-    Kind: 0
-    PortraitId: ui_character_creature_weak_radiated_hound_01
-    Portrait: {fileID: 21300000, guid: 0ae0b8b30d25f2ee8ebd9070e888c122, type: 3}
-    MaxHealth: 14
-    Armor: 0
-    Evasion: 0.08
-    BaseDamage: 3
-    BaseSpeed: 12
-    AttackType: 1
-    Accuracy: 0.75
-    AttackIntervalSeconds: 2
-    XpReward: 4
-    WeaponConfigId: 
-    ArmorConfigId: 
-    UtilityConfigId: 
-  - Id: starving_survivor
-    Name: Starving Survivor
+  - Id: enemy_boss_ash_queen
+    Name: Boss Ash Queen
     Kind: 1
-    PortraitId: ui_character_enemy_weak_scavenger_01
-    Portrait: {fileID: 21300000, guid: 5f8dd924387997744925ec66c57db94a, type: 3}
-    MaxHealth: 18
-    Armor: 0
+    PortraitId: ui_character_enemy_boss_ash_queen_01
+    Portrait: {fileID: 21300000, guid: a136dbb844b7e95459f3873fbb1c39e5, type: 3}
+    MaxHealth: 120
+    Armor: 6
+    Evasion: 0.02
+    BaseDamage: 5
+    BaseSpeed: 6
+    AttackType: 2
+    Accuracy: 0.68
+    AttackIntervalSeconds: 2
+    XpReward: 55
+    WeaponConfigId: weapon_firearm_advanced_08_high_grade_ak
+    ArmorConfigId: armor_28_heavy_mutant_hunter_armor
+    UtilityConfigId: utility_medkit_tier_05_advanced_trauma_case
+  - Id: enemy_boss_ashfall_warlord
+    Name: Boss Ashfall Warlord
+    Kind: 1
+    PortraitId: ui_character_enemy_boss_ashfall_warlord_01
+    Portrait: {fileID: 21300000, guid: f00923d338786b2458f140a8f5a51634, type: 3}
+    MaxHealth: 132
+    Armor: 7
+    Evasion: 0.03
+    BaseDamage: 6
+    BaseSpeed: 7
+    AttackType: 2
+    Accuracy: 0.71
+    AttackIntervalSeconds: 2
+    XpReward: 61
+    WeaponConfigId: weapon_firearm_advanced_27_anti_mutant_cannon
+    ArmorConfigId: armor_30_legendary_plated_survival_armor
+    UtilityConfigId: utility_ammo_pack_tier_05_reinforced_ammo_crate
+  - Id: enemy_boss_crawler_lord
+    Name: Boss Crawler Lord
+    Kind: 1
+    PortraitId: ui_character_enemy_boss_crawler_lord_01
+    Portrait: {fileID: 21300000, guid: 8a62cfebbfd15ad4fb706d19b57c190d, type: 3}
+    MaxHealth: 144
+    Armor: 8
+    Evasion: 0.04
+    BaseDamage: 7
+    BaseSpeed: 8
+    AttackType: 1
+    Accuracy: 0.74
+    AttackIntervalSeconds: 2
+    XpReward: 67
+    WeaponConfigId: weapon_melee_advanced_06_powered_saw_cleaver
+    ArmorConfigId: armor_midgame_30_veteran_scavenger_armor
+    UtilityConfigId: utility_backpack_tier_05_elite_cargo_pack
+  - Id: enemy_boss_furnace_brute
+    Name: Boss Furnace Brute
+    Kind: 1
+    PortraitId: ui_character_enemy_boss_furnace_brute_01
+    Portrait: {fileID: 21300000, guid: 6fe7054866a1f5a4899740f055a219fc, type: 3}
+    MaxHealth: 156
+    Armor: 9
+    Evasion: 0.02
+    BaseDamage: 8
+    BaseSpeed: 9
+    AttackType: 1
+    Accuracy: 0.68
+    AttackIntervalSeconds: 2
+    XpReward: 73
+    WeaponConfigId: weapon_melee_advanced_10_crusher_maul
+    ArmorConfigId: armor_midgame_25_mutant_hide_reinforced_vest
+    UtilityConfigId: utility_toolkit_tier_05_advanced_repair_case
+  - Id: enemy_boss_hive_matriarch
+    Name: Boss Hive Matriarch
+    Kind: 1
+    PortraitId: ui_character_enemy_boss_hive_matriarch_01
+    Portrait: {fileID: 21300000, guid: 92d82c70bf9f29545b3c80d6758d102f, type: 3}
+    MaxHealth: 168
+    Armor: 10
+    Evasion: 0.03
+    BaseDamage: 5
+    BaseSpeed: 6
+    AttackType: 2
+    Accuracy: 0.71
+    AttackIntervalSeconds: 2
+    XpReward: 79
+    WeaponConfigId: weapon_firearm_advanced_20_advanced_grenade_launcher
+    ArmorConfigId: armor_28_heavy_mutant_hunter_armor
+    UtilityConfigId: utility_medkit_tier_05_advanced_trauma_case
+  - Id: enemy_boss_plated_crusher
+    Name: Boss Plated Crusher
+    Kind: 1
+    PortraitId: ui_character_enemy_boss_plated_crusher_01
+    Portrait: {fileID: 21300000, guid: 0e8d5ffefd911a549a453468d8b94dbd, type: 3}
+    MaxHealth: 180
+    Armor: 6
+    Evasion: 0.04
+    BaseDamage: 6
+    BaseSpeed: 7
+    AttackType: 1
+    Accuracy: 0.74
+    AttackIntervalSeconds: 2
+    XpReward: 85
+    WeaponConfigId: weapon_melee_advanced_07_elite_claw_gauntlet
+    ArmorConfigId: armor_30_legendary_plated_survival_armor
+    UtilityConfigId: utility_ammo_pack_tier_05_reinforced_ammo_crate
+  - Id: enemy_boss_spine_gunner
+    Name: Boss Spine Gunner
+    Kind: 1
+    PortraitId: ui_character_enemy_boss_spine_gunner_01
+    Portrait: {fileID: 21300000, guid: 836e22cfbd2a5d6498865589043a0bbd, type: 3}
+    MaxHealth: 120
+    Armor: 7
+    Evasion: 0.02
+    BaseDamage: 7
+    BaseSpeed: 8
+    AttackType: 2
+    Accuracy: 0.68
+    AttackIntervalSeconds: 2
+    XpReward: 55
+    WeaponConfigId: weapon_firearm_advanced_28_rotary_microgun
+    ArmorConfigId: armor_midgame_30_veteran_scavenger_armor
+    UtilityConfigId: utility_backpack_tier_05_elite_cargo_pack
+  - Id: enemy_boss_storm_butcher
+    Name: Boss Storm Butcher
+    Kind: 1
+    PortraitId: ui_character_enemy_boss_storm_butcher_01
+    Portrait: {fileID: 21300000, guid: 981939b3109e18d4eb84bce98507dd4a, type: 3}
+    MaxHealth: 132
+    Armor: 8
+    Evasion: 0.03
+    BaseDamage: 8
+    BaseSpeed: 9
+    AttackType: 1
+    Accuracy: 0.71
+    AttackIntervalSeconds: 2
+    XpReward: 61
+    WeaponConfigId: weapon_melee_advanced_05_breaching_hammer
+    ArmorConfigId: armor_midgame_25_mutant_hide_reinforced_vest
+    UtilityConfigId: utility_toolkit_tier_05_advanced_repair_case
+  - Id: enemy_boss_war_priest
+    Name: Boss War Priest
+    Kind: 1
+    PortraitId: ui_character_enemy_boss_war_priest_01
+    Portrait: {fileID: 21300000, guid: 0155500c962e57a42a2c57ba4af799ff, type: 3}
+    MaxHealth: 144
+    Armor: 9
+    Evasion: 0.04
+    BaseDamage: 5
+    BaseSpeed: 6
+    AttackType: 2
+    Accuracy: 0.74
+    AttackIntervalSeconds: 2
+    XpReward: 67
+    WeaponConfigId: weapon_firearm_advanced_30_elite_wasteland_sniper
+    ArmorConfigId: armor_28_heavy_mutant_hunter_armor
+    UtilityConfigId: utility_medkit_tier_05_advanced_trauma_case
+  - Id: enemy_elite_acid_sprayer
+    Name: Elite Acid Sprayer
+    Kind: 1
+    PortraitId: ui_character_enemy_elite_acid_sprayer_01
+    Portrait: {fileID: 21300000, guid: 12b09d16ee32d7e4f856ee96c698fff8, type: 3}
+    MaxHealth: 77
+    Armor: 4
+    Evasion: 0.03
+    BaseDamage: 3
+    BaseSpeed: 8
+    AttackType: 2
+    Accuracy: 0.66
+    AttackIntervalSeconds: 2
+    XpReward: 31
+    WeaponConfigId: weapon_firearm_22_single_grenade_launcher
+    ArmorConfigId: armor_28_heavy_mutant_hunter_armor
+    UtilityConfigId: utility_ammo_pack_tier_03_canvas_ammo_pack
+  - Id: enemy_elite_auto_gunner
+    Name: Elite Auto Gunner
+    Kind: 1
+    PortraitId: ui_character_enemy_elite_auto_gunner_01
+    Portrait: {fileID: 21300000, guid: 02c3f63c4b65ac340a8ce63f70aa374a, type: 3}
+    MaxHealth: 82
+    Armor: 5
     Evasion: 0.04
     BaseDamage: 4
+    BaseSpeed: 9
+    AttackType: 1
+    Accuracy: 0.69
+    AttackIntervalSeconds: 2
+    XpReward: 34
+    WeaponConfigId: weapon_melee_28_sawblade_axe
+    ArmorConfigId: armor_midgame_04_raider_plate_vest
+    UtilityConfigId: utility_backpack_tier_03_expedition_pack
+  - Id: enemy_elite_bone_carver
+    Name: Elite Bone Carver
+    Kind: 1
+    PortraitId: ui_character_enemy_elite_bone_carver_01
+    Portrait: {fileID: 21300000, guid: a7087fcfca69f08408ccc33aa3fbb966, type: 3}
+    MaxHealth: 87
+    Armor: 6
+    Evasion: 0.05
+    BaseDamage: 5
+    BaseSpeed: 10
+    AttackType: 2
+    Accuracy: 0.72
+    AttackIntervalSeconds: 2
+    XpReward: 37
+    WeaponConfigId: weapon_firearm_14_hunting_rifle
+    ArmorConfigId: armor_midgame_09_armored_mechanic_vest
+    UtilityConfigId: utility_toolkit_tier_03_scrap_toolbox
+  - Id: enemy_elite_chitin_crossbowman
+    Name: Elite Chitin Crossbowman
+    Kind: 1
+    PortraitId: ui_character_enemy_elite_chitin_crossbowman_01
+    Portrait: {fileID: 21300000, guid: 692a1f8566806d243998feba5ab6321e, type: 3}
+    MaxHealth: 62
+    Armor: 3
+    Evasion: 0.03
+    BaseDamage: 3
+    BaseSpeed: 7
+    AttackType: 1
+    Accuracy: 0.66
+    AttackIntervalSeconds: 2
+    XpReward: 22
+    WeaponConfigId: weapon_melee_25_harpoon_spear
+    ArmorConfigId: armor_midgame_15_hunter_scale_vest
+    UtilityConfigId: utility_medkit_tier_03_trauma_bag
+  - Id: enemy_elite_harpoon_brute
+    Name: Elite Harpoon Brute
+    Kind: 1
+    PortraitId: ui_character_enemy_elite_harpoon_brute_01
+    Portrait: {fileID: 21300000, guid: d343baf6a8c889e48b14a2044c1d92e3, type: 3}
+    MaxHealth: 67
+    Armor: 4
+    Evasion: 0.04
+    BaseDamage: 4
+    BaseSpeed: 8
+    AttackType: 1
+    Accuracy: 0.69
+    AttackIntervalSeconds: 2
+    XpReward: 25
+    WeaponConfigId: weapon_melee_29_claw_gauntlet
+    ArmorConfigId: armor_midgame_24_militia_flak_vest
+    UtilityConfigId: utility_ammo_pack_tier_03_canvas_ammo_pack
+  - Id: enemy_elite_sawtooth_raider
+    Name: Elite Sawtooth Raider
+    Kind: 1
+    PortraitId: ui_character_enemy_elite_sawtooth_raider_01
+    Portrait: {fileID: 21300000, guid: db9586f375dbb494e97cfb92f87c0236, type: 3}
+    MaxHealth: 72
+    Armor: 5
+    Evasion: 0.05
+    BaseDamage: 5
+    BaseSpeed: 9
+    AttackType: 1
+    Accuracy: 0.72
+    AttackIntervalSeconds: 2
+    XpReward: 28
+    WeaponConfigId: weapon_melee_30_concrete_maul
+    ArmorConfigId: armor_28_heavy_mutant_hunter_armor
+    UtilityConfigId: utility_backpack_tier_03_expedition_pack
+  - Id: enemy_elite_siren_mutant
+    Name: Elite Siren Mutant
+    Kind: 1
+    PortraitId: ui_character_enemy_elite_siren_mutant_01
+    Portrait: {fileID: 21300000, guid: c1b0f95c83cf3fb4e93970939d107aeb, type: 3}
+    MaxHealth: 77
+    Armor: 6
+    Evasion: 0.03
+    BaseDamage: 3
+    BaseSpeed: 10
+    AttackType: 2
+    Accuracy: 0.66
+    AttackIntervalSeconds: 2
+    XpReward: 31
+    WeaponConfigId: weapon_firearm_18_battle_rifle
+    ArmorConfigId: armor_midgame_04_raider_plate_vest
+    UtilityConfigId: utility_toolkit_tier_03_scrap_toolbox
+  - Id: enemy_elite_tire_shield_mauler
+    Name: Elite Tire Shield Mauler
+    Kind: 1
+    PortraitId: ui_character_enemy_elite_tire_shield_mauler_01
+    Portrait: {fileID: 21300000, guid: 9c2d4b0d0cfeb7744b7ac0925e5bb324, type: 3}
+    MaxHealth: 82
+    Armor: 3
+    Evasion: 0.04
+    BaseDamage: 4
+    BaseSpeed: 7
+    AttackType: 2
+    Accuracy: 0.69
+    AttackIntervalSeconds: 2
+    XpReward: 34
+    WeaponConfigId: weapon_firearm_10_wasteland_assault_rifle
+    ArmorConfigId: armor_midgame_09_armored_mechanic_vest
+    UtilityConfigId: utility_medkit_tier_03_trauma_bag
+  - Id: enemy_mid_blister_rusher
+    Name: Mid Blister Rusher
+    Kind: 1
+    PortraitId: ui_character_enemy_mid_blister_rusher_01
+    Portrait: {fileID: 21300000, guid: 65affcdcd91f17547b1d6cae963f155f, type: 3}
+    MaxHealth: 54
+    Armor: 3
+    Evasion: 0.05
+    BaseDamage: 4
+    BaseSpeed: 9
+    AttackType: 2
+    Accuracy: 0.70
+    AttackIntervalSeconds: 2
+    XpReward: 20
+    WeaponConfigId: weapon_firearm_06_sawed_off_shotgun
+    ArmorConfigId: armor_10_riot_vest
+    UtilityConfigId: utility_ammo_pack_tier_02_leather_ammo_bag
+  - Id: enemy_mid_pistol_duelist
+    Name: Mid Pistol Duelist
+    Kind: 1
+    PortraitId: ui_character_enemy_mid_pistol_duelist_01
+    Portrait: {fileID: 21300000, guid: 7eba20e3e2265174d95b2451d8fbb10d, type: 3}
+    MaxHealth: 34
+    Armor: 1
+    Evasion: 0.06
+    BaseDamage: 2
+    BaseSpeed: 10
+    AttackType: 1
+    Accuracy: 0.64
+    AttackIntervalSeconds: 2
+    XpReward: 10
+    WeaponConfigId: weapon_melee_10_rebar_spear
+    ArmorConfigId: armor_14_spiked_raider_armor
+    UtilityConfigId: utility_backpack_tier_02_field_backpack
+  - Id: enemy_mid_rebar_lancer
+    Name: Mid Rebar Lancer
+    Kind: 1
+    PortraitId: ui_character_enemy_mid_rebar_lancer_01
+    Portrait: {fileID: 21300000, guid: 2aad762ed7c7bba449a4424a292e32c4, type: 3}
+    MaxHealth: 38
+    Armor: 2
+    Evasion: 0.07
+    BaseDamage: 3
+    BaseSpeed: 11
+    AttackType: 1
+    Accuracy: 0.67
+    AttackIntervalSeconds: 2
+    XpReward: 12
+    WeaponConfigId: weapon_melee_25_harpoon_spear
+    ArmorConfigId: armor_18_junkyard_plate_armor
+    UtilityConfigId: utility_toolkit_tier_02_mechanic_tool_roll
+  - Id: enemy_mid_shotgun_butcher
+    Name: Mid Shotgun Butcher
+    Kind: 1
+    PortraitId: ui_character_enemy_mid_shotgun_butcher_01
+    Portrait: {fileID: 21300000, guid: 7877e174197ebbb4a8438e047a44ec50, type: 3}
+    MaxHealth: 42
+    Armor: 3
+    Evasion: 0.04
+    BaseDamage: 4
+    BaseSpeed: 8
+    AttackType: 1
+    Accuracy: 0.70
+    AttackIntervalSeconds: 2
+    XpReward: 14
+    WeaponConfigId: weapon_melee_21_kukri
+    ArmorConfigId: armor_08_raider_leather_armor
+    UtilityConfigId: utility_medkit_tier_02_field_pouch
+  - Id: enemy_mid_splinter_thrower
+    Name: Mid Splinter Thrower
+    Kind: 1
+    PortraitId: ui_character_enemy_mid_splinter_thrower_01
+    Portrait: {fileID: 21300000, guid: 270281605c378b548b49993915d16ffd, type: 3}
+    MaxHealth: 46
+    Armor: 1
+    Evasion: 0.05
+    BaseDamage: 2
+    BaseSpeed: 9
+    AttackType: 1
+    Accuracy: 0.64
+    AttackIntervalSeconds: 2
+    XpReward: 16
+    WeaponConfigId: weapon_melee_16_scrap_sword
+    ArmorConfigId: armor_09_metal_plate_vest
+    UtilityConfigId: utility_ammo_pack_tier_02_leather_ammo_bag
+  - Id: enemy_mid_thorn_stabber
+    Name: Mid Thorn Stabber
+    Kind: 1
+    PortraitId: ui_character_enemy_mid_thorn_stabber_01
+    Portrait: {fileID: 21300000, guid: d693714fde90a2a4bb8415683cd79637, type: 3}
+    MaxHealth: 50
+    Armor: 2
+    Evasion: 0.06
+    BaseDamage: 3
+    BaseSpeed: 10
+    AttackType: 1
+    Accuracy: 0.67
+    AttackIntervalSeconds: 2
+    XpReward: 18
+    WeaponConfigId: weapon_melee_08_spiked_bat
+    ArmorConfigId: armor_10_riot_vest
+    UtilityConfigId: utility_backpack_tier_02_field_backpack
+  - Id: enemy_mid_welding_slasher
+    Name: Mid Welding Slasher
+    Kind: 1
+    PortraitId: ui_character_enemy_mid_welding_slasher_01
+    Portrait: {fileID: 21300000, guid: 839c2d97397d90346b0bc2a4ba7e83b9, type: 3}
+    MaxHealth: 54
+    Armor: 3
+    Evasion: 0.07
+    BaseDamage: 4
+    BaseSpeed: 11
+    AttackType: 2
+    Accuracy: 0.70
+    AttackIntervalSeconds: 2
+    XpReward: 20
+    WeaponConfigId: weapon_firearm_03_heavy_revolver
+    ArmorConfigId: armor_14_spiked_raider_armor
+    UtilityConfigId: utility_toolkit_tier_02_mechanic_tool_roll
+  - Id: enemy_raider
+    Name: Raider
+    Kind: 1
+    PortraitId: ui_character_enemy_raider_01
+    Portrait: {fileID: 21300000, guid: 13a4e5bf2a5548648a90dbefcef22aed, type: 3}
+    MaxHealth: 34
+    Armor: 1
+    Evasion: 0.04
+    BaseDamage: 2
+    BaseSpeed: 8
+    AttackType: 2
+    Accuracy: 0.64
+    AttackIntervalSeconds: 2
+    XpReward: 10
+    WeaponConfigId: weapon_firearm_01_service_pistol
+    ArmorConfigId: armor_18_junkyard_plate_armor
+    UtilityConfigId: utility_medkit_tier_02_field_pouch
+  - Id: enemy_weak_ash_gnawer
+    Name: Weak Ash Gnawer
+    Kind: 1
+    PortraitId: ui_character_enemy_weak_ash_gnawer_01
+    Portrait: {fileID: 21300000, guid: ea88616d4b8412d4f966dde1749cff45, type: 3}
+    MaxHealth: 18
+    Armor: 1
+    Evasion: 0.05
+    BaseDamage: 2
+    BaseSpeed: 10
+    AttackType: 1
+    Accuracy: 0.65
+    AttackIntervalSeconds: 2
+    XpReward: 6
+    WeaponConfigId: weapon_melee_24_bottle_shiv
+    ArmorConfigId: armor_02_leather_jacket
+    UtilityConfigId: utility_medkit_tier_01_rag_bundle
+  - Id: enemy_weak_ash_shrieker
+    Name: Weak Ash Shrieker
+    Kind: 1
+    PortraitId: ui_character_enemy_weak_ash_shrieker_01
+    Portrait: {fileID: 21300000, guid: cd29b6267bfa1824a9687a4eabb41e20, type: 3}
+    MaxHealth: 20
+    Armor: 0
+    Evasion: 0.06
+    BaseDamage: 1
+    BaseSpeed: 11
+    AttackType: 1
+    Accuracy: 0.68
+    AttackIntervalSeconds: 2
+    XpReward: 7
+    WeaponConfigId: weapon_melee_22_metal_pipe
+    ArmorConfigId: armor_03_padded_scavenger_vest
+    UtilityConfigId: utility_ammo_pack_tier_01_loose_ammo_pouch
+  - Id: enemy_weak_needle_raider
+    Name: Weak Needle Raider
+    Kind: 1
+    PortraitId: ui_character_enemy_weak_needle_raider_01
+    Portrait: {fileID: 21300000, guid: 0f585ad0ff0959d4e97425483963250b, type: 3}
+    MaxHealth: 22
+    Armor: 1
+    Evasion: 0.04
+    BaseDamage: 2
+    BaseSpeed: 12
+    AttackType: 1
+    Accuracy: 0.62
+    AttackIntervalSeconds: 2
+    XpReward: 8
+    WeaponConfigId: weapon_melee_06_crowbar
+    ArmorConfigId: armor_04_reinforced_hoodie
+    UtilityConfigId: utility_backpack_tier_01_torn_scavenger_bag
+  - Id: enemy_weak_rust_claw
+    Name: Weak Rust Claw
+    Kind: 1
+    PortraitId: ui_character_enemy_weak_rust_claw_01
+    Portrait: {fileID: 21300000, guid: 14acbb8f6d504354a8bc07a7db32a6e9, type: 3}
+    MaxHealth: 24
+    Armor: 0
+    Evasion: 0.05
+    BaseDamage: 1
     BaseSpeed: 9
     AttackType: 1
     Accuracy: 0.65
     AttackIntervalSeconds: 2
     XpReward: 5
+    WeaponConfigId: weapon_melee_01_survival_knife
+    ArmorConfigId: armor_05_biker_vest
+    UtilityConfigId: utility_medkit_tier_01_rag_bundle
+  - Id: enemy_weak_scavenger
+    Name: Weak Scavenger
+    Kind: 1
+    PortraitId: ui_character_enemy_weak_scavenger_01
+    Portrait: {fileID: 21300000, guid: 5f8dd924387997744925ec66c57db94a, type: 3}
+    MaxHealth: 26
+    Armor: 1
+    Evasion: 0.06
+    BaseDamage: 2
+    BaseSpeed: 10
+    AttackType: 2
+    Accuracy: 0.68
+    AttackIntervalSeconds: 2
+    XpReward: 6
+    WeaponConfigId: weapon_firearm_02_pipe_pistol
+    ArmorConfigId: armor_08_raider_leather_armor
+    UtilityConfigId: utility_ammo_pack_tier_01_loose_ammo_pouch
+  - Id: enemy_weak_spore_biter
+    Name: Weak Spore Biter
+    Kind: 1
+    PortraitId: ui_character_enemy_weak_spore_biter_01
+    Portrait: {fileID: 21300000, guid: fae604b3a2b2f8e408f73ba2ec7c7e26, type: 3}
+    MaxHealth: 18
+    Armor: 0
+    Evasion: 0.04
+    BaseDamage: 1
+    BaseSpeed: 11
+    AttackType: 1
+    Accuracy: 0.62
+    AttackIntervalSeconds: 2
+    XpReward: 7
     WeaponConfigId: weapon_melee_09_nailed_plank
     ArmorConfigId: armor_01_patched_cloth_jacket
     UtilityConfigId: utility_backpack_tier_01_torn_scavenger_bag
-  - Id: mutant_stray
-    Name: Mutant Stray
+  - Id: creature_boss_apex_claw_titan
+    Name: Boss Apex Claw Titan
     Kind: 2
-    PortraitId: ui_character_creature_weak_mutant_rat_01
-    Portrait: {fileID: 21300000, guid: 45c517e7fcdfa712be64f73356a398bd, type: 3}
-    MaxHealth: 26
-    Armor: 1
+    PortraitId: ui_character_creature_boss_apex_claw_titan_01
+    Portrait: {fileID: 21300000, guid: e40c5acb192c79cfd8925d822b408e7b, type: 3}
+    MaxHealth: 165
+    Armor: 7
+    Evasion: 0.02
+    BaseDamage: 7
+    BaseSpeed: 5
+    AttackType: 3
+    Accuracy: 0.70
+    AttackIntervalSeconds: 2
+    XpReward: 70
+    WeaponConfigId: weapon_creature_boss_apex_claw_titan_apex_titan_claws
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_boss_ash_widow
+    Name: Boss Ash Widow
+    Kind: 2
+    PortraitId: ui_character_creature_boss_ash_widow_01
+    Portrait: {fileID: 21300000, guid: 3e243e1af1574b90cb69a39e2b39486d, type: 3}
+    MaxHealth: 183
+    Armor: 8
     Evasion: 0.03
-    BaseDamage: 5
+    BaseDamage: 8
+    BaseSpeed: 6
+    AttackType: 3
+    Accuracy: 0.73
+    AttackIntervalSeconds: 2
+    XpReward: 78
+    WeaponConfigId: weapon_creature_boss_ash_widow_venom_fangs
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_boss_bone_crowned_behemoth
+    Name: Boss Bone Crowned Behemoth
+    Kind: 2
+    PortraitId: ui_character_creature_boss_bone_crowned_behemoth_01
+    Portrait: {fileID: 21300000, guid: bb2800a89f34fb7b15de8b3c29f9ebfe, type: 3}
+    MaxHealth: 201
+    Armor: 9
+    Evasion: 0.04
+    BaseDamage: 9
+    BaseSpeed: 7
+    AttackType: 3
+    Accuracy: 0.76
+    AttackIntervalSeconds: 2
+    XpReward: 86
+    WeaponConfigId: weapon_creature_boss_bone_crowned_behemoth_behemoth_bone_slam
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_boss_furnace_abomination
+    Name: Boss Furnace Abomination
+    Kind: 2
+    PortraitId: ui_character_creature_boss_furnace_abomination_01
+    Portrait: {fileID: 21300000, guid: bffddc4f718f08d8a6193a7b2d553f3f, type: 3}
+    MaxHealth: 219
+    Armor: 10
+    Evasion: 0.02
+    BaseDamage: 7
+    BaseSpeed: 8
+    AttackType: 3
+    Accuracy: 0.70
+    AttackIntervalSeconds: 2
+    XpReward: 94
+    WeaponConfigId: weapon_creature_boss_furnace_abomination_burning_breath
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_boss_tunnel_king
+    Name: Boss Tunnel King
+    Kind: 2
+    PortraitId: ui_character_creature_boss_tunnel_king_01
+    Portrait: {fileID: 21300000, guid: f907b84f7809f5ab0d201ab8e90498e8, type: 3}
+    MaxHealth: 237
+    Armor: 11
+    Evasion: 0.03
+    BaseDamage: 8
+    BaseSpeed: 5
+    AttackType: 3
+    Accuracy: 0.73
+    AttackIntervalSeconds: 2
+    XpReward: 102
+    WeaponConfigId: weapon_creature_boss_tunnel_king_tunnel_cave_in
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_boss_wasteland_apex
+    Name: Boss Wasteland Apex
+    Kind: 2
+    PortraitId: ui_character_creature_boss_wasteland_apex_01
+    Portrait: {fileID: 21300000, guid: 661344e99b9c97c4bdd627b8f9867db4, type: 3}
+    MaxHealth: 255
+    Armor: 7
+    Evasion: 0.04
+    BaseDamage: 9
+    BaseSpeed: 6
+    AttackType: 3
+    Accuracy: 0.76
+    AttackIntervalSeconds: 2
+    XpReward: 110
+    WeaponConfigId: weapon_creature_boss_wasteland_apex_wasteland_apex_lunge
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_elite_acidback_lurker
+    Name: Elite Acidback Lurker
+    Kind: 2
+    PortraitId: ui_character_creature_elite_acidback_lurker_01
+    Portrait: {fileID: 21300000, guid: 7df03810d69a3c363245c809aa47de26, type: 3}
+    MaxHealth: 78
+    Armor: 5
+    Evasion: 0.03
+    BaseDamage: 4
+    BaseSpeed: 7
+    AttackType: 3
+    Accuracy: 0.70
+    AttackIntervalSeconds: 2
+    XpReward: 32
+    WeaponConfigId: weapon_creature_elite_acidback_lurker_acid_spray
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_elite_blind_harvester
+    Name: Elite Blind Harvester
+    Kind: 2
+    PortraitId: ui_character_creature_elite_blind_harvester_01
+    Portrait: {fileID: 21300000, guid: 51e9c9692f6eee4e01b4cfd66c15d860, type: 3}
+    MaxHealth: 85
+    Armor: 6
+    Evasion: 0.04
+    BaseDamage: 4
+    BaseSpeed: 8
+    AttackType: 3
+    Accuracy: 0.73
+    AttackIntervalSeconds: 2
+    XpReward: 36
+    WeaponConfigId: weapon_creature_elite_blind_harvester_hook_claws
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_elite_chitin_mauler
+    Name: Elite Chitin Mauler
+    Kind: 2
+    PortraitId: ui_character_creature_elite_chitin_mauler_01
+    Portrait: {fileID: 21300000, guid: 4542b9907027ac6507205096c682bbcc, type: 3}
+    MaxHealth: 92
+    Armor: 3
+    Evasion: 0.05
+    BaseDamage: 4
+    BaseSpeed: 9
+    AttackType: 3
+    Accuracy: 0.76
+    AttackIntervalSeconds: 2
+    XpReward: 40
+    WeaponConfigId: weapon_creature_elite_chitin_mauler_chitin_maul
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_elite_grave_ghoul_matriarch
+    Name: Elite Grave Ghoul Matriarch
+    Kind: 2
+    PortraitId: ui_character_creature_elite_grave_ghoul_matriarch_01
+    Portrait: {fileID: 21300000, guid: b6b55fe5db4153caa23d5677269d531f, type: 3}
+    MaxHealth: 99
+    Armor: 4
+    Evasion: 0.03
+    BaseDamage: 4
+    BaseSpeed: 10
+    AttackType: 3
+    Accuracy: 0.70
+    AttackIntervalSeconds: 2
+    XpReward: 44
+    WeaponConfigId: weapon_creature_elite_grave_ghoul_matriarch_plague_cloud
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_elite_horned_alpha
+    Name: Elite Horned Alpha
+    Kind: 2
+    PortraitId: ui_character_creature_elite_horned_alpha_01
+    Portrait: {fileID: 21300000, guid: 37be4da6c6161ff843e0200c2d63fc10, type: 3}
+    MaxHealth: 106
+    Armor: 5
+    Evasion: 0.04
+    BaseDamage: 4
+    BaseSpeed: 6
+    AttackType: 3
+    Accuracy: 0.73
+    AttackIntervalSeconds: 2
+    XpReward: 28
+    WeaponConfigId: weapon_creature_elite_horned_alpha_horn_gore
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_elite_ironhide_ravager
+    Name: Elite Ironhide Ravager
+    Kind: 2
+    PortraitId: ui_character_creature_elite_ironhide_ravager_01
+    Portrait: {fileID: 21300000, guid: 017045891a9dc094caac9a935f8bc764, type: 3}
+    MaxHealth: 113
+    Armor: 6
+    Evasion: 0.05
+    BaseDamage: 4
+    BaseSpeed: 7
+    AttackType: 3
+    Accuracy: 0.76
+    AttackIntervalSeconds: 2
+    XpReward: 32
+    WeaponConfigId: weapon_creature_elite_ironhide_ravager_ironhide_slam
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_elite_spore_colossus
+    Name: Elite Spore Colossus
+    Kind: 2
+    PortraitId: ui_character_creature_elite_spore_colossus_01
+    Portrait: {fileID: 21300000, guid: 209b7b8183c8af584d44518611c0ea1f, type: 3}
+    MaxHealth: 78
+    Armor: 3
+    Evasion: 0.03
+    BaseDamage: 4
+    BaseSpeed: 8
+    AttackType: 3
+    Accuracy: 0.70
+    AttackIntervalSeconds: 2
+    XpReward: 36
+    WeaponConfigId: weapon_creature_elite_spore_colossus_spore_burst
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_elite_tumor_bear
+    Name: Elite Tumor Bear
+    Kind: 2
+    PortraitId: ui_character_creature_elite_tumor_bear_01
+    Portrait: {fileID: 21300000, guid: 6aff24843f6a7c80b1fb659e345aa6bf, type: 3}
+    MaxHealth: 85
+    Armor: 4
+    Evasion: 0.04
+    BaseDamage: 4
+    BaseSpeed: 9
+    AttackType: 3
+    Accuracy: 0.73
+    AttackIntervalSeconds: 2
+    XpReward: 40
+    WeaponConfigId: weapon_creature_elite_tumor_bear_tumor_bear_maul
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_mid_ash_boar
+    Name: Mid Ash Boar
+    Kind: 2
+    PortraitId: ui_character_creature_mid_ash_boar_01
+    Portrait: {fileID: 21300000, guid: 160b797d7e13ed6f16e98f1f36aedaac, type: 3}
+    MaxHealth: 48
+    Armor: 3
+    Evasion: 0.06
+    BaseDamage: 2
+    BaseSpeed: 12
+    AttackType: 3
+    Accuracy: 0.74
+    AttackIntervalSeconds: 2
+    XpReward: 20
+    WeaponConfigId: weapon_creature_mid_ash_boar_boar_charge
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_mid_boneback_hound
+    Name: Mid Boneback Hound
+    Kind: 2
+    PortraitId: ui_character_creature_mid_boneback_hound_01
+    Portrait: {fileID: 21300000, guid: c9eda18638b5616ab7fffcca357b0582, type: 3}
+    MaxHealth: 53
+    Armor: 1
+    Evasion: 0.04
+    BaseDamage: 2
+    BaseSpeed: 8
+    AttackType: 3
+    Accuracy: 0.68
+    AttackIntervalSeconds: 2
+    XpReward: 12
+    WeaponConfigId: weapon_creature_mid_boneback_hound_hound_pack_bite
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_mid_glass_spitter
+    Name: Mid Glass Spitter
+    Kind: 2
+    PortraitId: ui_character_creature_mid_glass_spitter_01
+    Portrait: {fileID: 21300000, guid: 35dc6eee36b51e7d6b3a549aab26f379, type: 3}
+    MaxHealth: 58
+    Armor: 2
+    Evasion: 0.05
+    BaseDamage: 2
+    BaseSpeed: 9
+    AttackType: 3
+    Accuracy: 0.71
+    AttackIntervalSeconds: 2
+    XpReward: 14
+    WeaponConfigId: weapon_creature_mid_glass_spitter_acid_spit
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_mid_plague_ghoul
+    Name: Mid Plague Ghoul
+    Kind: 2
+    PortraitId: ui_character_creature_mid_plague_ghoul_01
+    Portrait: {fileID: 21300000, guid: f88e76a5946509f66712fdc07f9e4f0b, type: 3}
+    MaxHealth: 63
+    Armor: 3
+    Evasion: 0.06
+    BaseDamage: 2
+    BaseSpeed: 10
+    AttackType: 3
+    Accuracy: 0.74
+    AttackIntervalSeconds: 2
+    XpReward: 16
+    WeaponConfigId: weapon_creature_mid_plague_ghoul_claw_swipe
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_mid_radstag_bruiser
+    Name: Mid Radstag Bruiser
+    Kind: 2
+    PortraitId: ui_character_creature_mid_radstag_bruiser_01
+    Portrait: {fileID: 21300000, guid: e64bab293de6e30988b016cfc5340c2e, type: 3}
+    MaxHealth: 38
+    Armor: 1
+    Evasion: 0.04
+    BaseDamage: 2
     BaseSpeed: 11
     AttackType: 3
     Accuracy: 0.68
     AttackIntervalSeconds: 2
-    XpReward: 8
-    WeaponConfigId: 
+    XpReward: 18
+    WeaponConfigId: weapon_creature_mid_radstag_bruiser_stag_gore
     ArmorConfigId: 
     UtilityConfigId: 
-  - Id: raider
-    Name: Raider
-    Kind: 1
-    PortraitId: ui_character_enemy_raider_01
-    Portrait: {fileID: 21300000, guid: 13a4e5bf2a5548648a90dbefcef22aed, type: 3}
-    MaxHealth: 30
-    Armor: 1
+  - Id: creature_mid_scrap_shell_crawler
+    Name: Mid Scrap Shell Crawler
+    Kind: 2
+    PortraitId: ui_character_creature_mid_scrap_shell_crawler_01
+    Portrait: {fileID: 21300000, guid: f363f8f3998308caa38250d683f58fb5, type: 3}
+    MaxHealth: 43
+    Armor: 2
     Evasion: 0.05
-    BaseDamage: 6
-    BaseSpeed: 10
-    AttackType: 2
-    Accuracy: 0.62
+    BaseDamage: 2
+    BaseSpeed: 12
+    AttackType: 3
+    Accuracy: 0.71
     AttackIntervalSeconds: 2
-    XpReward: 10
-    WeaponConfigId: weapon_firearm_02_pipe_pistol
-    ArmorConfigId: armor_08_raider_leather_armor
-    UtilityConfigId: utility_ammo_pack_tier_01_loose_ammo_pouch
-  - Id: armored_raider
-    Name: Armored Raider
-    Kind: 1
-    PortraitId: ui_character_enemy_elite_tire_shield_mauler_01
-    Portrait: {fileID: 21300000, guid: 9c2d4b0d0cfeb7744b7ac0925e5bb324, type: 3}
-    MaxHealth: 45
-    Armor: 4
-    Evasion: 0.02
-    BaseDamage: 7
-    BaseSpeed: 7
-    AttackType: 2
-    Accuracy: 0.6
+    XpReward: 20
+    WeaponConfigId: weapon_creature_mid_scrap_shell_crawler_pincer_crush
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_mid_screamer_ghoul
+    Name: Mid Screamer Ghoul
+    Kind: 2
+    PortraitId: ui_character_creature_mid_screamer_ghoul_01
+    Portrait: {fileID: 21300000, guid: 59a45c66338e9f07012696687d4e76a1, type: 3}
+    MaxHealth: 48
+    Armor: 3
+    Evasion: 0.06
+    BaseDamage: 2
+    BaseSpeed: 8
+    AttackType: 3
+    Accuracy: 0.74
+    AttackIntervalSeconds: 2
+    XpReward: 12
+    WeaponConfigId: weapon_creature_mid_screamer_ghoul_sonic_scream
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_mid_stalker_rat
+    Name: Mid Stalker Rat
+    Kind: 2
+    PortraitId: ui_character_creature_mid_stalker_rat_01
+    Portrait: {fileID: 21300000, guid: e918bdc199450984f2c7a0a1b032c36e, type: 3}
+    MaxHealth: 53
+    Armor: 1
+    Evasion: 0.04
+    BaseDamage: 2
+    BaseSpeed: 9
+    AttackType: 3
+    Accuracy: 0.68
     AttackIntervalSeconds: 2
     XpReward: 14
-    WeaponConfigId: weapon_firearm_07_pump_shotgun
-    ArmorConfigId: armor_18_junkyard_plate_armor
-    UtilityConfigId: utility_medkit_tier_02_field_pouch
-  - Id: mutant_brute
-    Name: Mutant Brute
+    WeaponConfigId: weapon_creature_mid_stalker_rat_ambush_bite
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_weak_ash_roach
+    Name: Weak Ash Roach
     Kind: 2
-    PortraitId: ui_character_creature_elite_tumor_bear_01
-    Portrait: {fileID: 21300000, guid: 6aff24843f6a7c80b1fb659e345aa6bf, type: 3}
-    MaxHealth: 80
-    Armor: 2
-    Evasion: 0.01
-    BaseDamage: 11
-    BaseSpeed: 6
+    PortraitId: ui_character_creature_weak_ash_roach_01
+    Portrait: {fileID: 21300000, guid: 05f857e92c1ed178ad5ee6b9e6b81a4c, type: 3}
+    MaxHealth: 20
+    Armor: 0
+    Evasion: 0.09
+    BaseDamage: 1
+    BaseSpeed: 11
     AttackType: 3
-    Accuracy: 0.7
+    Accuracy: 0.71
     AttackIntervalSeconds: 2
-    XpReward: 24
-    WeaponConfigId: 
+    XpReward: 6
+    WeaponConfigId: weapon_creature_weak_ash_roach_roach_mandibles
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_weak_bloat_toad
+    Name: Weak Bloat Toad
+    Kind: 2
+    PortraitId: ui_character_creature_weak_bloat_toad_01
+    Portrait: {fileID: 21300000, guid: 8a91c8387a146cd110a6a96beafed129, type: 3}
+    MaxHealth: 23
+    Armor: 1
+    Evasion: 0.10
+    BaseDamage: 1
+    BaseSpeed: 12
+    AttackType: 3
+    Accuracy: 0.74
+    AttackIntervalSeconds: 2
+    XpReward: 7
+    WeaponConfigId: weapon_creature_weak_bloat_toad_toad_tongue_strike
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_weak_feral_ghoul
+    Name: Weak Feral Ghoul
+    Kind: 2
+    PortraitId: ui_character_creature_weak_feral_ghoul_01
+    Portrait: {fileID: 21300000, guid: e532b4cd36f8ab6e21bf226177d525f1, type: 3}
+    MaxHealth: 26
+    Armor: 0
+    Evasion: 0.06
+    BaseDamage: 1
+    BaseSpeed: 13
+    AttackType: 3
+    Accuracy: 0.68
+    AttackIntervalSeconds: 2
+    XpReward: 8
+    WeaponConfigId: weapon_creature_weak_feral_ghoul_ghoul_rake
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_weak_mire_leech
+    Name: Weak Mire Leech
+    Kind: 2
+    PortraitId: ui_character_creature_weak_mire_leech_01
+    Portrait: {fileID: 21300000, guid: 6469280b60cafa82a8c69184bddc13e1, type: 3}
+    MaxHealth: 14
+    Armor: 1
+    Evasion: 0.07
+    BaseDamage: 1
+    BaseSpeed: 9
+    AttackType: 3
+    Accuracy: 0.71
+    AttackIntervalSeconds: 2
+    XpReward: 4
+    WeaponConfigId: weapon_creature_weak_mire_leech_leech_latch
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_weak_mutant_rat
+    Name: Weak Mutant Rat
+    Kind: 2
+    PortraitId: ui_character_creature_weak_mutant_rat_01
+    Portrait: {fileID: 21300000, guid: 45c517e7fcdfa712be64f73356a398bd, type: 3}
+    MaxHealth: 17
+    Armor: 0
+    Evasion: 0.09
+    BaseDamage: 1
+    BaseSpeed: 10
+    AttackType: 3
+    Accuracy: 0.74
+    AttackIntervalSeconds: 2
+    XpReward: 5
+    WeaponConfigId: weapon_creature_weak_mutant_rat_bite
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_weak_radiated_hound
+    Name: Weak Radiated Hound
+    Kind: 2
+    PortraitId: ui_character_creature_weak_radiated_hound_01
+    Portrait: {fileID: 21300000, guid: 0ae0b8b30d25f2ee8ebd9070e888c122, type: 3}
+    MaxHealth: 20
+    Armor: 1
+    Evasion: 0.10
+    BaseDamage: 1
+    BaseSpeed: 11
+    AttackType: 3
+    Accuracy: 0.68
+    AttackIntervalSeconds: 2
+    XpReward: 6
+    WeaponConfigId: weapon_creature_weak_radiated_hound_pounce
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_weak_shard_bat
+    Name: Weak Shard Bat
+    Kind: 2
+    PortraitId: ui_character_creature_weak_shard_bat_01
+    Portrait: {fileID: 21300000, guid: ee60ebd717244fd2b6e23cd6afd993eb, type: 3}
+    MaxHealth: 23
+    Armor: 0
+    Evasion: 0.06
+    BaseDamage: 1
+    BaseSpeed: 12
+    AttackType: 3
+    Accuracy: 0.71
+    AttackIntervalSeconds: 2
+    XpReward: 7
+    WeaponConfigId: weapon_creature_weak_shard_bat_bat_swoop
+    ArmorConfigId: 
+    UtilityConfigId: 
+  - Id: creature_weak_spine_mole
+    Name: Weak Spine Mole
+    Kind: 2
+    PortraitId: ui_character_creature_weak_spine_mole_01
+    Portrait: {fileID: 21300000, guid: 5901358a6ad5fdc22801b4f162fbe0e7, type: 3}
+    MaxHealth: 26
+    Armor: 1
+    Evasion: 0.07
+    BaseDamage: 1
+    BaseSpeed: 13
+    AttackType: 3
+    Accuracy: 0.74
+    AttackIntervalSeconds: 2
+    XpReward: 8
+    WeaponConfigId: weapon_creature_weak_spine_mole_spine_stab
     ArmorConfigId: 
     UtilityConfigId: 

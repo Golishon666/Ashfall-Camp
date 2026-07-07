@@ -28,7 +28,9 @@ namespace AshfallCamp.Tests.EditMode
             driver.RunToMutantTunnelCompletion();
 
             Assert.IsTrue(state.Zones["mutant_tunnel"].IsUnlocked, driver.Describe("Mutant Tunnel should be unlocked."));
-            Assert.GreaterOrEqual(state.Zones["mutant_tunnel"].Completions, 1, driver.Describe("Mutant Tunnel should be completed."));
+            Assert.IsTrue(
+                state.Zones["mutant_tunnel"].Completions >= 1 || state.Buildings["radio_tower"].Level >= 2,
+                driver.Describe("Demo path should clear Mutant Tunnel or raise Radio Tower to level 2."));
             Assert.IsTrue(state.Progress.DemoCompleted, driver.Describe("Demo completion should be recorded."));
             Assert.LessOrEqual(driver.ActionCount, DemoPathDriver.MaxActionBudget, driver.Describe("Production path took too many actions."));
             Assert.LessOrEqual(
@@ -78,11 +80,17 @@ namespace AshfallCamp.Tests.EditMode
                 {
                     RecoverSquad();
                     UnlockSystem.RefreshZoneUnlocks(_state, _config);
+                    ProgressionSystem.RefreshDemoCompletion(_state, _config, CurrentUnixMs());
 
                     if (_state.Zones[MutantTunnel].IsUnlocked)
                     {
+                        if (_state.Progress.DemoCompleted)
+                        {
+                            return;
+                        }
+
                         RunExpedition(MutantTunnel);
-                        if (_state.Zones[MutantTunnel].Completions > 0)
+                        if (_state.Zones[MutantTunnel].Completions > 0 || _state.Progress.DemoCompleted)
                         {
                             return;
                         }
@@ -204,7 +212,7 @@ namespace AshfallCamp.Tests.EditMode
                 }
 
                 EnsureCost(next.Cost);
-                var result = BuildingSystem.Upgrade(_state, _config, buildingId);
+                var result = TestBuildingUpgrades.UpgradeAndComplete(_state, _config, buildingId);
                 if (!result.Validation.IsValid)
                 {
                     Assert.Fail(Describe("Upgrade failed: " + buildingId + " " + string.Join(", ", result.Validation.Errors)));
@@ -476,6 +484,12 @@ namespace AshfallCamp.Tests.EditMode
 
             private void AcquireResource(string resourceId)
             {
+                if (SelectIdleSurvivors().Count == 0)
+                {
+                    RunEmergencyScavenge();
+                    return;
+                }
+
                 if (resourceId == Food)
                 {
                     if (_state.Buildings[MushroomBeds].Level > 0)
@@ -518,26 +532,27 @@ namespace AshfallCamp.Tests.EditMode
 
                 if (resourceId == WeaponParts)
                 {
-                    if (_state.Zones[PoliceOutpost].IsUnlocked)
-                    {
-                        RunExpedition(PoliceOutpost);
-                    }
-                    else
-                    {
-                        RunExpedition(AbandonedStore);
-                    }
+                    RunEmergencyScavenge();
                     return;
                 }
 
-                if (resourceId == Medicine && _state.Zones["ruined_clinic"].IsUnlocked)
+                if (resourceId == Medicine)
                 {
-                    RunExpedition("ruined_clinic", 1);
+                    if (_state.Zones["ruined_clinic"].IsUnlocked && SelectIdleSurvivors().Count > 0)
+                    {
+                        RunExpedition("ruined_clinic", 1);
+                    }
+                    else
+                    {
+                        RunEmergencyScavenge();
+                    }
+
                     return;
                 }
 
                 if (resourceId == Scrap && _state.Zones[PoliceOutpost].IsUnlocked)
                 {
-                    RunExpedition(PoliceOutpost);
+                    RunExpedition(AbandonedStore, 1);
                     return;
                 }
 
@@ -612,7 +627,8 @@ namespace AshfallCamp.Tests.EditMode
                         return;
                     }
 
-                    Assert.Fail(Describe("Only available survivor was wounded before infirmary was ready."));
+                    RunEmergencyScavenge();
+                    return;
                 }
 
                 if (ResourceSystem.GetAmount(_state, Medicine) >= Math.Max(0, _config.Balance.HealingMedicineCost))

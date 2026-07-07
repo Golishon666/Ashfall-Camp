@@ -228,6 +228,7 @@ namespace AshfallCamp.Presentation
 
             buildingGrid.SetUpgradeHandler(id => UpgradeRequested?.Invoke(id));
             alertsPanel.SetEmergencyScavengeHandler(() => EmergencyScavengeRequested?.Invoke());
+            alertsPanel.SetAlertActionHandler(OnAlertActionRequested);
             if (expeditionsPanel != null)
             {
                 expeditionsPanel.SetLaunchHandler(request => ExpeditionLaunchRequested?.Invoke(request));
@@ -275,6 +276,22 @@ namespace AshfallCamp.Presentation
         private void OnScreenSelected(string screenId)
         {
             OpenScreen(screenId);
+        }
+
+        private void OnAlertActionRequested(CampAlertPresentation alert)
+        {
+            if (alert == null) return;
+
+            if (alert.Action == CampAlertAction.StartEmergencyScavenge)
+            {
+                EmergencyScavengeRequested?.Invoke();
+                return;
+            }
+
+            if (alert.Action == CampAlertAction.OpenScreen)
+            {
+                OpenScreen(alert.TargetScreenId);
+            }
         }
 
         private void OpenScreen(string screenId)

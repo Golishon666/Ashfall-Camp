@@ -142,10 +142,11 @@ namespace AshfallCamp.Application
         public List<string> CompletedExpeditionIds = new List<string>();
         public List<string> FinishedExpeditionIds = new List<string>();
         public List<string> RestCompletedSurvivorIds = new List<string>();
+        public List<string> CompletedBuildingIds = new List<string>();
 
         public bool HasCriticalProgress
         {
-            get { return FinishedExpeditionIds.Count > 0 || RestCompletedSurvivorIds.Count > 0; }
+            get { return FinishedExpeditionIds.Count > 0 || RestCompletedSurvivorIds.Count > 0 || CompletedBuildingIds.Count > 0; }
         }
     }
 
@@ -228,12 +229,14 @@ namespace AshfallCamp.Application
     {
         private readonly IGameStateWriter _writer;
         private readonly IGameConfigProvider _configs;
+        private readonly IUnixTimeProvider _clock;
         private BuildingUpgradeResult _lastResult;
 
-        public UpgradeBuildingUseCase(IGameStateWriter writer, IGameConfigProvider configs)
+        public UpgradeBuildingUseCase(IGameStateWriter writer, IGameConfigProvider configs, IUnixTimeProvider clock = null)
         {
             _writer = writer;
             _configs = configs;
+            _clock = clock ?? new SystemUnixTimeProvider();
         }
 
         public async UniTask<BuildingUpgradeResult> ExecuteAsync(string buildingId, CancellationToken ct)
@@ -247,7 +250,7 @@ namespace AshfallCamp.Application
             _lastResult = null;
             await _writer.MutateAsync(state =>
             {
-                _lastResult = BuildingSystem.Upgrade(state, _configs.Current, buildingId);
+                _lastResult = BuildingSystem.Upgrade(state, _configs.Current, buildingId, _clock.NowUnixMs);
                 return state;
             }, ct);
             return _lastResult;
@@ -551,11 +554,13 @@ namespace AshfallCamp.Application
     {
         private readonly IGameStateWriter _writer;
         private readonly IGameConfigProvider _configs;
+        private readonly IUnixTimeProvider _clock;
 
-        public TickGameUseCase(IGameStateWriter writer, IGameConfigProvider configs)
+        public TickGameUseCase(IGameStateWriter writer, IGameConfigProvider configs, IUnixTimeProvider clock = null)
         {
             _writer = writer;
             _configs = configs;
+            _clock = clock ?? new SystemUnixTimeProvider();
         }
 
         public async UniTask<TickGameResult> ExecuteAsync(double deltaSeconds, CancellationToken ct)
@@ -572,6 +577,7 @@ namespace AshfallCamp.Application
                 var dt = Math.Max(0, deltaSeconds);
                 var activeBefore = ActiveExpeditionIds(state);
                 state.TotalPlayTimeSeconds += dt;
+                result.CompletedBuildingIds.AddRange(BuildingSystem.CompleteReadyUpgrades(state, _configs.Current, _clock.NowUnixMs));
                 CampUpkeepSystem.Tick(state, _configs.Current, dt);
                 BuildingSystem.TickProduction(state, _configs.Current, dt);
                 ExpeditionSimulator.TickAll(state, _configs.Current, dt);
@@ -650,10 +656,13 @@ namespace AshfallCamp.Application
                 var offlineSeconds = GameMath.Clamp(elapsedMs / 1000.0, 0, _configs.Current.Balance.MaxOfflineSeconds);
                 _report.AppliedSeconds = offlineSeconds;
                 var remaining = offlineSeconds;
+                var cursorUnixMs = state.LastSaveAtUnixMs;
                 while (remaining > 0)
                 {
                     var dt = Math.Min(10, remaining);
+                    cursorUnixMs += (long)Math.Round(dt * 1000);
                     state.TotalPlayTimeSeconds += dt;
+                    AddUnique(_report.CompletedBuildingIds, BuildingSystem.CompleteReadyUpgrades(state, _configs.Current, cursorUnixMs));
                     CampUpkeepSystem.Tick(state, _configs.Current, dt);
                     BuildingSystem.TickProduction(state, _configs.Current, dt);
                     ExpeditionSimulator.TickAll(state, _configs.Current, dt);
@@ -663,6 +672,7 @@ namespace AshfallCamp.Application
                     remaining -= dt;
                 }
 
+                AddUnique(_report.CompletedBuildingIds, BuildingSystem.CompleteReadyUpgrades(state, _configs.Current, nowUnixMs));
                 state.LastSaveAtUnixMs = nowUnixMs;
                 FillResourceDelta(beforeResources, state.Resources, _report.ResourcesGained);
                 FillResourceDelta(beforeSpent, state.Statistics.TotalResourcesSpent, _report.ResourcesSpent);
@@ -742,6 +752,14 @@ namespace AshfallCamp.Application
                 }
             }
         }
+
+        private static void AddUnique(List<string> output, List<string> values)
+        {
+            foreach (var value in values)
+            {
+                if (!output.Contains(value)) output.Add(value);
+            }
+        }
     }
 
     public sealed class SaveLoadUseCase : ISaveLoadUseCase
@@ -778,6 +796,7 @@ namespace AshfallCamp.Application
                 result.Message = result.UsedBackup ? "Loaded Ashfall Camp backup save." : "Loaded Ashfall Camp save.";
             }
 
+            BuildingSystem.CompleteReadyUpgrades(loaded, config, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
             BuildingSystem.ApplyAllBuildingEffects(loaded, config);
             UnlockSystem.RefreshZoneUnlocks(loaded, config);
             ProgressionSystem.RefreshDemoCompletion(loaded, config, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
@@ -843,12 +862,19 @@ namespace AshfallCamp.Application
             {
                 if (!state.Buildings.ContainsKey(building.Id))
                 {
+                    var startLevel = BuildingSystem.GetLevel(building, building.StartingLevel);
                     state.Buildings[building.Id] = new BuildingState
                     {
                         Id = building.Id,
                         Level = building.StartingLevel,
-                        IsUnlocked = building.StartsUnlocked
+                        IsUnlocked = building.StartsUnlocked,
+                        AssignedWorkers = startLevel != null ? startLevel.DefaultWorkers : 0,
+                        ConditionPercent = startLevel != null ? startLevel.DefaultConditionPercent : 0
                     };
+                }
+                else
+                {
+                    BuildingSystem.ApplyConfiguredDisplayDefaults(state.Buildings[building.Id], building);
                 }
             }
 

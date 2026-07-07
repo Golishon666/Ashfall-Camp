@@ -639,8 +639,8 @@ namespace AshfallCamp.Presentation
                 if (panel != null)
                 {
                     panel.color = isSelected
-                        ? new Color32(248, 235, 207, 255)
-                        : new Color32(238, 224, 194, 245);
+                        ? catalog.Theme.WithAlpha(catalog.Theme.Teal, catalog.Theme.SurvivorSelectedPanelAlpha)
+                        : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, catalog.Theme.SurvivorInactivePanelAlpha);
                 }
 
                 var textColor = catalog.Theme.Ink;

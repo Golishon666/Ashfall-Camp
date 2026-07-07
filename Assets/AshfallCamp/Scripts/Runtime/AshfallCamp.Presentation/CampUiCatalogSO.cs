@@ -60,6 +60,8 @@ namespace AshfallCamp.Presentation
         public int LowResourceAlertPercentThreshold;
         public string WoundedAlertTitleFormat = string.Empty;
         public string WoundedAlertBodyFormat = string.Empty;
+        public string IdleSurvivorsAlertTitleFormat = string.Empty;
+        public string IdleSurvivorsAlertBodyFormat = string.Empty;
         public string EmergencyScavengeAlertTitle = string.Empty;
         public string EmergencyScavengeReadyBodyFormat = string.Empty;
         public string EmergencyScavengeActiveBodyFormat = string.Empty;
@@ -146,11 +148,22 @@ namespace AshfallCamp.Presentation
         public string DefaultExpeditionPolicyId = string.Empty;
         public string EmptyBuildingTitle = string.Empty;
         public string UpgradeCostLabel = string.Empty;
+        public string BuildButtonLabel = string.Empty;
         public string UpgradeButtonLabel = string.Empty;
         public string MaxButtonLabel = string.Empty;
         public string LockedButtonLabel = string.Empty;
         public string NeedResourcesButtonLabel = string.Empty;
         public string MaxCostLabel = string.Empty;
+        public string BuildingStatusBuildingFormat = string.Empty;
+        public string BuildingStatusUpgradingFormat = string.Empty;
+        public string BuildingStatusNotBuiltLabel = string.Empty;
+        public string BuildingStatusMaxLabel = string.Empty;
+        public string BuildingStatusRepairReadyLabel = string.Empty;
+        public string BuildingStatusBroadcastReadyLabel = string.Empty;
+        public string BuildingStatusBroadcastBlockedLabel = string.Empty;
+        public string BuildingStatusNoWoundedLabel = string.Empty;
+        public string BuildingStatusWoundedFormat = string.Empty;
+        public string BuildingStatusProductionFormat = string.Empty;
         public string SurvivorEffectFormat = string.Empty;
         public string ResourceCapEffectFormat = string.Empty;
         public string ResourceCapOnlyEffectFormat = string.Empty;
@@ -373,9 +386,42 @@ namespace AshfallCamp.Presentation
     [Serializable]
     public sealed class AlertUiEntry
     {
+        public string Id = string.Empty;
+        public CampAlertSeverity Severity = CampAlertSeverity.Info;
+        public int Priority;
+        public string Category = string.Empty;
+        public CampAlertAction Action = CampAlertAction.None;
+        public string TargetScreenId = string.Empty;
+        public Texture2D Icon;
+        public Texture2D ActionIcon;
+        public CampAlertButtonView ButtonView = CampAlertButtonView.Text;
+        public string ButtonLabel = string.Empty;
         public string Title = string.Empty;
         public string Body = string.Empty;
         public Color ToneColor = Color.white;
+    }
+
+    public enum CampAlertSeverity
+    {
+        Info,
+        Success,
+        Warning,
+        Critical
+    }
+
+    public enum CampAlertAction
+    {
+        None,
+        OpenScreen,
+        StartEmergencyScavenge
+    }
+
+    public enum CampAlertButtonView
+    {
+        Hidden,
+        Text,
+        Icon,
+        IconAndText
     }
 
     [Serializable]

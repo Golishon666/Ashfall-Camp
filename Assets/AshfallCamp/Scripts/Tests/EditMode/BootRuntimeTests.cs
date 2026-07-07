@@ -149,7 +149,7 @@ namespace AshfallCamp.Tests.EditMode
             presenter.Start();
             view.RaiseBroadcastRecruitmentRequested();
             view.RaiseRecruitmentCandidatesSkipRequested();
-            view.RaiseRecruitRequested(new RecruitSurvivorViewRequest("elias"));
+            view.RaiseRecruitRequested(new RecruitSurvivorViewRequest("survivor_02"));
             view.RaiseRepairItemRequested(new RepairItemRequest { ItemUid = "item_1" });
             view.RaiseEquipItemRequested(new EquipItemRequest { SurvivorId = "survivor_1", ItemUid = "item_2" });
             view.RaiseUseMedicineRequested(new UseMedicineRequest { SurvivorId = "survivor_1" });
@@ -562,7 +562,7 @@ namespace AshfallCamp.Tests.EditMode
 
             public readonly RecruitSurvivorResult RecruitResult = new RecruitSurvivorResult
             {
-                Survivor = new SurvivorState { Id = "survivor_2", Name = "Elias" }
+                Survivor = new SurvivorState { Id = "survivor_2", Name = "Bram" }
             };
 
             public readonly RepairItemResult RepairResult = new RepairItemResult
@@ -602,8 +602,8 @@ namespace AshfallCamp.Tests.EditMode
 
             public FakePresenterUseCases()
             {
-                BroadcastResult.CandidateIds.Add("elias");
-                SkipResult.SkippedCandidateIds.Add("elias");
+                BroadcastResult.CandidateIds.Add("survivor_02");
+                SkipResult.SkippedCandidateIds.Add("survivor_02");
             }
 
             public UniTask<BuildingUpgradeResult> ExecuteAsync(string buildingId, CancellationToken ct)

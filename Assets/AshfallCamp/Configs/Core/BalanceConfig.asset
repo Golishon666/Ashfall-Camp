@@ -58,7 +58,7 @@ MonoBehaviour:
     RecruitmentFoodDivisor: 2
     RecruitmentBaseWater: 2
     RecruitmentWaterDivisor: 3
-    RecruitmentCandidateCount: 2
+    RecruitmentCandidateCount: 4
     WorkshopRequiredBuildingId: workshop
     WorkshopRequiredBuildingLevel: 1
     WorkshopRepairResourceId: weapon_parts
@@ -78,9 +78,13 @@ MonoBehaviour:
     - Id: scrap
       Value: 3
     - Id: food
-      Value: 2
+      Value: 8
     - Id: water
-      Value: 2
+      Value: 8
+    - Id: weapon_parts
+      Value: 1
+    - Id: medicine
+      Value: 1
     DemoCompletionRequiresAnyCondition: 1
     DemoCompletionConditions:
     - Type: zone_completions

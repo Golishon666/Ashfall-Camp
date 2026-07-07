@@ -1987,3 +1987,633 @@ MonoBehaviour:
     AttackSoundId: "firearm_precision"
     Icon: {fileID: 8622121099221227665, guid: e86deaafa456bd48a24a0874a5b6f693, type: 3}
     AttackSound: {fileID: 0}
+  - Id: "weapon_creature_boss_apex_claw_titan_apex_titan_claws"
+    Name: "Apex Titan Claws"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 3
+    Attack: 30
+    AttacksPerTurn: 2
+    TargetCount: 3
+    TargetingRule: 0
+    HitChance: 0.78
+    ArmorPenetration: 0.25
+    CriticalChance: 0.12
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 4
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2001
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 21300000, guid: 8062b8fb261715a429c88ffd7b01db7b, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_boss_ash_widow_venom_fangs"
+    Name: "Ash Widow Venom Fangs"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 3
+    Attack: 26
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.80
+    ArmorPenetration: 0.18
+    CriticalChance: 0.14
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 3
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2002
+    AttackSoundId: "melee_pierce"
+    Icon: {fileID: 21300000, guid: 2200f538dadc113449223cbab1a28067, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_boss_bone_crowned_behemoth_behemoth_bone_slam"
+    Name: "Bone Crowned Slam"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 3
+    Attack: 34
+    AttacksPerTurn: 1
+    TargetCount: 3
+    TargetingRule: 0
+    HitChance: 0.70
+    ArmorPenetration: 0.30
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 5
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2003
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 21300000, guid: b6e60a17d5a8ac249913a2ea96fdaf7c, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_boss_furnace_abomination_burning_breath"
+    Name: "Furnace Burning Breath"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 1
+    Rarity: 3
+    Attack: 28
+    AttacksPerTurn: 1
+    TargetCount: 3
+    TargetingRule: 1
+    HitChance: 0.70
+    ArmorPenetration: 0.18
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 6
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2004
+    AttackSoundId: "explosive_launcher"
+    Icon: {fileID: 21300000, guid: c334b80c5e865374c96fd6184a8645d1, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_boss_tunnel_king_tunnel_cave_in"
+    Name: "Tunnel Cave-In Slam"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 2
+    Rarity: 3
+    Attack: 32
+    AttacksPerTurn: 1
+    TargetCount: 4
+    TargetingRule: 2
+    HitChance: 0.66
+    ArmorPenetration: 0.20
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 7
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2005
+    AttackSoundId: "explosive_launcher"
+    Icon: {fileID: 21300000, guid: 8d8f42a82c290a848bb9288331b36f8b, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_boss_wasteland_apex_wasteland_apex_lunge"
+    Name: "Wasteland Apex Lunge"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 3
+    Attack: 31
+    AttacksPerTurn: 2
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.24
+    CriticalChance: 0.12
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 4
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2006
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 21300000, guid: a44c665864f808e45956114906a3f3f7, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_elite_acidback_lurker_acid_spray"
+    Name: "Acidback Spray"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 1
+    Rarity: 2
+    Attack: 15
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.72
+    ArmorPenetration: 0.22
+    CriticalChance: 0.07
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 3
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2007
+    AttackSoundId: "explosive_launcher"
+    Icon: {fileID: 21300000, guid: 1b9e616a5dd6b444c80ae57407635f85, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_elite_blind_harvester_hook_claws"
+    Name: "Blind Hook Claws"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 2
+    Attack: 15
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.78
+    ArmorPenetration: 0.12
+    CriticalChance: 0.10
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 1
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2008
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 21300000, guid: 9a9aee9b6858b37428cb397e5daa409c, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_elite_chitin_mauler_chitin_maul"
+    Name: "Chitin Maul"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 2
+    Attack: 17
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.72
+    ArmorPenetration: 0.18
+    CriticalChance: 0.07
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 2
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2009
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 21300000, guid: 264ae47abae7cf34884d1047226bdbc5, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_elite_grave_ghoul_matriarch_plague_cloud"
+    Name: "Grave Plague Cloud"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 2
+    Rarity: 2
+    Attack: 14
+    AttacksPerTurn: 1
+    TargetCount: 3
+    TargetingRule: 2
+    HitChance: 0.68
+    ArmorPenetration: 0.00
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 4
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2010
+    AttackSoundId: "explosive_launcher"
+    Icon: {fileID: 21300000, guid: 459eeaa87f2409e40b0d9a7c9c4ec87a, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_elite_horned_alpha_horn_gore"
+    Name: "Alpha Horn Gore"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 2
+    Attack: 17
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.74
+    ArmorPenetration: 0.20
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 2
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2011
+    AttackSoundId: "melee_pierce"
+    Icon: {fileID: 21300000, guid: c9688eb5dbb160041a9de441e611662c, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_elite_ironhide_ravager_ironhide_slam"
+    Name: "Ironhide Slam"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 2
+    Attack: 18
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.70
+    ArmorPenetration: 0.14
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 2
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2012
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 21300000, guid: baefd8e8301ed7347bc61436fc111756, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_elite_spore_colossus_spore_burst"
+    Name: "Spore Burst"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 2
+    Rarity: 2
+    Attack: 16
+    AttacksPerTurn: 1
+    TargetCount: 4
+    TargetingRule: 2
+    HitChance: 0.66
+    ArmorPenetration: 0.00
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 5
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2013
+    AttackSoundId: "explosive_launcher"
+    Icon: {fileID: 21300000, guid: c7020046c7d96654f982d79f2ff61ec8, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_elite_tumor_bear_tumor_bear_maul"
+    Name: "Tumor Bear Maul"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 2
+    Attack: 19
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.72
+    ArmorPenetration: 0.12
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 3
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2014
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 21300000, guid: dd952ca9f61367b4a92b20a3f8e7ce95, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_mid_ash_boar_boar_charge"
+    Name: "Ash Boar Charge"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 1
+    Attack: 9
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.72
+    ArmorPenetration: 0.08
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 2
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2015
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 21300000, guid: d4a7f4307c598494f97c6972f1a62643, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_mid_boneback_hound_hound_pack_bite"
+    Name: "Boneback Pack Bite"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 1
+    Attack: 8
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.04
+    CriticalChance: 0.07
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 1
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2016
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 21300000, guid: 3e27b3b702193a54eae5d2bcceed07ec, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_mid_glass_spitter_acid_spit"
+    Name: "Glass Acid Spit"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 1
+    Rarity: 1
+    Attack: 9
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.70
+    ArmorPenetration: 0.15
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 2
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2017
+    AttackSoundId: "melee_pierce"
+    Icon: {fileID: 21300000, guid: 3c1c2676ad5a11d49851e5718bfa6b45, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_mid_plague_ghoul_claw_swipe"
+    Name: "Plague Claw Swipe"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 1
+    Attack: 8
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.75
+    ArmorPenetration: 0.05
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 1
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2018
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 21300000, guid: 81a59618722fd4a47bc649063c388167, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_mid_radstag_bruiser_stag_gore"
+    Name: "Radstag Gore"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 1
+    Attack: 10
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 0
+    HitChance: 0.70
+    ArmorPenetration: 0.12
+    CriticalChance: 0.07
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 2
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2019
+    AttackSoundId: "melee_pierce"
+    Icon: {fileID: 21300000, guid: 94098b88b0eb6264a8bd4bc22493f79f, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_mid_scrap_shell_crawler_pincer_crush"
+    Name: "Pincer Crush"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 1
+    Attack: 10
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.74
+    ArmorPenetration: 0.10
+    CriticalChance: 0.04
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 1
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2020
+    AttackSoundId: "melee_blunt"
+    Icon: {fileID: 21300000, guid: e12bed4e82348194b976a2fa73413128, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_mid_screamer_ghoul_sonic_scream"
+    Name: "Sonic Scream"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 1
+    Rarity: 1
+    Attack: 8
+    AttacksPerTurn: 1
+    TargetCount: 2
+    TargetingRule: 1
+    HitChance: 0.72
+    ArmorPenetration: 0.00
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 3
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2021
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 21300000, guid: 501af16cc37498549be2a7d53271081d, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_mid_stalker_rat_ambush_bite"
+    Name: "Ambush Bite"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 1
+    Attack: 9
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.78
+    ArmorPenetration: 0.06
+    CriticalChance: 0.09
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 1
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2022
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 21300000, guid: ead165742aa574c488cf2222f692b46b, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_weak_ash_roach_roach_mandibles"
+    Name: "Roach Mandibles"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 0
+    Attack: 4
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.78
+    ArmorPenetration: 0.00
+    CriticalChance: 0.03
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2023
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 21300000, guid: b4e23b57189038e41ac66ecc3ba69d03, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_weak_bloat_toad_toad_tongue_strike"
+    Name: "Toad Tongue Strike"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 1
+    Rarity: 0
+    Attack: 5
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 1
+    HitChance: 0.72
+    ArmorPenetration: 0.00
+    CriticalChance: 0.04
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 1
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2024
+    AttackSoundId: "melee_pierce"
+    Icon: {fileID: 21300000, guid: 355b6078e5da03c4fb85d8b73118ef69, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_weak_feral_ghoul_ghoul_rake"
+    Name: "Ghoul Rake"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 0
+    Attack: 5
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.04
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 1
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2025
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 21300000, guid: 4863315edd0342c49b3f91d2672b341b, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_weak_mire_leech_leech_latch"
+    Name: "Leech Latch"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 0
+    Attack: 4
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.80
+    ArmorPenetration: 0.02
+    CriticalChance: 0.03
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2026
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 21300000, guid: 6ed576a4c9aa74647a840224c3ef71eb, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_weak_mutant_rat_bite"
+    Name: "Mutant Bite"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 0
+    Attack: 4
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.78
+    ArmorPenetration: 0.00
+    CriticalChance: 0.04
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2027
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 21300000, guid: 90885e40654da45429ae4c41838f712b, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_weak_radiated_hound_pounce"
+    Name: "Radiated Pounce"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 0
+    Attack: 6
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.74
+    ArmorPenetration: 0.04
+    CriticalChance: 0.06
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 1
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2028
+    AttackSoundId: "melee_fist"
+    Icon: {fileID: 21300000, guid: c17532e9720f5304a85a8f85dc99991e, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_weak_shard_bat_bat_swoop"
+    Name: "Shard Swoop"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 0
+    Attack: 4
+    AttacksPerTurn: 2
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.74
+    ArmorPenetration: 0.00
+    CriticalChance: 0.08
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2029
+    AttackSoundId: "melee_blade"
+    Icon: {fileID: 21300000, guid: b6d53bf705b56d645b0053312395683b, type: 3}
+    AttackSound: {fileID: 0}
+  - Id: "weapon_creature_weak_spine_mole_spine_stab"
+    Name: "Spine Stab"
+    Description: "Natural mutant attack used by non-humanoid creatures."
+    Type: 0
+    Rarity: 0
+    Attack: 5
+    AttacksPerTurn: 1
+    TargetCount: 1
+    TargetingRule: 0
+    HitChance: 0.76
+    ArmorPenetration: 0.10
+    CriticalChance: 0.05
+    AmmoCostPerAttack: 0
+    NoisePerAttack: 0
+    Durability: 1
+    MaxDurability: 999
+    RepairCostMultiplier: 0
+    SortOrder: 2030
+    AttackSoundId: "melee_pierce"
+    Icon: {fileID: 21300000, guid: ef1d67336d38d6e4790f161b9b495682, type: 3}
+    AttackSound: {fileID: 0}

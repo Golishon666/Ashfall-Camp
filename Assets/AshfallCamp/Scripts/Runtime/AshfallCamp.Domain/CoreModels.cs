@@ -236,6 +236,8 @@ namespace AshfallCamp.Domain
         public bool IsUnlocked;
         public long UpgradeStartedAtUnixMs;
         public long UpgradeFinishedAtUnixMs;
+        public int AssignedWorkers;
+        public int ConditionPercent;
     }
 
     public sealed class ZoneState
@@ -310,6 +312,10 @@ namespace AshfallCamp.Domain
     {
         public ValidationResult Validation = new ValidationResult();
         public BuildingState Building;
+        public int TargetLevel;
+        public double DurationSeconds;
+        public bool Started;
+        public bool Completed;
     }
 
     public sealed class RecruitSurvivorRequest
@@ -422,6 +428,7 @@ namespace AshfallCamp.Domain
         public Dictionary<string, int> ResourcesGained = new Dictionary<string, int>(StringComparer.Ordinal);
         public Dictionary<string, int> ResourcesSpent = new Dictionary<string, int>(StringComparer.Ordinal);
         public List<string> CompletedExpeditionIds = new List<string>();
+        public List<string> CompletedBuildingIds = new List<string>();
         public List<string> WoundedSurvivorIds = new List<string>();
         public List<string> HealedSurvivorIds = new List<string>();
     }
@@ -637,6 +644,10 @@ namespace AshfallCamp.Domain
     {
         public int Level;
         public Dictionary<string, int> Cost = new Dictionary<string, int>(StringComparer.Ordinal);
+        public double UpgradeDurationSeconds;
+        public int WorkerCapacity;
+        public int DefaultWorkers;
+        public int DefaultConditionPercent;
         public int SurvivorCap;
         public int SquadSize;
         public int ResourceCap;
@@ -690,7 +701,7 @@ namespace AshfallCamp.Domain
         public int RecruitmentFoodDivisor = 2;
         public int RecruitmentBaseWater = 2;
         public int RecruitmentWaterDivisor = 3;
-        public int RecruitmentCandidateCount = 2;
+        public int RecruitmentCandidateCount = RecruitmentSystem.MaxCandidateCount;
         public string WorkshopRequiredBuildingId = GameIds.Buildings.Workshop;
         public int WorkshopRequiredBuildingLevel = 1;
         public string WorkshopRepairResourceId = GameIds.Resources.WeaponParts;

@@ -99,6 +99,8 @@ MonoBehaviour:
   LowResourceAlertPercentThreshold: 25
   WoundedAlertTitleFormat: '{0} SURVIVOR NEEDS CARE'
   WoundedAlertBodyFormat: '{0} is not ready for field work.'
+  IdleSurvivorsAlertTitleFormat: '{0} IDLE SURVIVORS'
+  IdleSurvivorsAlertBodyFormat: '{0} survivors are ready for expeditions or camp work.'
   EmergencyScavengeAlertTitle: SCAVENGE AROUND CAMP
   EmergencyScavengeReadyBodyFormat: No cost. {0}s for {1}.
   EmergencyScavengeActiveBodyFormat: Crew is checking the perimeter. {0}s left.
@@ -188,11 +190,22 @@ MonoBehaviour:
   DefaultExpeditionPolicyId: balanced
   EmptyBuildingTitle: BUILD NEW STRUCTURE
   UpgradeCostLabel: UPGRADE COST
+  BuildButtonLabel: BUILD
   UpgradeButtonLabel: UPGRADE
   MaxButtonLabel: MAX
   LockedButtonLabel: LOCKED
   NeedResourcesButtonLabel: NEED
   MaxCostLabel: MAX
+  BuildingStatusBuildingFormat: BUILDING {0}
+  BuildingStatusUpgradingFormat: UPGRADING {0}
+  BuildingStatusNotBuiltLabel: NOT BUILT
+  BuildingStatusMaxLabel: MAX LEVEL
+  BuildingStatusRepairReadyLabel: Repair Ready
+  BuildingStatusBroadcastReadyLabel: Broadcast Ready
+  BuildingStatusBroadcastBlockedLabel: Broadcast Blocked
+  BuildingStatusNoWoundedLabel: No Wounded
+  BuildingStatusWoundedFormat: '{0} Wounded'
+  BuildingStatusProductionFormat: '+{0}/h'
   SurvivorEffectFormat: Survivor cap {0}, squad size {1}.
   ResourceCapEffectFormat: '{0} cap {1}, +{2}/h.'
   ResourceCapOnlyEffectFormat: '{0} cap {1}.'
@@ -424,15 +437,136 @@ MonoBehaviour:
     OverviewLeftPercent: 60
     OverviewTopPercent: 20
   Alerts:
-  - Title: UPGRADE AVAILABLE
+  - Id: survivor_joined
+    Severity: 1
+    Priority: 1000
+    Category: events
+    Action: 1
+    TargetScreenId: reports
+    Icon: {fileID: 2800000, guid: 911e2f9b550a95b42b9828e52356a8ca, type: 3}
+    ActionIcon: {fileID: 2800000, guid: 697e79168b8544088c982e7063364f08, type: 3}
+    ButtonView: 1
+    ButtonLabel: VIEW
+    Title: SURVIVOR JOINED
+    Body: A new survivor joined the camp.
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
+  - Id: demo_completed
+    Severity: 1
+    Priority: 1000
+    Category: events
+    Action: 1
+    TargetScreenId: reports
+    Icon: {fileID: 2800000, guid: d6bc12cd4c798af4a9e4011919711632, type: 3}
+    ActionIcon: {fileID: 2800000, guid: 697e79168b8544088c982e7063364f08, type: 3}
+    ButtonView: 1
+    ButtonLabel: VIEW
+    Title: SIGNAL FOUND
+    Body: Demo objective complete.
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
+  - Id: emergency_scavenge_completed
+    Severity: 1
+    Priority: 1000
+    Category: events
+    Action: 1
+    TargetScreenId: reports
+    Icon: {fileID: 2800000, guid: a501b2a244d70bf46b39f8cf7db10beb, type: 3}
+    ActionIcon: {fileID: 2800000, guid: 697e79168b8544088c982e7063364f08, type: 3}
+    ButtonView: 1
+    ButtonLabel: VIEW
+    Title: SUPPLIES RECOVERED
+    Body: Emergency scavenge returned with supplies.
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
+  - Id: active_expedition
+    Severity: 0
+    Priority: 650
+    Category: expeditions
+    Action: 1
+    TargetScreenId: expeditions
+    Icon: {fileID: 2800000, guid: a597ee356523901408b8d779b765ea1f, type: 3}
+    ActionIcon: {fileID: 2800000, guid: a597ee356523901408b8d779b765ea1f, type: 3}
+    ButtonView: 1
+    ButtonLabel: VIEW
+    Title: ACTIVE EXPEDITIONS
+    Body: A squad is outside the camp.
+    ToneColor: {r: 0.18431373, g: 0.41568628, b: 0.44705883, a: 1}
+  - Id: wounded_survivors
+    Severity: 3
+    Priority: 900
+    Category: survivors
+    Action: 1
+    TargetScreenId: survivors
+    Icon: {fileID: 2800000, guid: 1fbf16eba429c26428801995f9a42d7c, type: 3}
+    ActionIcon: {fileID: 2800000, guid: 911e2f9b550a95b42b9828e52356a8ca, type: 3}
+    ButtonView: 1
+    ButtonLabel: VIEW
+    Title: WOUNDED SURVIVORS
+    Body: Survivors need treatment.
+    ToneColor: {r: 0.7882353, g: 0.3882353, b: 0.22745098, a: 1}
+  - Id: idle_survivors
+    Severity: 2
+    Priority: 500
+    Category: survivors
+    Action: 1
+    TargetScreenId: expeditions
+    Icon: {fileID: 2800000, guid: 911e2f9b550a95b42b9828e52356a8ca, type: 3}
+    ActionIcon: {fileID: 2800000, guid: a597ee356523901408b8d779b765ea1f, type: 3}
+    ButtonView: 1
+    ButtonLabel: MANAGE
+    Title: IDLE SURVIVORS
+    Body: Survivors are ready for orders.
+    ToneColor: {r: 0.88235295, g: 0.7058824, b: 0.41568628, a: 1}
+  - Id: emergency_scavenge
+    Severity: 3
+    Priority: 850
+    Category: supplies
+    Action: 2
+    TargetScreenId: 
+    Icon: {fileID: 2800000, guid: a501b2a244d70bf46b39f8cf7db10beb, type: 3}
+    ActionIcon: {fileID: 2800000, guid: a501b2a244d70bf46b39f8cf7db10beb, type: 3}
+    ButtonView: 1
+    ButtonLabel: SCAVENGE
+    Title: SCAVENGE AROUND CAMP
+    Body: Send a small crew for emergency supplies.
+    ToneColor: {r: 0.7882353, g: 0.3882353, b: 0.22745098, a: 1}
+  - Id: low_resource
+    Severity: 3
+    Priority: 800
+    Category: supplies
+    Action: 1
+    TargetScreenId: expeditions
+    Icon: {fileID: 2800000, guid: b99b3830405b85f4b82a76d60e9f0015, type: 3}
+    ActionIcon: {fileID: 2800000, guid: a597ee356523901408b8d779b765ea1f, type: 3}
+    ButtonView: 1
+    ButtonLabel: VIEW
+    Title: LOW SUPPLIES
+    Body: One stored resource is below the safe threshold.
+    ToneColor: {r: 0.7882353, g: 0.3882353, b: 0.22745098, a: 1}
+  - Id: upgrade_available
+    Severity: 2
+    Priority: 450
+    Category: buildings
+    Action: 1
+    TargetScreenId: buildings
+    Icon: {fileID: 2800000, guid: ebb35b604d6d6d243999e5bc29882a7d, type: 3}
+    ActionIcon: {fileID: 2800000, guid: ebb35b604d6d6d243999e5bc29882a7d, type: 3}
+    ButtonView: 1
+    ButtonLabel: VIEW
+    Title: UPGRADE AVAILABLE
     Body: Spend scrap to improve camp systems.
     ToneColor: {r: 0.88235295, g: 0.7058824, b: 0.41568628, a: 1}
-  - Title: ACTIVE EXPEDITIONS
-    Body: Launch squads from the expedition tab.
-    ToneColor: {r: 0.18431373, g: 0.41568628, b: 0.44705883, a: 1}
-  - Title: LOW SUPPLIES
-    Body: Food and water caps are tracked here.
-    ToneColor: {r: 0.7882353, g: 0.3882353, b: 0.22745098, a: 1}
+  - Id: no_alerts
+    Severity: 0
+    Priority: 0
+    Category: system
+    Action: 0
+    TargetScreenId: 
+    Icon: {fileID: 2800000, guid: b1a3ecc912a823e488d01dd7bb394bde, type: 3}
+    ActionIcon: {fileID: 0}
+    ButtonView: 0
+    ButtonLabel: 
+    Title: CAMP QUIET
+    Body: No urgent issues in the last shift.
+    ToneColor: {r: 0.48235294, g: 0.5411765, b: 0.41960785, a: 1}
   ExpeditionCards:
   - Title: ABANDONED STORE
     Subtitle: Scavenge
@@ -509,32 +643,94 @@ MonoBehaviour:
   SurvivorPortraits:
   - Id: survivor_1
     Portrait: {fileID: 2800000, guid: 67ef02d0cd5b491997f40982ecd9ada0, type: 3}
-  - Id: scavenger
-    Portrait: {fileID: 2800000, guid: 67ef02d0cd5b491997f40982ecd9ada0, type: 3}
   - Id: default
+    Portrait: {fileID: 2800000, guid: 67ef02d0cd5b491997f40982ecd9ada0, type: 3}
+  - Id: survivor_02
     Portrait: {fileID: 2800000, guid: 9055609bcf290da4bb5db43819f39ca4, type: 3}
-  - Id: elias
+  - Id: survivor_03
     Portrait: {fileID: 2800000, guid: b30644392d56b794099004b3a6259106, type: 3}
-  - Id: ex_cop
-    Portrait: {fileID: 2800000, guid: b30644392d56b794099004b3a6259106, type: 3}
-  - Id: nika
+  - Id: survivor_04
     Portrait: {fileID: 2800000, guid: 9252c059948b41848b2f29e0da8bf2a9, type: 3}
-  - Id: mechanic
-    Portrait: {fileID: 2800000, guid: 9252c059948b41848b2f29e0da8bf2a9, type: 3}
-  - Id: june
+  - Id: survivor_05
     Portrait: {fileID: 2800000, guid: b5b360bf7ffa7614786a388a44610f8d, type: 3}
-  - Id: nurse
-    Portrait: {fileID: 2800000, guid: b5b360bf7ffa7614786a388a44610f8d, type: 3}
-  - Id: tomas
+  - Id: survivor_06
     Portrait: {fileID: 2800000, guid: 3c92c456571127e429513b2df1157ee7, type: 3}
-  - Id: brawler
-    Portrait: {fileID: 2800000, guid: 3c92c456571127e429513b2df1157ee7, type: 3}
-  - Id: rhea
+  - Id: survivor_07
     Portrait: {fileID: 2800000, guid: 949c5ed8749b7b24fa59175a4591c02a, type: 3}
-  - Id: hunter
-    Portrait: {fileID: 2800000, guid: 949c5ed8749b7b24fa59175a4591c02a, type: 3}
-  - Id: kade
+  - Id: survivor_08
     Portrait: {fileID: 2800000, guid: 2f1eb5beafaf9c34fb4ea40ff8cf5995, type: 3}
+  - Id: survivor_09
+    Portrait: {fileID: 2800000, guid: d2bc0bc3a6d7ec341ae18704e7441420, type: 3}
+  - Id: survivor_10
+    Portrait: {fileID: 2800000, guid: fe4c757d722f85d418086e3efe4072f8, type: 3}
+  - Id: survivor_11
+    Portrait: {fileID: 2800000, guid: 051f3398fc6121345a993af527b7ee53, type: 3}
+  - Id: survivor_12
+    Portrait: {fileID: 2800000, guid: e7296321b3b5f54439db2e59776189ef, type: 3}
+  - Id: survivor_13
+    Portrait: {fileID: 2800000, guid: 532230dc8a8fb5b4f84d4784c96a1f87, type: 3}
+  - Id: survivor_14
+    Portrait: {fileID: 2800000, guid: 6faee97f340b6ec4085a5b576993bd8a, type: 3}
+  - Id: survivor_15
+    Portrait: {fileID: 2800000, guid: c8289d0a25a3cf14bad30d6917c048fd, type: 3}
+  - Id: survivor_16
+    Portrait: {fileID: 2800000, guid: 7f99d461b9e19814dbb1723a0c0f4fbb, type: 3}
+  - Id: survivor_17
+    Portrait: {fileID: 2800000, guid: 335443047b80c564e954245c7a810ffb, type: 3}
+  - Id: survivor_18
+    Portrait: {fileID: 2800000, guid: b95a1ea05759c26499ca829d1b0b2eff, type: 3}
+  - Id: survivor_19
+    Portrait: {fileID: 2800000, guid: 734bf451f8d7a564d90c56b5fb851256, type: 3}
+  - Id: survivor_20
+    Portrait: {fileID: 2800000, guid: 63f3132b9503bde438cd3c1d315d44cf, type: 3}
+  - Id: survivor_21
+    Portrait: {fileID: 2800000, guid: 127edb487978b274b9c7e49ee68e80fc, type: 3}
+  - Id: survivor_22
+    Portrait: {fileID: 2800000, guid: e7ca5d1feab132b4faebcd9568ecbc47, type: 3}
+  - Id: survivor_23
+    Portrait: {fileID: 2800000, guid: b08005a88b02d42459edd6e987c88f15, type: 3}
+  - Id: survivor_24
+    Portrait: {fileID: 2800000, guid: 093d56aeae7c222418514d86d3c499b4, type: 3}
+  - Id: survivor_25
+    Portrait: {fileID: 2800000, guid: ee3bee8aaebf09645ba8ef91bf005429, type: 3}
+  - Id: survivor_26
+    Portrait: {fileID: 2800000, guid: 6a377cb1f0599ad40bd6bb974263c0ad, type: 3}
+  - Id: survivor_27
+    Portrait: {fileID: 2800000, guid: f0ac29db6e9b157499e5a0845ac13036, type: 3}
+  - Id: survivor_28
+    Portrait: {fileID: 2800000, guid: c14d64bb0aa732b428cab02d5dcf2997, type: 3}
+  - Id: survivor_29
+    Portrait: {fileID: 2800000, guid: 4ffed6332c962044ebeb4169c4e693c5, type: 3}
+  - Id: survivor_30
+    Portrait: {fileID: 2800000, guid: 069864612e72b3348a5fd2bb3fcce2ae, type: 3}
+  - Id: survivor_31
+    Portrait: {fileID: 2800000, guid: 454140c185da17249a4b222e33f85f36, type: 3}
+  - Id: survivor_32
+    Portrait: {fileID: 2800000, guid: 6556a97f64187bb46ad91dfdbe75aef3, type: 3}
+  - Id: survivor_33
+    Portrait: {fileID: 2800000, guid: a22b14a24334c8641a4804d19876dee1, type: 3}
+  - Id: survivor_34
+    Portrait: {fileID: 2800000, guid: 6a09eee481befda489b40587dcab03ea, type: 3}
+  - Id: survivor_35
+    Portrait: {fileID: 2800000, guid: 8aade07d43fd15c48b07344d310d61db, type: 3}
+  - Id: survivor_36
+    Portrait: {fileID: 2800000, guid: 86e3b72747ae9e144a6f7d32d5399cb0, type: 3}
+  - Id: survivor_37
+    Portrait: {fileID: 2800000, guid: 3a6512a786f58e04e83661f0750b71f5, type: 3}
+  - Id: survivor_38
+    Portrait: {fileID: 2800000, guid: 97354d8fe2e5f8c4099cebbe71c7d676, type: 3}
+  - Id: survivor_39
+    Portrait: {fileID: 2800000, guid: 44cd22c731fdeba40b5264b0f96baa0c, type: 3}
+  - Id: survivor_40
+    Portrait: {fileID: 2800000, guid: 9f8842cff20d0f541ba63776bdfe7331, type: 3}
+  - Id: survivor_41
+    Portrait: {fileID: 2800000, guid: 83ad2764f6cb74a45884106e4259c1ac, type: 3}
+  - Id: survivor_42
+    Portrait: {fileID: 2800000, guid: 5144af19ee04c8b47a1b6975753fb035, type: 3}
+  - Id: survivor_43
+    Portrait: {fileID: 2800000, guid: 3ee2c682d01089c4ab0e7d1592f85101, type: 3}
+  - Id: survivor_44
+    Portrait: {fileID: 2800000, guid: 67740cbb5f0602a4d8b6573c1d76f51d, type: 3}
   ToastMessages:
   - Id: action_blocked
     TitleFormat: ACTION BLOCKED

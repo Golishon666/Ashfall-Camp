@@ -17,6 +17,7 @@ namespace AshfallCamp.Tests.EditMode
     public sealed class CampUiPrefabValidationTests
     {
         private const string DashboardPrefabPath = "Assets/AshfallCamp/Prefabs/UI/PF_CampDashboard.prefab";
+        private const string AlertRowPrefabPath = "Assets/AshfallCamp/Prefabs/UI/Alerts/AlertRow.prefab";
         private const string CampUiCatalogPath = "Assets/AshfallCamp/UI/CampUiCatalog.asset";
         private const string GameConfigDatabasePath = "Assets/AshfallCamp/Configs/Core/GameConfigDatabase.asset";
 
@@ -64,6 +65,29 @@ namespace AshfallCamp.Tests.EditMode
             }
 
             Assert.IsEmpty(failures, string.Join("\n", failures));
+        }
+
+        [Test]
+        public void CampDashboardPrefabUsesAlertRowPrefabForRecentAlerts()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DashboardPrefabPath);
+            var alertRowPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(AlertRowPrefabPath);
+
+            Assert.NotNull(prefab, DashboardPrefabPath + " is missing.");
+            Assert.NotNull(alertRowPrefab, AlertRowPrefabPath + " is missing.");
+
+            var dashboard = prefab.GetComponent<CampDashboardView>();
+            Assert.NotNull(dashboard, DashboardPrefabPath + " does not contain CampDashboardView.");
+
+            var alertsPanel = ReadAlertsPanel(dashboard);
+            var panelSerialized = new SerializedObject(alertsPanel);
+            var rowPrefab = panelSerialized.FindProperty("alertRowPrefab").objectReferenceValue as GameObject;
+            var firstRowTopOffset = panelSerialized.FindProperty("firstRowTopOffset").floatValue;
+            var rowSpacing = panelSerialized.FindProperty("rowSpacing").floatValue;
+
+            Assert.AreSame(alertRowPrefab, rowPrefab, "Recent alerts should instantiate the shared AlertRow prefab.");
+            Assert.Greater(firstRowTopOffset, 0f, "Recent alerts scroll layout should reserve room for the section title.");
+            Assert.GreaterOrEqual(rowSpacing, 0f, "Recent alerts row spacing cannot be negative.");
         }
 
         [Test]

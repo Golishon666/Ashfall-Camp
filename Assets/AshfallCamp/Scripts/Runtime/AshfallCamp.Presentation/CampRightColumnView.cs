@@ -115,12 +115,111 @@ namespace AshfallCamp.Presentation
                 if (!hasDefinition || !hasState) continue;
 
                 var label = string.IsNullOrEmpty(definition.Name) ? string.Empty : definition.Name.Substring(0, 1).ToUpperInvariant();
+                binding.ResolveReferences();
                 UiText.Set(binding.Label, label);
+                UiText.Set(binding.NameLabel, definition.Name);
+                UiText.Set(binding.LevelLabel, FormatLevel(catalog, building.Level));
+                UiText.Set(binding.StatusLabel, ResolveBuildingStatus(state, config, catalog, definition, building));
                 if (binding.Pin != null)
                 {
                     binding.Pin.color = building.IsUnlocked ? catalog.Theme.Teal : catalog.Theme.MutedInk;
                 }
+
+                if (binding.Icon != null && entry.Icon != null)
+                {
+                    binding.Icon.texture = entry.Icon;
+                    binding.Icon.color = Color.white;
+                }
             }
+        }
+
+        private static string ResolveBuildingStatus(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog, BuildingDefinition definition, BuildingState building)
+        {
+            if (BuildingSystem.IsUpgradeActive(building))
+            {
+                var timer = FormatTimer(BuildingSystem.GetRemainingUpgradeSeconds(building, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()));
+                return building.Level <= 0
+                    ? Format(Fallback(catalog.BuildingStatusBuildingFormat, "BUILDING {0}"), timer)
+                    : Format(Fallback(catalog.BuildingStatusUpgradingFormat, "UPGRADING {0}"), timer);
+            }
+
+            if (building.Level <= 0)
+            {
+                return Fallback(catalog.BuildingStatusNotBuiltLabel, "NOT BUILT");
+            }
+
+            if (BuildingSystem.GetLevel(definition, building.Level + 1) == null)
+            {
+                return Fallback(catalog.BuildingStatusMaxLabel, "MAX LEVEL");
+            }
+
+            if (string.Equals(definition.Id, GameIds.Buildings.Barracks, StringComparison.Ordinal))
+            {
+                return string.Format("{0} / {1}", state.Survivors.Count, state.SurvivorCap);
+            }
+
+            if (string.Equals(definition.Id, GameIds.Buildings.WaterCollector, StringComparison.Ordinal) ||
+                string.Equals(definition.Id, GameIds.Buildings.MushroomBeds, StringComparison.Ordinal))
+            {
+                var level = BuildingSystem.GetLevel(definition, building.Level);
+                var perHour = level != null ? Math.Max(0, level.ResourcePerMinute * 60) : 0;
+                return Format(Fallback(catalog.BuildingStatusProductionFormat, "+{0}/h"), perHour);
+            }
+
+            if (string.Equals(definition.Id, GameIds.Buildings.Infirmary, StringComparison.Ordinal))
+            {
+                var wounded = CountWounded(state);
+                return wounded > 0
+                    ? Format(Fallback(catalog.BuildingStatusWoundedFormat, "{0} Wounded"), wounded)
+                    : Fallback(catalog.BuildingStatusNoWoundedLabel, "No Wounded");
+            }
+
+            if (string.Equals(definition.Id, GameIds.Buildings.Workshop, StringComparison.Ordinal))
+            {
+                return Fallback(catalog.BuildingStatusRepairReadyLabel, "Repair Ready");
+            }
+
+            if (string.Equals(definition.Id, GameIds.Buildings.RadioTower, StringComparison.Ordinal))
+            {
+                return RecruitmentSystem.ValidateBroadcast(state, config).IsValid
+                    ? Fallback(catalog.BuildingStatusBroadcastReadyLabel, "Broadcast Ready")
+                    : Fallback(catalog.BuildingStatusBroadcastBlockedLabel, "Broadcast Blocked");
+            }
+
+            return string.Empty;
+        }
+
+        private static int CountWounded(GameState state)
+        {
+            var count = 0;
+            foreach (var survivor in state.Survivors)
+            {
+                if (survivor.State == SurvivorActivityState.Wounded) count++;
+            }
+
+            return count;
+        }
+
+        private static string FormatLevel(CampUiCatalogSO catalog, int level)
+        {
+            var format = string.IsNullOrWhiteSpace(catalog.LevelLabelFormat) ? "Level {0}" : catalog.LevelLabelFormat;
+            return string.Format(format, level);
+        }
+
+        private static string FormatTimer(double seconds)
+        {
+            var whole = Math.Max(0, (int)Math.Ceiling(seconds));
+            return string.Format("{0:00}:{1:00}", whole / 60, whole % 60);
+        }
+
+        private static string Format(string format, object value)
+        {
+            return string.Format(format, value);
+        }
+
+        private static string Fallback(string value, string fallback)
+        {
+            return string.IsNullOrWhiteSpace(value) ? fallback : value;
         }
 
         private void RenderExpeditionCards(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
@@ -200,8 +299,15 @@ namespace AshfallCamp.Presentation
         public sealed class BuildingPinBinding
         {
             [SerializeField] private string buildingId;
+            [SerializeField] private Graphic panel;
+            [SerializeField] private RawImage icon;
             [SerializeField] private Image pin;
             [SerializeField] private TextMeshProUGUI label;
+            [SerializeField] private TextMeshProUGUI nameLabel;
+            [SerializeField] private TextMeshProUGUI levelLabel;
+            [SerializeField] private TextMeshProUGUI statusLabel;
+
+            private Transform _resolvedRoot;
 
             public BuildingPinBinding()
             {
@@ -215,12 +321,93 @@ namespace AshfallCamp.Presentation
             }
 
             public string BuildingId { get { return buildingId; } }
+            public Graphic Panel { get { return panel; } }
+            public RawImage Icon { get { return icon; } }
             public Image Pin { get { return pin; } }
             public TextMeshProUGUI Label { get { return label; } }
+            public TextMeshProUGUI NameLabel { get { return nameLabel; } }
+            public TextMeshProUGUI LevelLabel { get { return levelLabel; } }
+            public TextMeshProUGUI StatusLabel { get { return statusLabel; } }
 
             public void SetActive(bool active)
             {
-                UiText.SetActive(pin, active);
+                ResolveReferences();
+                if (panel != null)
+                {
+                    panel.gameObject.SetActive(active);
+                }
+                else
+                {
+                    UiText.SetActive(pin, active);
+                    UiText.SetActive(label, active);
+                    UiText.SetActive(nameLabel, active);
+                    UiText.SetActive(levelLabel, active);
+                    UiText.SetActive(statusLabel, active);
+                }
+            }
+
+            public void ResolveReferences()
+            {
+                var root = ResolveRoot();
+                if (root == null) return;
+
+                if (panel == null) panel = root.GetComponent<Graphic>();
+                if (icon == null) icon = FindRawImage(root);
+
+                var texts = root.GetComponentsInChildren<TextMeshProUGUI>(true);
+                if (nameLabel == null) nameLabel = FindText(texts, "Name", 0);
+                if (levelLabel == null) levelLabel = FindText(texts, "Level", 1);
+                if (statusLabel == null) statusLabel = FindText(texts, "Status", 2) ?? FindText(texts, "Description", 2);
+                if (label == null) label = FindText(texts, "PinRuntime", -1);
+            }
+
+            private Transform ResolveRoot()
+            {
+                if (_resolvedRoot != null) return _resolvedRoot;
+                var current = label != null ? label.transform : pin != null ? pin.transform : null;
+                while (current != null)
+                {
+                    if (current.gameObject.name.StartsWith("Callout_", StringComparison.Ordinal))
+                    {
+                        _resolvedRoot = current;
+                        return _resolvedRoot;
+                    }
+
+                    current = current.parent;
+                }
+
+                _resolvedRoot = label != null ? label.transform.parent : pin != null ? pin.transform.parent : null;
+                return _resolvedRoot;
+            }
+
+            private static RawImage FindRawImage(Transform root)
+            {
+                var images = root.GetComponentsInChildren<RawImage>(true);
+                return images.Length > 0 ? images[0] : null;
+            }
+
+            private static TextMeshProUGUI FindText(TextMeshProUGUI[] texts, string token, int fallbackIndex)
+            {
+                for (var i = 0; i < texts.Length; i++)
+                {
+                    if (texts[i] == null) continue;
+                    if (texts[i].gameObject.name.IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        return texts[i];
+                    }
+                }
+
+                if (fallbackIndex < 0) return null;
+                var visibleIndex = 0;
+                for (var i = 0; i < texts.Length; i++)
+                {
+                    if (texts[i] == null) continue;
+                    if (texts[i].gameObject.name.IndexOf("PinRuntime", StringComparison.OrdinalIgnoreCase) >= 0) continue;
+                    if (visibleIndex == fallbackIndex) return texts[i];
+                    visibleIndex++;
+                }
+
+                return null;
             }
         }
 

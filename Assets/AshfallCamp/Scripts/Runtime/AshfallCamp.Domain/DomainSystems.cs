@@ -131,11 +131,14 @@ namespace AshfallCamp.Domain
 
             foreach (var building in config.Buildings.Values)
             {
+                var startLevel = BuildingSystem.GetLevel(building, building.StartingLevel);
                 state.Buildings[building.Id] = new BuildingState
                 {
                     Id = building.Id,
                     Level = building.StartingLevel,
-                    IsUnlocked = building.StartsUnlocked
+                    IsUnlocked = building.StartsUnlocked,
+                    AssignedWorkers = startLevel != null ? startLevel.DefaultWorkers : 0,
+                    ConditionPercent = startLevel != null ? startLevel.DefaultConditionPercent : 0
                 };
             }
 
@@ -537,6 +540,8 @@ namespace AshfallCamp.Domain
 
     public static class RecruitmentSystem
     {
+        public const int MaxCandidateCount = 4;
+
         public static ValidationResult ValidateBroadcast(GameState state, GameConfigSnapshot config)
         {
             var result = new ValidationResult();
@@ -793,7 +798,7 @@ namespace AshfallCamp.Domain
             if (candidates.Count == 0) return selected;
 
             var rng = new SeededRandom(seed == 0 ? (uint)Math.Max(1, state.NextId) * 2654435761u : seed);
-            var targetCount = Math.Min(Math.Max(1, count), candidates.Count);
+            var targetCount = Math.Min(Math.Min(Math.Max(1, count), MaxCandidateCount), candidates.Count);
             while (selected.Count < targetCount)
             {
                 var index = rng.RangeInclusive(0, candidates.Count - 1);
@@ -1112,6 +1117,8 @@ namespace AshfallCamp.Domain
 
     public static class BuildingSystem
     {
+        private const int MillisecondsPerSecond = 1000;
+
         public static ValidationResult ValidateUpgrade(GameState state, GameConfigSnapshot config, string buildingId)
         {
             var result = new ValidationResult();
@@ -1132,6 +1139,12 @@ namespace AshfallCamp.Domain
             if (!state.Buildings.TryGetValue(buildingId, out building))
             {
                 result.Errors.Add("Building state is missing.");
+                return result;
+            }
+
+            if (IsUpgradeActive(building))
+            {
+                result.Errors.Add("Building upgrade is already in progress.");
                 return result;
             }
 
@@ -1157,6 +1170,11 @@ namespace AshfallCamp.Domain
 
         public static BuildingUpgradeResult Upgrade(GameState state, GameConfigSnapshot config, string buildingId)
         {
+            return Upgrade(state, config, buildingId, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+        }
+
+        public static BuildingUpgradeResult Upgrade(GameState state, GameConfigSnapshot config, string buildingId, long nowUnixMs)
+        {
             var validation = ValidateUpgrade(state, config, buildingId);
             var result = new BuildingUpgradeResult { Validation = validation };
             if (!validation.IsValid)
@@ -1168,12 +1186,68 @@ namespace AshfallCamp.Domain
             var building = state.Buildings[buildingId];
             var nextLevel = GetLevel(definition, building.Level + 1);
             ResourceSystem.TrySpend(state, nextLevel.Cost);
-            building.Level = nextLevel.Level;
-            ApplyAllBuildingEffects(state, config);
-            UnlockSystem.RefreshZoneUnlocks(state, config);
-            ProgressionSystem.RefreshDemoCompletion(state, config);
+            var durationSeconds = Math.Max(0.001, nextLevel.UpgradeDurationSeconds);
+            building.UpgradeStartedAtUnixMs = Math.Max(0, nowUnixMs);
+            building.UpgradeFinishedAtUnixMs = building.UpgradeStartedAtUnixMs + Math.Max(1, (long)Math.Ceiling(durationSeconds * MillisecondsPerSecond));
             result.Building = building;
+            result.TargetLevel = nextLevel.Level;
+            result.DurationSeconds = durationSeconds;
+            result.Started = true;
             return result;
+        }
+
+        public static List<string> CompleteReadyUpgrades(GameState state, GameConfigSnapshot config, long nowUnixMs)
+        {
+            var completed = new List<string>();
+            foreach (var building in state.Buildings.Values)
+            {
+                if (!IsUpgradeActive(building) || building.UpgradeFinishedAtUnixMs > nowUnixMs) continue;
+
+                BuildingDefinition definition;
+                if (!config.TryGetBuilding(building.Id, out definition))
+                {
+                    ClearUpgradeTimer(building);
+                    continue;
+                }
+
+                var nextLevel = GetLevel(definition, building.Level + 1);
+                if (nextLevel == null)
+                {
+                    ClearUpgradeTimer(building);
+                    continue;
+                }
+
+                building.Level = nextLevel.Level;
+                ApplyLevelDisplayDefaults(building, nextLevel, true);
+                ClearUpgradeTimer(building);
+                completed.Add(building.Id);
+            }
+
+            if (completed.Count > 0)
+            {
+                ApplyAllBuildingEffects(state, config);
+                UnlockSystem.RefreshZoneUnlocks(state, config);
+                ProgressionSystem.RefreshDemoCompletion(state, config, nowUnixMs);
+            }
+
+            return completed;
+        }
+
+        public static bool IsUpgradeActive(BuildingState building)
+        {
+            return building != null && building.UpgradeStartedAtUnixMs > 0 && building.UpgradeFinishedAtUnixMs > building.UpgradeStartedAtUnixMs;
+        }
+
+        public static double GetRemainingUpgradeSeconds(BuildingState building, long nowUnixMs)
+        {
+            if (!IsUpgradeActive(building)) return 0;
+            return Math.Max(0, (building.UpgradeFinishedAtUnixMs - nowUnixMs) / 1000.0);
+        }
+
+        public static void ApplyConfiguredDisplayDefaults(BuildingState building, BuildingDefinition definition)
+        {
+            if (building == null || definition == null) return;
+            ApplyLevelDisplayDefaults(building, GetLevel(definition, building.Level), false);
         }
 
         public static void ApplyAllBuildingEffects(GameState state, GameConfigSnapshot config)
@@ -1266,6 +1340,26 @@ namespace AshfallCamp.Domain
             }
 
             return null;
+        }
+
+        private static void ClearUpgradeTimer(BuildingState building)
+        {
+            building.UpgradeStartedAtUnixMs = 0;
+            building.UpgradeFinishedAtUnixMs = 0;
+        }
+
+        private static void ApplyLevelDisplayDefaults(BuildingState building, BuildingLevelDefinition level, bool overwrite)
+        {
+            if (level == null) return;
+            if (overwrite || building.AssignedWorkers <= 0)
+            {
+                building.AssignedWorkers = Math.Max(0, Math.Min(level.DefaultWorkers, level.WorkerCapacity));
+            }
+
+            if (overwrite || building.ConditionPercent <= 0)
+            {
+                building.ConditionPercent = Math.Max(0, Math.Min(100, level.DefaultConditionPercent));
+            }
         }
 
         private static void ClampResourcesToCaps(GameState state)

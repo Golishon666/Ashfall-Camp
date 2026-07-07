@@ -231,6 +231,10 @@ namespace AshfallCamp.Infrastructure
     {
         public int Level;
         public List<IntPairData> Cost = new List<IntPairData>();
+        public double UpgradeDurationSeconds;
+        public int WorkerCapacity;
+        public int DefaultWorkers;
+        public int DefaultConditionPercent;
         public int SurvivorCap;
         public int SquadSize;
         public int ResourceCap;
@@ -285,7 +289,7 @@ namespace AshfallCamp.Infrastructure
         public int RecruitmentFoodDivisor = 2;
         public int RecruitmentBaseWater = 2;
         public int RecruitmentWaterDivisor = 3;
-        public int RecruitmentCandidateCount = 2;
+        public int RecruitmentCandidateCount = 4;
         public string WorkshopRequiredBuildingId = "workshop";
         public int WorkshopRequiredBuildingLevel = 1;
         public string WorkshopRepairResourceId = "weapon_parts";
