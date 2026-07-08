@@ -273,10 +273,10 @@ namespace AshfallCamp.Composition
             RecruitAsync(request).Forget();
         }
 
-        private void OnBroadcastRecruitmentRequested()
+        private void OnBroadcastRecruitmentRequested(BroadcastRecruitmentRequest request)
         {
             if (_isRecruiting) return;
-            BroadcastRecruitmentAsync().Forget();
+            BroadcastRecruitmentAsync(request).Forget();
         }
 
         private void OnRecruitmentCandidatesSkipRequested()
@@ -420,19 +420,21 @@ namespace AshfallCamp.Composition
             }
         }
 
-        private async UniTaskVoid BroadcastRecruitmentAsync()
+        private async UniTaskVoid BroadcastRecruitmentAsync(BroadcastRecruitmentRequest request)
         {
             _isRecruiting = true;
             try
             {
                 if (_configs.Current == null) return;
 
+                request = request ?? new BroadcastRecruitmentRequest();
                 var state = _reader.State.CurrentValue;
                 var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                 var result = await _broadcastRecruitment.ExecuteAsync(new BroadcastRecruitmentRequest
                 {
-                    Seed = CreateLaunchSeed(state, now),
-                    NowUnixMs = now
+                    Seed = request.Seed != 0 ? request.Seed : CreateLaunchSeed(state, now),
+                    NowUnixMs = request.NowUnixMs != 0 ? request.NowUnixMs : now,
+                    CandidateChanceMultiplier = request.CandidateChanceMultiplier
                 }, CancellationToken.None);
 
                 if (!result.Validation.IsValid)

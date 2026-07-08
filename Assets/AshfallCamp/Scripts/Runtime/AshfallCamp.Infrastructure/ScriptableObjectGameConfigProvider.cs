@@ -419,6 +419,7 @@ namespace AshfallCamp.Infrastructure
                 RecruitmentBaseWater = source.RecruitmentBaseWater,
                 RecruitmentWaterDivisor = source.RecruitmentWaterDivisor,
                 RecruitmentCandidateCount = source.RecruitmentCandidateCount,
+                RecruitmentBroadcastCost = ToDictionary(source.RecruitmentBroadcastCost),
                 WorkshopRequiredBuildingId = source.WorkshopRequiredBuildingId,
                 WorkshopRequiredBuildingLevel = source.WorkshopRequiredBuildingLevel,
                 WorkshopRepairResourceId = source.WorkshopRepairResourceId,
@@ -592,6 +593,12 @@ namespace AshfallCamp.Infrastructure
             ValidateRecruitmentResource(snapshot, snapshot.Balance.RecruitmentScrapResourceId);
             ValidateRecruitmentResource(snapshot, snapshot.Balance.RecruitmentFoodResourceId);
             ValidateRecruitmentResource(snapshot, snapshot.Balance.RecruitmentWaterResourceId);
+            foreach (var cost in snapshot.Balance.RecruitmentBroadcastCost)
+            {
+                ValidateRecruitmentResource(snapshot, cost.Key);
+                if (cost.Value < 0) throw new InvalidOperationException("Recruitment broadcast cost cannot be negative: " + cost.Key);
+            }
+
             if (snapshot.Balance.RecruitmentRequiredBuildingLevel < 0) throw new InvalidOperationException("Recruitment building level cannot be negative.");
             if (snapshot.Balance.RecruitmentBaseScrap < 0 || snapshot.Balance.RecruitmentBaseFood < 0 || snapshot.Balance.RecruitmentBaseWater < 0)
             {

@@ -41,7 +41,7 @@ namespace AshfallCamp.Presentation
 
         public event Action<string> UpgradeRequested;
         public event Action<ExpeditionLaunchViewRequest> ExpeditionLaunchRequested;
-        public event Action BroadcastRecruitmentRequested;
+        public event Action<BroadcastRecruitmentRequest> BroadcastRecruitmentRequested;
         public event Action<RecruitSurvivorViewRequest> RecruitRequested;
         public event Action RecruitmentCandidatesSkipRequested;
         public event Action<RepairItemRequest> RepairItemRequested;
@@ -59,6 +59,11 @@ namespace AshfallCamp.Presentation
         }
 
         private void Awake()
+        {
+            EnsureBound();
+        }
+
+        private void OnEnable()
         {
             EnsureBound();
         }
@@ -195,7 +200,12 @@ namespace AshfallCamp.Presentation
 
         private bool EnsureBound()
         {
-            if (_isBound) return true;
+            if (_isBound)
+            {
+                ApplyRuntimeHandlers();
+                return true;
+            }
+
             if (catalog == null)
             {
                 if (!_missingCatalogLogged)
@@ -226,6 +236,13 @@ namespace AshfallCamp.Presentation
                 return false;
             }
 
+            ApplyRuntimeHandlers();
+            _isBound = true;
+            return true;
+        }
+
+        private void ApplyRuntimeHandlers()
+        {
             buildingGrid.SetUpgradeHandler(id => UpgradeRequested?.Invoke(id));
             alertsPanel.SetEmergencyScavengeHandler(() => EmergencyScavengeRequested?.Invoke());
             alertsPanel.SetAlertActionHandler(OnAlertActionRequested);
@@ -236,7 +253,7 @@ namespace AshfallCamp.Presentation
 
             if (radioPanel != null)
             {
-                radioPanel.SetBroadcastHandler(() => BroadcastRecruitmentRequested?.Invoke());
+                radioPanel.SetBroadcastHandler(request => BroadcastRecruitmentRequested?.Invoke(request));
                 radioPanel.SetRecruitHandler(request => RecruitRequested?.Invoke(request));
                 radioPanel.SetSkipHandler(() => RecruitmentCandidatesSkipRequested?.Invoke());
             }
@@ -267,10 +284,8 @@ namespace AshfallCamp.Presentation
             }
 
             rightColumn.SetExpeditionLaunchHandler(request => ExpeditionLaunchRequested?.Invoke(request));
-            rightColumn.SetBroadcastHandler(() => BroadcastRecruitmentRequested?.Invoke());
+            rightColumn.SetBroadcastHandler(() => BroadcastRecruitmentRequested?.Invoke(new BroadcastRecruitmentRequest()));
             bottomNav.SetSelectionHandler(OnScreenSelected);
-            _isBound = true;
-            return true;
         }
 
         private void OnScreenSelected(string screenId)
@@ -438,29 +453,29 @@ namespace AshfallCamp.Presentation
                     DOTween.Kill(group);
                 }
 
-                var canAnimate = animate && transition != null && transition.Enabled && transition.DurationSeconds > 0 && group != null;
-                if (!canAnimate)
+                if (!active)
                 {
-                    root.SetActive(active);
-                    ApplyCanvasState(group, active);
+                    root.SetActive(false);
+                    ApplyCanvasState(group, false);
                     return;
                 }
 
-                if (active)
+                EnsureParentsActive(root.transform);
+                root.SetActive(true);
+                ApplyCanvasState(group, true);
+            }
+
+            private static void EnsureParentsActive(Transform transform)
+            {
+                if (transform == null) return;
+
+                var parent = transform.parent;
+                if (parent == null) return;
+
+                EnsureParentsActive(parent);
+                if (!parent.gameObject.activeSelf)
                 {
-                    root.SetActive(true);
-                    ApplyCanvasState(group, true);
-                }
-                else
-                {
-                    group.interactable = false;
-                    group.blocksRaycasts = false;
-                    DOTween.To(() => group.alpha, value => group.alpha = value, 0, transition.DurationSeconds)
-                        .SetEase(transition.Ease)
-                        .SetUpdate(transition.UseUnscaledTime)
-                        .SetTarget(group)
-                        .SetLink(root)
-                        .OnComplete(() => root.SetActive(false));
+                    parent.gameObject.SetActive(true);
                 }
             }
 

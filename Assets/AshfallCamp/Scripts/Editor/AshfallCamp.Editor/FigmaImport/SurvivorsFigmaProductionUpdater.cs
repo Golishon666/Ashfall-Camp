@@ -240,12 +240,18 @@ namespace AshfallCamp.Editor.FigmaImport
         private static void ReplaceDashboardPanel(GameObject dashboardRoot, FigmaPanelIntegration panel)
         {
             var dashboard = dashboardRoot.GetComponent<CampDashboardView>();
+            TryGetDashboardScreenBinding(dashboard, panel.screenId, out var oldScreenRoot, out var oldScreenCanvasGroup);
             var oldPanel = dashboardRoot.GetComponentInChildren(panel.panelType, true);
             var oldRoot = oldPanel != null ? oldPanel.gameObject : null;
-            var parent = oldRoot != null && oldRoot.transform.parent != null ? oldRoot.transform.parent : dashboardRoot.transform;
-            var siblingIndex = oldRoot != null ? oldRoot.transform.GetSiblingIndex() : parent.childCount;
-            var activeSelf = oldRoot != null && oldRoot.activeSelf;
-            var oldCanvasGroup = oldRoot != null ? oldRoot.GetComponent<CanvasGroup>() : null;
+            var anchorRoot = oldScreenRoot != null ? oldScreenRoot : oldRoot;
+            var parent = ResolveReplacementParent(dashboardRoot.transform, anchorRoot);
+            var siblingIndex = ResolveReplacementSiblingIndex(parent, anchorRoot);
+            var activeSelf = anchorRoot != null && anchorRoot.activeSelf;
+            var oldCanvasGroup = oldScreenCanvasGroup != null
+                ? oldScreenCanvasGroup
+                : oldRoot != null
+                    ? oldRoot.GetComponent<CanvasGroup>()
+                    : null;
 
             var source = AssetDatabase.LoadAssetAtPath<GameObject>(panel.prefabPath);
             if (source == null)
@@ -267,12 +273,116 @@ namespace AshfallCamp.Editor.FigmaImport
 
             CopyCanvasState(oldCanvasGroup, newCanvasGroup);
 
-            if (oldRoot != null)
-            {
-                UnityEngine.Object.DestroyImmediate(oldRoot);
-            }
+            DestroyReplacedRoots(oldScreenRoot, oldRoot, newRoot);
 
             BindDashboardScreen(dashboard, panel.screenId, panel.panelProperty, newRoot, newRoot.GetComponent(panel.panelType), newCanvasGroup);
+        }
+
+        private static bool TryGetDashboardScreenBinding(CampDashboardView dashboard, string screenId, out GameObject screenRoot, out CanvasGroup canvasGroup)
+        {
+            screenRoot = null;
+            canvasGroup = null;
+            if (dashboard == null || string.IsNullOrWhiteSpace(screenId)) return false;
+
+            var serialized = new SerializedObject(dashboard);
+            var screens = serialized.FindProperty("screens");
+            if (screens == null) return false;
+
+            for (var i = 0; i < screens.arraySize; i++)
+            {
+                var item = screens.GetArrayElementAtIndex(i);
+                if (!string.Equals(item.FindPropertyRelative("id").stringValue, screenId, StringComparison.Ordinal)) continue;
+
+                var roots = item.FindPropertyRelative("roots");
+                if (roots != null && roots.arraySize > 0)
+                {
+                    screenRoot = roots.GetArrayElementAtIndex(0).objectReferenceValue as GameObject;
+                }
+
+                var groups = item.FindPropertyRelative("canvasGroups");
+                if (groups != null && groups.arraySize > 0)
+                {
+                    canvasGroup = groups.GetArrayElementAtIndex(0).objectReferenceValue as CanvasGroup;
+                }
+
+                return screenRoot != null || canvasGroup != null;
+            }
+
+            return false;
+        }
+
+        private static Transform ResolveReplacementParent(Transform dashboardRoot, GameObject anchorRoot)
+        {
+            if (anchorRoot == null || anchorRoot.transform.parent == null)
+            {
+                return dashboardRoot;
+            }
+
+            var parent = anchorRoot.transform.parent;
+            if (string.Equals(parent.name, RuntimeBindingsRootName, StringComparison.Ordinal) &&
+                parent.parent != null &&
+                IsDescendantOf(parent, dashboardRoot))
+            {
+                return parent.parent;
+            }
+
+            return parent;
+        }
+
+        private static int ResolveReplacementSiblingIndex(Transform parent, GameObject anchorRoot)
+        {
+            if (parent == null) return 0;
+            if (anchorRoot == null || anchorRoot.transform.parent == null) return parent.childCount;
+            if (anchorRoot.transform.parent == parent) return anchorRoot.transform.GetSiblingIndex();
+
+            var anchorParent = anchorRoot.transform.parent;
+            if (string.Equals(anchorParent.name, RuntimeBindingsRootName, StringComparison.Ordinal) &&
+                anchorParent.parent == parent)
+            {
+                return anchorParent.GetSiblingIndex();
+            }
+
+            return parent.childCount;
+        }
+
+        private static bool IsDescendantOf(Transform transform, Transform expectedRoot)
+        {
+            while (transform != null)
+            {
+                if (transform == expectedRoot) return true;
+                transform = transform.parent;
+            }
+
+            return false;
+        }
+
+        private static void DestroyReplacedRoots(GameObject oldScreenRoot, GameObject oldPanelRoot, GameObject newRoot)
+        {
+            if (oldScreenRoot != null && oldPanelRoot != null)
+            {
+                if (oldScreenRoot.transform.IsChildOf(oldPanelRoot.transform))
+                {
+                    DestroyIfDifferent(oldPanelRoot, newRoot);
+                    return;
+                }
+
+                if (oldPanelRoot.transform.IsChildOf(oldScreenRoot.transform))
+                {
+                    DestroyIfDifferent(oldScreenRoot, newRoot);
+                    return;
+                }
+            }
+
+            DestroyIfDifferent(oldScreenRoot, newRoot);
+            DestroyIfDifferent(oldPanelRoot, newRoot);
+        }
+
+        private static void DestroyIfDifferent(GameObject target, GameObject keep)
+        {
+            if (target != null && target != keep)
+            {
+                UnityEngine.Object.DestroyImmediate(target);
+            }
         }
 
         private static void BindDashboardScreen(CampDashboardView dashboard, string screenId, string panelProperty, GameObject screenRoot, Component panel, CanvasGroup canvasGroup)

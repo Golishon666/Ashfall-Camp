@@ -17,6 +17,8 @@ namespace AshfallCamp.Tests.EditMode
     public sealed class CampUiPrefabValidationTests
     {
         private const string DashboardPrefabPath = "Assets/AshfallCamp/Prefabs/UI/PF_CampDashboard.prefab";
+        private const string RadioScreenPrefabPath = "Assets/AshfallCamp/Prefabs/UI/RadioScreen.prefab";
+        private const string RecruitCardPrefabPath = "Assets/AshfallCamp/Prefabs/UI/Radio/RecruitCard_Maya.prefab";
         private const string AlertRowPrefabPath = "Assets/AshfallCamp/Prefabs/UI/Alerts/AlertRow.prefab";
         private const string CampUiCatalogPath = "Assets/AshfallCamp/UI/CampUiCatalog.asset";
         private const string GameConfigDatabasePath = "Assets/AshfallCamp/Configs/Core/GameConfigDatabase.asset";
@@ -27,7 +29,8 @@ namespace AshfallCamp.Tests.EditMode
             "Assets/AshfallCamp/Prefabs/UI/BuildingCard.prefab",
             "Assets/AshfallCamp/Prefabs/UI/ExpeditionsScreen.prefab",
             DashboardPrefabPath,
-            "Assets/AshfallCamp/Prefabs/UI/RadioScreen.prefab",
+            RadioScreenPrefabPath,
+            RecruitCardPrefabPath,
             "Assets/AshfallCamp/Prefabs/UI/ReportsScreen.prefab",
             "Assets/AshfallCamp/Prefabs/UI/SurvivorsScreen.prefab",
             "Assets/AshfallCamp/Prefabs/UI/TopBar.prefab",
@@ -65,6 +68,46 @@ namespace AshfallCamp.Tests.EditMode
             }
 
             Assert.IsEmpty(failures, string.Join("\n", failures));
+        }
+
+        [Test]
+        public void RadioScreenPrefabUsesRecruitCardPrefabAndSignalTunerBindings()
+        {
+            var radioPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(RadioScreenPrefabPath);
+            var recruitPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(RecruitCardPrefabPath);
+
+            Assert.NotNull(radioPrefab, RadioScreenPrefabPath + " is missing.");
+            Assert.NotNull(recruitPrefab, RecruitCardPrefabPath + " is missing.");
+
+            var radioPanel = radioPrefab.GetComponentInChildren<RadioPanelView>(true);
+            var recruitCard = recruitPrefab.GetComponent<RecruitCardView>();
+            Assert.NotNull(radioPanel, RadioScreenPrefabPath + " does not contain RadioPanelView.");
+            Assert.NotNull(recruitCard, RecruitCardPrefabPath + " does not contain RecruitCardView.");
+
+            var serialized = new SerializedObject(radioPanel);
+            Assert.AreSame(recruitCard, serialized.FindProperty("recruitCardPrefab").objectReferenceValue, "RadioPanelView should spawn RecruitCard_Maya dynamically.");
+            Assert.NotNull(serialized.FindProperty("candidateCardContainer").objectReferenceValue, "Radio candidate card container is not assigned.");
+            Assert.NotNull(serialized.FindProperty("frequencyDownButton").objectReferenceValue, "Frequency minus button is not assigned.");
+            Assert.NotNull(serialized.FindProperty("frequencyUpButton").objectReferenceValue, "Frequency plus button is not assigned.");
+            Assert.NotNull(serialized.FindProperty("frequencyLabel").objectReferenceValue, "Frequency label is not assigned.");
+            Assert.NotNull(serialized.FindProperty("broadcastRadioIntelCostValue").objectReferenceValue, "Broadcast radio intel cost value is not assigned.");
+            Assert.NotNull(serialized.FindProperty("signalStateLabel").objectReferenceValue, "Signal state label is not assigned.");
+            Assert.NotNull(serialized.FindProperty("signalStrengthSlider").objectReferenceValue, "Signal strength slider is not assigned.");
+            Assert.NotNull(serialized.FindProperty("callStrengthStateLabel").objectReferenceValue, "Call strength state label is not assigned.");
+            Assert.NotNull(serialized.FindProperty("signalStrengthFillImage").objectReferenceValue, "Signal strength fill image is not assigned.");
+            Assert.NotNull(serialized.FindProperty("scanRangeLabel").objectReferenceValue, "Scan range label is not assigned.");
+            Assert.NotNull(serialized.FindProperty("scanRangeSlider").objectReferenceValue, "Scan range slider is not assigned.");
+            Assert.NotNull(serialized.FindProperty("scanRangeFillImage").objectReferenceValue, "Scan range fill image is not assigned.");
+            Assert.NotNull(serialized.FindProperty("tunerGraphContainer").objectReferenceValue, "Tuner graph container is not assigned.");
+            Assert.NotNull(serialized.FindProperty("tunerGraphBarTemplate").objectReferenceValue, "Tuner graph bar template is not assigned.");
+            Assert.AreEqual(0, serialized.FindProperty("candidateCards").arraySize, "RadioScreen should use dynamic recruit-card spawning instead of static candidate cards.");
+
+            var signalBars = serialized.FindProperty("tunerSignalBars");
+            Assert.That(signalBars.arraySize, Is.GreaterThanOrEqualTo(1), "Radio signal graph needs at least one source bar template.");
+            for (var i = 0; i < signalBars.arraySize; i++)
+            {
+                Assert.NotNull(signalBars.GetArrayElementAtIndex(i).objectReferenceValue, "Radio signal source bar binding " + i + " is missing.");
+            }
         }
 
         [Test]
@@ -324,7 +367,11 @@ namespace AshfallCamp.Tests.EditMode
                 Assert.That(screenRoots.ContainsKey(expeditionsNavId), Is.True, "Missing expeditions screen root.");
                 Assert.That(screenRoots[expeditionsNavId], Is.Not.Empty, "Expeditions screen has no roots.");
 
-                var mapRoot = FindDescendant(screenRoots[expeditionsNavId][0].transform, "WorldMapFigma");
+                var expeditionsRoot = screenRoots[expeditionsNavId][0];
+                Assert.That(expeditionsRoot.activeSelf, Is.True, "Expeditions screen root should become active after nav click.");
+                Assert.That(expeditionsRoot.activeInHierarchy, Is.True, "Expeditions screen root should be visible in hierarchy after nav click.");
+
+                var mapRoot = FindDescendant(expeditionsRoot.transform, "WorldMapFigma");
                 Assert.NotNull(mapRoot, "Expeditions nav must show the imported world map, not the old planning screen.");
                 Assert.NotNull(FindDescendant(mapRoot, "WorldMapArea"), "Imported world map is missing the location map area.");
             }
@@ -378,6 +425,7 @@ namespace AshfallCamp.Tests.EditMode
                 var canvasGroup = workshopRoot.GetComponent<CanvasGroup>();
                 Assert.NotNull(canvasGroup, "Workshop screen root must have a CanvasGroup.");
                 Assert.That(workshopRoot.activeSelf, Is.True, "Workshop screen root should become active immediately.");
+                Assert.That(workshopRoot.activeInHierarchy, Is.True, "Workshop screen root should be visible in hierarchy after nav click.");
                 Assert.That(canvasGroup.alpha, Is.EqualTo(1f).Within(0.001f), "Workshop screen should not stay visually empty after nav click.");
                 Assert.NotNull(FindDescendant(workshopRoot.transform, "WorkshopFigma"), "Workshop screen is missing the imported Figma layer.");
             }
@@ -703,11 +751,17 @@ namespace AshfallCamp.Tests.EditMode
 
                 Assert.NotNull(expected.Portrait, "Catalog radio candidate portrait is missing for " + expected.CandidateId + ".");
                 Assert.NotNull(bindings.Portrait, "Radio candidate portrait binding is missing.");
-                Assert.NotNull(bindings.Avatar, "Radio candidate avatar binding is missing.");
                 Assert.AreSame(expected.Portrait, bindings.Portrait.texture);
                 Assert.That(bindings.Portrait.gameObject.activeSelf, Is.True);
-                Assert.That(bindings.Avatar.gameObject.activeSelf, Is.False);
-                AssertRadioArtwork(catalog.RadioCandidateCardTexture, artwork.FirstCandidateCard, "first candidate card");
+                if (bindings.Avatar != null)
+                {
+                    Assert.That(bindings.Avatar.gameObject.activeSelf, Is.False);
+                }
+
+                if (artwork.FirstCandidateCard != null)
+                {
+                    AssertRadioArtwork(catalog.RadioCandidateCardTexture, artwork.FirstCandidateCard, "first candidate card");
+                }
             }
             finally
             {
@@ -1968,6 +2022,19 @@ namespace AshfallCamp.Tests.EditMode
         private static Button ReadFirstInteractableRecruitButton(CampDashboardView dashboard)
         {
             var radioPanel = ReadRadioPanel(dashboard);
+            var dynamicCards = radioPanel.GetComponentsInChildren<RecruitCardView>(true);
+            foreach (var dynamicCard in dynamicCards)
+            {
+                if (dynamicCard == null || !dynamicCard.gameObject.activeSelf) continue;
+
+                var cardSerialized = new SerializedObject(dynamicCard);
+                var dynamicButton = cardSerialized.FindProperty("recruitButton").objectReferenceValue as Button;
+                if (dynamicButton != null && dynamicButton.interactable)
+                {
+                    return dynamicButton;
+                }
+            }
+
             var panelSerialized = new SerializedObject(radioPanel);
             var cards = panelSerialized.FindProperty("candidateCards");
             for (var i = 0; i < cards.arraySize; i++)
@@ -1986,6 +2053,15 @@ namespace AshfallCamp.Tests.EditMode
         private static RadioCandidatePortraitBindings ReadFirstRadioCandidatePortraitBindings(CampDashboardView dashboard)
         {
             var radioPanel = ReadRadioPanel(dashboard);
+            var dynamicCard = ReadFirstRenderedRecruitCard(radioPanel);
+            if (dynamicCard != null)
+            {
+                var cardSerialized = new SerializedObject(dynamicCard);
+                return new RadioCandidatePortraitBindings(
+                    cardSerialized.FindProperty("portrait").objectReferenceValue as RawImage,
+                    null);
+            }
+
             var panelSerialized = new SerializedObject(radioPanel);
             var cards = panelSerialized.FindProperty("candidateCards");
             Assert.That(cards.arraySize, Is.GreaterThan(0), "RadioPanelView has no candidate card bindings.");
@@ -2001,13 +2077,29 @@ namespace AshfallCamp.Tests.EditMode
             var radioPanel = ReadRadioPanel(dashboard);
             var panelSerialized = new SerializedObject(radioPanel);
             var cards = panelSerialized.FindProperty("candidateCards");
-            Assert.That(cards.arraySize, Is.GreaterThan(0), "RadioPanelView has no candidate card bindings.");
+            var firstCandidateCard = cards.arraySize > 0
+                ? cards.GetArrayElementAtIndex(0).FindPropertyRelative("cardArtwork").objectReferenceValue as RawImage
+                : null;
 
             return new RadioArtworkBindings(
                 panelSerialized.FindProperty("intelPanelArtwork").objectReferenceValue as RawImage,
                 panelSerialized.FindProperty("broadcastPanelArtwork").objectReferenceValue as RawImage,
                 panelSerialized.FindProperty("emptyPanelArtwork").objectReferenceValue as RawImage,
-                cards.GetArrayElementAtIndex(0).FindPropertyRelative("cardArtwork").objectReferenceValue as RawImage);
+                firstCandidateCard);
+        }
+
+        private static RecruitCardView ReadFirstRenderedRecruitCard(RadioPanelView radioPanel)
+        {
+            var dynamicCards = radioPanel.GetComponentsInChildren<RecruitCardView>(true);
+            foreach (var dynamicCard in dynamicCards)
+            {
+                if (dynamicCard != null && dynamicCard.gameObject.activeSelf)
+                {
+                    return dynamicCard;
+                }
+            }
+
+            return null;
         }
 
         private static void AssertRadioArtwork(Texture2D expected, RawImage binding, string label)

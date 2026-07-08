@@ -59,6 +59,9 @@ MonoBehaviour:
     RecruitmentBaseWater: 2
     RecruitmentWaterDivisor: 3
     RecruitmentCandidateCount: 4
+    RecruitmentBroadcastCost:
+    - Id: radio_intel
+      Value: 1
     WorkshopRequiredBuildingId: workshop
     WorkshopRequiredBuildingLevel: 1
     WorkshopRepairResourceId: weapon_parts

@@ -9,6 +9,7 @@ namespace AshfallCamp.Domain
             public const string Water = "water";
             public const string WeaponParts = "weapon_parts";
             public const string Medicine = "medicine";
+            public const string RadioIntel = "radio_intel";
 
             public static readonly string[] All =
             {
@@ -17,6 +18,7 @@ namespace AshfallCamp.Domain
                 Water,
                 WeaponParts,
                 Medicine,
+                RadioIntel,
             };
         }
 

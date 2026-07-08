@@ -440,7 +440,7 @@ namespace AshfallCamp.Tests.EditMode
 
             public event Action<string> UpgradeRequested;
             public event Action<ExpeditionLaunchViewRequest> ExpeditionLaunchRequested;
-            public event Action BroadcastRecruitmentRequested;
+            public event Action<BroadcastRecruitmentRequest> BroadcastRecruitmentRequested;
             public event Action<RecruitSurvivorViewRequest> RecruitRequested;
             public event Action RecruitmentCandidatesSkipRequested;
             public event Action<RepairItemRequest> RepairItemRequested;
@@ -478,7 +478,7 @@ namespace AshfallCamp.Tests.EditMode
 
             public void RaiseBroadcastRecruitmentRequested()
             {
-                BroadcastRecruitmentRequested?.Invoke();
+                BroadcastRecruitmentRequested?.Invoke(new BroadcastRecruitmentRequest());
             }
 
             public void RaiseRecruitRequested(RecruitSurvivorViewRequest request)

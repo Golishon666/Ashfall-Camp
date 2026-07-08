@@ -228,20 +228,26 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
-        public void RecruitmentValidationBlocksCapAndUnaffordableBroadcast()
+        public void RecruitmentBroadcastIgnoresCapButStillRequiresResources()
         {
             var config = TestConfigFactory.Create();
             var state = GameStateFactory.CreateNew(config, 0);
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
-
-            var capped = RecruitmentSystem.ValidateBroadcast(state, config);
-            Assert.IsFalse(capped.IsValid);
-            Assert.Contains("Survivor cap reached.", capped.Errors);
-
             TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
-            state.Resources["scrap"] = 0;
+            state.SurvivorCap = state.Survivors.Count;
+
+            var cappedBroadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1 });
+            Assert.IsTrue(cappedBroadcast.Validation.IsValid, string.Join(", ", cappedBroadcast.Validation.Errors));
+            Assert.Greater(cappedBroadcast.CandidateIds.Count, 0);
+
+            var cappedRecruit = RecruitmentSystem.ValidateRecruitSelection(state, config, cappedBroadcast.CandidateIds[0]);
+            Assert.IsFalse(cappedRecruit.IsValid);
+            Assert.Contains("Survivor cap reached.", cappedRecruit.Errors);
+
+            RecruitmentSystem.SkipCandidates(state);
+            state.Resources["radio_intel"] = 0;
             var unaffordable = RecruitmentSystem.ValidateBroadcast(state, config);
 
             Assert.IsFalse(unaffordable.IsValid);
@@ -257,15 +263,19 @@ namespace AshfallCamp.Tests.EditMode
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
             TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
+            var scrapAfterUpgrade = state.Resources["scrap"];
+            var foodAfterUpgrade = state.Resources["food"];
+            var waterAfterUpgrade = state.Resources["water"];
 
             var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1, NowUnixMs = 25 });
 
             Assert.IsTrue(broadcast.Validation.IsValid);
             Assert.AreEqual(1, broadcast.CandidateIds.Count);
             Assert.AreEqual("survivor_02", broadcast.CandidateIds[0]);
-            Assert.AreEqual(55, state.Resources["scrap"]);
-            Assert.AreEqual(14, state.Resources["food"]);
-            Assert.AreEqual(18, state.Resources["water"]);
+            Assert.AreEqual(scrapAfterUpgrade, state.Resources["scrap"]);
+            Assert.AreEqual(foodAfterUpgrade, state.Resources["food"]);
+            Assert.AreEqual(waterAfterUpgrade, state.Resources["water"]);
+            Assert.AreEqual(2, state.Resources["radio_intel"]);
             Assert.AreEqual(1, state.Recruitment.PendingCandidateIds.Count);
 
             var result = RecruitmentSystem.Recruit(state, config, new RecruitSurvivorRequest { CandidateId = "survivor_02", NowUnixMs = 50 });
@@ -276,9 +286,10 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("Bram", state.Survivors[1].Name);
             Assert.AreEqual("rusty_knife", result.Weapon.ItemId);
             Assert.AreEqual(result.Weapon.Uid, result.Survivor.Equipment.WeaponItemUid);
-            Assert.AreEqual(55, state.Resources["scrap"]);
-            Assert.AreEqual(14, state.Resources["food"]);
-            Assert.AreEqual(18, state.Resources["water"]);
+            Assert.AreEqual(scrapAfterUpgrade, state.Resources["scrap"]);
+            Assert.AreEqual(foodAfterUpgrade, state.Resources["food"]);
+            Assert.AreEqual(waterAfterUpgrade, state.Resources["water"]);
+            Assert.AreEqual(2, state.Resources["radio_intel"]);
             Assert.AreEqual(0, result.Cost.Count);
             Assert.AreEqual(0, state.Recruitment.PendingCandidateIds.Count);
             Assert.AreEqual(1, state.Statistics.SurvivorsRecruited);
@@ -291,34 +302,60 @@ namespace AshfallCamp.Tests.EditMode
         public void RecruitmentBroadcastUsesConfiguredCandidateCount()
         {
             var config = TestConfigFactory.Create();
-            config.RecruitableSurvivors["survivor_03"] = new RecruitableSurvivorDefinition
-            {
-                Id = "survivor_03",
-                Name = "Cora",
-                BackgroundId = "scavenger",
-                TraitIds = new List<string> { "careful" },
-                WeaponItemId = "rusty_knife",
-                Skills = new Dictionary<string, int>
-                {
-                    { "scavenging", 1 },
-                    { "melee", 1 },
-                    { "firearms", 0 },
-                    { "survival", 1 },
-                    { "mechanics", 0 },
-                    { "medicine", 0 }
-                }
-            };
+            config.Balance.RecruitmentCandidateCount = 2;
+            AddRecruitableDefinition(config, "survivor_03", "Cora");
             var state = GameStateFactory.CreateNew(config, 0);
             state.Resources["scrap"] = 100;
             state.Resources["food"] = 20;
             state.Resources["water"] = 20;
             TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
 
-            var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1 });
+            var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1, CandidateChanceMultiplier = 100 });
 
             Assert.IsTrue(broadcast.Validation.IsValid);
             Assert.AreEqual(config.Balance.RecruitmentCandidateCount, broadcast.CandidateIds.Count);
             CollectionAssert.AreEquivalent(new[] { "survivor_02", "survivor_03" }, broadcast.CandidateIds);
+        }
+
+        [Test]
+        public void RecruitmentBroadcastSignalQualityScalesCandidateChances()
+        {
+            var goodTotal = 0;
+            var normalTotal = 0;
+            var badTotal = 0;
+
+            for (uint seed = 1; seed <= 128; seed++)
+            {
+                goodTotal += BroadcastCountForSignalMultiplier(seed, 1.0);
+                normalTotal += BroadcastCountForSignalMultiplier(seed, 0.5);
+                badTotal += BroadcastCountForSignalMultiplier(seed, 0.25);
+            }
+
+            Assert.Greater(goodTotal, normalTotal);
+            Assert.Greater(normalTotal, badTotal);
+        }
+
+        [Test]
+        public void RecruitmentBroadcastNeverReturnsMoreThanFourCandidates()
+        {
+            var config = TestConfigFactory.Create();
+            config.Balance.RecruitmentCandidateCount = 99;
+            AddRecruitableDefinition(config, "survivor_03", "Cora");
+            AddRecruitableDefinition(config, "survivor_04", "Dee");
+            AddRecruitableDefinition(config, "survivor_05", "Eli");
+            AddRecruitableDefinition(config, "survivor_06", "Faye");
+            AddRecruitableDefinition(config, "survivor_07", "Gale");
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["food"] = 20;
+            state.Resources["water"] = 20;
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
+
+            var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 7, CandidateChanceMultiplier = 100 });
+
+            Assert.IsTrue(broadcast.Validation.IsValid, string.Join(", ", broadcast.Validation.Errors));
+            Assert.AreEqual(RecruitmentSystem.MaxCandidateCount, broadcast.CandidateIds.Count);
+            Assert.AreEqual(RecruitmentSystem.MaxCandidateCount, state.Recruitment.PendingCandidateIds.Count);
         }
 
         [Test]
@@ -1329,6 +1366,57 @@ namespace AshfallCamp.Tests.EditMode
             }
         }
 
+        private static void AddRecruitableDefinition(GameConfigSnapshot config, string id, string name)
+        {
+            config.RecruitableSurvivors[id] = new RecruitableSurvivorDefinition
+            {
+                Id = id,
+                Name = name,
+                BackgroundId = "scavenger",
+                TraitIds = new List<string> { "careful" },
+                WeaponItemId = "rusty_knife",
+                WeaponConfigId = "test_knife",
+                ArmorConfigId = "test_cloth",
+                UtilityConfigId = "test_medkit",
+                BaseAttack = 2,
+                BaseSpeed = 8,
+                Skills = new Dictionary<string, int>
+                {
+                    { "scavenging", 1 },
+                    { "melee", 1 },
+                    { "firearms", 0 },
+                    { "survival", 1 },
+                    { "mechanics", 0 },
+                    { "medicine", 0 }
+                }
+            };
+        }
+
+        private static int BroadcastCountForSignalMultiplier(uint seed, double signalMultiplier)
+        {
+            var config = TestConfigFactory.Create();
+            config.Balance.RecruitmentCandidateCount = RecruitmentSystem.MaxCandidateCount;
+            AddRecruitableDefinition(config, "survivor_03", "Cora");
+            AddRecruitableDefinition(config, "survivor_04", "Dee");
+            AddRecruitableDefinition(config, "survivor_05", "Eli");
+            AddRecruitableDefinition(config, "survivor_06", "Faye");
+            var state = GameStateFactory.CreateNew(config, 0);
+            state.Resources["scrap"] = 100;
+            state.Resources["food"] = 20;
+            state.Resources["water"] = 20;
+            TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
+
+            var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest
+            {
+                Seed = seed,
+                CandidateChanceMultiplier = signalMultiplier
+            });
+
+            Assert.IsTrue(broadcast.Validation.IsValid, string.Join(", ", broadcast.Validation.Errors));
+            Assert.That(broadcast.CandidateIds.Count, Is.InRange(1, RecruitmentSystem.MaxCandidateCount));
+            return broadcast.CandidateIds.Count;
+        }
+
         private static SurvivorState AddRecruitableSurvivor(GameState state, GameConfigSnapshot config, string survivorId, string candidateId)
         {
             var candidate = config.RecruitableSurvivors[candidateId];
@@ -1524,6 +1612,8 @@ namespace AshfallCamp.Tests.EditMode
             config.Resources["water"] = new ResourceDefinition { Id = "water", Name = "Water", StartAmount = 6, HasCap = true, StartCap = 40 };
             config.Resources["weapon_parts"] = new ResourceDefinition { Id = "weapon_parts", Name = "Weapon Parts", StartAmount = 0, HasCap = false };
             config.Resources["medicine"] = new ResourceDefinition { Id = "medicine", Name = "Medicine", StartAmount = 1, HasCap = true, StartCap = 20 };
+            config.Resources["radio_intel"] = new ResourceDefinition { Id = "radio_intel", Name = "Radio Intel", StartAmount = 3, HasCap = false };
+            config.Balance.RecruitmentBroadcastCost = new Dictionary<string, int> { { "radio_intel", 1 } };
 
             config.Backgrounds["scavenger"] = new BackgroundDefinition
             {

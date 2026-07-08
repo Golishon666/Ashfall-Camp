@@ -10,7 +10,7 @@ namespace AshfallCamp.Presentation
         Transform Root { get; }
         event Action<string> UpgradeRequested;
         event Action<ExpeditionLaunchViewRequest> ExpeditionLaunchRequested;
-        event Action BroadcastRecruitmentRequested;
+        event Action<BroadcastRecruitmentRequest> BroadcastRecruitmentRequested;
         event Action<RecruitSurvivorViewRequest> RecruitRequested;
         event Action RecruitmentCandidatesSkipRequested;
         event Action<RepairItemRequest> RepairItemRequested;

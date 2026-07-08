@@ -19,6 +19,7 @@ namespace AshfallCamp.Presentation
 
         private readonly Dictionary<string, FilterBinding> _filterLookup = new Dictionary<string, FilterBinding>(StringComparer.Ordinal);
         private readonly Dictionary<string, BuildingCardView> _cardLookup = new Dictionary<string, BuildingCardView>(StringComparer.Ordinal);
+        private readonly List<GameObject> _templateChildren = new List<GameObject>();
         private bool _lookupDirty = true;
         private bool _dynamicCardsBuilt;
         private Action<string> _upgradeRequested;
@@ -85,13 +86,7 @@ namespace AshfallCamp.Presentation
             if (_dynamicCardsBuilt) return;
 
             var parent = ResolveCardContainer();
-            foreach (var card in cards)
-            {
-                if (card != null)
-                {
-                    card.gameObject.SetActive(false);
-                }
-            }
+            HideTemplateChildren(parent);
 
             cards.Clear();
             foreach (var entry in catalog.Buildings)
@@ -100,6 +95,7 @@ namespace AshfallCamp.Presentation
 
                 var card = Instantiate(cardPrefab, parent);
                 card.name = "BuildingCard_" + entry.BuildingId;
+                card.gameObject.SetActive(true);
                 card.ConfigureBuildingId(entry.BuildingId);
                 card.SetUpgradeHandler(_upgradeRequested);
                 cards.Add(card);
@@ -140,10 +136,38 @@ namespace AshfallCamp.Presentation
 
             if (addedLayout || gridLayout.cellSize == Vector2.zero || gridLayout.cellSize.x <= 100f || gridLayout.cellSize.y <= 100f)
             {
-                var sample = cards.Count > 0 && cards[0] != null ? cards[0].GetComponent<RectTransform>() : null;
+                var sample = cardPrefab != null ? cardPrefab.GetComponent<RectTransform>() : null;
+                if (sample == null && cards.Count > 0 && cards[0] != null)
+                {
+                    sample = cards[0].GetComponent<RectTransform>();
+                }
+
                 gridLayout.cellSize = sample != null && sample.sizeDelta != Vector2.zero
                     ? sample.sizeDelta
                     : new Vector2(540f, 306f);
+            }
+        }
+
+        private void HideTemplateChildren(Transform parent)
+        {
+            if (parent == null) return;
+
+            _templateChildren.Clear();
+            for (var i = 0; i < parent.childCount; i++)
+            {
+                var child = parent.GetChild(i);
+                if (child == null || child == cardPrefab.transform) continue;
+
+                var existingCard = child.GetComponent<BuildingCardView>();
+                if (existingCard != null && cards.Contains(existingCard))
+                {
+                    existingCard.gameObject.SetActive(false);
+                    _templateChildren.Add(existingCard.gameObject);
+                    continue;
+                }
+
+                child.gameObject.SetActive(false);
+                _templateChildren.Add(child.gameObject);
             }
         }
 

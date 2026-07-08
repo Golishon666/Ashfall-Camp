@@ -290,6 +290,10 @@ namespace AshfallCamp.Infrastructure
         public int RecruitmentBaseWater = 2;
         public int RecruitmentWaterDivisor = 3;
         public int RecruitmentCandidateCount = 4;
+        public List<IntPairData> RecruitmentBroadcastCost = new List<IntPairData>
+        {
+            new IntPairData("radio_intel", 1)
+        };
         public string WorkshopRequiredBuildingId = "workshop";
         public int WorkshopRequiredBuildingLevel = 1;
         public string WorkshopRepairResourceId = "weapon_parts";

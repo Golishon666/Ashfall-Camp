@@ -541,6 +541,7 @@ namespace AshfallCamp.Domain
     public static class RecruitmentSystem
     {
         public const int MaxCandidateCount = 4;
+        private static readonly double[] CandidateSlotBaseChances = { 1.0, 0.5, 0.25, 0.1 };
 
         public static ValidationResult ValidateBroadcast(GameState state, GameConfigSnapshot config)
         {
@@ -549,11 +550,6 @@ namespace AshfallCamp.Domain
             {
                 result.Errors.Add("Recruitment state is missing.");
                 return result;
-            }
-
-            if (state.Survivors.Count >= state.SurvivorCap)
-            {
-                result.Errors.Add("Survivor cap reached.");
             }
 
             if (!HasRequiredBuilding(state, config))
@@ -635,7 +631,7 @@ namespace AshfallCamp.Domain
                 return result;
             }
 
-            var candidates = PickCandidates(state, config, request.Seed, config.Balance.RecruitmentCandidateCount);
+            var candidates = PickCandidates(state, config, request.Seed, config.Balance.RecruitmentCandidateCount, request.CandidateChanceMultiplier);
             if (candidates.Count == 0)
             {
                 result.Validation.Errors.Add("No survivor signals available.");
@@ -729,6 +725,16 @@ namespace AshfallCamp.Domain
             if (state == null || config == null) return cost;
 
             var balance = config.Balance;
+            if (balance.RecruitmentBroadcastCost != null && balance.RecruitmentBroadcastCost.Count > 0)
+            {
+                foreach (var pair in balance.RecruitmentBroadcastCost)
+                {
+                    AddCost(cost, pair.Key, pair.Value);
+                }
+
+                return cost;
+            }
+
             var survivorCount = Math.Max(1, state.Survivors.Count);
             AddCost(cost, balance.RecruitmentScrapResourceId, (int)Math.Floor(balance.RecruitmentBaseScrap * Math.Pow(survivorCount, balance.RecruitmentScrapExponent)));
             AddCost(cost, balance.RecruitmentFoodResourceId, balance.RecruitmentBaseFood + survivorCount / Math.Max(1, balance.RecruitmentFoodDivisor));
@@ -782,7 +788,7 @@ namespace AshfallCamp.Domain
                    building.Level >= config.Balance.RecruitmentRequiredBuildingLevel;
         }
 
-        private static List<RecruitableSurvivorDefinition> PickCandidates(GameState state, GameConfigSnapshot config, uint seed, int count)
+        private static List<RecruitableSurvivorDefinition> PickCandidates(GameState state, GameConfigSnapshot config, uint seed, int count, double chanceMultiplier)
         {
             var candidates = new List<RecruitableSurvivorDefinition>();
             foreach (var candidate in config.RecruitableSurvivors.Values)
@@ -799,11 +805,24 @@ namespace AshfallCamp.Domain
 
             var rng = new SeededRandom(seed == 0 ? (uint)Math.Max(1, state.NextId) * 2654435761u : seed);
             var targetCount = Math.Min(Math.Min(Math.Max(1, count), MaxCandidateCount), candidates.Count);
-            while (selected.Count < targetCount)
+            var fallbackCandidate = candidates[0];
+            var normalizedMultiplier = GameMath.Clamp(chanceMultiplier, 0, double.MaxValue);
+            for (var slot = 0; slot < targetCount && candidates.Count > 0; slot++)
             {
                 var index = rng.RangeInclusive(0, candidates.Count - 1);
-                selected.Add(candidates[index]);
+                var candidate = candidates[index];
                 candidates.RemoveAt(index);
+                var baseChance = slot < CandidateSlotBaseChances.Length ? CandidateSlotBaseChances[slot] : 0.0;
+                var chance = GameMath.Clamp(baseChance * normalizedMultiplier, 0, 1);
+                if (rng.NextDouble() <= chance)
+                {
+                    selected.Add(candidate);
+                }
+            }
+
+            if (selected.Count == 0)
+            {
+                selected.Add(fallbackCandidate);
             }
 
             return selected;

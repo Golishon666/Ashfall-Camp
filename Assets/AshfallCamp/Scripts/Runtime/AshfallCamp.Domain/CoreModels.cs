@@ -328,6 +328,7 @@ namespace AshfallCamp.Domain
     {
         public uint Seed;
         public long NowUnixMs;
+        public double CandidateChanceMultiplier = 1.0;
     }
 
     public sealed class BroadcastRecruitmentResult
@@ -702,6 +703,10 @@ namespace AshfallCamp.Domain
         public int RecruitmentBaseWater = 2;
         public int RecruitmentWaterDivisor = 3;
         public int RecruitmentCandidateCount = RecruitmentSystem.MaxCandidateCount;
+        public Dictionary<string, int> RecruitmentBroadcastCost = new Dictionary<string, int>(StringComparer.Ordinal)
+        {
+            { GameIds.Resources.RadioIntel, 1 }
+        };
         public string WorkshopRequiredBuildingId = GameIds.Buildings.Workshop;
         public int WorkshopRequiredBuildingLevel = 1;
         public string WorkshopRepairResourceId = GameIds.Resources.WeaponParts;

@@ -16,7 +16,7 @@ MonoBehaviour:
   - Id: scrap
     Name: Scrap
     HasCap: 0
-    StartAmount: 15
+    StartAmount: 500
     StartCap: 0
   - Id: food
     Name: Food
@@ -38,3 +38,8 @@ MonoBehaviour:
     HasCap: 1
     StartAmount: 1
     StartCap: 20
+  - Id: radio_intel
+    Name: Radio Intel
+    HasCap: 0
+    StartAmount: 3
+    StartCap: 0

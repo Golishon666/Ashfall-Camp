@@ -733,6 +733,58 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void ScreenBindingActivatesInactiveParentContainer()
+        {
+            var parent = new GameObject("RuntimeBindings");
+            var root = new GameObject("ScreenRoot");
+
+            try
+            {
+                root.transform.SetParent(parent.transform, false);
+                var group = root.AddComponent<CanvasGroup>();
+                var binding = new CampDashboardView.ScreenBinding("screen", new[] { root }, new[] { group });
+                parent.SetActive(false);
+
+                binding.SetActive(true, new CampUiScreenTransition { Enabled = false }, true);
+
+                Assert.IsTrue(parent.activeSelf);
+                Assert.IsTrue(root.activeSelf);
+                Assert.IsTrue(root.activeInHierarchy);
+                Assert.AreEqual(1, group.alpha);
+                Assert.IsTrue(group.interactable);
+                Assert.IsTrue(group.blocksRaycasts);
+            }
+            finally
+            {
+                Object.DestroyImmediate(parent);
+            }
+        }
+
+        [Test]
+        public void ScreenBindingHidesInactiveScreenImmediatelyWhenTransitionEnabled()
+        {
+            var root = new GameObject("ScreenRoot");
+
+            try
+            {
+                var group = root.AddComponent<CanvasGroup>();
+                var binding = new CampDashboardView.ScreenBinding("screen", new[] { root }, new[] { group });
+                var transition = new CampUiScreenTransition { Enabled = true, DurationSeconds = 0.16f };
+
+                binding.SetActive(false, transition, true);
+
+                Assert.IsFalse(root.activeSelf);
+                Assert.AreEqual(0, group.alpha);
+                Assert.IsFalse(group.interactable);
+                Assert.IsFalse(group.blocksRaycasts);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+            }
+        }
+
+        [Test]
         public void DashboardViewStartsOnDashboardEvenWhenCatalogMarksAnotherNavItemActive()
         {
             var root = new GameObject("Dashboard");
@@ -948,7 +1000,7 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual("Intel", radio.IntelTitle);
             Assert.AreEqual("1/3/0", radio.IntelBody);
             Assert.AreEqual("Broadcast", radio.BroadcastTitle);
-            Assert.AreEqual("Cost Scrap x20, Food x2, Water x2", radio.BroadcastCost);
+            Assert.AreEqual("Cost Radio Intel x1", radio.BroadcastCost);
             Assert.AreEqual("Ready", radio.BroadcastStatus);
             Assert.AreEqual("Broadcast", radio.BroadcastButton);
             Assert.IsTrue(radio.CanBroadcast);
@@ -987,6 +1039,257 @@ namespace AshfallCamp.Tests.EditMode
 
             Object.DestroyImmediate(catalog);
             Object.DestroyImmediate(portrait);
+        }
+
+        [Test]
+        public void RadioPanelSpawnsRecruitCardsFromPrefabAndCapsAtFour()
+        {
+            var root = new GameObject("RadioPanelRoot", typeof(RectTransform));
+            var template = CreateRecruitCardTemplate("RecruitCardTemplate");
+            var catalog = CreateCatalog();
+
+            try
+            {
+                var config = TestConfigFactory.Create();
+                AddRecruitableDefinition(config, "survivor_03", "Cora");
+                AddRecruitableDefinition(config, "survivor_04", "Dee");
+                AddRecruitableDefinition(config, "survivor_05", "Eli");
+                AddRecruitableDefinition(config, "survivor_06", "Faye");
+                var state = GameStateFactory.CreateNew(config, 0);
+                TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
+
+                var view = root.AddComponent<RadioPanelView>();
+                var broadcastButton = CreateButton("Broadcast", root.transform);
+                var emptyPanel = CreateImage("Empty", root.transform);
+                var cardContainer = new GameObject("Cards", typeof(RectTransform)).GetComponent<RectTransform>();
+                cardContainer.transform.SetParent(root.transform, false);
+                view.ConfigureBindings(
+                    CreateText("Title", root.transform),
+                    CreateText("IntelTitle", root.transform),
+                    CreateText("IntelBody", root.transform),
+                    CreateText("BroadcastTitle", root.transform),
+                    CreateText("BroadcastCost", root.transform),
+                    CreateText("BroadcastStatus", root.transform),
+                    broadcastButton,
+                    CreateText("BroadcastLabel", broadcastButton.transform),
+                    CreateText("CandidatesTitle", root.transform),
+                    emptyPanel,
+                    CreateText("EmptyTitle", emptyPanel.transform),
+                    CreateText("EmptyBody", emptyPanel.transform),
+                    null);
+                view.ConfigureDynamicRecruitment(template, cardContainer);
+                view.SetRecruitHandler(_ => { });
+                view.Render(state, config, catalog);
+
+                Assert.That(emptyPanel.gameObject.activeSelf, Is.True);
+                Assert.AreEqual(0, cardContainer.GetComponentsInChildren<RecruitCardView>(false).Length);
+
+                state.Recruitment.PendingCandidateIds.Add("survivor_02");
+                view.Render(state, config, catalog);
+
+                Assert.AreEqual(1, cardContainer.GetComponentsInChildren<RecruitCardView>(false).Length);
+
+                state.Recruitment.PendingCandidateIds.Add("survivor_03");
+                state.Recruitment.PendingCandidateIds.Add("survivor_04");
+                state.Recruitment.PendingCandidateIds.Add("survivor_05");
+                view.Render(state, config, catalog);
+
+                var cards = cardContainer.GetComponentsInChildren<RecruitCardView>(false);
+                Assert.AreEqual(RecruitmentSystem.MaxCandidateCount, cards.Length);
+                Assert.That(emptyPanel.gameObject.activeSelf, Is.False);
+                Assert.That(cards[0].name, Does.EndWith("_01"));
+                Assert.That(cardContainer.GetComponentsInChildren<TextMeshProUGUI>(false)[0].text, Is.EqualTo("Bram"));
+
+                state.Recruitment.PendingCandidateIds.Add("survivor_06");
+                view.Render(state, config, catalog);
+
+                Assert.AreEqual(RecruitmentSystem.MaxCandidateCount, cardContainer.GetComponentsInChildren<RecruitCardView>(false).Length);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(template.gameObject);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void RadioPanelShowsBroadcastCandidatesWhenSurvivorCapIsFull()
+        {
+            var root = new GameObject("RadioPanelFullCapRoot", typeof(RectTransform));
+            var template = CreateRecruitCardTemplate("RecruitCardTemplate");
+            var catalog = CreateCatalog();
+
+            try
+            {
+                var config = TestConfigFactory.Create();
+                var state = GameStateFactory.CreateNew(config, 0);
+                TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
+                state.SurvivorCap = state.Survivors.Count;
+
+                var broadcast = RecruitmentSystem.Broadcast(state, config, new BroadcastRecruitmentRequest { Seed = 1 });
+                Assert.IsTrue(broadcast.Validation.IsValid, string.Join(", ", broadcast.Validation.Errors));
+                Assert.Greater(broadcast.CandidateIds.Count, 0);
+
+                var view = root.AddComponent<RadioPanelView>();
+                var broadcastButton = CreateButton("Broadcast", root.transform);
+                var emptyPanel = CreateImage("Empty", root.transform);
+                var cardContainer = new GameObject("Cards", typeof(RectTransform)).GetComponent<RectTransform>();
+                cardContainer.transform.SetParent(root.transform, false);
+                view.ConfigureBindings(
+                    CreateText("Title", root.transform),
+                    CreateText("IntelTitle", root.transform),
+                    CreateText("IntelBody", root.transform),
+                    CreateText("BroadcastTitle", root.transform),
+                    CreateText("BroadcastCost", root.transform),
+                    CreateText("BroadcastStatus", root.transform),
+                    broadcastButton,
+                    CreateText("BroadcastLabel", broadcastButton.transform),
+                    CreateText("CandidatesTitle", root.transform),
+                    emptyPanel,
+                    CreateText("EmptyTitle", emptyPanel.transform),
+                    CreateText("EmptyBody", emptyPanel.transform),
+                    null);
+                view.ConfigureDynamicRecruitment(template, cardContainer);
+                view.SetRecruitHandler(_ => { });
+                view.Render(state, config, catalog);
+
+                var cards = cardContainer.GetComponentsInChildren<RecruitCardView>(false);
+                Assert.AreEqual(1, cards.Length);
+                Assert.That(emptyPanel.gameObject.activeSelf, Is.False);
+                Assert.That(cards[0].GetComponentInChildren<Button>(false).interactable, Is.False);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(template.gameObject);
+                Object.DestroyImmediate(catalog);
+            }
+        }
+
+        [Test]
+        public void RadioPanelTunerUpdatesSignalBarsAndKeepsBroadcastAvailable()
+        {
+            var root = new GameObject("RadioTunerRoot", typeof(RectTransform));
+            var catalog = CreateCatalog();
+
+            try
+            {
+                var config = TestConfigFactory.Create();
+                var state = GameStateFactory.CreateNew(config, 0);
+                state.Resources["scrap"] = 100;
+                state.Resources["food"] = 20;
+                state.Resources["water"] = 20;
+                TestBuildingUpgrades.UpgradeAndComplete(state, config, "barracks");
+
+                var view = root.AddComponent<RadioPanelView>();
+                var broadcastButton = CreateButton("Broadcast", root.transform);
+                var broadcastStatus = CreateText("BroadcastStatus", root.transform);
+                var frequencyDown = CreateButton("FrequencyDown", root.transform);
+                var frequencyUp = CreateButton("FrequencyUp", root.transform);
+                var frequencyLabel = CreateText("FrequencyLabel", root.transform);
+                var signalState = CreateText("SignalState", root.transform);
+                var signalStrength = CreateSlider("SignalStrength", root.transform);
+                var signalStrengthFill = signalStrength.fillRect.GetComponent<Image>();
+                var callStrengthState = CreateText("StrengthState", root.transform);
+                var scanRangeLabel = CreateText("RangeLabel", root.transform);
+                var scanRangeSlider = CreateSlider("ScanRange", root.transform);
+                var scanRangeFill = scanRangeSlider.fillRect.GetComponent<Image>();
+                var bars = new List<Image>();
+                for (var i = 0; i < 8; i++)
+                {
+                    var bar = CreateImage("WaveBar" + i, root.transform);
+                    bar.rectTransform.sizeDelta = new Vector2(4f, 24f + i);
+                    bars.Add(bar);
+                }
+
+                view.ConfigureBindings(
+                    CreateText("Title", root.transform),
+                    CreateText("IntelTitle", root.transform),
+                    CreateText("IntelBody", root.transform),
+                    CreateText("BroadcastTitle", root.transform),
+                    CreateText("BroadcastCost", root.transform),
+                    broadcastStatus,
+                    broadcastButton,
+                    CreateText("BroadcastLabel", broadcastButton.transform),
+                    CreateText("CandidatesTitle", root.transform),
+                    CreateImage("Empty", root.transform),
+                    CreateText("EmptyTitle", root.transform),
+                    CreateText("EmptyBody", root.transform),
+                    null);
+                view.ConfigureTunerBindings(
+                    frequencyDown,
+                    frequencyUp,
+                    frequencyLabel,
+                    signalState,
+                    signalStrength,
+                    bars,
+                    scanRangeLabel,
+                    null,
+                    null,
+                    callStrengthState,
+                    signalStrengthFill,
+                    scanRangeSlider,
+                    scanRangeFill);
+                BroadcastRecruitmentRequest capturedRequest = null;
+                view.SetBroadcastHandler(request => capturedRequest = request);
+                view.Render(state, config, catalog);
+
+                var centerGraphBar = FindImage(root.transform, "SignalGraphBar_24");
+                Assert.NotNull(centerGraphBar, "Tuner should generate function graph bars at runtime.");
+                Assert.That(bars[0].gameObject.activeSelf, Is.False, "Preauthored tuner bars should be hidden after graph generation.");
+                var initialHeight = centerGraphBar.rectTransform.sizeDelta.y;
+                var initialStrength = signalStrength.value;
+                var initialFillColor = signalStrengthFill.color;
+                Assert.AreEqual("107.45 MHz", frequencyLabel.text);
+                Assert.AreEqual("SCAN RANGE 100-120 MHz", scanRangeLabel.text);
+                Assert.That(scanRangeSlider.value, Is.EqualTo(1f).Within(0.0001f));
+                Assert.AreEqual("SIGNAL LOCKED", signalState.text);
+                Assert.AreEqual("GOOD", callStrengthState.text);
+                Assert.That(signalStrength.value, Is.EqualTo(1f).Within(0.0001f));
+                Assert.That(broadcastButton.interactable, Is.True);
+                broadcastButton.onClick.Invoke();
+                Assert.NotNull(capturedRequest);
+                Assert.That(capturedRequest.CandidateChanceMultiplier, Is.EqualTo(1.0).Within(0.0001));
+                capturedRequest = null;
+
+                for (var i = 0; i < 20; i++)
+                {
+                    frequencyDown.onClick.Invoke();
+                }
+
+                view.Render(state, config, catalog);
+
+                Assert.AreEqual("106.45 MHz", frequencyLabel.text);
+                Assert.AreEqual("TUNING...", signalState.text);
+                Assert.That(signalStrength.value, Is.LessThan(initialStrength));
+                Assert.AreNotEqual("GOOD", callStrengthState.text);
+                Assert.AreNotEqual(initialFillColor, signalStrengthFill.color);
+                Assert.AreNotEqual(initialHeight, centerGraphBar.rectTransform.sizeDelta.y);
+                Assert.That(broadcastButton.interactable, Is.True);
+                Assert.AreNotEqual("Tune signal", broadcastStatus.text);
+                broadcastButton.onClick.Invoke();
+                Assert.NotNull(capturedRequest);
+                Assert.That(capturedRequest.CandidateChanceMultiplier, Is.LessThan(1.0));
+                capturedRequest = null;
+
+                for (var i = 0; i < 20; i++)
+                {
+                    frequencyUp.onClick.Invoke();
+                }
+
+                view.Render(state, config, catalog);
+
+                Assert.AreEqual("107.45 MHz", frequencyLabel.text);
+                Assert.AreEqual("SIGNAL LOCKED", signalState.text);
+                Assert.AreEqual("GOOD", callStrengthState.text);
+                Assert.That(broadcastButton.interactable, Is.True);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(catalog);
+            }
         }
 
         [Test]
@@ -1269,6 +1572,32 @@ namespace AshfallCamp.Tests.EditMode
             }
         }
 
+        private static void AddRecruitableDefinition(GameConfigSnapshot config, string id, string name)
+        {
+            config.RecruitableSurvivors[id] = new RecruitableSurvivorDefinition
+            {
+                Id = id,
+                Name = name,
+                BackgroundId = "scavenger",
+                TraitIds = new List<string> { "careful" },
+                WeaponItemId = "rusty_knife",
+                WeaponConfigId = "test_knife",
+                ArmorConfigId = "test_cloth",
+                UtilityConfigId = "test_medkit",
+                BaseAttack = 2,
+                BaseSpeed = 8,
+                Skills = new Dictionary<string, int>
+                {
+                    { "scavenging", 1 },
+                    { "melee", 1 },
+                    { "firearms", 0 },
+                    { "survival", 1 },
+                    { "mechanics", 0 },
+                    { "medicine", 0 }
+                }
+            };
+        }
+
         private static TextMeshProUGUI CreateText(string name, Transform parent)
         {
             var go = new GameObject(name, typeof(RectTransform));
@@ -1294,6 +1623,19 @@ namespace AshfallCamp.Tests.EditMode
             return button;
         }
 
+        private static Slider CreateSlider(string name, Transform parent)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(Image));
+            go.transform.SetParent(parent, false);
+            var fill = CreateImage("Fill", go.transform);
+            var slider = go.AddComponent<Slider>();
+            slider.targetGraphic = go.GetComponent<Image>();
+            slider.fillRect = fill.rectTransform;
+            slider.minValue = 0f;
+            slider.maxValue = 1f;
+            return slider;
+        }
+
         private static Image CreateImage(string name, Transform parent)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Image));
@@ -1306,6 +1648,40 @@ namespace AshfallCamp.Tests.EditMode
             var go = new GameObject(name, typeof(RectTransform), typeof(RawImage));
             go.transform.SetParent(parent, false);
             return go.GetComponent<RawImage>();
+        }
+
+        private static Image FindImage(Transform root, string name)
+        {
+            var match = FindTransform(root, name);
+            return match != null ? match.GetComponent<Image>() : null;
+        }
+
+        private static Transform FindTransform(Transform root, string name)
+        {
+            if (root == null) return null;
+            if (root.name == name) return root;
+            for (var i = 0; i < root.childCount; i++)
+            {
+                var match = FindTransform(root.GetChild(i), name);
+                if (match != null) return match;
+            }
+
+            return null;
+        }
+
+        private static RecruitCardView CreateRecruitCardTemplate(string name)
+        {
+            var root = new GameObject(name, typeof(RectTransform), typeof(Image));
+            var nameLabel = CreateText("Name", root.transform);
+            var roleLabel = CreateText("Role", root.transform);
+            var descriptionLabel = CreateText("Description", root.transform);
+            var skillsLabel = CreateText("SkillsLabel", root.transform);
+            var portrait = CreateRawImage("Portrait", root.transform);
+            var recruitButton = CreateButton("Button_Recruit", root.transform);
+            var recruitLabel = CreateText("Label", recruitButton.transform);
+            var view = root.AddComponent<RecruitCardView>();
+            view.ConfigureBindings(root.GetComponent<Image>(), nameLabel, roleLabel, descriptionLabel, skillsLabel, portrait, recruitButton, recruitLabel);
+            return view;
         }
 
         private static void SetPrivateField(object target, string fieldName, object value)

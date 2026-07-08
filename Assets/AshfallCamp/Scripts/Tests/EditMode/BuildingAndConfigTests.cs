@@ -229,6 +229,7 @@ namespace AshfallCamp.Tests.EditMode
         {
             var database = CreateValidDatabase();
             RenameResource(database, "scrap", "metal", "Metal");
+            database.Balance.Balance.RecruitmentBroadcastCost.Clear();
 
             var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
             var state = GameStateFactory.CreateNew(config, 0);
@@ -469,7 +470,7 @@ namespace AshfallCamp.Tests.EditMode
 
             var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
 
-            AssertIdsMatch("resources", config.Resources.Keys, GameIds.Resources.All);
+            AssertContainsRequiredIds("resources", config.Resources.Keys, GameIds.Resources.All);
             AssertIdsMatch("skills", GameStateFactory.SkillIds, GameIds.Skills.All);
             AssertIdsMatch("buildings", config.Buildings.Keys, GameIds.Buildings.All);
             AssertIdsMatch("zones", config.Zones.Keys, GameIds.Zones.All);
@@ -549,6 +550,29 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
+        public void ScriptableObjectConfigAllowsAdditionalRuntimeTestResources()
+        {
+            var database = CreateValidDatabase();
+            database.Resources.Resources.Add(new ResourceConfigData
+            {
+                Id = "test_runtime_resource",
+                Name = "Test Runtime Resource",
+                HasCap = true,
+                StartAmount = 7,
+                StartCap = 12
+            });
+
+            var config = new ScriptableObjectGameConfigProvider(database).LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+            var state = GameStateFactory.CreateNew(config, 0);
+
+            Assert.IsTrue(config.Resources.ContainsKey("test_runtime_resource"));
+            Assert.IsFalse(Array.IndexOf(GameIds.Resources.All, "test_runtime_resource") >= 0);
+            Assert.AreEqual(7, state.Resources["test_runtime_resource"]);
+            Assert.AreEqual(12, state.ResourceCaps["test_runtime_resource"]);
+            DestroyDatabase(database);
+        }
+
+        [Test]
         public void ScriptableObjectConfigValidationRejectsUnknownProgressionSkill()
         {
             var database = CreateValidDatabase();
@@ -622,6 +646,27 @@ namespace AshfallCamp.Tests.EditMode
             }
         }
 
+        private static void AssertContainsRequiredIds(string label, IEnumerable<string> configIds, string[] requiredIds)
+        {
+            var configSet = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var id in configIds)
+            {
+                if (!string.IsNullOrWhiteSpace(id)) configSet.Add(id);
+            }
+
+            var requiredSet = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var id in requiredIds)
+            {
+                Assert.IsFalse(string.IsNullOrWhiteSpace(id), label + " contains an empty required id.");
+                Assert.IsTrue(requiredSet.Add(id), label + " contains duplicate required id: " + id);
+            }
+
+            foreach (var id in requiredSet)
+            {
+                Assert.IsTrue(configSet.Contains(id), label + " missing required id: " + id);
+            }
+        }
+
         private static IEnumerable<string> CollectUsedSoundIds(GameConfigSnapshot config)
         {
             var ids = new HashSet<string>(StringComparer.Ordinal);
@@ -657,6 +702,7 @@ namespace AshfallCamp.Tests.EditMode
             database.Resources.Resources.Add(new ResourceConfigData { Id = "water", Name = "Water", HasCap = true, StartAmount = 6, StartCap = 40 });
             database.Resources.Resources.Add(new ResourceConfigData { Id = "medicine", Name = "Medicine", HasCap = true, StartAmount = 1, StartCap = 20 });
             database.Resources.Resources.Add(new ResourceConfigData { Id = "weapon_parts", Name = "Weapon Parts", HasCap = false, StartAmount = 0 });
+            database.Resources.Resources.Add(new ResourceConfigData { Id = "radio_intel", Name = "Radio Intel", HasCap = false, StartAmount = 3 });
 
             database.Survivors = ScriptableObject.CreateInstance<SurvivorCatalogSO>();
             database.Survivors.StartingSurvivor = new StartingSurvivorConfigData
