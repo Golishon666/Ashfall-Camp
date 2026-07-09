@@ -65,14 +65,14 @@ namespace AshfallCamp.Editor.FigmaImport
 
         public static float NodeOpacity(FigmaImportNode node)
         {
-            return node == null || node.opacity <= 0f ? 1f : Mathf.Clamp01(node.opacity);
+            return node == null ? 1f : Mathf.Clamp01(node.opacity);
         }
 
         public static Color ToColor(FigmaPaint paint, float nodeOpacity)
         {
             if (paint == null) return Color.white;
 
-            var paintOpacity = paint.opacity <= 0f ? 1f : Mathf.Clamp01(paint.opacity);
+            var paintOpacity = Mathf.Clamp01(paint.opacity);
             var color = new Color(
                 Mathf.Clamp01(paint.color.r),
                 Mathf.Clamp01(paint.color.g),

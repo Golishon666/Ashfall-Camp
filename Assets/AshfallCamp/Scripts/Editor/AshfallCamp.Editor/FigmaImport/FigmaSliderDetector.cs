@@ -40,7 +40,7 @@ namespace AshfallCamp.Editor.FigmaImport
                 }
             }
 
-            if (!looksLikeSlider && track == null && fill == null) return false;
+            if (!looksLikeSlider && !LooksLikeStandaloneSlider(node)) return false;
             if (track == null || fill == null) return false;
             if (track.bounds.width <= 0f) return false;
 
@@ -54,6 +54,34 @@ namespace AshfallCamp.Editor.FigmaImport
             };
 
             return true;
+        }
+
+        private static bool LooksLikeStandaloneSlider(FigmaImportNode node)
+        {
+            if (node == null || node.children == null || node.children.Count == 0 || node.children.Count > 5)
+            {
+                return false;
+            }
+
+            var hasTrack = false;
+            var hasFill = false;
+            for (var i = 0; i < node.children.Count; i++)
+            {
+                var child = node.children[i];
+                if (child == null) return false;
+
+                var name = FigmaImportNameUtility.NormalizeForSearch(child.name);
+                var isTrack = name.Contains("track");
+                var isFill = name.Contains("fill");
+                var isHandle = name.Contains("handle");
+                var isLabel = name.Contains("label") || name.Contains("value");
+                if (!isTrack && !isFill && !isHandle && !isLabel) return false;
+
+                hasTrack |= isTrack;
+                hasFill |= isFill;
+            }
+
+            return hasTrack && hasFill;
         }
     }
 

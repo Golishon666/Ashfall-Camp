@@ -45,6 +45,14 @@
       },
       "hash": "08c8ceebc674a447388bebb2ac26d21e000ac173"
     },
+    "com.golishon666.figunity": {
+      "version": "file:C:/Users/jaros/Downloads/FIGUNITY",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.2.2"
+      }
+    },
     "com.scellecs.morpeh": {
       "version": "https://github.com/scellecs/morpeh.git?path=Scellecs.Morpeh",
       "depth": 0,

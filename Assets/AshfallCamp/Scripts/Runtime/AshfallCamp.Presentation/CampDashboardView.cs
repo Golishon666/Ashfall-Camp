@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AshfallCamp.Domain;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace AshfallCamp.Presentation
 {
@@ -30,6 +31,7 @@ namespace AshfallCamp.Presentation
         [SerializeField] private CampRightColumnView rightColumn;
         [SerializeField] private BottomNavView bottomNav;
         [SerializeField] private List<ScreenBinding> screens = new List<ScreenBinding>();
+        [SerializeField] private bool resourceBarOnly;
 
         private bool _isBound;
         private bool _missingCatalogLogged;
@@ -58,14 +60,29 @@ namespace AshfallCamp.Presentation
             get { return root != null ? root : transform; }
         }
 
+        public bool ResourceBarOnly
+        {
+            get { return resourceBarOnly; }
+            set
+            {
+                resourceBarOnly = value;
+                if (resourceBarOnly)
+                {
+                    ApplyResourceBarOnlyVisibility();
+                }
+            }
+        }
+
         private void Awake()
         {
             EnsureBound();
+            ApplyResourceBarOnlyVisibility();
         }
 
         private void OnEnable()
         {
             EnsureBound();
+            ApplyResourceBarOnlyVisibility();
         }
 
         public void SetCatalog(CampUiCatalogSO uiCatalog)
@@ -141,6 +158,15 @@ namespace AshfallCamp.Presentation
             if (state == null || config == null) return;
             if (!EnsureBound()) return;
 
+            if (resourceBarOnly)
+            {
+                ApplyResourceBarOnlyVisibility();
+                resourceBar.Render(state, config, catalog);
+                _lastState = state;
+                _lastConfig = config;
+                return;
+            }
+
             header.Render(catalog);
             resourceBar.Render(state, config, catalog);
             statusPanel.Render(state, config, catalog);
@@ -188,12 +214,19 @@ namespace AshfallCamp.Presentation
 
         public void ShowToast(CampToastRequest request)
         {
+            if (resourceBarOnly)
+            {
+                ApplyResourceBarOnlyVisibility();
+                return;
+            }
+
             if (toastPanel == null || catalog == null || request == null) return;
             toastPanel.Show(request, catalog);
         }
 
         public void OpenReports()
         {
+            if (resourceBarOnly) return;
             if (!EnsureBound() || catalog == null) return;
             OpenScreen(catalog.ReportsScreenId);
         }
@@ -202,7 +235,11 @@ namespace AshfallCamp.Presentation
         {
             if (_isBound)
             {
-                ApplyRuntimeHandlers();
+                if (!resourceBarOnly)
+                {
+                    ApplyRuntimeHandlers();
+                }
+
                 return true;
             }
 
@@ -229,6 +266,18 @@ namespace AshfallCamp.Presentation
                 return false;
             }
 
+            if (resourceBarOnly)
+            {
+                if (resourceBar == null)
+                {
+                    Debug.LogError("CampDashboardView resource bar only mode requires a ResourceBarView.", this);
+                    return false;
+                }
+
+                _isBound = true;
+                return true;
+            }
+
             if (header == null || resourceBar == null || statusPanel == null || summaryPanel == null ||
                 alertsPanel == null || buildingGrid == null || rightColumn == null || bottomNav == null)
             {
@@ -236,7 +285,11 @@ namespace AshfallCamp.Presentation
                 return false;
             }
 
-            ApplyRuntimeHandlers();
+            if (!resourceBarOnly)
+            {
+                ApplyRuntimeHandlers();
+            }
+
             _isBound = true;
             return true;
         }
@@ -311,6 +364,7 @@ namespace AshfallCamp.Presentation
 
         private void OpenScreen(string screenId)
         {
+            if (resourceBarOnly) return;
             if (!EnsureBound()) return;
             if (string.IsNullOrWhiteSpace(screenId) || !HasScreenBinding(screenId)) return;
 
@@ -384,6 +438,50 @@ namespace AshfallCamp.Presentation
             }
 
             _appliedScreenId = _activeScreenId;
+        }
+
+        private void ApplyResourceBarOnlyVisibility()
+        {
+            if (!resourceBarOnly || resourceBar == null) return;
+            if (!Application.isPlaying) return;
+
+            var rootTransform = Root != null ? Root : transform;
+            var resourceRoot = resourceBar.transform;
+            if (rootTransform == null || resourceRoot == null) return;
+
+            EnsureActivePath(rootTransform, resourceRoot);
+
+            foreach (var child in rootTransform.GetComponentsInChildren<Transform>(true))
+            {
+                if (child == null || child == rootTransform) continue;
+                if (IsResourceBarPathOrContent(resourceRoot, child)) continue;
+
+                child.gameObject.SetActive(false);
+            }
+
+            foreach (var graphic in rootTransform.GetComponentsInChildren<Graphic>(true))
+            {
+                if (graphic == null || graphic.transform == null) continue;
+                if (graphic.transform == resourceRoot || graphic.transform.IsChildOf(resourceRoot)) continue;
+
+                graphic.enabled = false;
+            }
+        }
+
+        private static void EnsureActivePath(Transform rootTransform, Transform leaf)
+        {
+            var current = leaf;
+            while (current != null)
+            {
+                current.gameObject.SetActive(true);
+                if (current == rootTransform) return;
+                current = current.parent;
+            }
+        }
+
+        private static bool IsResourceBarPathOrContent(Transform resourceRoot, Transform target)
+        {
+            return target == resourceRoot || target.IsChildOf(resourceRoot) || resourceRoot.IsChildOf(target);
         }
 
         [Serializable]

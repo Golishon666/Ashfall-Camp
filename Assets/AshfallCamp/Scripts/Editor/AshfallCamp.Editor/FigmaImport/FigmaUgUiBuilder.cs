@@ -281,7 +281,7 @@ namespace AshfallCamp.Editor.FigmaImport
 
             var rawImage = rect.gameObject.AddComponent<RawImage>();
             rawImage.texture = AssetDatabase.LoadAssetAtPath<Texture2D>(node.assetPath);
-            rawImage.color = rawImage.texture == null ? Color.clear : new Color(1f, 1f, 1f, FigmaImportStyleUtility.NodeOpacity(node));
+            rawImage.color = rawImage.texture == null ? Color.clear : Color.white;
             rawImage.raycastTarget = false;
             return rawImage;
         }

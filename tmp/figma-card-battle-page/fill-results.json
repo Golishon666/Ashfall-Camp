@@ -1,0 +1,582 @@
+[
+  {
+    "asset": "bgBattle",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "5ebcae35db76f4bcb21b9f6d9c01cdcbea9741a6",
+      "nodes": [
+        {
+          "id": "162:15174",
+          "name": "battlefield background / existing asset"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "resScrap",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "48f837ac90df4b506d0d654c68700f0127f8ea2a",
+      "nodes": [
+        {
+          "id": "162:15232",
+          "name": "resource icon / Scrap"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "resFood",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "a9e080386f04cac5c2fd4d610059b8cbc3e963fc",
+      "nodes": [
+        {
+          "id": "162:15235",
+          "name": "resource icon / Food"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "resWater",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "08e643b69fb4b1e7aee1aa7c2e8943c3802e8f9a",
+      "nodes": [
+        {
+          "id": "162:15239",
+          "name": "resource icon / Water"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "resParts",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "eb7f727d853b13e87af208f6041e08ae7b6ab0dc",
+      "nodes": [
+        {
+          "id": "162:15243",
+          "name": "resource icon / Weapon Parts"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "resMedicine",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "a338ba86c6e5bd9af5fc52d1b9c251aa5e897e2a",
+      "nodes": [
+        {
+          "id": "162:15247",
+          "name": "resource icon / Medicine"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "resIntel",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "084bdc506ddf5c5a04cfb4208649f67e7f9e349a",
+      "nodes": [
+        {
+          "id": "162:15251",
+          "name": "resource icon / Radio Intel"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "survivor01",
+    "nodeCount": 2,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 2 node(s)",
+      "imageHash": "8235ce114d70224cf6d34c2bb0fea17c0bf228c4",
+      "nodes": [
+        {
+          "id": "162:15276",
+          "name": "portrait / Asha"
+        },
+        {
+          "id": "162:15461",
+          "name": "lane ally avatar / Asha"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "heart",
+    "nodeCount": 8,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 8 node(s)",
+      "imageHash": "1695ace6f2db4269173c756fae34e362b672534d",
+      "nodes": [
+        {
+          "id": "162:15279",
+          "name": "hp icon / Asha"
+        },
+        {
+          "id": "162:15303",
+          "name": "hp icon / Bram"
+        },
+        {
+          "id": "162:15327",
+          "name": "hp icon / Cora"
+        },
+        {
+          "id": "162:15351",
+          "name": "hp icon / Dima"
+        },
+        {
+          "id": "162:15376",
+          "name": "hp icon / Raider"
+        },
+        {
+          "id": "162:15400",
+          "name": "hp icon / Mutant Stray"
+        },
+        {
+          "id": "162:15424",
+          "name": "hp icon / Ash Roach"
+        },
+        {
+          "id": "162:15448",
+          "name": "hp icon / Armored Raider"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "energy",
+    "nodeCount": 8,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 8 node(s)",
+      "imageHash": "10faaac209e429c490df7bf431c999d26aeab536",
+      "nodes": [
+        {
+          "id": "162:15284",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15308",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15332",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15356",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15381",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15405",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15429",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15453",
+          "name": "stat icon"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "morale",
+    "nodeCount": 8,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 8 node(s)",
+      "imageHash": "cc0442d9cb173030a394618123ef34d550f8f304",
+      "nodes": [
+        {
+          "id": "162:15287",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15311",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15335",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15359",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15384",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15408",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15432",
+          "name": "stat icon"
+        },
+        {
+          "id": "162:15456",
+          "name": "stat icon"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "knife",
+    "nodeCount": 2,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 2 node(s)",
+      "imageHash": "e85afd38758c1c7c9531e5d94e2c7d0ec5cf2bb5",
+      "nodes": [
+        {
+          "id": "162:15290",
+          "name": "ability icon / Quick Slash"
+        },
+        {
+          "id": "162:15387",
+          "name": "ability icon / Brutal Swing"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "survivor02",
+    "nodeCount": 2,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 2 node(s)",
+      "imageHash": "2a2134407936488b8691010ff6493e968d9dfa86",
+      "nodes": [
+        {
+          "id": "162:15300",
+          "name": "portrait / Bram"
+        },
+        {
+          "id": "162:15476",
+          "name": "lane ally avatar / Bram"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "pistol",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "247e329d9975448b7f59618b16279723be702b62",
+      "nodes": [
+        {
+          "id": "162:15314",
+          "name": "ability icon / Steady Shot"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "survivor03",
+    "nodeCount": 2,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 2 node(s)",
+      "imageHash": "9a23920df1416ce461afa051072df2e413823bd2",
+      "nodes": [
+        {
+          "id": "162:15324",
+          "name": "portrait / Cora"
+        },
+        {
+          "id": "162:15491",
+          "name": "lane ally avatar / Cora"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "medkit",
+    "nodeCount": 3,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 3 node(s)",
+      "imageHash": "463303a775380be60322b38460fc4c2aa0ad695a",
+      "nodes": [
+        {
+          "id": "162:15338",
+          "name": "ability icon / Support"
+        },
+        {
+          "id": "162:15493",
+          "name": "lane icon image / Cora"
+        },
+        {
+          "id": "162:15535",
+          "name": "action icon / Use Medkit"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "survivor04",
+    "nodeCount": 2,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 2 node(s)",
+      "imageHash": "3e2aae2c6f8c03b2b0f2c09c62139adc74247d84",
+      "nodes": [
+        {
+          "id": "162:15348",
+          "name": "portrait / Dima"
+        },
+        {
+          "id": "162:15506",
+          "name": "lane ally avatar / Dima"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "shotgun",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "41f47dccdeaf1aa63e61f6a17563856d7ea7cb14",
+      "nodes": [
+        {
+          "id": "162:15362",
+          "name": "ability icon / Cover Fire"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "shield",
+    "nodeCount": 3,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 3 node(s)",
+      "imageHash": "b90a027dbc120267694930333124bc4269cbe0d9",
+      "nodes": [
+        {
+          "id": "162:15364",
+          "name": "defense icon / Dima"
+        },
+        {
+          "id": "162:15508",
+          "name": "lane icon image / Dima"
+        },
+        {
+          "id": "162:15543",
+          "name": "action icon / Retreat"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "enemyRaider",
+    "nodeCount": 2,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 2 node(s)",
+      "imageHash": "e02631637af0b234f7c7997a2ae8dc361f552629",
+      "nodes": [
+        {
+          "id": "162:15373",
+          "name": "portrait / Raider"
+        },
+        {
+          "id": "162:15470",
+          "name": "lane enemy avatar / Raider"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "enemyHound",
+    "nodeCount": 2,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 2 node(s)",
+      "imageHash": "45ec5b2ceb5387b92d21616ec4b06074734b1ffd",
+      "nodes": [
+        {
+          "id": "162:15397",
+          "name": "portrait / Mutant Stray"
+        },
+        {
+          "id": "162:15485",
+          "name": "lane enemy avatar / Mutant Stray"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "bite",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "8e5cf5c53029821beb62da8fb192f7d0d5db6030",
+      "nodes": [
+        {
+          "id": "162:15411",
+          "name": "ability icon / Rabid Lunge"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "enemyRoach",
+    "nodeCount": 2,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 2 node(s)",
+      "imageHash": "0992f9a6bafe7312f6a76fd62118770b2f8dd10e",
+      "nodes": [
+        {
+          "id": "162:15421",
+          "name": "portrait / Ash Roach"
+        },
+        {
+          "id": "162:15500",
+          "name": "lane enemy avatar / Ash Roach"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "acid",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "bfa3c210b752e820544c0e9f8b2ccf2f55bb9ddb",
+      "nodes": [
+        {
+          "id": "162:15435",
+          "name": "ability icon / Acid Spit"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "enemyArmored",
+    "nodeCount": 2,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 2 node(s)",
+      "imageHash": "93f2a312675d25c2b1670a59d89928bca71cf23d",
+      "nodes": [
+        {
+          "id": "162:15445",
+          "name": "portrait / Armored Raider"
+        },
+        {
+          "id": "162:15515",
+          "name": "lane enemy avatar / Armored Raider"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "rifle",
+    "nodeCount": 1,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 1 node(s)",
+      "imageHash": "94241e1878616c9e6564715aa0db8287b7e78b91",
+      "nodes": [
+        {
+          "id": "162:15459",
+          "name": "ability icon / Suppressing Fire"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "attack",
+    "nodeCount": 4,
+    "result": {
+      "_mcp": "figma-console-mcp",
+      "success": true,
+      "message": "Image fill applied to 4 node(s)",
+      "imageHash": "6efe0fc0f365037c46afd885a4e9067e91209f21",
+      "nodes": [
+        {
+          "id": "162:15463",
+          "name": "lane icon image / Asha"
+        },
+        {
+          "id": "162:15478",
+          "name": "lane icon image / Bram"
+        },
+        {
+          "id": "162:15526",
+          "name": "action icon / Focus Fire"
+        },
+        {
+          "id": "162:15568",
+          "name": "auto battle icon"
+        }
+      ]
+    }
+  }
+]
