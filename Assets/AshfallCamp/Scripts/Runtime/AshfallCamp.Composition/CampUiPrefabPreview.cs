@@ -15,6 +15,7 @@ namespace AshfallCamp.Composition
         [SerializeField] private GameConfigDatabaseSO configDatabase;
         [SerializeField] private CampDashboardView dashboardView;
         [SerializeField] private bool renderInEditMode = true;
+        [SerializeField] private bool useReferenceTestProfile = true;
 
         public void SetReferences(GameConfigDatabaseSO database, CampDashboardView view)
         {
@@ -63,6 +64,10 @@ namespace AshfallCamp.Composition
                 var provider = new ScriptableObjectGameConfigProvider(configDatabase);
                 var config = provider.LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
                 var state = GameStateFactory.CreateNew(config, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+                if (useReferenceTestProfile)
+                {
+                    state = CampUiPreviewStateFactory.CreateReferenceProfile(config, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+                }
                 dashboardView.Render(state, config);
             }
             catch (Exception ex)

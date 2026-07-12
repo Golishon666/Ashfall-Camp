@@ -51,13 +51,13 @@ namespace AshfallCamp.Presentation
                 if (binding.Panel != null)
                 {
                     binding.Panel.color = isActive
-                        ? catalog.Theme.Teal
-                        : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, catalog.Theme.NavInactivePanelAlpha);
+                        ? new Color32(0x32, 0x37, 0x2E, 0xFF)
+                        : new Color32(0x16, 0x1C, 0x19, 0xF2);
                 }
 
                 if (binding.Label != null)
                 {
-                    binding.Label.color = isActive ? catalog.Theme.Paper : catalog.Theme.Ink;
+                    binding.Label.color = isActive ? catalog.Theme.Amber : catalog.Theme.Paper;
                 }
 
                 if (binding.Icon != null)
@@ -67,7 +67,7 @@ namespace AshfallCamp.Presentation
                     if (hasIcon)
                     {
                         binding.Icon.texture = entry.Icon;
-                        binding.Icon.color = isActive ? catalog.Theme.Paper : catalog.Theme.Ink;
+                        binding.Icon.color = isActive ? catalog.Theme.Amber : catalog.Theme.Paper;
                     }
                 }
 

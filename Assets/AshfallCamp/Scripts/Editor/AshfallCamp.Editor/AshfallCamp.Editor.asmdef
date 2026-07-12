@@ -9,6 +9,7 @@
     "AshfallCamp.Composition",
     "Unity.TextMeshPro",
     "UnityEngine.UI",
+    "Unity.2D.Tilemap.Editor",
     "UniTask",
     "VContainer"
   ],

@@ -10,13 +10,13 @@
 
 ## 0. Короткий питч
 
-Игрок — новый лидер лагеря выживших после апокалипсиса. Он принимает выживших, снаряжает их, отправляет отряды в пустошь за припасами, наблюдает за автоматическими боями с мутантами и рейдерами, а затем тратит добытые ресурсы на развитие лагеря, снаряжение и новые маршруты.
+Игрок — новый лидер лагеря выживших после апокалипсиса. Вся игра разворачивается на единой крупной тайловой карте: в центре растёт лагерь, вокруг лежат леса, поля, пустоши, дороги, руины и опасные точки экспедиций. Игрок строит барак, мастерскую, водосборник и радиовышку прямо на camp tiles, отправляет отряды по маршрутам через buffer tiles, наблюдает за автоматическими боями и возвращает добычу обратно в видимый лагерь.
 
-**Главная фантазия:** не один герой становится сильнее, а весь лагерь превращается из ржавого укрытия в организованное поселение.
+**Главная фантазия:** не один герой становится сильнее, а весь лагерь физически разрастается на карте: из одного ржавого укрытия в организованное поселение, вокруг которого постепенно проясняется и подчиняется пустошь.
 
 **Одно предложение для Steam:**
 
-> Lead a camp of survivors in an idle post-apocalyptic RPG. Send squads into the wasteland, watch them auto-fight mutants and raiders, bring back scrap and supplies, and rebuild your camp one upgrade at a time.
+> Lead a camp of survivors on a living tile map. Build your settlement tile by tile, send squads through forests, roads and wasteland into ruined locations, watch optional auto-battles, and rebuild the world around your camp one expedition at a time.
 
 ---
 
@@ -24,40 +24,52 @@
 
 ### 1.1. Лагерь — это главный персонаж
 
-Игрок прокачивает не только отдельных выживших, а весь лагерь: вместимость, медицину, мастерскую, разведку, воду, снаряжение, доктрины и доступные зоны.
+Игрок прокачивает не только отдельных выживших, а весь лагерь: вместимость, медицину, мастерскую, разведку, воду, снаряжение, доктрины, маршруты и доступные тайлы.
 
-### 1.2. Решения принимаются до экспедиции
+Здание — не просто строка в списке. Оно занимает camp tile и меняет форму поселения. Барак расширяет население, мастерская делает центр лагеря промышленнее, радиовышка визуально становится причиной того, что дальние клетки карты раскрываются.
+
+### 1.2. Карта и лагерь — один экран
+
+Не делать два раздельных мира: “экран базы” и “экран глобальной карты”. Главный экран — это карта, где:
+
+- ближний zoom показывает здания лагеря и свободные строительные тайлы;
+- средний zoom показывает buffer tiles вокруг лагеря;
+- дальний zoom показывает маршруты и expedition location tiles;
+- side panels и модальные окна дают детали, но не заменяют карту как главный контекст.
+
+### 1.3. Решения принимаются до экспедиции
 
 Игра не должна превращаться в ручной тактический бой. Основные решения:
 
 - кого отправить;
-- куда отправить;
+- на какой expedition tile отправить;
+- каким маршрутом идти;
 - какое оружие и броню дать;
 - какую политику поведения выбрать;
 - сколько припасов взять;
 - рискнуть или отступить.
 
-### 1.3. Наблюдение за боем опционально
+### 1.4. Наблюдение за боем опционально
 
 Игрок может открыть экран экспедиции и смотреть лог боя, но игра должна нормально играться в idle/offline-режиме.
 
 Активное наблюдение даёт контроль и небольшую оптимизацию, но не должно быть обязательным.
 
-### 1.4. Риск должен быть добровольным
+### 1.5. Риск должен быть добровольным
 
 Случайная потеря прокачанного выжившего во время offline-прогресса — плохой опыт. В обычных зонах выжившие получают ранения, усталость или пропадают на время. Реальная смерть возможна только в явно помеченных высокорисковых экспедициях.
 
-### 1.5. Каждый новый ресурс должен открывать новую проблему
+### 1.6. Каждый новый ресурс должен открывать новую проблему
 
 Не добавлять ресурсы ради количества. Новый ресурс должен менять решения игрока:
 
 - `food` ограничивает длительность и количество экспедиций;
-- `water` открывает дальние зоны;
+- `water` открывает дальние маршруты через dry/wasteland tiles;
 - `weapon_parts` позволяют ремонтировать и улучшать оружие;
 - `medicine` снижает downtime после ранений;
 - `electronics` открывает автоматизацию и разведку.
 
-### 1.6. Steam-first, не mobile-порт
+### 1.7. Steam-first, не mobile-порт
 
 Игра должна ощущаться как premium PC idle RPG:
 
@@ -96,7 +108,20 @@
   - `water_collector`;
   - `infirmary`;
   - `radio_tower`.
-- 5 зон экспедиций:
+- единая handcrafted tile map:
+  - 9x9 или 12x12 в MVP;
+  - центральный `camp_core`;
+  - 5 строительных camp tiles;
+  - 5 expedition location tiles;
+  - 20–35 buffer tiles.
+- 6 типов тайлов:
+  - `camp`;
+  - `road`;
+  - `field`;
+  - `forest`;
+  - `ruins_buffer`;
+  - `wasteland`.
+- 5 expedition location tiles:
   - `abandoned_store`;
   - `dry_suburb`;
   - `ruined_clinic`;
@@ -110,20 +135,22 @@
 - Offline progress до 8–12 часов.
 - Autosave.
 - After Action Report после экспедиций.
-- Один финальный демо-челлендж: зачистить `mutant_tunnel` или построить `radio_tower` level 2.
+- Один финальный демо-челлендж: построить `radio_tower` level 2 на camp tile и зачистить `mutant_tunnel`.
 
 #### В MVP не делать
 
 - полноценные фракции;
 - торговлю между поселениями;
 - рейды на лагерь;
-- базу с grid-layout как в Fallout Shelter;
+- комнатную базу с grid-layout как в Fallout Shelter;
+- свободное размещение десятков мелких объектов;
 - ручные тактические бои;
 - патроны на каждый выстрел;
 - сложную мораль;
 - болезни как отдельную систему;
 - детей/семьи;
-- procedural world map;
+- бесконечную procedural world map;
+- procedural генерацию MVP-карты вместо authored layout;
 - 20+ навыков;
 - 50+ ресурсов;
 - случайную permadeath в offline.
@@ -138,6 +165,8 @@
 - 20–30 врагов;
 - 40–60 предметов;
 - 8–10 зданий;
+- 40–80 map tiles в новой области;
+- biome clusters и опасные Dead Zone tiles;
 - 8–10 ресурсов;
 - 20+ backgrounds/traits;
 - 100+ upgrades;
@@ -155,19 +184,20 @@
 ### 3.1. Моментальный цикл, 10–60 секунд
 
 1. Игрок видит доступных выживших.
-2. Выбирает зону.
-3. Проверяет риск и награды.
+2. Выбирает expedition tile на карте.
+3. Проверяет маршрут через buffer tiles, риск и награды.
 4. Отправляет отряд.
 5. Смотрит или не смотрит автобой.
 6. Получает лог, лут, XP, ранения.
+7. Видит, как результат влияет на карту: familiarity, новый unlock, очищенный маршрут или доступный building tile.
 
 ### 3.2. Средний цикл, 5–15 минут
 
 1. Несколько экспедиций приносят ресурсы.
-2. Игрок строит или улучшает здание.
-3. Открывается новая зона, предмет или слот выжившего.
+2. Игрок строит или улучшает здание на camp tile.
+3. Открывается новая зона, route tile, предмет или слот выжившего.
 4. Игрок оптимизирует состав отрядов.
-5. Следующая зона требует нового ресурса/навыка.
+5. Следующая зона требует нового ресурса, навыка или безопасного маршрута.
 
 ### 3.3. Длинный цикл, 1–3 часа
 
@@ -175,7 +205,7 @@
 2. Готовит отряд: оружие, броня, медицина.
 3. Проходит мини-босса или рискованную экспедицию.
 4. Получает blueprint / permanent upgrade.
-5. Лагерь выходит на новый этап развития.
+5. Лагерь выходит на новый этап развития и расширяется на новые camp tiles.
 
 ### 3.4. Prestige loop, полная версия
 
@@ -192,17 +222,123 @@
 
 ```mermaid
 flowchart TD
-    A[Camp Dashboard] --> B[Recruit / Manage Survivors]
-    A --> C[Upgrade Buildings]
+    A[Unified Tile Map] --> B[Build / Upgrade Camp Tile]
+    A --> C[Recruit / Manage Survivors]
     A --> D[Craft / Repair Gear]
-    A --> E[Choose Expedition Zone]
-    E --> F[Configure Squad]
-    F --> G[Expedition Auto-Simulation]
-    G --> H[Combat / Scavenging / Events]
-    H --> I[After Action Report]
-    I --> J[Resources + XP + Injuries]
-    J --> A
+    A --> E[Select Expedition Tile]
+    E --> F[Preview Route Through Buffer Tiles]
+    F --> G[Configure Squad]
+    G --> H[Expedition Auto-Simulation]
+    H --> I[Combat / Scavenging / Events]
+    I --> J[After Action Report]
+    J --> K[Resources + XP + Injuries + Map Changes]
+    K --> A
 ```
+
+---
+
+
+## 5. Единая тайловая карта
+
+### 5.1. Главная идея
+
+Карта — главный игровой объект. Она объединяет лагерь, маршруты, буферные биомы и точки экспедиций. Игрок всегда понимает, где находится лагерь, куда ушёл отряд и почему дальняя зона опаснее ближней.
+
+MVP карта должна быть authored, а не procedural. Цель — не бесконечный мир, а читаемая стратегическая доска, где каждый крупный тайл имеет понятную роль.
+
+### 5.2. Tile scale
+
+Один tile — это не клетка пола и не декор. Это крупная стратегическая область:
+
+- camp tile под одно здание или camp feature;
+- buffer tile, который влияет на путь;
+- expedition tile с полноценной зоной;
+- locked / hazard tile, который показывает будущий риск.
+
+Размер MVP: `9x9` для компактного демо или `12x12`, если UI уже уверенно держит карту.
+
+### 5.3. Tile types
+
+| Tile type | Роль | Основной эффект |
+|---|---|---|
+| `camp_core` | центр лагеря | старт, storage, safe return point |
+| `camp_buildable` | свободное место лагеря | можно построить здание |
+| `camp_building` | занятый строительный тайл | даёт эффект здания |
+| `road` | маршрут | снижает duration, может повышать raider risk |
+| `field` | открытая местность | быстрый путь, меньше укрытий, шанс food event |
+| `forest` | лесополоса | выше survival checks, ниже обнаружение, шанс wood/scrap event |
+| `ruins_buffer` | мелкие руины | шанс scrap/event, средний ambush risk |
+| `wasteland` | сухая пустошь | выше fatigue и water cost |
+| `hazard` | опасная область | locked или high-risk path |
+| `expedition_location` | полноценная зона | запускает expedition setup |
+
+### 5.4. Buffer tiles
+
+Buffer tiles нужны, чтобы карта не была набором disconnected icons. Они создают расстояние, читаемый путь и лёгкую стратегию без микроменеджмента.
+
+Правила:
+
+- buffer tile не требует отдельного ручного управления;
+- он влияет на route duration, fatigue, water cost, ambush chance или event weights;
+- он может быть cleared/mapped через repeated expeditions рядом;
+- некоторые buffer tiles могут стать camp_buildable после unlock.
+
+Примеры:
+
+| Buffer tile | Route effect | Future use |
+|---|---|---|
+| `road` | -20% duration | unlock convoy / trade later |
+| `field` | -10% duration, +5% exposed ambush | farm/water support later |
+| `forest` | +10% duration, -5% detection, +survival events | watchtower / cleared camp tile |
+| `ruins_buffer` | +scrap event chance, +ambush risk | dismantle for scrap or workshop outpost |
+| `wasteland` | +water cost, +fatigue | late outpost / vehicle route |
+
+### 5.5. Building placement
+
+Здания ставятся только на `camp_buildable` tiles, которые связаны с `camp_core` или уже построенным camp tile.
+
+MVP правило простое:
+
+```ts
+canBuild = tile.type == "camp_buildable" && isAdjacentToCampNetwork(tile)
+```
+
+Каждое здание занимает один tile:
+
+| Building | Tile effect |
+|---|---|
+| `barracks` | survivor cap, squad size, visible sleeping/shelter tile |
+| `workshop` | repair/craft, opens police_outpost route logic |
+| `water_collector` | water generation, reduces dry route pressure |
+| `infirmary` | treatment, safer recovery after dangerous routes |
+| `radio_tower` | reveals distant tiles, recruitment, mutant_tunnel unlock |
+
+### 5.6. Route preview
+
+Экспедиция выбирается кликом по `expedition_location`. Перед запуском игрок видит route preview:
+
+- route tiles;
+- duration;
+- food/water cost;
+- fatigue estimate;
+- ambush/noise risk;
+- recommended power;
+- known rewards.
+
+В MVP маршрут можно делать authored path, а не полноценный pathfinding. Если позже появится pathfinding, он должен выбирать из уже открытых tiles и показывать игроку итог до запуска.
+
+### 5.7. Map progression
+
+Карта меняется от действий:
+
+- building built: camp tile получает здание;
+- building upgraded: визуал здания усиливается;
+- expedition completed: target tile получает familiarity;
+- route repeated: buffer tiles становятся mapped/safer;
+- radio upgraded: reveal distant fogged tiles;
+- boss cleared: hazard tile ослабляется или превращается в mapped danger.
+
+Карта не должна требовать постоянной уборки, ремонта тайлов или ручного сбора с каждого buffer tile. Это стратегический слой прогресса, а не colony sim.
 
 ---
 
@@ -240,6 +376,18 @@ type ExpeditionPolicy =
   | "loot_focused"
   | "ammo_saving";
 
+type MapTileType =
+  | "camp_core"
+  | "camp_buildable"
+  | "camp_building"
+  | "road"
+  | "field"
+  | "forest"
+  | "ruins_buffer"
+  | "wasteland"
+  | "hazard"
+  | "expedition_location";
+
 interface GameState {
   version: string;
   createdAt: number;
@@ -251,6 +399,7 @@ interface GameState {
 
   survivors: Survivor[];
   inventory: InventoryItem[];
+  map: MapState;
   buildings: Record<string, BuildingState>;
   zones: Record<string, ZoneState>;
   upgrades: Record<string, UpgradeState>;
@@ -300,21 +449,46 @@ interface BuildingState {
   id: string;
   level: number;
   isUnlocked: boolean;
+  tileId?: string;
   upgradeStartedAt?: number;
   upgradeFinishedAt?: number;
 }
 
 interface ZoneState {
   id: string;
+  tileId: string;
   isUnlocked: boolean;
+  isRevealed: boolean;
   completions: number;
   familiarity: number;
   bestClearTimeSeconds?: number;
 }
 
+interface MapState {
+  mapId: string;
+  width: number;
+  height: number;
+  tiles: Record<string, MapTileState>;
+  authoredRoutes: Record<string, string[]>;
+}
+
+interface MapTileState {
+  id: string;
+  x: number;
+  y: number;
+  type: MapTileType;
+  isRevealed: boolean;
+  isMapped: boolean;
+  buildingId?: string;
+  zoneId?: string;
+  routeTags: string[];
+  safety: number;
+}
+
 interface ExpeditionState {
   id: string;
   zoneId: string;
+  routeTileIds: string[];
   survivorIds: string[];
   policy: ExpeditionPolicy;
   startedAt: number;
@@ -782,11 +956,12 @@ MVP:
 
 Игрок выбирает:
 
-1. Zone.
-2. Survivors, 1–3 в MVP.
-3. Policy.
-4. Supplies.
-5. Optional risk toggles.
+1. Expedition location tile.
+2. Route preview через buffer tiles.
+3. Survivors, 1–3 в MVP.
+4. Policy.
+5. Supplies.
+6. Optional risk toggles.
 
 ### 15.3. Squad size
 
@@ -825,8 +1000,11 @@ MVP может оставить только `medkit`, `ammo_pack`, `toolkit`.
 ### 15.6. Expedition cost
 
 ```ts
-foodCost = zone.foodCostPerSurvivor * survivorCount * policy.foodModifier
-waterCost = zone.waterCostPerSurvivor * survivorCount * policy.waterModifier
+routeFoodModifier = 1 + route.fieldCount * 0.02 + route.ruinsCount * 0.03
+routeWaterModifier = 1 + route.wastelandCount * 0.15
+
+foodCost = zone.foodCostPerSurvivor * survivorCount * policy.foodModifier * routeFoodModifier
+waterCost = zone.waterCostPerSurvivor * survivorCount * policy.waterModifier * routeWaterModifier
 ```
 
 Округление вверх:
@@ -842,10 +1020,21 @@ baseDuration = zone.baseDurationSeconds
 survivalBonus = averageSurvivalSkill * 0.003
 familiarityBonus = zoneFamiliarity * 0.002
 policyModifier = policy.durationModifier
+routeModifier = route.durationModifier
 
-finalDuration = baseDuration * policyModifier * (1 - survivalBonus - familiarityBonus)
+finalDuration = baseDuration * routeModifier * policyModifier * (1 - survivalBonus - familiarityBonus)
 finalDuration = clamp(finalDuration, zone.minDurationSeconds, zone.maxDurationSeconds)
 ```
+
+Примеры route duration:
+
+| Route tile | Modifier contribution |
+|---|---:|
+| `road` | -10% per meaningful segment, capped |
+| `field` | -5% |
+| `forest` | +10% |
+| `ruins_buffer` | +5% |
+| `wasteland` | +15% |
 
 ### 15.8. Expedition progress
 
@@ -869,7 +1058,14 @@ expedition.progress += progressGain
 | Skill Event | 15% | mechanics/survival/medicine check |
 | Empty / Travel | 15% | ничего, только progress |
 
-Zone может переопределять веса.
+Zone и route tiles могут переопределять веса.
+
+Примеры:
+
+- `forest` повышает шанс survival event и снижает detection/ambush от raiders;
+- `ruins_buffer` повышает шанс small scrap scavenge и ambush;
+- `wasteland` повышает fatigue event и water pressure;
+- `road` ускоряет travel, но может повышать шанс raider encounter.
 
 ### 15.10. Завершение экспедиции
 
@@ -878,6 +1074,8 @@ Zone может переопределять веса.
 - начислить loot;
 - начислить XP;
 - повысить familiarity зоны;
+- повысить mapped/safety для route tiles;
+- раскрыть связанные тайлы, если выполнен unlock;
 - вернуть survivors;
 - применить fatigue;
 - показать After Action Report.
@@ -887,7 +1085,8 @@ Zone может переопределять веса.
 - часть loot теряется;
 - survivors получают wounded/missing;
 - expedition log сохраняется;
-- familiarity всё равно немного растёт.
+- familiarity всё равно немного растёт;
+- route tiles могут получить partial scouting progress.
 
 ---
 
@@ -898,9 +1097,11 @@ Zone может переопределять веса.
 ```ts
 interface ZoneDefinition {
   id: string;
+  tileId: string;
   name: string;
   description: string;
   riskTier: "safe" | "unstable" | "dangerous" | "dead_zone";
+  authoredRouteTileIds: string[];
   baseDurationSeconds: number;
   minDurationSeconds: number;
   maxDurationSeconds: number;
@@ -917,15 +1118,37 @@ interface ZoneDefinition {
 
 ### 16.2. MVP zones
 
-| ID | Название | Длительность | Риск | Главный лут | Unlock |
+| ID | Tile role | Длительность | Риск | Главный лут | Unlock |
 |---|---|---:|---|---|---|
-| `abandoned_store` | Abandoned Store | 45 сек | Safe | scrap, food | старт |
-| `dry_suburb` | Dry Suburb | 90 сек | Safe | scrap, water | 2 completions store |
-| `ruined_clinic` | Ruined Clinic | 180 сек | Unstable | medicine | radio_tower lvl 1 |
-| `police_outpost` | Police Outpost | 300 сек | Unstable | weapon_parts, weapons | workshop lvl 1 |
-| `mutant_tunnel` | Mutant Tunnel | 600 сек | Dangerous | rare loot, medicine, scrap | radio_tower lvl 2 |
+| `abandoned_store` | ближний ruins/road tile | 45 сек | Safe | scrap, food | старт |
+| `dry_suburb` | residential edge tile | 90 сек | Safe | scrap, water | 2 completions store |
+| `ruined_clinic` | medical ruins tile | 180 сек | Unstable | medicine | radio_tower lvl 1 |
+| `police_outpost` | fortified ruins tile | 300 сек | Unstable | weapon_parts, weapons | workshop lvl 1 |
+| `mutant_tunnel` | hazard entrance tile | 600 сек | Dangerous | rare loot, medicine, scrap | radio_tower lvl 2 |
 
-### 16.3. Zone familiarity
+### 16.3. MVP map layout
+
+MVP layout должен быть authored и легко читаемым:
+
+- `camp_core` в центре;
+- 5 соседних/ближних `camp_buildable` tiles под здания;
+- `abandoned_store` на коротком road/ruins route;
+- `dry_suburb` за field/road buffer;
+- `ruined_clinic` за ruins_buffer;
+- `police_outpost` за road + ruins_buffer;
+- `mutant_tunnel` за wasteland/hazard chain.
+
+Пример не является точной координатной сеткой, но задаёт смысл:
+
+```text
+[forest][forest][road][ruins][hazard]
+[field ][camp ][camp][road ][clinic]
+[field ][camp_core][barracks][ruins][police]
+[road  ][workshop][water][wasteland][tunnel]
+[store ][field][radio][ruins][hazard]
+```
+
+### 16.4. Zone familiarity
 
 Каждое завершение зоны повышает familiarity.
 
@@ -941,15 +1164,24 @@ Familiarity effects:
 - 50 familiarity: unlock improved loot table;
 - 100 familiarity: zone considered “mapped”.
 
-### 16.4. Пример `ZoneCatalogSO` / serialized config snapshot
+Route familiarity:
+
+- repeated route use raises `isMapped`/`safety` on buffer tiles;
+- mapped route shows better estimates;
+- safer route slightly lowers ambush chance;
+- route familiarity must stay secondary to zone familiarity.
+
+### 16.5. Пример `ZoneCatalogSO` / serialized config snapshot
 
 ```config-data
 [
   {
     "id": "abandoned_store",
+    "tileId": "tile_store_01",
     "name": "Abandoned Store",
     "description": "A looted roadside store. Still worth checking the back rooms.",
     "riskTier": "safe",
+    "authoredRouteTileIds": ["tile_camp_core", "tile_road_01", "tile_ruins_01", "tile_store_01"],
     "baseDurationSeconds": 45,
     "minDurationSeconds": 30,
     "maxDurationSeconds": 90,
@@ -1370,9 +1602,21 @@ repairCost = ceil(missingDurability / 10 * item.repairCostMultiplier)
 ### 22.1. Общие правила
 
 - Здания имеют уровни.
+- Каждое MVP здание занимает один `camp_buildable` tile.
+- Строить можно только на тайле, связанном с `camp_core` через camp network.
 - Апгрейд здания требует ресурсы.
 - В MVP апгрейды мгновенные или с коротким таймером до 60 секунд.
 - В полной версии можно добавить таймеры строительства, но без агрессивного mobile-feel.
+- Апгрейд здания должен менять визуальное состояние тайла, даже если это простой sprite/state swap.
+
+MVP placement rule:
+
+```ts
+canPlaceBuilding =
+  tile.type == "camp_buildable" &&
+  tile.buildingId == null &&
+  isAdjacentToCampNetwork(tile)
+```
 
 ### 22.2. Building cost formula
 
@@ -1390,7 +1634,14 @@ cost(level) = floor(baseCost * pow(level + 1, 1.7))
 
 - повышает survivor cap;
 - открывает squad size;
-- снижает fatigue recovery penalty.
+- снижает fatigue recovery penalty;
+- визуально показывает, что лагерь стал жильём, а не одиночным убежищем.
+
+Placement:
+
+- первый tutorial building;
+- ставится на ближайший `camp_buildable` tile рядом с `camp_core`;
+- после постройки может открыть ещё один соседний camp tile.
 
 | Level | Cost | Эффект |
 |---:|---|---|
@@ -1407,7 +1658,13 @@ cost(level) = floor(baseCost * pow(level + 1, 1.7))
 - ремонт оружия;
 - крафт basic weapons;
 - снижает repair cost;
-- открывает police outpost.
+- открывает police outpost;
+- делает маршрут к fortified/ruins tiles более осмысленным.
+
+Placement:
+
+- лучше ставить рядом с road/ruins side лагеря;
+- в MVP можно auto-suggest tile, чтобы не заставлять игрока оптимизировать сетку.
 
 | Level | Cost | Эффект |
 |---:|---|---|
@@ -1423,7 +1680,13 @@ cost(level) = floor(baseCost * pow(level + 1, 1.7))
 
 - генерирует water;
 - увеличивает water cap;
-- открывает длинные экспедиции.
+- открывает длинные экспедиции;
+- снижает давление маршрутов через `wasteland`.
+
+Placement:
+
+- в MVP ставится на заранее отмеченный camp tile у dry/field edge;
+- later может требовать water source / lowland tile.
 
 | Level | Cost | Эффект |
 |---:|---|---|
@@ -1438,7 +1701,13 @@ cost(level) = floor(baseCost * pow(level + 1, 1.7))
 
 - лечение ран;
 - faster recovery;
-- craft medkits.
+- craft medkits;
+- делает рискованные маршруты психологически приемлемее.
+
+Placement:
+
+- camp tile рядом с core или barracks;
+- не требует отдельной логистики в MVP.
 
 | Level | Cost | Эффект |
 |---:|---|---|
@@ -1454,7 +1723,14 @@ cost(level) = floor(baseCost * pow(level + 1, 1.7))
 - recruitment;
 - unlock zones;
 - expedition intel;
+- reveals fogged map tiles;
 - future factions.
+
+Placement:
+
+- camp tile на краю лагеря;
+- уровень 1 раскрывает `ruined_clinic`;
+- уровень 2 раскрывает/разблокирует route к `mutant_tunnel`.
 
 | Level | Cost | Эффект |
 |---:|---|---|
@@ -1485,7 +1761,7 @@ cost(level) = floor(baseCost * pow(level + 1, 1.7))
 | Type | Пример | Эффект |
 |---|---|---|
 | Building Level | Barracks lvl 2 | survivor cap |
-| Camp Upgrade | Better Maps | -5% expedition duration |
+| Camp Upgrade | Better Maps | -5% route duration |
 | Equipment Upgrade | Reinforced Handles | +10% melee durability |
 | Doctrine | No One Left Behind | меньше missing chance |
 | Blueprint | Water Filters | permanent water bonus |
@@ -1494,14 +1770,14 @@ cost(level) = floor(baseCost * pow(level + 1, 1.7))
 
 #### Scavenging
 
-- `marked_routes`: +10% scrap from safe zones.
+- `marked_routes`: -10% route penalty on mapped buffer tiles, +5% scrap on safe routes.
 - `salvage_hooks`: +10 carry capacity for all squads.
-- `organized_looting`: +5% loot from all zones.
+- `organized_looting`: +5% loot from expedition location tiles.
 
 #### Combat
 
 - `basic_drills`: +5% melee/firearms accuracy.
-- `quiet_approach`: -10% ambush chance.
+- `quiet_approach`: -10% ambush chance on forest/ruins routes.
 - `target_priority`: active command cooldown -5 sec.
 
 #### Medical
@@ -1512,8 +1788,8 @@ cost(level) = floor(baseCost * pow(level + 1, 1.7))
 
 #### Logistics
 
-- `ration_planning`: -10% food expedition costs.
-- `water_rationing`: -10% water expedition costs.
+- `ration_planning`: -10% food expedition costs on routes with 3+ tiles.
+- `water_rationing`: -10% water expedition costs on wasteland routes.
 - `shift_rotation`: -10% fatigue gain.
 
 ### 23.3. Пример `UpgradeCatalogSO` / serialized config snapshot
@@ -1524,15 +1800,20 @@ cost(level) = floor(baseCost * pow(level + 1, 1.7))
     "id": "marked_routes",
     "name": "Marked Routes",
     "category": "scavenging",
-    "description": "+10% scrap from Safe zones.",
+    "description": "-10% route penalty on mapped buffer tiles, +5% scrap on safe routes.",
     "cost": { "scrap": 40 },
     "requirements": [],
     "effects": [
       {
+        "type": "route_penalty_multiplier",
+        "tileState": "mapped",
+        "multiplier": 0.9
+      },
+      {
         "type": "loot_multiplier",
         "resourceId": "scrap",
         "zoneRiskTier": "safe",
-        "multiplier": 1.1
+        "multiplier": 1.05
       }
     ]
   }
@@ -1718,9 +1999,12 @@ for each productionBuilding:
 - 1 medicine;
 - 1 survivor;
 - 1 rusty knife;
+- revealed `camp_core`;
+- 2 revealed `camp_buildable` tiles;
+- visible route to `abandoned_store`;
 - Barracks level 0;
 - Water cap 40;
-- доступная зона `abandoned_store`.
+- доступный expedition tile `abandoned_store`.
 
 ### 28.2. Первый survivor
 
@@ -1749,10 +2033,11 @@ for each productionBuilding:
 
 1. Отправить Mara в Abandoned Store.
 2. Получить scrap + food.
-3. Улучшить Barracks до lvl 1.
-4. Открыть recruitment broadcast.
-5. Получить второго survivor.
-6. Увидеть Dry Suburb как следующую цель.
+3. Построить Barracks lvl 1 на соседнем camp tile.
+4. Увидеть, что camp tile изменился визуально и survivor cap вырос.
+5. Открыть recruitment broadcast.
+6. Получить второго survivor.
+7. Увидеть Dry Suburb как следующую цель на карте.
 
 ---
 
@@ -1761,14 +2046,15 @@ for each productionBuilding:
 ### 29.1. 0–5 минут
 
 - 1 survivor.
-- Abandoned Store.
+- Abandoned Store tile and first short route.
 - Первый loot.
-- Barracks lvl 1.
+- Barracks lvl 1 на camp tile.
 - Второй survivor.
 
 ### 29.2. 5–15 минут
 
 - Dry Suburb.
+- Первый route preview через field/road buffer tiles.
 - Water становится важной.
 - Workshop lvl 1.
 - Первый ремонт оружия.
@@ -1777,6 +2063,7 @@ for each productionBuilding:
 ### 29.3. 15–45 минут
 
 - Ruined Clinic.
+- Radio Tower lvl 1 reveals medical route.
 - Medicine и wounds.
 - Infirmary lvl 1.
 - Первый wounded survivor.
@@ -1785,6 +2072,7 @@ for each productionBuilding:
 ### 29.4. 45–90 минут
 
 - Police Outpost.
+- Route через road + ruins_buffer.
 - Weapon parts.
 - Первый firearm.
 - Выбор melee vs firearm.
@@ -1793,7 +2081,7 @@ for each productionBuilding:
 ### 29.5. 90+ минут
 
 - Radio Tower lvl 2.
-- Mutant Tunnel.
+- Mutant Tunnel hazard route.
 - Mini-boss Mutant Brute.
 - Demo goal.
 
@@ -1851,17 +2139,27 @@ oldWorldTechGain = floor(sqrt(totalCampValue / 1000)) + bossZonesCleared * 2 + u
 
 ## 31. UI / Screens
 
-### 31.1. Camp Dashboard
+### 31.1. Unified Map Dashboard
 
-Главный экран.
+Главный экран. Это не отдельная “панель лагеря”, а единая карта с режимами просмотра.
 
 Показывает:
 
 - ресурсы сверху;
-- состояние лагеря;
+- центральный лагерь на camp tiles;
+- свободные `camp_buildable` tiles;
+- buffer tiles вокруг лагеря;
+- expedition location tiles;
+- active route lines для отрядов;
 - список active expeditions;
-- быстрые кнопки: Expeditions, Survivors, Buildings, Workshop, Radio;
+- быстрые кнопки: Build, Expeditions, Survivors, Workshop, Radio;
 - alerts: wounded, idle survivors, enough resources for upgrade.
+
+Zoom behavior:
+
+- close zoom: building tiles, upgrade badges, survivor/camp status;
+- medium zoom: buffer tiles, route previews, nearby locations;
+- far zoom: known region, fogged tiles, dangerous routes.
 
 ### 31.2. Survivors screen
 
@@ -1898,14 +2196,16 @@ oldWorldTechGain = floor(sqrt(totalCampValue / 1000)) + bossZonesCleared * 2 + u
 - expedition history;
 - buttons: equip, rest, treat.
 
-### 31.4. Expedition screen
+### 31.4. Map Expedition mode
 
-Показывает зоны.
+Показывает expedition location tiles на карте. Игрок выбирает не карточку зоны из списка, а конкретный тайл.
 
-Для каждой зоны:
+Для выбранного location tile:
 
 - risk tier;
 - duration;
+- route preview;
+- buffer tile modifiers;
 - cost food/water;
 - expected loot;
 - known enemies;
@@ -1917,7 +2217,8 @@ oldWorldTechGain = floor(sqrt(totalCampValue / 1000)) + bossZonesCleared * 2 + u
 
 Показывает:
 
-- выбранную зону;
+- выбранный expedition tile;
+- route tile strip;
 - squad slots;
 - policy selector;
 - supplies selector;
@@ -1961,15 +2262,19 @@ No medic in squad
 - enemies defeated;
 - button `Send Again`.
 
-### 31.8. Buildings screen
+### 31.8. Build / Buildings mode
 
-Показывает здания:
+Показывает camp tiles и здания:
 
+- свободные buildable tiles;
+- занятые building tiles;
 - level;
 - next level effect;
 - cost;
 - requirements;
-- upgrade button.
+- build/upgrade button.
+
+Правило UX: если в MVP placement choice ещё не интересен, UI может предлагать один recommended tile. Игрок всё равно должен видеть, что здание занимает место на карте.
 
 ### 31.9. Workshop screen
 
@@ -1989,6 +2294,7 @@ No medic in squad
 - candidate list;
 - recruitment costs;
 - zone intel;
+- fogged map tiles that will be revealed by next level;
 - future faction contacts.
 
 ### 31.11. Offline Report
@@ -2015,7 +2321,7 @@ No medic in squad
 Пример:
 
 ```text
-Next goal: Build Workshop level 1 to repair weapons and unlock the Police Outpost.
+Next goal: Build Workshop level 1 on the east camp tile to repair weapons and reveal the Police Outpost route.
 ```
 
 ### 32.2. Не прятать важные формулы
@@ -2026,8 +2332,16 @@ Next goal: Build Workshop level 1 to repair weapons and unlock the Police Outpos
 Risk: High
 Reasons:
 - Squad power below recommended by 18%
+- Route crosses 2 ruins_buffer tiles
 - No medicine supply
 - Firearm noise expected: High
+```
+
+Для route preview показывать не формулы ради формул, а понятные причины:
+
+```text
+Route: Camp -> Old Road -> Broken Houses -> Police Outpost
+Modifiers: +5% duration from ruins, +8% ambush risk, -10% duration from mapped road
 ```
 
 ### 32.3. Не наказывать за offline
@@ -2056,7 +2370,9 @@ Full version unlocks relocation, factions, vehicles, and Dead Zones.
   - spend resources;
   - recruit survivor;
   - equip item;
-  - upgrade building.
+  - build/upgrade building;
+  - reveal tile;
+  - change route/tile safety state.
 - Версионированный save.
 - Backup save.
 - Import/export save в полной версии.
@@ -2070,6 +2386,11 @@ Full version unlocks relocation, factions, vehicles, and Dead Zones.
   "resources": {},
   "survivors": [],
   "inventory": [],
+  "map": {
+    "mapId": "mvp_region_01",
+    "tiles": {},
+    "authoredRoutes": {}
+  },
   "buildings": {},
   "zones": {},
   "upgrades": {},
@@ -2098,7 +2419,7 @@ MVP achievements:
 |---|---|---|
 | `first_run` | First Run | Complete first expedition |
 | `not_empty_handed` | Not Empty-Handed | Bring back 100 total scrap |
-| `new_bed` | New Bed | Upgrade Barracks to lvl 1 |
+| `new_bed` | New Bed | Build Barracks lvl 1 on a camp tile |
 | `first_recruit` | One More Mouth | Recruit second survivor |
 | `field_medic` | Field Medic | Heal first wound |
 | `armed_and_ready` | Armed and Ready | Equip first firearm |
@@ -2171,14 +2492,15 @@ MVP achievements:
 
 ### 35.4. MVP art priorities
 
-1. Key art / capsule с ощущением “лагерь восстанавливается”.
-2. Чистые resource icons.
-3. Survivor cards с читаемыми лицами и ролями.
-4. Zone backgrounds: опасность в мире, но без визуального мусора.
-5. Building icons/cards.
-6. Simple combat/event icons.
-7. UI states: success, warning, danger, empty, loading.
-8. Минимальные, мягкие DOTween-анимации.
+1. Unified tile map concept: лагерь в центре, buffer tiles вокруг, expedition locations дальше.
+2. Building tile states для barracks/workshop/water/infirmary/radio.
+3. Чистые resource icons.
+4. Survivor cards с читаемыми лицами и ролями.
+5. Zone/location backgrounds: опасность в мире, но без визуального мусора.
+6. Buffer tile art: forest, field, road, ruins_buffer, wasteland.
+7. Simple combat/event icons.
+8. UI states: success, warning, danger, empty, loading.
+9. Минимальные, мягкие DOTween-анимации для route lines, build completion и returning squads.
 
 ### 35.5. Sound priorities
 
@@ -2200,7 +2522,7 @@ MVP achievements:
 Использовать этот базовый prompt для новых концептов:
 
 ```text
-Ashfall Camp, original post-apocalyptic idle RPG and survival camp management game, friendly survival UI, cozy but practical survivor camp, warm readable management dashboard, soft sand and warm paper panels, sage green success states, faded teal information accents, restrained rust orange CTA, clean card-based interface, low visual noise, clear typography, generous spacing, hopeful rebuilding tone, survivors tired but humane, camp made from reclaimed wood and metal, light dust and subtle wear, premium Steam indie UI concept, readable at a glance, calm incremental game interface
+Ashfall Camp, original post-apocalyptic idle RPG and survival camp management game, unified camp and world tile map, large readable square strategic tiles, central survivor camp expanding tile by tile, buffer tiles with forest field road ruins and wasteland, expedition locations around the camp, friendly survival UI, cozy but practical survivor camp, warm readable management dashboard, soft sand and warm paper panels, sage green safe camp accents, faded teal information accents, restrained rust orange danger and CTA accents, low visual noise, clear typography, generous spacing, hopeful rebuilding tone, survivors tired but humane, camp made from reclaimed wood and metal, light dust and subtle wear, premium Steam indie UI concept, readable at a glance, calm incremental game interface
 ```
 
 Negative prompt:
@@ -2232,9 +2554,9 @@ Primary:
 ### 36.2. Steam description draft
 
 ```markdown
-Ashfall Camp is an idle post-apocalyptic RPG where you lead a small camp of survivors.
+Ashfall Camp is an idle post-apocalyptic RPG where you lead a small camp of survivors on a unified tile map.
 
-Send squads into the wasteland, watch them auto-fight mutants and raiders, bring back scrap, food, water, medicine and weapon parts, then rebuild your camp one upgrade at a time.
+Build your camp tile by tile, send squads through forests, roads, fields and wasteland into ruined locations, watch them auto-fight mutants and raiders, bring back scrap, food, water, medicine and weapon parts, then expand the settlement around you.
 
 Your survivors grow through skill-based progression. Scavengers find better loot, medics reduce downtime, mechanics open locked caches, and fighters keep the squad alive.
 
@@ -2244,9 +2566,11 @@ You can watch every expedition through a combat log and issue occasional orders,
 ### 36.3. Feature list
 
 ```markdown
-- Send survivors on automated expeditions into ruined stores, clinics, suburbs and mutant nests.
+- Build a visible survivor camp on large strategic map tiles.
+- Send survivors on automated expeditions through roads, forests, fields, ruins and wasteland.
 - Watch optional auto-battles against raiders, beasts and mutants.
 - Build and upgrade your camp: barracks, workshop, infirmary, water collector and radio tower.
+- Reveal new tiles, safer routes and dangerous expedition locations.
 - Train six core skills: scavenging, melee, firearms, survival, mechanics and medicine.
 - Equip melee weapons, firearms, armor and utility items.
 - Recover scrap, food, water, medicine and weapon parts.
@@ -2264,13 +2588,14 @@ You can watch every expedition through a combat log and issue occasional orders,
 
 ```ts
 function validateExpeditionSetup(setup, gameState): ValidationResult {
-  // 1. Zone unlocked?
-  // 2. Survivor count valid?
-  // 3. All survivors idle?
-  // 4. Enough food/water/supplies?
-  // 5. No survivor wounded/resting?
-  // 6. Required building levels met?
-  // 7. Squad power not critically below recommended, or show warning.
+  // 1. Expedition tile revealed and unlocked?
+  // 2. Authored route exists and all required route tiles are revealed?
+  // 3. Survivor count valid?
+  // 4. All survivors idle?
+  // 5. Enough food/water/supplies after route modifiers?
+  // 6. No survivor wounded/resting?
+  // 7. Required building levels met?
+  // 8. Squad power not critically below recommended, or show warning.
 }
 ```
 
@@ -2312,7 +2637,9 @@ squadPower = sum(survivorCombatPower) * policyPowerModifier
 ### 39.3. Risk display
 
 ```ts
+routeRiskModifier = route.ambushModifier + route.fatigueModifier
 powerRatio = squadPower / zone.recommendedPower
+riskScore = powerRatio - routeRiskModifier
 ```
 
 | Ratio | Display |
@@ -2456,7 +2783,28 @@ function applyOfflineProgress(gameState: GameState, now: number): OfflineReport 
 | Max offline progress | 12h |
 | Autosave interval | 30s |
 
-### 44.2. MVP items
+### 44.2. MVP map tiles
+
+| ID | Type | Role | Starts revealed |
+|---|---|---|---|
+| `tile_camp_core` | camp_core | центр лагеря, return point | yes |
+| `tile_camp_barracks` | camp_buildable | tutorial barracks placement | yes |
+| `tile_camp_workshop` | camp_buildable | workshop placement | yes |
+| `tile_camp_water` | camp_buildable | water collector placement | no |
+| `tile_camp_infirmary` | camp_buildable | infirmary placement | no |
+| `tile_camp_radio` | camp_buildable | radio tower placement | no |
+| `tile_road_01` | road | first safe route segment | yes |
+| `tile_field_01` | field | dry_suburb route | no |
+| `tile_forest_01` | forest | optional safer route flavor | no |
+| `tile_ruins_01` | ruins_buffer | store/clinic route pressure | yes |
+| `tile_wasteland_01` | wasteland | mutant_tunnel route pressure | no |
+| `tile_store_01` | expedition_location | abandoned_store | yes |
+| `tile_suburb_01` | expedition_location | dry_suburb | no |
+| `tile_clinic_01` | expedition_location | ruined_clinic | no |
+| `tile_police_01` | expedition_location | police_outpost | no |
+| `tile_tunnel_01` | expedition_location | mutant_tunnel | no |
+
+### 44.3. MVP items
 
 | ID | Name | Slot | Damage/Armor | Notes |
 |---|---|---|---:|---|
@@ -2473,15 +2821,15 @@ function applyOfflineProgress(gameState: GameState, now: number): OfflineReport 
 | ammo_pack | Ammo Pack | utility | +firearm | noise risk |
 | backpack | Backpack | utility | +capacity | loot focus |
 
-### 44.3. MVP zones
+### 44.4. MVP zones
 
-| ID | Duration | Risk | Enemy pool | Loot |
-|---|---:|---|---|---|
-| abandoned_store | 45s | safe | dog, starving survivor | scrap, food |
-| dry_suburb | 90s | safe | dog, mutant stray | scrap, water |
-| ruined_clinic | 180s | unstable | starving survivor, raider | medicine, scrap |
-| police_outpost | 300s | unstable | raider, armored raider | weapon_parts, weapons |
-| mutant_tunnel | 600s | dangerous | mutant stray, mutant brute | medicine, rare loot |
+| ID | Tile ID | Route flavor | Duration | Risk | Enemy pool | Loot |
+|---|---|---|---:|---|---|---|
+| abandoned_store | tile_store_01 | road + ruins | 45s | safe | dog, starving survivor | scrap, food |
+| dry_suburb | tile_suburb_01 | field + road | 90s | safe | dog, mutant stray | scrap, water |
+| ruined_clinic | tile_clinic_01 | ruins_buffer | 180s | unstable | starving survivor, raider | medicine, scrap |
+| police_outpost | tile_police_01 | road + ruins_buffer | 300s | unstable | raider, armored raider | weapon_parts, weapons |
+| mutant_tunnel | tile_tunnel_01 | wasteland + hazard | 600s | dangerous | mutant stray, mutant brute | medicine, rare loot |
 
 ---
 
@@ -2492,8 +2840,9 @@ function applyOfflineProgress(gameState: GameState, now: number): OfflineReport 
 Через 10 минут игрок должен иметь:
 
 - 2 survivors;
-- Barracks lvl 1;
-- 2 зоны открыты;
+- Barracks lvl 1 built on camp tile;
+- 2 expedition tiles visible;
+- first route preview understood;
 - минимум 1 wound или close call;
 - понимание, зачем нужен Workshop.
 
@@ -2505,6 +2854,7 @@ function applyOfflineProgress(gameState: GameState, now: number): OfflineReport 
 - Workshop lvl 1;
 - Water Collector lvl 1;
 - Ruined Clinic open;
+- at least one newly revealed buffer/location tile;
 - первый medkit/medicine decision.
 
 ### 45.3. Через 60–90 минут
@@ -2515,6 +2865,7 @@ function applyOfflineProgress(gameState: GameState, now: number): OfflineReport 
 - первый firearm;
 - Infirmary lvl 1;
 - Police Outpost progress;
+- at least one mapped route with better estimates;
 - понимание melee/firearm tradeoff.
 
 ### 45.4. Через 2–4 часа
@@ -2524,6 +2875,7 @@ function applyOfflineProgress(gameState: GameState, now: number): OfflineReport 
 - открыть Mutant Tunnel;
 - победить Mutant Brute;
 - увидеть locked preview полной версии;
+- иметь лагерь, который визуально вырос из core tile в маленькое поселение;
 - захотеть продолжить.
 
 ---
@@ -2574,14 +2926,15 @@ Risk: none
 
 ### 47.2. Tutorial steps
 
-1. “Send Mara to the Abandoned Store.”
-2. “Watch the expedition or let it run.”
-3. “Collect the report.”
-4. “Upgrade Barracks.”
-5. “Broadcast for a survivor.”
-6. “Send a larger squad.”
-7. “Build Workshop.”
-8. “Repair or equip a new weapon.”
+1. “Select the Abandoned Store tile.”
+2. “Preview the route and send Mara.”
+3. “Watch the expedition or let it run.”
+4. “Collect the report.”
+5. “Build Barracks on the highlighted camp tile.”
+6. “Broadcast for a survivor.”
+7. “Send a larger squad through the revealed route.”
+8. “Build Workshop.”
+9. “Repair or equip a new weapon.”
 
 ---
 
@@ -2590,6 +2943,9 @@ Risk: none
 MVP считается готовым, если:
 
 - игрок может пройти от старта до Mutant Tunnel;
+- игрок строит минимум 3 здания на camp tiles;
+- карта показывает revealed/mapped tiles и route preview;
+- buffer tile modifiers влияют на expedition estimate;
 - все экспедиции симулируются active и offline;
 - save/load работает без потери данных;
 - нет softlock при нуле food/water;
@@ -2612,8 +2968,11 @@ MVP считается готовым, если:
 
 Защита:
 
-- MVP только экспедиции + автобой + лагерь.
-- Нет grid-base.
+- MVP только единая authored map + экспедиции + автобой + 5 зданий.
+- Нет комнатной grid-base.
+- Нет свободной микростройки.
+- Buffer tiles не требуют ручного обслуживания.
+- Один tile = одно важное решение или понятный route modifier.
 - Нет фракций.
 - Нет тактического боя.
 
@@ -2628,7 +2987,9 @@ MVP считается готовым, если:
 - survivor traits;
 - named survivors;
 - after action stories;
-- визуальная панель лагеря.
+- единая визуальная карта лагеря и пустоши;
+- building tiles visibly change after construction;
+- route lines and mapped tiles show progress without extra menus.
 
 ### 49.3. Несправедливый offline
 
@@ -2657,6 +3018,15 @@ MVP считается готовым, если:
 
 ## 52. Test cases для Unity MCP agent
 
+### 52.0. Map tests
+
+- MVP map loads with expected width/height and tile ids.
+- `camp_core` starts revealed.
+- Building can be placed only on valid adjacent `camp_buildable` tile.
+- Placing Barracks changes tile type/state and assigns `buildingId`.
+- Radio Tower level reveal unlocks expected map tiles.
+- Route preview returns route tile ids and aggregated modifiers.
+
 ### 52.1. Resource tests
 
 - Spending resources below zero should fail.
@@ -2665,7 +3035,9 @@ MVP считается готовым, если:
 
 ### 52.2. Expedition tests
 
-- Cannot start locked zone.
+- Cannot start locked expedition tile.
+- Cannot start expedition from unrevealed expedition tile.
+- Expedition stores route tile ids.
 - Cannot start expedition with wounded survivor.
 - Cannot start expedition without required food/water.
 - Expedition completes and gives loot.
@@ -2688,6 +3060,7 @@ MVP считается готовым, если:
 ### 52.5. Save tests
 
 - Save/load preserves resources.
+- Save/load preserves map tile reveal/mapped/building state.
 - Save/load preserves active expeditions.
 - Save migration handles old version.
 - Corrupted save falls back to backup.
@@ -2699,17 +3072,21 @@ MVP считается готовым, если:
 ### Week 1 — Core simulation
 
 - GameState.
+- MapState and authored MVP tile layout.
+- Tile reveal/mapped/safety state.
 - Content loading.
 - Resources.
 - Survivors.
-- Basic expedition setup.
+- Basic expedition setup from location tile.
+- Route preview data.
 - Basic auto combat.
 - Basic loot.
 - Save/load.
 
 ### Week 2 — Camp systems
 
-- Buildings.
+- Building placement on camp tiles.
+- Building tile visual states.
 - Recruitment.
 - Workshop repair/equip.
 - Wounds/healing.
@@ -2718,7 +3095,9 @@ MVP считается готовым, если:
 
 ### Week 3 — Content and balancing
 
-- 5 zones.
+- 5 expedition location tiles.
+- 20–35 buffer tiles.
+- route modifiers.
 - 6 enemies.
 - 10–15 items.
 - 20–30 upgrades.
@@ -2728,7 +3107,8 @@ MVP считается готовым, если:
 
 ### Week 4 — Steam demo polish
 
-- UI polish.
+- Unified map UI polish.
+- Route line and tile reveal animation.
 - Tutorial.
 - Audio cues.
 - Settings.
@@ -2743,7 +3123,7 @@ MVP считается готовым, если:
 
 Игра должна ощущаться так:
 
-> Я отправил слабого выжившего с ржавым ножом в заброшенный магазин. Он еле выжил, принёс scrap и еду. Я построил барак, принял второго человека, починил револьвер, рискнул сходить в полицейский участок, потерял здоровье, но добыл weapon parts. Теперь я могу построить радио и открыть путь в мутантский туннель.
+> Я выбрал на карте заброшенный магазин, увидел короткий маршрут через старую дорогу и отправил туда слабого выжившего с ржавым ножом. Он еле выжил, принёс scrap и еду. Я построил барак на соседнем тайле лагеря, принял второго человека, починил револьвер в мастерской и рискнул пройти через руины к полицейскому участку. Отряд вернулся раненым, но с weapon parts. Теперь я могу поставить радиовышку, раскрыть дальнюю пустошь и открыть путь к мутантскому туннелю.
 
 Если этот цикл работает и вызывает желание “ещё одну экспедицию”, MVP успешен.
 
@@ -2771,4 +3151,3 @@ Design reminder:
 ```text
 The apocalypse is the setting, not the UI mood. The UI should communicate rebuilding, clarity, safety, and player control.
 ```
-

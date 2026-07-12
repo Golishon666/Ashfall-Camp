@@ -100,7 +100,8 @@ MonoBehaviour:
   WoundedAlertTitleFormat: '{0} SURVIVOR NEEDS CARE'
   WoundedAlertBodyFormat: '{0} is not ready for field work.'
   IdleSurvivorsAlertTitleFormat: '{0} IDLE SURVIVORS'
-  IdleSurvivorsAlertBodyFormat: '{0} survivors are ready for expeditions or camp work.'
+  IdleSurvivorsAlertBodyFormat: '{0} survivors are ready for expeditions or camp
+    work.'
   EmergencyScavengeAlertTitle: SCAVENGE AROUND CAMP
   EmergencyScavengeReadyBodyFormat: No cost. {0}s for {1}.
   EmergencyScavengeActiveBodyFormat: Crew is checking the perimeter. {0}s left.
@@ -205,7 +206,7 @@ MonoBehaviour:
   BuildingStatusBroadcastBlockedLabel: Broadcast Blocked
   BuildingStatusNoWoundedLabel: No Wounded
   BuildingStatusWoundedFormat: '{0} Wounded'
-  BuildingStatusProductionFormat: '+{0}/h'
+  BuildingStatusProductionFormat: +{0}/h
   SurvivorEffectFormat: Survivor cap {0}, squad size {1}.
   ResourceCapEffectFormat: '{0} cap {1}, +{2}/h.'
   ResourceCapOnlyEffectFormat: '{0} cap {1}.'
@@ -220,7 +221,7 @@ MonoBehaviour:
   SurvivorEmptyBody: Broadcast from the radio tower to find more people.
   SurvivorCardStateFormat: '{0}  *  LVL {1}'
   SurvivorCardSkillFormat: '{0} {1}'
-  SurvivorDetailTitle: '{0}  *  LEVEL {1}'
+  SurvivorDetailTitle: '{0}'
   SurvivorDetailBackgroundFormat: 'Background: {0}'
   SurvivorDetailTraitsFormat: 'Traits: {0}'
   SurvivorDetailWeaponFormat: 'Weapon: {0}  ({1}/{2})'
@@ -240,6 +241,53 @@ MonoBehaviour:
   DefaultSurvivorPortraitId: default
   SurvivorNoWeaponLabel: Unarmed
   SurvivorNoTraitsLabel: None
+  SurvivorInventoryTitle: INVENTORY
+  SurvivorInventoryEquipButton: EQUIP
+  SurvivorInventoryEmptyLabel: NO ITEMS
+  SurvivorInventoryFilters:
+  - Id: all
+    Label: ALL
+    Icon: {fileID: 0}
+  - Id: weapons
+    Label: WEAPONS
+    Icon: {fileID: 0}
+  - Id: armor
+    Label: ARMOR
+    Icon: {fileID: 0}
+  - Id: utility
+    Label: UTILITY
+    Icon: {fileID: 0}
+  - Id: materials
+    Label: MATERIALS
+    Icon: {fileID: 0}
+  SurvivorInventoryItems:
+  - ItemId: rusty_knife
+    Description: A dull blade, but better than nothing.
+    Icon: {fileID: 2800000, guid: 2a362fccb3094eab980c92483a2b4e6c, type: 3}
+  - ItemId: metal_pipe
+    Description: A heavy improvised melee weapon.
+    Icon: {fileID: 2800000, guid: 8e8791c2401149408d09d4df61016c5d, type: 3}
+  - ItemId: rusty_revolver
+    Description: Old, loud and still dangerous.
+    Icon: {fileID: 2800000, guid: d815f4bf6dc64c9d8228544b2938f905, type: 3}
+  - ItemId: leather_jacket
+    Description: Worn leather offering basic protection.
+    Icon: {fileID: 2800000, guid: 47825d7182bf4b549e26db796d7cecca, type: 3}
+  - ItemId: scrap_armor
+    Description: Scavenged plates wired into a rough vest.
+    Icon: {fileID: 2800000, guid: 47825d7182bf4b549e26db796d7cecca, type: 3}
+  - ItemId: medkit
+    Description: Emergency supplies for field treatment.
+    Icon: {fileID: 2800000, guid: e3bcdbc3d90e45eabddae965992c404e, type: 3}
+  - ItemId: toolkit
+    Description: Tools for repairs away from the workshop.
+    Icon: {fileID: 2800000, guid: 5f8d453e20f04f869951999def59f9c0, type: 3}
+  - ItemId: ammo_pack
+    Description: Keeps loose ammunition dry and organized.
+    Icon: {fileID: 2800000, guid: bf55df2885174b86a3ca4fae80016000, type: 3}
+  - ItemId: backpack
+    Description: Adds room for scavenged supplies.
+    Icon: {fileID: 2800000, guid: be1579143c8f4384b8d2c160670a267b, type: 3}
   WorkshopScreenTitle: WORKSHOP
   WorkshopStatusFormat: Target {0}. Items {1}. Parts {2}. Repair requires Workshop
     lvl {3}.
@@ -371,22 +419,18 @@ MonoBehaviour:
     Label: WATER
     Icon: {fileID: 2800000, guid: d0efb0f2f4a881a43993b2caecd76a1b, type: 3}
     UsesSurvivorCapacity: 0
+  - Id: weapon_parts
+    Label: WEAPON PARTS
+    Icon: {fileID: 2800000, guid: 9ba4001c551c74f4b9997c78f990b832, type: 3}
+    UsesSurvivorCapacity: 0
   - Id: medicine
     Label: MEDICINE
     Icon: {fileID: 2800000, guid: 1fbf16eba429c26428801995f9a42d7c, type: 3}
-    UsesSurvivorCapacity: 0
-  - Id: weapon_parts
-    Label: PARTS
-    Icon: {fileID: 2800000, guid: 9ba4001c551c74f4b9997c78f990b832, type: 3}
     UsesSurvivorCapacity: 0
   - Id: radio_intel
     Label: RADIO INTEL
     Icon: {fileID: 2800000, guid: 348c0e2c5e19462eb6b36a580a3c1a50, type: 3}
     UsesSurvivorCapacity: 0
-  - Id: survivors
-    Label: CAPACITY
-    Icon: {fileID: 2800000, guid: 911e2f9b550a95b42b9828e52356a8ca, type: 3}
-    UsesSurvivorCapacity: 1
   BuildingFilters:
   - Id: all
     Label: ALL
@@ -607,29 +651,21 @@ MonoBehaviour:
     Label: SURVIVORS
     Icon: {fileID: 2800000, guid: 911e2f9b550a95b42b9828e52356a8ca, type: 3}
     IsActive: 0
-  - Id: buildings
-    Label: BUILDINGS
-    Icon: {fileID: 2800000, guid: ebb35b604d6d6d243999e5bc29882a7d, type: 3}
+  - Id: inventory
+    Label: INVENTORY
+    Icon: {fileID: 0}
     IsActive: 0
   - Id: expeditions
     Label: EXPEDITIONS
     Icon: {fileID: 2800000, guid: a597ee356523901408b8d779b765ea1f, type: 3}
     IsActive: 0
-  - Id: workshop
-    Label: WORKSHOP
-    Icon: {fileID: 2800000, guid: f398bd99595f0214586895e7a61a6bb7, type: 3}
-    IsActive: 0
-  - Id: reports
-    Label: REPORTS
-    Icon: {fileID: 2800000, guid: 697e79168b8544088c982e7063364f08, type: 3}
-    IsActive: 0
   - Id: radio
     Label: RADIO
     Icon: {fileID: 2800000, guid: d6bc12cd4c798af4a9e4011919711632, type: 3}
     IsActive: 0
-  - Id: settings
-    Label: SETTINGS
-    Icon: {fileID: 2800000, guid: d37e26ec26a54759a08df26b81c993a4, type: 3}
+  - Id: reports
+    Label: REPORTS
+    Icon: {fileID: 2800000, guid: 697e79168b8544088c982e7063364f08, type: 3}
     IsActive: 0
   SurvivorSkillLabels:
   - Id: scavenging

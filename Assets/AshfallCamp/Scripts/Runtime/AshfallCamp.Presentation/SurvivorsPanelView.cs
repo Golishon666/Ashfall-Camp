@@ -51,15 +51,36 @@ namespace AshfallCamp.Presentation
         [SerializeField] private RawImage detailPortrait;
         [SerializeField] private Button useMedicineButton;
         [SerializeField] private TextMeshProUGUI useMedicineButtonLabel;
+        [Header("Reference screen")]
+        [SerializeField] private Slider detailXpSlider;
+        [SerializeField] private List<SurvivorSkillBinding> skillRows = new List<SurvivorSkillBinding>();
+        [SerializeField] private List<EquipmentSlotBinding> equipmentSlots = new List<EquipmentSlotBinding>();
+        [SerializeField] private TextMeshProUGUI inventoryTitle;
+        [SerializeField] private List<InventoryFilterBinding> inventoryFilters = new List<InventoryFilterBinding>();
+        [SerializeField] private List<InventorySectionBinding> inventorySections = new List<InventorySectionBinding>();
+        [SerializeField] private RawImage selectedItemIcon;
+        [SerializeField] private TextMeshProUGUI selectedItemName;
+        [SerializeField] private TextMeshProUGUI selectedItemDescription;
+        [SerializeField] private TextMeshProUGUI selectedItemStats;
+        [SerializeField] private Button selectedItemEquipButton;
+        [SerializeField] private TextMeshProUGUI selectedItemEquipButtonLabel;
 
         private string _selectedSurvivorId = string.Empty;
         private SurvivorDetailActionKind _selectedActionKind;
         private Action<UseMedicineRequest> _useMedicineRequested;
         private Action<StartRestRequest> _startRestRequested;
         private Action<StopRestRequest> _stopRestRequested;
+        private Action<EquipItemRequest> _equipItemRequested;
         private UnityAction _useMedicineClick;
         private UnityAction _viewDetailsClick;
         private UnityAction _closeDetailClick;
+        private UnityAction _equipItemClick;
+        private GameState _lastState;
+        private GameConfigSnapshot _lastConfig;
+        private CampUiCatalogSO _lastCatalog;
+        private SurvivorInventoryCategory _activeInventoryCategory = SurvivorInventoryCategory.All;
+        private string _selectedItemUid = string.Empty;
+        private string _selectedMaterialId = string.Empty;
 
         public void ConfigureBindings(
             TextMeshProUGUI titleLabel,
@@ -270,6 +291,7 @@ namespace AshfallCamp.Presentation
             WireCards();
             WireUseMedicineButton();
             WireDetailNavigation();
+            WireReferenceBindings();
         }
 
         private void OnDestroy()
@@ -284,6 +306,40 @@ namespace AshfallCamp.Presentation
 
             ClearUseMedicineButton();
             ClearDetailNavigation();
+            ClearReferenceBindings();
+        }
+
+        public void ConfigureReferenceBindings(
+            Slider xpSlider,
+            IEnumerable<SurvivorSkillBinding> skills,
+            IEnumerable<EquipmentSlotBinding> loadout,
+            TextMeshProUGUI inventoryTitleLabel,
+            IEnumerable<InventoryFilterBinding> filters,
+            IEnumerable<InventorySectionBinding> sections,
+            RawImage itemIcon,
+            TextMeshProUGUI itemName,
+            TextMeshProUGUI itemDescription,
+            TextMeshProUGUI itemStats,
+            Button equipButton,
+            TextMeshProUGUI equipButtonLabel)
+        {
+            detailXpSlider = xpSlider;
+            skillRows.Clear();
+            if (skills != null) skillRows.AddRange(skills);
+            equipmentSlots.Clear();
+            if (loadout != null) equipmentSlots.AddRange(loadout);
+            inventoryTitle = inventoryTitleLabel;
+            inventoryFilters.Clear();
+            if (filters != null) inventoryFilters.AddRange(filters);
+            inventorySections.Clear();
+            if (sections != null) inventorySections.AddRange(sections);
+            selectedItemIcon = itemIcon;
+            selectedItemName = itemName;
+            selectedItemDescription = itemDescription;
+            selectedItemStats = itemStats;
+            selectedItemEquipButton = equipButton;
+            selectedItemEquipButtonLabel = equipButtonLabel;
+            WireReferenceBindings();
         }
 
         public void SetUseMedicineHandler(Action<UseMedicineRequest> useMedicineRequested)
@@ -299,9 +355,18 @@ namespace AshfallCamp.Presentation
             WireUseMedicineButton();
         }
 
+        public void SetEquipHandler(Action<EquipItemRequest> equipItemRequested)
+        {
+            _equipItemRequested = equipItemRequested;
+            WireReferenceBindings();
+        }
+
         public void Render(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
         {
             if (state == null || config == null || catalog == null) return;
+            _lastState = state;
+            _lastConfig = config;
+            _lastCatalog = catalog;
 
             UiText.Set(title, catalog.SurvivorsScreenTitle);
             UiText.Set(countLabel, CampDashboardTextFormatter.Format(catalog.SurvivorsCountFormat, state.Survivors.Count, Math.Max(1, state.SurvivorCap)));
@@ -333,6 +398,7 @@ namespace AshfallCamp.Presentation
             }
 
             RenderDetail(FindSelectedSurvivor(state), selectedCard, state, config, catalog);
+            RenderInventory(state, config, catalog);
         }
 
         private void WireCards()
@@ -349,6 +415,7 @@ namespace AshfallCamp.Presentation
         private void SelectSurvivor(string survivorId)
         {
             _selectedSurvivorId = survivorId ?? string.Empty;
+            Rerender();
         }
 
         private void ShowRoster()
@@ -396,6 +463,7 @@ namespace AshfallCamp.Presentation
             UiText.Set(detailTitle, detail.Title);
             UiText.Set(detailLevel, detail.LevelText);
             UiText.Set(detailXp, detail.XpText);
+            SetSlider(detailXpSlider, detail.XpValue);
             UiText.Set(detailStatus, detail.StatusText);
             UiText.Set(detailBackground, detail.Background);
             UiText.Set(detailTraits, detail.Traits);
@@ -411,6 +479,15 @@ namespace AshfallCamp.Presentation
             UiText.Set(detailMedicineCost, detail.ActionCost);
             UiText.Set(useMedicineButtonLabel, detail.ActionButton);
             ApplyPortrait(detailPortrait, detail.Portrait);
+            for (var i = 0; i < skillRows.Count; i++)
+            {
+                skillRows[i]?.Render(i < detail.Skills.Count ? detail.Skills[i] : null, catalog);
+            }
+
+            for (var i = 0; i < equipmentSlots.Count; i++)
+            {
+                equipmentSlots[i]?.Render(i < detail.Equipment.Count ? detail.Equipment[i] : null, catalog);
+            }
             _selectedActionKind = detail.ActionKind;
             UiText.SetActive(detailMedicineCost, detail.ShowAction && !string.IsNullOrWhiteSpace(detail.ActionCost));
             if (useMedicineButton != null)
@@ -520,6 +597,327 @@ namespace AshfallCamp.Presentation
             return false;
         }
 
+        private void RenderInventory(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
+        {
+            UiText.Set(inventoryTitle, catalog.SurvivorInventoryTitle);
+            var items = CampDashboardTextFormatter.BuildSurvivorInventory(state, config, catalog, _selectedSurvivorId);
+            EnsureSelectedInventoryItem(items);
+
+            foreach (var filter in inventoryFilters)
+            {
+                filter?.Render(_activeInventoryCategory, catalog);
+            }
+
+            foreach (var section in inventorySections)
+            {
+                section?.Render(items, _activeInventoryCategory, _selectedItemUid, _selectedMaterialId, catalog, SelectInventoryItem);
+            }
+
+            CampInventoryItemPresentation selected = null;
+            foreach (var item in items)
+            {
+                if (IsSelectedInventoryItem(item))
+                {
+                    selected = item;
+                    break;
+                }
+            }
+
+            RenderSelectedInventoryItem(selected, catalog);
+        }
+
+        private void EnsureSelectedInventoryItem(List<CampInventoryItemPresentation> items)
+        {
+            foreach (var item in items)
+            {
+                if (IsVisibleForFilter(item) && IsSelectedInventoryItem(item)) return;
+            }
+
+            _selectedItemUid = string.Empty;
+            _selectedMaterialId = string.Empty;
+            foreach (var item in items)
+            {
+                if (!IsVisibleForFilter(item)) continue;
+                if (item.IsMaterial) _selectedMaterialId = item.ItemId;
+                else _selectedItemUid = item.ItemUid;
+                return;
+            }
+        }
+
+        private bool IsVisibleForFilter(CampInventoryItemPresentation item)
+        {
+            return item != null && (_activeInventoryCategory == SurvivorInventoryCategory.All || item.Category == _activeInventoryCategory);
+        }
+
+        private bool IsSelectedInventoryItem(CampInventoryItemPresentation item)
+        {
+            if (item == null) return false;
+            return item.IsMaterial
+                ? string.Equals(item.ItemId, _selectedMaterialId, StringComparison.Ordinal)
+                : string.Equals(item.ItemUid, _selectedItemUid, StringComparison.Ordinal);
+        }
+
+        private void SelectInventoryItem(CampInventoryItemPresentation item)
+        {
+            if (item == null) return;
+            _selectedItemUid = item.IsMaterial ? string.Empty : item.ItemUid;
+            _selectedMaterialId = item.IsMaterial ? item.ItemId : string.Empty;
+            Rerender();
+        }
+
+        private void SelectInventoryFilter(SurvivorInventoryCategory category)
+        {
+            _activeInventoryCategory = category;
+            _selectedItemUid = string.Empty;
+            _selectedMaterialId = string.Empty;
+            Rerender();
+        }
+
+        private void RenderSelectedInventoryItem(CampInventoryItemPresentation item, CampUiCatalogSO catalog)
+        {
+            var hasItem = item != null;
+            ApplyPortrait(selectedItemIcon, hasItem ? item.Icon : null);
+            UiText.Set(selectedItemName, hasItem ? item.Name : catalog.SurvivorInventoryEmptyLabel);
+            UiText.Set(selectedItemDescription, hasItem ? item.Description : string.Empty);
+            UiText.Set(selectedItemStats, hasItem ? item.Stats : string.Empty);
+            UiText.Set(selectedItemEquipButtonLabel, catalog.SurvivorInventoryEquipButton);
+            if (selectedItemEquipButton != null)
+            {
+                UiText.SetActive(selectedItemEquipButton, hasItem && !item.IsMaterial);
+                selectedItemEquipButton.interactable = hasItem && !item.IsMaterial && item.CanEquip && _equipItemRequested != null;
+            }
+        }
+
+        private void WireReferenceBindings()
+        {
+            foreach (var filter in inventoryFilters)
+            {
+                filter?.Wire(SelectInventoryFilter);
+            }
+
+            if (selectedItemEquipButton != null && _equipItemClick == null)
+            {
+                _equipItemClick = OnEquipItemClicked;
+                selectedItemEquipButton.onClick.AddListener(_equipItemClick);
+            }
+        }
+
+        private void ClearReferenceBindings()
+        {
+            foreach (var filter in inventoryFilters) filter?.Clear();
+            foreach (var section in inventorySections) section?.Clear();
+            if (selectedItemEquipButton != null && _equipItemClick != null)
+            {
+                selectedItemEquipButton.onClick.RemoveListener(_equipItemClick);
+            }
+
+            _equipItemClick = null;
+        }
+
+        private void OnEquipItemClicked()
+        {
+            if (string.IsNullOrWhiteSpace(_selectedSurvivorId) || string.IsNullOrWhiteSpace(_selectedItemUid)) return;
+            _equipItemRequested?.Invoke(new EquipItemRequest { SurvivorId = _selectedSurvivorId, ItemUid = _selectedItemUid });
+        }
+
+        private void Rerender()
+        {
+            if (_lastState != null && _lastConfig != null && _lastCatalog != null)
+            {
+                Render(_lastState, _lastConfig, _lastCatalog);
+            }
+        }
+
+        [Serializable]
+        public sealed class SurvivorSkillBinding
+        {
+            [SerializeField] private TextMeshProUGUI label;
+            [SerializeField] private Slider slider;
+            [SerializeField] private TextMeshProUGUI value;
+
+            public SurvivorSkillBinding(TextMeshProUGUI label, Slider slider, TextMeshProUGUI value)
+            {
+                this.label = label;
+                this.slider = slider;
+                this.value = value;
+            }
+
+            public void Render(CampSurvivorSkillPresentation skill, CampUiCatalogSO catalog)
+            {
+                var active = skill != null;
+                if (label != null) label.transform.parent.gameObject.SetActive(active);
+                if (!active) return;
+                UiText.Set(label, skill.Label);
+                UiText.Set(value, skill.Percent.ToString());
+                SetSlider(slider, skill.Value);
+            }
+        }
+
+        [Serializable]
+        public sealed class EquipmentSlotBinding
+        {
+            [SerializeField] private Image panel;
+            [SerializeField] private TextMeshProUGUI slotLabel;
+            [SerializeField] private RawImage icon;
+            [SerializeField] private TextMeshProUGUI nameLabel;
+            [SerializeField] private TextMeshProUGUI durabilityLabel;
+
+            public EquipmentSlotBinding(Image panel, TextMeshProUGUI slotLabel, RawImage icon, TextMeshProUGUI nameLabel, TextMeshProUGUI durabilityLabel)
+            {
+                this.panel = panel;
+                this.slotLabel = slotLabel;
+                this.icon = icon;
+                this.nameLabel = nameLabel;
+                this.durabilityLabel = durabilityLabel;
+            }
+
+            public void Render(CampEquippedItemPresentation item, CampUiCatalogSO catalog)
+            {
+                UiText.SetActive(panel, item != null);
+                if (item == null) return;
+                UiText.Set(slotLabel, item.SlotLabel);
+                UiText.Set(nameLabel, item.Name);
+                UiText.Set(durabilityLabel, item.MaxDurability > 0 ? item.Durability + "/" + item.MaxDurability : string.Empty);
+                ApplyPortrait(icon, item.Icon);
+            }
+        }
+
+        [Serializable]
+        public sealed class InventoryFilterBinding
+        {
+            [SerializeField] private SurvivorInventoryCategory category;
+            [SerializeField] private Image panel;
+            [SerializeField] private Button button;
+            [SerializeField] private TextMeshProUGUI label;
+            [NonSerialized] private UnityAction _click;
+            [NonSerialized] private Action<SurvivorInventoryCategory> _selected;
+
+            public InventoryFilterBinding(SurvivorInventoryCategory category, Image panel, Button button, TextMeshProUGUI label)
+            {
+                this.category = category;
+                this.panel = panel;
+                this.button = button;
+                this.label = label;
+            }
+
+            public void Wire(Action<SurvivorInventoryCategory> selected)
+            {
+                Clear();
+                _selected = selected;
+                if (button == null) return;
+                _click = () => _selected?.Invoke(category);
+                button.onClick.AddListener(_click);
+            }
+
+            public void Clear()
+            {
+                if (button != null && _click != null) button.onClick.RemoveListener(_click);
+                _click = null;
+            }
+
+            public void Render(SurvivorInventoryCategory activeCategory, CampUiCatalogSO catalog)
+            {
+                var active = category == activeCategory;
+                UiText.Set(label, category == SurvivorInventoryCategory.All ? "All" : category.ToString());
+                if (panel != null) panel.color = active ? catalog.Theme.Sage : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, 0.7f);
+                if (button != null) button.interactable = !active;
+            }
+        }
+
+        [Serializable]
+        public sealed class InventorySectionBinding
+        {
+            [SerializeField] private SurvivorInventoryCategory category;
+            [SerializeField] private GameObject root;
+            [SerializeField] private TextMeshProUGUI title;
+            [SerializeField] private TextMeshProUGUI count;
+            [SerializeField] private List<InventoryItemBinding> items = new List<InventoryItemBinding>();
+
+            public InventorySectionBinding(SurvivorInventoryCategory category, GameObject root, TextMeshProUGUI title, TextMeshProUGUI count, IEnumerable<InventoryItemBinding> items)
+            {
+                this.category = category;
+                this.root = root;
+                this.title = title;
+                this.count = count;
+                if (items != null) this.items.AddRange(items);
+            }
+
+            public void Render(List<CampInventoryItemPresentation> source, SurvivorInventoryCategory filter, string selectedUid, string selectedMaterialId, CampUiCatalogSO catalog, Action<CampInventoryItemPresentation> selected)
+            {
+                var visible = filter == SurvivorInventoryCategory.All || filter == category;
+                var matches = new List<CampInventoryItemPresentation>();
+                foreach (var item in source)
+                {
+                    if (item != null && item.Category == category) matches.Add(item);
+                }
+
+                if (root != null) root.SetActive(visible && matches.Count > 0);
+                if (!visible) return;
+                UiText.Set(title, category.ToString());
+                UiText.Set(count, matches.Count.ToString());
+                for (var i = 0; i < items.Count; i++)
+                {
+                    var item = i < matches.Count ? matches[i] : null;
+                    var isSelected = item != null && (item.IsMaterial
+                        ? string.Equals(item.ItemId, selectedMaterialId, StringComparison.Ordinal)
+                        : string.Equals(item.ItemUid, selectedUid, StringComparison.Ordinal));
+                    items[i].Render(item, isSelected, catalog, selected);
+                }
+            }
+
+            public void Clear()
+            {
+                foreach (var item in items) item?.Clear();
+            }
+        }
+
+        [Serializable]
+        public sealed class InventoryItemBinding
+        {
+            [SerializeField] private Image panel;
+            [SerializeField] private Button button;
+            [SerializeField] private RawImage icon;
+            [SerializeField] private TextMeshProUGUI nameLabel;
+            [SerializeField] private TextMeshProUGUI countLabel;
+            [NonSerialized] private UnityAction _click;
+            [NonSerialized] private CampInventoryItemPresentation _item;
+            [NonSerialized] private Action<CampInventoryItemPresentation> _selected;
+
+            public InventoryItemBinding(Image panel, Button button, RawImage icon, TextMeshProUGUI nameLabel, TextMeshProUGUI countLabel)
+            {
+                this.panel = panel;
+                this.button = button;
+                this.icon = icon;
+                this.nameLabel = nameLabel;
+                this.countLabel = countLabel;
+            }
+
+            public void Render(CampInventoryItemPresentation item, bool isSelected, CampUiCatalogSO catalog, Action<CampInventoryItemPresentation> selected)
+            {
+                _item = item;
+                UiText.SetActive(panel, item != null);
+                Clear();
+                if (item == null) return;
+                _selected = selected;
+                UiText.Set(nameLabel, item.Name);
+                UiText.Set(countLabel, item.IsMaterial ? item.Count.ToString() : string.Empty);
+                ApplyPortrait(icon, item.Icon);
+                if (panel != null) panel.color = isSelected ? catalog.Theme.Amber : catalog.Theme.WithAlpha(catalog.Theme.PaperDark, 0.82f);
+                if (button != null)
+                {
+                    _click = () => _selected?.Invoke(_item);
+                    button.onClick.AddListener(_click);
+                    button.interactable = !isSelected;
+                }
+            }
+
+            public void Clear()
+            {
+                if (button != null && _click != null) button.onClick.RemoveListener(_click);
+                _click = null;
+            }
+        }
+
         [Serializable]
         public sealed class SurvivorCardBinding
         {
@@ -535,8 +933,10 @@ namespace AshfallCamp.Presentation
             [SerializeField] private TextMeshProUGUI powerLabel;
             [SerializeField] private Slider healthSlider;
             [SerializeField] private Slider fatigueSlider;
+            [SerializeField] private Slider moraleSlider;
             [SerializeField] private TextMeshProUGUI healthValueLabel;
             [SerializeField] private TextMeshProUGUI fatigueValueLabel;
+            [SerializeField] private TextMeshProUGUI moraleValueLabel;
 
             [NonSerialized] private string _survivorId = string.Empty;
             [NonSerialized] private UnityAction _cachedClick;
@@ -606,6 +1006,29 @@ namespace AshfallCamp.Presentation
                 this.fatigueValueLabel = fatigueValueLabel;
             }
 
+            public SurvivorCardBinding(
+                Image panel,
+                RawImage cardArtwork,
+                Button button,
+                RawImage portrait,
+                TextMeshProUGUI avatarLabel,
+                TextMeshProUGUI nameLabel,
+                TextMeshProUGUI stateLabel,
+                TextMeshProUGUI skillLabel,
+                TextMeshProUGUI levelLabel,
+                TextMeshProUGUI powerLabel,
+                Slider healthSlider,
+                Slider fatigueSlider,
+                Slider moraleSlider,
+                TextMeshProUGUI healthValueLabel,
+                TextMeshProUGUI fatigueValueLabel,
+                TextMeshProUGUI moraleValueLabel)
+                : this(panel, cardArtwork, button, portrait, avatarLabel, nameLabel, stateLabel, skillLabel, levelLabel, powerLabel, healthSlider, fatigueSlider, healthValueLabel, fatigueValueLabel)
+            {
+                this.moraleSlider = moraleSlider;
+                this.moraleValueLabel = moraleValueLabel;
+            }
+
             public void Wire(Action<string> selected)
             {
                 if (button == null) return;
@@ -654,8 +1077,10 @@ namespace AshfallCamp.Presentation
                 UiText.Set(powerLabel, survivor.PowerText);
                 SetSlider(healthSlider, survivor.HealthValue);
                 SetSlider(fatigueSlider, survivor.FatigueValue);
+                SetSlider(moraleSlider, survivor.MoraleValue);
                 UiText.Set(healthValueLabel, survivor.HealthText);
                 UiText.Set(fatigueValueLabel, survivor.FatigueText);
+                UiText.Set(moraleValueLabel, survivor.MoraleText);
                 if (avatarLabel != null) avatarLabel.color = catalog.Theme.Paper;
                 if (nameLabel != null) nameLabel.color = textColor;
                 if (stateLabel != null) stateLabel.color = catalog.Theme.MutedInk;
@@ -664,6 +1089,7 @@ namespace AshfallCamp.Presentation
                 if (powerLabel != null) powerLabel.color = textColor;
                 if (healthValueLabel != null) healthValueLabel.color = catalog.Theme.MutedInk;
                 if (fatigueValueLabel != null) fatigueValueLabel.color = catalog.Theme.MutedInk;
+                if (moraleValueLabel != null) moraleValueLabel.color = catalog.Theme.MutedInk;
                 if (button != null) button.interactable = !isSelected;
             }
 

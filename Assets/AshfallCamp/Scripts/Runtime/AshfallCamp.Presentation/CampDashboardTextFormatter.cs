@@ -350,8 +350,10 @@ namespace AshfallCamp.Presentation
                     CalculateSurvivorPower(survivor).ToString("N0", CultureInfo.InvariantCulture),
                     CalculateHealthValue(survivor),
                     CalculateFatigueValue(survivor),
+                    CalculateMoraleValue(survivor),
                     FormatSurvivorHealth(survivor),
                     FormatSurvivorFatigue(survivor),
+                    FormatSurvivorMorale(survivor),
                     ResolveSurvivorPortrait(survivor, catalog)));
             }
 
@@ -374,7 +376,10 @@ namespace AshfallCamp.Presentation
                 Treatment = FormatTreatment(survivor, state, config, catalog),
                 Stats = Format(catalog.SurvivorDetailStatsFormat, survivor.Health, survivor.MaxHealth, survivor.Morale, survivor.Fatigue, survivor.Xp),
                 LevelText = "LEVEL " + Math.Max(1, survivor.Level).ToString(CultureInfo.InvariantCulture),
-                XpText = Math.Max(0, survivor.Xp).ToString("N0", CultureInfo.InvariantCulture) + " XP",
+                XpText = Math.Max(0, survivor.Xp).ToString("N0", CultureInfo.InvariantCulture) + " / " +
+                         Math.Max(1, survivor.PreviewXpGoal > 0
+                             ? survivor.PreviewXpGoal
+                             : ProgressionSystem.GetSurvivorXpRequired(survivor.Level, config.Balance)).ToString("N0", CultureInfo.InvariantCulture),
                 StatusText = survivor.State.ToString(),
                 HealthValue = CalculateHealthValue(survivor),
                 FatigueValue = CalculateFatigueValue(survivor),
@@ -389,8 +394,181 @@ namespace AshfallCamp.Presentation
                 Portrait = ResolveSurvivorPortrait(survivor, catalog)
             };
 
+            var xpGoal = survivor.PreviewXpGoal > 0
+                ? survivor.PreviewXpGoal
+                : ProgressionSystem.GetSurvivorXpRequired(survivor.Level, config.Balance);
+            presentation.XpValue = Mathf.Clamp01(survivor.Xp / (float)Math.Max(1, xpGoal));
+            presentation.Skills = BuildSurvivorSkills(survivor, config, catalog);
+            presentation.Equipment = BuildSurvivorEquipment(survivor, state, config, catalog);
+
             ApplySurvivorDetailAction(presentation, survivor, state, config, catalog);
             return presentation;
+        }
+
+        public static List<CampSurvivorSkillPresentation> BuildSurvivorSkills(SurvivorState survivor, GameConfigSnapshot config, CampUiCatalogSO catalog)
+        {
+            var result = new List<CampSurvivorSkillPresentation>();
+            if (survivor == null || config == null || catalog == null) return result;
+
+            var maxSkill = Math.Max(1, config.Balance.SkillMaxLevel);
+            var useRawPercent = false;
+            foreach (var pair in survivor.Skills)
+            {
+                if (pair.Value > maxSkill)
+                {
+                    useRawPercent = true;
+                    break;
+                }
+            }
+            foreach (var skillId in GameStateFactory.SkillIds)
+            {
+                int value;
+                survivor.Skills.TryGetValue(skillId, out value);
+                var percent = useRawPercent
+                    ? Mathf.Clamp(value, 0, 100)
+                    : Mathf.RoundToInt(Mathf.Clamp01(value / (float)maxSkill) * 100f);
+                result.Add(new CampSurvivorSkillPresentation(
+                    skillId,
+                    CultureInfo.InvariantCulture.TextInfo.ToTitleCase(skillId.Replace('_', ' ')),
+                    percent,
+                    percent / 100f));
+            }
+
+            return result;
+        }
+
+        public static List<CampEquippedItemPresentation> BuildSurvivorEquipment(SurvivorState survivor, GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
+        {
+            var result = new List<CampEquippedItemPresentation>();
+            if (survivor == null || state == null || config == null || catalog == null) return result;
+
+            AddEquippedItem(result, "Weapon", ItemSlot.Weapon, survivor.Equipment.WeaponItemUid, state, config, catalog);
+            AddEquippedItem(result, "Armor", ItemSlot.Armor, survivor.Equipment.ArmorItemUid, state, config, catalog);
+            AddEquippedItem(result, "Utility", ItemSlot.Utility, survivor.Equipment.UtilityItemUid, state, config, catalog);
+            AddEquippedItem(result, "Backpack", ItemSlot.Backpack, survivor.Equipment.BackpackItemUid, state, config, catalog);
+            return result;
+        }
+
+        public static List<CampInventoryItemPresentation> BuildSurvivorInventory(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog, string targetSurvivorId)
+        {
+            var result = new List<CampInventoryItemPresentation>();
+            if (state == null || config == null || catalog == null) return result;
+
+            foreach (var item in state.Inventory)
+            {
+                if (item == null) continue;
+                ItemDefinition definition;
+                if (!config.TryGetItem(item.ItemId, out definition)) continue;
+
+                var request = new EquipItemRequest { SurvivorId = targetSurvivorId, ItemUid = item.Uid };
+                var ui = ResolveSurvivorInventoryItemUi(item.ItemId, catalog);
+                result.Add(new CampInventoryItemPresentation(
+                    item.Uid,
+                    item.ItemId,
+                    definition.Name,
+                    ui != null ? ui.Description : string.Empty,
+                    FormatSurvivorInventoryStats(definition, item, config),
+                    ResolveInventoryCategory(definition),
+                    definition.Slot,
+                    ui != null ? ui.Icon : null,
+                    item.EquippedBySurvivorId,
+                    WorkshopSystem.ValidateEquip(state, config, request).IsValid,
+                    false,
+                    0));
+            }
+
+            AddMaterial(result, state, config, catalog, GameIds.Resources.Scrap);
+            AddMaterial(result, state, config, catalog, GameIds.Resources.WeaponParts);
+            AddMaterial(result, state, config, catalog, GameIds.Resources.Medicine);
+            AddMaterial(result, state, config, catalog, GameIds.Resources.RadioIntel);
+            return result;
+        }
+
+        private static void AddEquippedItem(List<CampEquippedItemPresentation> result, string label, ItemSlot slot, string itemUid, GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog)
+        {
+            var item = WorkshopSystem.FindItem(state, itemUid);
+            ItemDefinition definition = null;
+            var hasDefinition = item != null && config.TryGetItem(item.ItemId, out definition);
+            var ui = hasDefinition ? ResolveSurvivorInventoryItemUi(item.ItemId, catalog) : null;
+            result.Add(new CampEquippedItemPresentation(
+                slot,
+                label,
+                hasDefinition ? definition.Name : "Empty",
+                item != null ? item.Durability : 0,
+                item != null ? item.MaxDurability : 0,
+                ui != null ? ui.Icon : null));
+        }
+
+        private static void AddMaterial(List<CampInventoryItemPresentation> result, GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog, string resourceId)
+        {
+            ResourceDefinition definition;
+            var name = config.TryGetResource(resourceId, out definition) ? definition.Name : resourceId.Replace('_', ' ');
+            var ui = ResolveResourceUi(resourceId, catalog);
+            result.Add(new CampInventoryItemPresentation(
+                string.Empty,
+                resourceId,
+                name,
+                string.Empty,
+                string.Empty,
+                SurvivorInventoryCategory.Materials,
+                ItemSlot.Utility,
+                ui != null ? ui.Icon : null,
+                string.Empty,
+                false,
+                true,
+                ResourceSystem.GetAmount(state, resourceId)));
+        }
+
+        private static SurvivorInventoryCategory ResolveInventoryCategory(ItemDefinition definition)
+        {
+            if (definition == null) return SurvivorInventoryCategory.Utility;
+            if (definition.Slot == ItemSlot.Weapon) return SurvivorInventoryCategory.Weapons;
+            if (definition.Slot == ItemSlot.Armor) return SurvivorInventoryCategory.Armor;
+            return SurvivorInventoryCategory.Utility;
+        }
+
+        private static string FormatSurvivorInventoryStats(ItemDefinition definition, InventoryItemState item, GameConfigSnapshot config)
+        {
+            if (definition == null || item == null) return string.Empty;
+            if (definition.Slot == ItemSlot.Weapon)
+            {
+                var baseAccuracy = definition.WeaponType == WeaponType.Firearm ? config.Balance.BaseAccuracyFirearms : config.Balance.BaseAccuracyMelee;
+                return "Damage " + definition.BaseDamage + "   Accuracy " + Mathf.RoundToInt((float)(baseAccuracy + definition.AccuracyBonus) * 100f) + "%";
+            }
+
+            if (definition.Slot == ItemSlot.Armor)
+            {
+                return "Armor " + definition.Armor + "   Durability " + item.Durability + "/" + item.MaxDurability;
+            }
+
+            if (definition.Slot == ItemSlot.Backpack)
+            {
+                return "Capacity +" + definition.CarryCapacityBonus + "   Durability " + item.Durability + "/" + item.MaxDurability;
+            }
+
+            return "Durability " + item.Durability + "/" + item.MaxDurability;
+        }
+
+        private static SurvivorInventoryItemUiEntry ResolveSurvivorInventoryItemUi(string itemId, CampUiCatalogSO catalog)
+        {
+            if (catalog == null || catalog.SurvivorInventoryItems == null) return null;
+            foreach (var entry in catalog.SurvivorInventoryItems)
+            {
+                if (entry != null && string.Equals(entry.ItemId, itemId, StringComparison.Ordinal)) return entry;
+            }
+
+            return null;
+        }
+
+        private static ResourceUiEntry ResolveResourceUi(string resourceId, CampUiCatalogSO catalog)
+        {
+            if (catalog == null || catalog.ResourceBar == null) return null;
+            foreach (var entry in catalog.ResourceBar)
+            {
+                if (entry != null && string.Equals(entry.Id, resourceId, StringComparison.Ordinal)) return entry;
+            }
+
+            return null;
         }
 
         public static string FormatWorkshopStatus(GameState state, GameConfigSnapshot config, CampUiCatalogSO catalog, string targetSurvivorId)
@@ -2309,17 +2487,19 @@ namespace AshfallCamp.Presentation
         public readonly string PowerText;
         public readonly float HealthValue;
         public readonly float FatigueValue;
+        public readonly float MoraleValue;
         public readonly string HealthText;
         public readonly string FatigueText;
+        public readonly string MoraleText;
         public readonly Texture2D Portrait;
 
         public CampSurvivorCardPresentation(string survivorId, string name, string avatar, string state, string skill)
-            : this(survivorId, name, avatar, state, skill, string.Empty, string.Empty, 0f, 0f, string.Empty, string.Empty, null)
+            : this(survivorId, name, avatar, state, skill, string.Empty, string.Empty, 0f, 0f, 0f, string.Empty, string.Empty, string.Empty, null)
         {
         }
 
         public CampSurvivorCardPresentation(string survivorId, string name, string avatar, string state, string skill, Texture2D portrait)
-            : this(survivorId, name, avatar, state, skill, string.Empty, string.Empty, 0f, 0f, string.Empty, string.Empty, portrait)
+            : this(survivorId, name, avatar, state, skill, string.Empty, string.Empty, 0f, 0f, 0f, string.Empty, string.Empty, string.Empty, portrait)
         {
         }
 
@@ -2336,6 +2516,25 @@ namespace AshfallCamp.Presentation
             string healthText,
             string fatigueText,
             Texture2D portrait)
+            : this(survivorId, name, avatar, state, skill, levelText, powerText, healthValue, fatigueValue, 0f, healthText, fatigueText, string.Empty, portrait)
+        {
+        }
+
+        public CampSurvivorCardPresentation(
+            string survivorId,
+            string name,
+            string avatar,
+            string state,
+            string skill,
+            string levelText,
+            string powerText,
+            float healthValue,
+            float fatigueValue,
+            float moraleValue,
+            string healthText,
+            string fatigueText,
+            string moraleText,
+            Texture2D portrait)
         {
             SurvivorId = survivorId ?? string.Empty;
             Name = name ?? string.Empty;
@@ -2346,8 +2545,10 @@ namespace AshfallCamp.Presentation
             PowerText = powerText ?? string.Empty;
             HealthValue = healthValue;
             FatigueValue = fatigueValue;
+            MoraleValue = moraleValue;
             HealthText = healthText ?? string.Empty;
             FatigueText = fatigueText ?? string.Empty;
+            MoraleText = moraleText ?? string.Empty;
             Portrait = portrait;
         }
     }
@@ -2382,11 +2583,103 @@ namespace AshfallCamp.Presentation
         public string ActionCost = string.Empty;
         public string ActionButton = string.Empty;
         public Texture2D Portrait;
+        public float XpValue;
+        public List<CampSurvivorSkillPresentation> Skills = new List<CampSurvivorSkillPresentation>();
+        public List<CampEquippedItemPresentation> Equipment = new List<CampEquippedItemPresentation>();
         public SurvivorDetailActionKind ActionKind;
         public bool ShowAction;
         public bool CanUseAction;
         public bool ShowMedicineAction;
         public bool CanUseMedicine;
+    }
+
+    public sealed class CampSurvivorSkillPresentation
+    {
+        public readonly string SkillId;
+        public readonly string Label;
+        public readonly int Percent;
+        public readonly float Value;
+
+        public CampSurvivorSkillPresentation(string skillId, string label, int percent, float value)
+        {
+            SkillId = skillId ?? string.Empty;
+            Label = label ?? string.Empty;
+            Percent = percent;
+            Value = value;
+        }
+    }
+
+    public sealed class CampEquippedItemPresentation
+    {
+        public readonly ItemSlot Slot;
+        public readonly string SlotLabel;
+        public readonly string Name;
+        public readonly int Durability;
+        public readonly int MaxDurability;
+        public readonly Texture2D Icon;
+
+        public CampEquippedItemPresentation(ItemSlot slot, string slotLabel, string name, int durability, int maxDurability, Texture2D icon)
+        {
+            Slot = slot;
+            SlotLabel = slotLabel ?? string.Empty;
+            Name = name ?? string.Empty;
+            Durability = durability;
+            MaxDurability = maxDurability;
+            Icon = icon;
+        }
+    }
+
+    public enum SurvivorInventoryCategory
+    {
+        All,
+        Weapons,
+        Armor,
+        Utility,
+        Materials
+    }
+
+    public sealed class CampInventoryItemPresentation
+    {
+        public readonly string ItemUid;
+        public readonly string ItemId;
+        public readonly string Name;
+        public readonly string Description;
+        public readonly string Stats;
+        public readonly SurvivorInventoryCategory Category;
+        public readonly ItemSlot Slot;
+        public readonly Texture2D Icon;
+        public readonly string EquippedBySurvivorId;
+        public readonly bool CanEquip;
+        public readonly bool IsMaterial;
+        public readonly int Count;
+
+        public CampInventoryItemPresentation(
+            string itemUid,
+            string itemId,
+            string name,
+            string description,
+            string stats,
+            SurvivorInventoryCategory category,
+            ItemSlot slot,
+            Texture2D icon,
+            string equippedBySurvivorId,
+            bool canEquip,
+            bool isMaterial,
+            int count)
+        {
+            ItemUid = itemUid ?? string.Empty;
+            ItemId = itemId ?? string.Empty;
+            Name = name ?? string.Empty;
+            Description = description ?? string.Empty;
+            Stats = stats ?? string.Empty;
+            Category = category;
+            Slot = slot;
+            Icon = icon;
+            EquippedBySurvivorId = equippedBySurvivorId ?? string.Empty;
+            CanEquip = canEquip;
+            IsMaterial = isMaterial;
+            Count = count;
+        }
     }
 
     public sealed class CampWorkshopItemPresentation

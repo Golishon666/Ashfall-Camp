@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AshfallCamp.Domain;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,6 +33,8 @@ namespace AshfallCamp.Presentation
         [SerializeField] private BottomNavView bottomNav;
         [SerializeField] private List<ScreenBinding> screens = new List<ScreenBinding>();
         [SerializeField] private bool resourceBarOnly;
+        [SerializeField] private TextMeshProUGUI dayLabel;
+        [SerializeField] private TextMeshProUGUI timeLabel;
 
         private bool _isBound;
         private bool _missingCatalogLogged;
@@ -153,6 +156,12 @@ namespace AshfallCamp.Presentation
             EnsureBound();
         }
 
+        public void ConfigureClock(TextMeshProUGUI dayText, TextMeshProUGUI timeText)
+        {
+            dayLabel = dayText;
+            timeLabel = timeText;
+        }
+
         public void Render(GameState state, GameConfigSnapshot config)
         {
             if (state == null || config == null) return;
@@ -169,6 +178,7 @@ namespace AshfallCamp.Presentation
 
             header.Render(catalog);
             resourceBar.Render(state, config, catalog);
+            RenderClock(state);
             statusPanel.Render(state, config, catalog);
             summaryPanel.Render(state, config, catalog);
             alertsPanel.Render(state, config, catalog);
@@ -210,6 +220,18 @@ namespace AshfallCamp.Presentation
 
             _lastState = state;
             _lastConfig = config;
+        }
+
+        private void RenderClock(GameState state)
+        {
+            if (state == null) return;
+            var totalMinutes = 8 * 60 + Math.Max(0, (long)Math.Floor(state.TotalPlayTimeSeconds));
+            var day = totalMinutes / (24 * 60) + 1;
+            var minuteOfDay = totalMinutes % (24 * 60);
+            var hour = minuteOfDay / 60;
+            var minute = minuteOfDay % 60;
+            UiText.Set(dayLabel, "Day " + day);
+            UiText.Set(timeLabel, hour.ToString("00") + ":" + minute.ToString("00"));
         }
 
         public void ShowToast(CampToastRequest request)
@@ -319,6 +341,7 @@ namespace AshfallCamp.Presentation
 
             if (survivorsPanel != null)
             {
+                survivorsPanel.SetEquipHandler(request => EquipItemRequested?.Invoke(request));
                 survivorsPanel.SetUseMedicineHandler(request => UseMedicineRequested?.Invoke(request));
                 survivorsPanel.SetRestHandlers(
                     request => StartRestRequested?.Invoke(request),

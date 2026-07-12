@@ -146,6 +146,8 @@ namespace AshfallCamp.Domain
             public const string OldInjury = "old_injury";
             public const string Quiet = "quiet";
             public const string Clumsy = "clumsy";
+            public const string Resourceful = "resourceful";
+            public const string QuickLearner = "quick_learner";
 
             public static readonly string[] All =
             {
@@ -159,6 +161,8 @@ namespace AshfallCamp.Domain
                 OldInjury,
                 Quiet,
                 Clumsy,
+                Resourceful,
+                QuickLearner,
             };
         }
 

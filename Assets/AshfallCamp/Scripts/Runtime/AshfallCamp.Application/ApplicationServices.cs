@@ -791,7 +791,7 @@ namespace AshfallCamp.Application
             else
             {
                 result.UsedBackup = repositoryResult != null && repositoryResult.UsedBackup;
-                Migrate(loaded);
+                Migrate(loaded, config);
                 EnsureConfiguredState(loaded, config);
                 result.Message = result.UsedBackup ? "Loaded Ashfall Camp backup save." : "Loaded Ashfall Camp save.";
             }
@@ -818,7 +818,7 @@ namespace AshfallCamp.Application
             await _repository.SaveAsync(snapshot, ct);
         }
 
-        private static void Migrate(GameState state)
+        private static void Migrate(GameState state, GameConfigSnapshot config)
         {
             if (string.IsNullOrEmpty(state.Version))
             {
@@ -841,6 +841,26 @@ namespace AshfallCamp.Application
             if (state.Progress == null) state.Progress = new GameProgressState();
             if (state.Settings == null) state.Settings = new GameSettings();
             if (state.Statistics == null) state.Statistics = new GameStatistics();
+
+            foreach (var survivor in state.Survivors)
+            {
+                if (survivor == null) continue;
+                if (survivor.Equipment == null) survivor.Equipment = new SurvivorEquipmentState();
+                if (!string.IsNullOrWhiteSpace(survivor.Equipment.BackpackItemUid) ||
+                    string.IsNullOrWhiteSpace(survivor.Equipment.UtilityItemUid) ||
+                    config == null)
+                {
+                    continue;
+                }
+
+                var utilityItem = WorkshopSystem.FindItem(state, survivor.Equipment.UtilityItemUid);
+                ItemDefinition definition;
+                if (utilityItem != null && config.TryGetItem(utilityItem.ItemId, out definition) && definition.Slot == ItemSlot.Backpack)
+                {
+                    survivor.Equipment.BackpackItemUid = survivor.Equipment.UtilityItemUid;
+                    survivor.Equipment.UtilityItemUid = string.Empty;
+                }
+            }
         }
 
         private static void EnsureConfiguredState(GameState state, GameConfigSnapshot config)

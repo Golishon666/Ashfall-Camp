@@ -11,6 +11,7 @@
     "UniTask",
     "Unity.TextMeshPro",
     "UnityEngine.UI",
+    "Unity.2D.Tilemap.Editor",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner"
   ],

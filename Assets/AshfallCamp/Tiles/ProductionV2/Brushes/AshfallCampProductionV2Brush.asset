@@ -1,0 +1,258 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 641a412160af51940bf0fa891001a6dd, type: 3}
+  m_Name: AshfallCampProductionV2Brush
+  m_EditorClassIdentifier: AshfallCamp.Editor::AshfallCamp.Editor.CampMapProductionV2Brush
+  m_Cells:
+  - m_Tile: {fileID: 11400000, guid: 43854a6a2bf70514c919f09823d78bf1, type: 2}
+    m_Matrix:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_TileChangeDataList:
+  - m_Position: {x: 8, y: 8, z: 0}
+    m_TileAsset: {fileID: 11400000, guid: 43854a6a2bf70514c919f09823d78bf1, type: 2}
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+    m_Transform:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Pivot: {x: 0, y: 0, z: 0}
+  m_CanChangeZPosition: 0
+  m_FloodFillContiguousOnly: 1
+  m_LastPickedLayout: 0
+  m_LastPickedCellSwizzle: 0
+  m_LastPickedCellSize: {x: 5, y: 5, z: 1}
+  m_LastPickedCellGap: {x: 0, y: 0, z: 0}
+  tiles:
+  - {fileID: 11400000, guid: 340397bcdc778e4438cd3f2ab1ebb1f9, type: 2}
+  - {fileID: 11400000, guid: 113a30e4b1421754eabaa8ee77e3a586, type: 2}
+  - {fileID: 11400000, guid: 342abec0371aa1b43907d6176c299566, type: 2}
+  - {fileID: 11400000, guid: f93888b1933d31440930e7b211402bed, type: 2}
+  - {fileID: 11400000, guid: 2b49f208be8b682498e2a8ebf1698c26, type: 2}
+  - {fileID: 11400000, guid: 0002d33da35eac34e9339efe1d0dd887, type: 2}
+  - {fileID: 11400000, guid: 69c9f5224244612428a3fc14bf6c74ab, type: 2}
+  - {fileID: 11400000, guid: c40beb22907eae443b9d7e81bc5bfcb9, type: 2}
+  - {fileID: 11400000, guid: d644a1b97f38015488feb18a71008ba1, type: 2}
+  - {fileID: 11400000, guid: 4651f5bd700d5ed46a69892f75ba4a29, type: 2}
+  - {fileID: 11400000, guid: 0e664dc3ee2a0a24e925c5e9c3c825d2, type: 2}
+  - {fileID: 11400000, guid: d73de831e449c2a4794124994d97e25c, type: 2}
+  - {fileID: 11400000, guid: 8a824b6c48fac734ab56e9f084d915eb, type: 2}
+  - {fileID: 11400000, guid: 4064a73bfd50e3b48a97759defd5f7a1, type: 2}
+  - {fileID: 11400000, guid: 93d4fa2473d09ff4fa68777a6a5f1591, type: 2}
+  - {fileID: 11400000, guid: 73eadeb173fb060429232a6bd14ee96c, type: 2}
+  - {fileID: 11400000, guid: 12ab986d379da8c4390e1a43b5e442a7, type: 2}
+  - {fileID: 11400000, guid: 14c92aa6a2b7aca458772879cdeb3b12, type: 2}
+  - {fileID: 11400000, guid: c915e1845056a474eb009f3595f2a77e, type: 2}
+  - {fileID: 11400000, guid: ca27f4ea498ee8f41ba64236e71ff822, type: 2}
+  - {fileID: 11400000, guid: 248ad36bae559924080aa8a26a9dd584, type: 2}
+  - {fileID: 11400000, guid: 2012cbe1f0895ab40ada57ebf0f66b1e, type: 2}
+  - {fileID: 11400000, guid: 1f744bcb8ac577147bc86bba3fadc45d, type: 2}
+  - {fileID: 11400000, guid: e91d02c6628296b40b88678652d0c672, type: 2}
+  - {fileID: 11400000, guid: 0b0ee279cd04d034e90b43b6492f6b13, type: 2}
+  - {fileID: 11400000, guid: 8bb96f23e472b0d429143b039f930740, type: 2}
+  - {fileID: 11400000, guid: 5fc08c5db0753404da30767c516f5e8f, type: 2}
+  - {fileID: 11400000, guid: ae8179fbb3e499849843b39bcf4671e9, type: 2}
+  - {fileID: 11400000, guid: cfda4f3716cf36a4ca6f8035bba94510, type: 2}
+  - {fileID: 11400000, guid: 50c534653485fc84f98bfcf701a83c1d, type: 2}
+  - {fileID: 11400000, guid: 8938e57b8c9d5f146a049031ac06f997, type: 2}
+  - {fileID: 11400000, guid: b0289ca283899ee4b9d1c9ecc7bd98d9, type: 2}
+  - {fileID: 11400000, guid: 5509ee4f252373644a0f92991d66eb0c, type: 2}
+  - {fileID: 11400000, guid: f6a6de972dd15b34c8c2345c0fa837c6, type: 2}
+  - {fileID: 11400000, guid: b1b74edd0e3424c4eb9ae26d601a4170, type: 2}
+  - {fileID: 11400000, guid: 272a9d53602ae3f4dbe680649844feb0, type: 2}
+  - {fileID: 11400000, guid: ca4d8d2ee51714448bfd9c935de08496, type: 2}
+  - {fileID: 11400000, guid: 60927114c5908ac448666d89ead9b1fd, type: 2}
+  - {fileID: 11400000, guid: 55bf66a086c4f17488250a461ad021e5, type: 2}
+  - {fileID: 11400000, guid: de1466a884dda7d468de614650b96236, type: 2}
+  - {fileID: 11400000, guid: bce16cf6ed85f98418aa3e63284cc825, type: 2}
+  - {fileID: 11400000, guid: fe71e5f360dd4e947b5ba1bc51f869bb, type: 2}
+  - {fileID: 11400000, guid: 1659a44612b3bdb439633b29c10a1bf6, type: 2}
+  - {fileID: 11400000, guid: dad8c392a8406de42b795d53c876020e, type: 2}
+  - {fileID: 11400000, guid: 97652b5f155d5f64e85292db0a4ccf23, type: 2}
+  - {fileID: 11400000, guid: ad716c8323095ad498d34db11cb24cf7, type: 2}
+  - {fileID: 11400000, guid: 81816d619f11961428be007db1fc85ca, type: 2}
+  - {fileID: 11400000, guid: 67879f17dd1252842a189e17ce254c42, type: 2}
+  - {fileID: 11400000, guid: c1e860b6e3212514683ee0dea00ad672, type: 2}
+  - {fileID: 11400000, guid: 62157eae2501dbf49b475c5a72408ba8, type: 2}
+  - {fileID: 11400000, guid: 5472f812f5a836c46961a0b8e2cb6a10, type: 2}
+  - {fileID: 11400000, guid: e7174a45793e4b94ab8291f0bb680981, type: 2}
+  - {fileID: 11400000, guid: 2697b642dd7c468419ca578c330a4bc9, type: 2}
+  - {fileID: 11400000, guid: 9df69a7b67ad33848b815410e2bdcb59, type: 2}
+  - {fileID: 11400000, guid: 6e796258b31861546a810b3af1ecc6f7, type: 2}
+  - {fileID: 11400000, guid: be588d5bcdeb0ce4e9e1f663f20da2dc, type: 2}
+  - {fileID: 11400000, guid: a8711daf65a99e64ca989fd2d7b663fc, type: 2}
+  - {fileID: 11400000, guid: d1c164f0c2c282c4783d085c419bcd9f, type: 2}
+  - {fileID: 11400000, guid: 574e31be89079c64c880d43f60d166fa, type: 2}
+  - {fileID: 11400000, guid: 2ddf5a29a4cac4f4c9d2e3a1cd921e97, type: 2}
+  - {fileID: 11400000, guid: 109dfd52044dc014093feb089c3f49f9, type: 2}
+  - {fileID: 11400000, guid: 36c95b51832e7114892efa9f133abfd8, type: 2}
+  - {fileID: 11400000, guid: 368b04e6e844abf4cab6b4089b3c8ee3, type: 2}
+  - {fileID: 11400000, guid: a50c52c13f6ac5e409fbf5a1482b80a7, type: 2}
+  - {fileID: 11400000, guid: 309bf15de4cecb14c83692fd0c7e322c, type: 2}
+  - {fileID: 11400000, guid: 38500db68f81c864e80c45efeff3bbc8, type: 2}
+  - {fileID: 11400000, guid: 6f3719661560b4243a2699eafb1bd556, type: 2}
+  - {fileID: 11400000, guid: 9d3f8abab2aa4c64783ff3ac7f3b188c, type: 2}
+  - {fileID: 11400000, guid: 26e008aea7b73994a8e3a5e37c99ed77, type: 2}
+  - {fileID: 11400000, guid: ae9a50d9dbbd71f469aafd20c8ae55cf, type: 2}
+  - {fileID: 11400000, guid: d25ff3d39789a2444adac24a146823b4, type: 2}
+  - {fileID: 11400000, guid: f9c21afe065e00443b5825181f762fcf, type: 2}
+  - {fileID: 11400000, guid: 694c24488683ced478861bb70b41722f, type: 2}
+  - {fileID: 11400000, guid: ea0d5726b7d79dd4bbb68ee3431503dc, type: 2}
+  - {fileID: 11400000, guid: 00a5b92ff4f06bb47b1bf36ca8055dbe, type: 2}
+  - {fileID: 11400000, guid: f572ca7582325d44c859c7100a475710, type: 2}
+  - {fileID: 11400000, guid: 762e1cc022c0ece4ab405293ce7cb8ca, type: 2}
+  - {fileID: 11400000, guid: 185f6633278775547836a925f59023c1, type: 2}
+  - {fileID: 11400000, guid: 56595572dc0a0bd4e8319e25514b8dde, type: 2}
+  - {fileID: 11400000, guid: 6325fab0dcc8d7b4ba96e8ae0e3763f3, type: 2}
+  - {fileID: 11400000, guid: f2b65ec33232b7f43afc3444eee46bf3, type: 2}
+  - {fileID: 11400000, guid: 5a8b4423aa2a9234ea4601690bbf0543, type: 2}
+  - {fileID: 11400000, guid: e2eec02911e3e4a47995171854431973, type: 2}
+  - {fileID: 11400000, guid: 04091e924698c084ca135d2d1e1681be, type: 2}
+  - {fileID: 11400000, guid: fee2cc50812ae9044a0ee2bc5dad0798, type: 2}
+  - {fileID: 11400000, guid: 9b0ddc129cc59954981927acf3b2f55c, type: 2}
+  - {fileID: 11400000, guid: d10c42d8520599e408eb64e6c89eb2a6, type: 2}
+  - {fileID: 11400000, guid: 669399cb406c310428c9e461ba79f95c, type: 2}
+  - {fileID: 11400000, guid: ce26125263fdf6b46b5b8d0849dde94a, type: 2}
+  - {fileID: 11400000, guid: 8be9ff0d1b1f7c24f8e0f9eb250ed11c, type: 2}
+  - {fileID: 11400000, guid: 7f6417130b2c5ce469b0712198f29495, type: 2}
+  - {fileID: 11400000, guid: 898a6a0b9351bde45aab69c6cef68cfe, type: 2}
+  - {fileID: 11400000, guid: c210cc31df2e35b40b34a75d2b24554e, type: 2}
+  - {fileID: 11400000, guid: 43854a6a2bf70514c919f09823d78bf1, type: 2}
+  - {fileID: 11400000, guid: 2dc0e5b21d1cda7479254aeeaa262125, type: 2}
+  - {fileID: 11400000, guid: f3aac48d0106253419efdbc5143ec4e4, type: 2}
+  tileLabels:
+  - camp / camp_core
+  - camp / camp_buildable
+  - building / barracks_basic
+  - building / barracks_upgraded
+  - building / barracks_ruined
+  - building / workshop_basic
+  - building / workshop_upgraded
+  - building / workshop_ruined
+  - building / water_collector_basic
+  - building / water_collector_upgraded
+  - building / water_collector_ruined
+  - building / mushroom_beds_basic
+  - building / mushroom_beds_upgraded
+  - building / mushroom_beds_ruined
+  - building / infirmary_basic
+  - building / infirmary_upgraded
+  - building / infirmary_ruined
+  - building / radio_tower_basic
+  - building / radio_tower_upgraded
+  - building / radio_tower_ruined
+  - expedition / abandoned_store
+  - expedition / dry_suburb
+  - expedition / ruined_clinic
+  - expedition / police_outpost
+  - expedition / mutant_tunnel
+  - future_location / ruined_homestead
+  - future_location / abandoned_greenhouse
+  - future_location / flooded_cellar
+  - future_location / scavenger_hideout
+  - future_location / collapsed_mine
+  - future_location / marauder_camp
+  - future_location / mutant_nest
+  - future_location / military_depot
+  - future_location / underground_laboratory
+  - future_location / biohazard_plant
+  - future_location / reactor_complex
+  - future_location / warlord_fortress
+  - grass / grass_meadow
+  - grass / grass_tall_field
+  - grass / grass_wildflower_clearing
+  - grass / grass_mossy_boulders
+  - grass / grass_overgrown_ruins
+  - grass / grass_ivy_bunker
+  - grass_location / grass_abandoned_farm
+  - grass_location / grass_ranger_station
+  - grass_location / grass_overgrown_church
+  - grass_location / grass_water_tower
+  - grass_location / grass_moss_quarry
+  - grass_location / grass_relay_station
+  - winter / snow_field
+  - winter / snowy_forest
+  - winter / frozen_marsh
+  - winter / ash_winter_wasteland
+  - winter_extra / winter_snowdrifts
+  - winter_extra / winter_cracked_ice
+  - winter_extra / winter_frosted_boulders
+  - winter_extra / winter_dead_grove
+  - winter_extra / winter_snow_ruins
+  - winter_extra / winter_supply_shelter
+  - winter_location / winter_frozen_cabin
+  - winter_location / winter_weather_station
+  - winter_location / winter_ice_cave
+  - winter_location / winter_snowbound_depot
+  - winter_location / winter_research_outpost
+  - winter_location / winter_crash_site
+  - forest / forest_sparse
+  - forest / forest_dense
+  - forest / dead_forest
+  - forest / irradiated_forest
+  - swamp / marsh_water
+  - swamp / reed_marsh
+  - swamp / bog_islands
+  - swamp / toxic_swamp
+  - desert / desert_plain
+  - desert / rocky_hills
+  - desert / cracked_wasteland
+  - desert / dried_field
+  - city / ruined_city_residential
+  - city / ruined_city_commercial
+  - city / ruined_city_factory
+  - city / ruined_city_intersection
+  - city / ruined_city_overpass
+  - city / ruined_city_apartments
+  - city / ruined_city_rail_yard
+  - city / ruined_city_civic_center
+  - buffer / power_substation
+  - buffer / collapsed_bunker
+  - buffer / abandoned_checkpoint
+  - buffer / ash_cemetery
+  - buffer / green_field
+  - buffer / wheat_field
+  - buffer / ruins_buffer
+  - buffer / gas_station
+  - buffer / scrapyard
+  - hazard / nuclear_crater
+  - hazard / waste_barrels_zone
+  selectedIndex: 0

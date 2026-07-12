@@ -51,3 +51,9 @@ MonoBehaviour:
     StatModifiers:
     - Id: durability_loss
       Value: 1
+  - Id: resourceful
+    Name: Resourceful
+    StatModifiers: []
+  - Id: quick_learner
+    Name: Quick Learner
+    StatModifiers: []

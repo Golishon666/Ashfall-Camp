@@ -55,7 +55,8 @@ namespace AshfallCamp.Domain
     {
         Weapon,
         Armor,
-        Utility
+        Utility,
+        Backpack
     }
 
     public enum WeaponType
@@ -192,6 +193,7 @@ namespace AshfallCamp.Domain
         public string Name = string.Empty;
         public int Level = 1;
         public int Xp;
+        [NonSerialized] public int PreviewXpGoal;
         public string BackgroundId = string.Empty;
         public List<string> TraitIds = new List<string>();
         public SurvivorActivityState State = SurvivorActivityState.Idle;
@@ -211,6 +213,7 @@ namespace AshfallCamp.Domain
         public string WeaponItemUid = string.Empty;
         public string ArmorItemUid = string.Empty;
         public string UtilityItemUid = string.Empty;
+        public string BackpackItemUid = string.Empty;
     }
 
     public sealed class StatusEffectState

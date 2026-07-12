@@ -1106,6 +1106,7 @@ namespace AshfallCamp.Domain
             if (string.Equals(owner.Equipment.WeaponItemUid, item.Uid, StringComparison.Ordinal)) owner.Equipment.WeaponItemUid = string.Empty;
             if (string.Equals(owner.Equipment.ArmorItemUid, item.Uid, StringComparison.Ordinal)) owner.Equipment.ArmorItemUid = string.Empty;
             if (string.Equals(owner.Equipment.UtilityItemUid, item.Uid, StringComparison.Ordinal)) owner.Equipment.UtilityItemUid = string.Empty;
+            if (string.Equals(owner.Equipment.BackpackItemUid, item.Uid, StringComparison.Ordinal)) owner.Equipment.BackpackItemUid = string.Empty;
             item.EquippedBySurvivorId = string.Empty;
         }
 
@@ -1114,6 +1115,7 @@ namespace AshfallCamp.Domain
             if (survivor == null || survivor.Equipment == null) return string.Empty;
             if (slot == ItemSlot.Armor) return survivor.Equipment.ArmorItemUid;
             if (slot == ItemSlot.Utility) return survivor.Equipment.UtilityItemUid;
+            if (slot == ItemSlot.Backpack) return survivor.Equipment.BackpackItemUid;
             return survivor.Equipment.WeaponItemUid;
         }
 
@@ -1126,6 +1128,10 @@ namespace AshfallCamp.Domain
             else if (slot == ItemSlot.Utility)
             {
                 survivor.Equipment.UtilityItemUid = itemUid ?? string.Empty;
+            }
+            else if (slot == ItemSlot.Backpack)
+            {
+                survivor.Equipment.BackpackItemUid = itemUid ?? string.Empty;
             }
             else
             {
@@ -3030,6 +3036,7 @@ namespace AshfallCamp.Domain
                 DamageEquippedItem(state, expedition, survivor.Equipment.WeaponItemUid, loss, damagedItems);
                 DamageEquippedItem(state, expedition, survivor.Equipment.ArmorItemUid, loss, damagedItems);
                 DamageEquippedItem(state, expedition, survivor.Equipment.UtilityItemUid, loss, damagedItems);
+                DamageEquippedItem(state, expedition, survivor.Equipment.BackpackItemUid, loss, damagedItems);
             }
         }
 

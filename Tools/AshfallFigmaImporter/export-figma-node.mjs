@@ -50,6 +50,7 @@ const frames = [
     key: "survivors",
     slug: "06-survivors-elementwise",
     name: "06 Survivors Elementwise",
+    nodeId: process.env.ASHFALL_SURVIVORS_FIGMA_NODE_ID || "190:15573",
   },
   {
     key: "survivorDetail",
@@ -73,6 +74,19 @@ const frames = [
     name: "10 Reports Elementwise",
   },
 ];
+
+const requestedFrameKeys = new Set(
+  (process.env.ASHFALL_FIGMA_FRAME_KEYS || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean)
+);
+const selectedFrames = requestedFrameKeys.size > 0
+  ? frames.filter((frame) => requestedFrameKeys.has(frame.key))
+  : frames;
+if (selectedFrames.length === 0) {
+  throw new Error(`No Figma frames match ASHFALL_FIGMA_FRAME_KEYS=${Array.from(requestedFrameKeys).join(",")}`);
+}
 
 const mcpCmd = `${process.env.APPDATA}\\npm\\figma-console-mcp.cmd`;
 if (!existsSync(mcpCmd)) {
@@ -397,7 +411,7 @@ try {
   const summary = [];
   const assetPathByHash = new Map();
 
-  for (const frame of frames) {
+  for (const frame of selectedFrames) {
     const assetDir = join(outDir, "ElementAssets", frame.slug);
     rmSync(assetDir, { recursive: true, force: true });
     mkdirSync(assetDir, { recursive: true });

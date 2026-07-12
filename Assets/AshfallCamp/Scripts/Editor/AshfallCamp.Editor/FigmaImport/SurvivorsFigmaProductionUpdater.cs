@@ -126,23 +126,7 @@ namespace AshfallCamp.Editor.FigmaImport
 
         private static void BuildSurvivorsProductionPrefab(FigmaImportDocument document)
         {
-            var root = PrefabUtility.LoadPrefabContents(SurvivorsPrefabPath);
-            try
-            {
-                ConfigureScreenRect(root);
-
-                if (root.GetComponent<SurvivorsPanelView>() == null)
-                {
-                    root.AddComponent<SurvivorsPanelView>();
-                }
-
-                new FigmaUgUiBuilder().PopulateSurvivorsRoot(root, document, productionCrop: true);
-                PrefabUtility.SaveAsPrefabAsset(root, SurvivorsPrefabPath);
-            }
-            finally
-            {
-                PrefabUtility.UnloadPrefabContents(root);
-            }
+            AshfallCamp.Editor.SurvivorsReferenceUiBuilder.BuildSurvivorsPrefab();
         }
 
         private static void BuildProductionPanelPrefab(FigmaImportDocument document, FigmaPanelIntegration panel)

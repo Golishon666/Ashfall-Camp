@@ -198,6 +198,11 @@ namespace AshfallCamp.Presentation
         public string DefaultSurvivorPortraitId = string.Empty;
         public string SurvivorNoWeaponLabel = string.Empty;
         public string SurvivorNoTraitsLabel = string.Empty;
+        public string SurvivorInventoryTitle = "INVENTORY";
+        public string SurvivorInventoryEquipButton = "EQUIP";
+        public string SurvivorInventoryEmptyLabel = "No items in this category";
+        public List<SurvivorInventoryFilterUiEntry> SurvivorInventoryFilters = new List<SurvivorInventoryFilterUiEntry>();
+        public List<SurvivorInventoryItemUiEntry> SurvivorInventoryItems = new List<SurvivorInventoryItemUiEntry>();
         public string WorkshopScreenTitle = string.Empty;
         public string WorkshopStatusFormat = string.Empty;
         public string WorkshopEmptyTitle = string.Empty;
@@ -467,6 +472,22 @@ namespace AshfallCamp.Presentation
     {
         public string Id = string.Empty;
         public Texture2D Portrait;
+    }
+
+    [Serializable]
+    public sealed class SurvivorInventoryFilterUiEntry
+    {
+        public string Id = string.Empty;
+        public string Label = string.Empty;
+        public Texture2D Icon;
+    }
+
+    [Serializable]
+    public sealed class SurvivorInventoryItemUiEntry
+    {
+        public string ItemId = string.Empty;
+        public string Description = string.Empty;
+        public Texture2D Icon;
     }
 
     [Serializable]

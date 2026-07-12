@@ -147,7 +147,7 @@ MonoBehaviour:
     CarryCapacityBonus: 0
   - Id: backpack
     Name: Backpack
-    Slot: 2
+    Slot: 3
     WeaponType: 0
     BaseDamage: 0
     Armor: 0
