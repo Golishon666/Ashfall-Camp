@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f41c5db82f5e43448ef0d41fccd90e2, type: 3}
+  m_Name: WorldTile_grass_ranger_station
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.WorldTileConfigSO
+  Id: grass_ranger_station
+  DisplayName: Grass Ranger Station
+  Category: grass_location
+  Type: 2
+  Strength: 3
+  ZoneId: grass_ranger_station
+  FoodCostPerSurvivor: 0
+  WaterCostPerSurvivor: 1
+  EncounterChance: 0.255
+  RareEquipmentChance: 0.24
+  ResourceRewards:
+  - ResourceId: scrap
+    Min: 0
+    Max: 1
+    Weight: 90
+  - ResourceId: scrap
+    Min: 5
+    Max: 11
+    Weight: 100
+  EnemyTable:
+  - Id: creature_weak_ash_roach
+    Weight: 65
+  - Id: creature_weak_mire_leech
+    Weight: 65
+  - Id: creature_weak_radiated_hound
+    Weight: 65
+  - Id: enemy_weak_scavenger
+    Weight: 65
+  EquipmentTable:
+  - Id: rusty_knife
+    Weight: 35
+  - Id: metal_pipe
+    Weight: 30
+  - Id: leather_jacket
+    Weight: 25
+  - Id: medkit
+    Weight: 20
+  - Id: toolkit
+    Weight: 18
+  ContentTile: {fileID: 11400000, guid: 97652b5f155d5f64e85292db0a4ccf23, type: 2}
+  MarkerTile: {fileID: 11400000, guid: aa99a84a651fc0840bcdcd88244ffbf1, type: 2}
+  Thumbnail: {fileID: 21300000, guid: 4ae05d3d0d0db9148b6cad2f0b45fd90, type: 3}

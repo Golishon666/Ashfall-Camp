@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -40,10 +38,9 @@ namespace AshfallCamp.Editor
             ActivateBrush();
             BuildCatalogPrefab();
             BuildMarkerCatalogPrefab();
-            ApplyAuthoredMapToBootScene();
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-            Debug.Log("Built Ashfall Camp Production V2: sixteen 3x2 source sheets, 96 location/terrain tiles, 29 location markers, two palettes, catalog previews, and a 12x12 authored world map.");
+            Debug.Log("Built Ashfall Camp Production V2 assets: sixteen 3x2 source sheets, one standalone map-border tile, 97 location/terrain tiles, 29 location markers, two palettes, and catalog previews. The manually authored Tilemap was not modified.");
         }
 
         [MenuItem("Tools/Ashfall Camp/Camp Map/Production V2/Build Assets And Palette")]
@@ -81,66 +78,6 @@ namespace AshfallCamp.Editor
             Debug.Log("Rebuilt sorted Production V2 content and marker palettes.");
         }
 
-        [MenuItem("Tools/Ashfall Camp/Camp Map/Production V2/Apply 12x12 Map To Boot Scene")]
-        public static void ApplyAuthoredMapToBootScene()
-        {
-            var scene = EditorSceneManager.OpenScene(CampMapProductionV2Manifest.BootScenePath, OpenSceneMode.Single);
-            var worldRoot = scene.GetRootGameObjects().FirstOrDefault(gameObject => gameObject.name == "WorldTileMap");
-            if (worldRoot == null)
-            {
-                throw new InvalidOperationException("WorldTileMap was not found in " + CampMapProductionV2Manifest.BootScenePath);
-            }
-
-            var grid = worldRoot.GetComponent<Grid>();
-            if (grid == null)
-            {
-                throw new InvalidOperationException("WorldTileMap requires a Grid component.");
-            }
-
-            grid.cellSize = new Vector3(CampMapProductionV2Manifest.WorldTileCellSize, CampMapProductionV2Manifest.WorldTileCellSize, 1f);
-            grid.cellGap = Vector3.zero;
-            worldRoot.GetComponent<Tilemap>()?.ClearAllTiles();
-
-            var terrainMap = GetOrCreateTilemap(worldRoot.transform, "Tilemap", 0);
-            var canopyMap = GetOrCreateTilemap(worldRoot.transform, "ForestCanopyOverlay", 1);
-            var markerMap = GetOrCreateTilemap(worldRoot.transform, "LocationMarkerOverlay", 3);
-            terrainMap.ClearAllTiles();
-            canopyMap.ClearAllTiles();
-            markerMap.ClearAllTiles();
-            var legacyFrameMap = worldRoot.transform.Find("TileFrameOverlay")?.GetComponent<Tilemap>();
-            legacyFrameMap?.ClearAllTiles();
-
-            var map = CampMapProductionV2Manifest.AuthoredMap;
-            for (var row = 0; row < CampMapProductionV2Manifest.MapRows; row++)
-            {
-                for (var column = 0; column < CampMapProductionV2Manifest.MapColumns; column++)
-                {
-                    var id = map[row, column];
-                    var tile = AssetDatabase.LoadAssetAtPath<Tile>(CampMapProductionV2Manifest.GetTileAssetPath(id));
-                    if (tile == null)
-                    {
-                        throw new InvalidOperationException("Missing authored-map Tile asset: " + id);
-                    }
-
-                    var cell = new Vector3Int(
-                        column - CampMapProductionV2Manifest.MapColumns / 2,
-                        CampMapProductionV2Manifest.MapRows / 2 - row - 1,
-                        0);
-                    terrainMap.SetTile(cell, tile);
-                    var markerTile = AssetDatabase.LoadAssetAtPath<Tile>(CampMapProductionV2Manifest.GetMarkerTileAssetPath(id));
-                    if (markerTile != null)
-                    {
-                        markerMap.SetTile(cell, markerTile);
-                    }
-                }
-            }
-
-            terrainMap.CompressBounds();
-            markerMap.CompressBounds();
-            EditorSceneManager.MarkSceneDirty(scene);
-            EditorSceneManager.SaveScene(scene);
-        }
-
         [MenuItem("Tools/Ashfall Camp/Camp Map/Production V2/Activate Tile Brush")]
         public static void ActivateBrush()
         {
@@ -163,9 +100,9 @@ namespace AshfallCamp.Editor
 
         public static void ValidateSourceFiles()
         {
-            if (CampMapProductionV2Manifest.Specs.Count != 96)
+            if (CampMapProductionV2Manifest.Specs.Count != 97)
             {
-                throw new InvalidOperationException("Production V2 manifest must contain exactly 96 tiles.");
+                throw new InvalidOperationException("Production V2 manifest must contain exactly 97 tiles.");
             }
 
             if (CampMapProductionV2Manifest.Sheets.Count != 16)
@@ -227,23 +164,14 @@ namespace AshfallCamp.Editor
                 }
             }
 
-            var knownIds = new HashSet<string>(CampMapProductionV2Manifest.Specs.Select(spec => spec.Id), StringComparer.Ordinal);
-            if (!knownIds.SetEquals(sheetIds))
+            var generatedSheetIds = new HashSet<string>(
+                CampMapProductionV2Manifest.Specs
+                    .Where(spec => !string.Equals(spec.Category, "map_border", StringComparison.Ordinal))
+                    .Select(spec => spec.Id),
+                StringComparer.Ordinal);
+            if (!generatedSheetIds.SetEquals(sheetIds))
             {
-                throw new InvalidOperationException("Production V2 sheet ids do not match the tile manifest.");
-            }
-            var map = CampMapProductionV2Manifest.AuthoredMap;
-            if (map.GetLength(0) != CampMapProductionV2Manifest.MapRows || map.GetLength(1) != CampMapProductionV2Manifest.MapColumns)
-            {
-                throw new InvalidOperationException("Production V2 authored map must be 12x12.");
-            }
-
-            foreach (var id in map)
-            {
-                if (!knownIds.Contains(id))
-                {
-                    throw new InvalidOperationException("Authored map references an unknown Production V2 tile id: " + id);
-                }
+                throw new InvalidOperationException("Production V2 sheet ids do not match the generated tile manifest.");
             }
         }
 
@@ -884,33 +812,6 @@ namespace AshfallCamp.Editor
             PrefabUtility.SaveAsPrefabAsset(root, CampMapProductionV2Manifest.MarkerCatalogPrefabPath);
             Object.DestroyImmediate(root);
             AssetDatabase.ImportAsset(CampMapProductionV2Manifest.MarkerCatalogPrefabPath, ImportAssetOptions.ForceUpdate);
-        }
-
-        private static Tilemap GetOrCreateTilemap(Transform root, string name, int sortingOrder)
-        {
-            var child = root.Find(name);
-            if (child == null)
-            {
-                var gameObject = new GameObject(name, typeof(Tilemap), typeof(TilemapRenderer));
-                child = gameObject.transform;
-                child.SetParent(root, false);
-            }
-
-            var tilemap = child.GetComponent<Tilemap>();
-            if (tilemap == null)
-            {
-                tilemap = child.gameObject.AddComponent<Tilemap>();
-            }
-
-            var renderer = child.GetComponent<TilemapRenderer>();
-            if (renderer == null)
-            {
-                renderer = child.gameObject.AddComponent<TilemapRenderer>();
-            }
-
-            tilemap.tileAnchor = new Vector3(0.5f, 0.5f, 0f);
-            renderer.sortingOrder = sortingOrder;
-            return tilemap;
         }
 
         private static void Stretch(RectTransform rect)

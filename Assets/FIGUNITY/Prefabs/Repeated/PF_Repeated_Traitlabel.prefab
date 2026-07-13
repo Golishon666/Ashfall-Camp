@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 60, y: 18}
+  m_SizeDelta: {x: 200, y: 24}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6910224441619913214
 MonoBehaviour:
@@ -50,15 +50,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfd9ad0e47a3f6a41b43a34d319d5b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Figunity.Runtime::Figunity.Runtime.FigunityImportedNode
-  figmaId: 72:21719
+  figmaId: 202:19402
   figmaName: Trait Label
   figmaType: TEXT
   renderMode: text
-  sourcePath: 'Ashfall Camp - Full HD Elements / 06 Survivors Elementwise/Survivor
-    Grid[8]/Survivor Card - JADE[0]/Trait Label[19]'
+  sourcePath: '08 Radio Recruitment Choice Elementwise/Radio Recruitment Console[22]/Candidate
+    Card ANNA[12]/Trait Label[9]'
   componentKey: 
   repeatKey: traitlabel
   controlHint: 
+  overrideHint: 
+  decisionReason: Figma TEXT node
+  horizontalConstraint: MIN
+  verticalConstraint: MIN
   mask: 0
   repeated: 1
 --- !u!222 &7475879783140809768
@@ -82,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.41960785, g: 0.36862746, b: 0.3019608, a: 1}
+  m_Color: {r: 0.48235294, g: 0.42745098, b: 0.3372549, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -134,7 +138,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 60, y: 18}
+  m_SizeDelta: {x: 200, y: 24}
   m_Pivot: {x: 0, y: 1}
 --- !u!225 &8853015197885703989
 CanvasGroup:

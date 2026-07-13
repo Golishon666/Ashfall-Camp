@@ -1,15 +1,15 @@
 [
   {
-    "key": "survivors",
-    "slug": "06-survivors-elementwise",
-    "frameName": "06 Survivors Elementwise",
-    "frameId": "190:15573",
+    "key": "radioRecruitment",
+    "slug": "08-radio-recruitment-choice-elementwise",
+    "frameName": "08 Radio Recruitment Choice Elementwise",
+    "frameId": "201:18073",
     "frameSize": "1920x1080",
-    "nodeCount": 290,
-    "textCount": 110,
-    "visualCount": 139,
-    "exportedPngs": 76,
-    "dedupedPngs": 63,
-    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/06-survivors-elementwise.png"
+    "nodeCount": 274,
+    "textCount": 86,
+    "visualCount": 188,
+    "exportedPngs": 136,
+    "dedupedPngs": 52,
+    "screenshotPath": "Assets/AshfallCamp/Art/UI/FigmaImports/SurvivorsElementwise/Screenshots/08-radio-recruitment-choice-elementwise.png"
   }
 ]

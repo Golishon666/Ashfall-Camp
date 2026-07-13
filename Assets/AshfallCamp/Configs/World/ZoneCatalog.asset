@@ -16,196 +16,4282 @@ MonoBehaviour:
   - Id: abandoned_store
     Name: Abandoned Store
     RiskTier: 0
-    BaseDurationSeconds: 45
-    MinDurationSeconds: 30
-    MaxDurationSeconds: 90
-    FoodCostPerSurvivor: 1
+    BaseDurationSeconds: 53
+    MinDurationSeconds: 34.45
+    MaxDurationSeconds: 87.44999999999999
+    FoodCostPerSurvivor: 0
     WaterCostPerSurvivor: 0
-    RecommendedPower: 5
-    BaseAmbushChance: 0.05
-    DurabilityPressure: 1
+    RecommendedPower: 8
+    BaseAmbushChance: 0.16499999999999998
+    DurabilityPressure: 0
     MinEnemyCount: 1
     MaxEnemyCount: 1
     RequiredBuildingLevels: []
     EnemyTable:
-    - Id: creature_weak_mire_leech
-      Weight: 60
     - Id: creature_weak_ash_roach
-      Weight: 40
+      Weight: 75
+    - Id: creature_weak_mire_leech
+      Weight: 75
+    - Id: creature_weak_radiated_hound
+      Weight: 75
+    - Id: enemy_weak_scavenger
+      Weight: 75
     LootTable:
     - ResourceId: scrap
-      Min: 4
-      Max: 10
-      Weight: 100
-    - ResourceId: food
       Min: 1
-      Max: 4
-      Weight: 70
+      Max: 3
+      Weight: 90
+    - ResourceId: scrap
+      Min: 6
+      Max: 21
+      Weight: 100
     EventTable: []
     UnlockConditions: []
+    EquipmentDropChance: 0.16
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 1
   - Id: dry_suburb
     Name: Dry Suburb
     RiskTier: 0
-    BaseDurationSeconds: 90
-    MinDurationSeconds: 60
-    MaxDurationSeconds: 150
-    FoodCostPerSurvivor: 1
-    WaterCostPerSurvivor: 1
-    RecommendedPower: 8
-    BaseAmbushChance: 0.05
+    BaseDurationSeconds: 81
+    MinDurationSeconds: 52.65
+    MaxDurationSeconds: 133.65
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 13
+    BaseAmbushChance: 0.21
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 70
+    - Id: creature_weak_mire_leech
+      Weight: 70
+    - Id: creature_weak_radiated_hound
+      Weight: 70
+    - Id: enemy_weak_scavenger
+      Weight: 70
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 3
+      Weight: 90
+    - ResourceId: scrap
+      Min: 8
+      Max: 27
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.2
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 1
+  - Id: ruined_clinic
+    Name: Ruined Clinic
+    RiskTier: 1
+    BaseDurationSeconds: 137
+    MinDurationSeconds: 89.05
+    MaxDurationSeconds: 226.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 23
+    BaseAmbushChance: 0.3
     DurabilityPressure: 1
     MinEnemyCount: 1
     MaxEnemyCount: 2
     RequiredBuildingLevels: []
     EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
     - Id: creature_weak_radiated_hound
-      Weight: 35
-    - Id: enemy_weak_rust_claw
-      Weight: 25
-    - Id: enemy_weak_needle_raider
-      Weight: 20
-    - Id: creature_weak_bloat_toad
-      Weight: 20
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
     LootTable:
     - ResourceId: scrap
-      Min: 5
-      Max: 12
-      Weight: 100
-    - ResourceId: water
       Min: 1
-      Max: 5
-      Weight: 80
+      Max: 6
+      Weight: 90
+    - ResourceId: medicine
+      Min: 2
+      Max: 6
+      Weight: 32
+    - ResourceId: scrap
+      Min: 12
+      Max: 39
+      Weight: 100
     EventTable: []
-    UnlockConditions:
-    - Type: zone_completions
-      Id: abandoned_store
-      Value: 2
-  - Id: ruined_clinic
-    Name: Ruined Clinic
+    UnlockConditions: []
+    EquipmentDropChance: 0.28
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 1
+  - Id: police_outpost
+    Name: Police Outpost
     RiskTier: 1
-    BaseDurationSeconds: 180
-    MinDurationSeconds: 120
-    MaxDurationSeconds: 260
-    FoodCostPerSurvivor: 2
-    WaterCostPerSurvivor: 1
-    RecommendedPower: 14
-    BaseAmbushChance: 0.12
+    BaseDurationSeconds: 193
+    MinDurationSeconds: 125.45
+    MaxDurationSeconds: 318.45
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 33
+    BaseAmbushChance: 0.39
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 9
+      Weight: 90
+    - ResourceId: scrap
+      Min: 16
+      Max: 51
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.36
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 1
+  - Id: mutant_tunnel
+    Name: Mutant Tunnel
+    RiskTier: 2
+    BaseDurationSeconds: 249
+    MinDurationSeconds: 161.85
+    MaxDurationSeconds: 410.84999999999997
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 43
+    BaseAmbushChance: 0.48
     DurabilityPressure: 2
     MinEnemyCount: 1
     MaxEnemyCount: 3
     RequiredBuildingLevels: []
     EnemyTable:
-    - Id: enemy_weak_spore_biter
-      Weight: 25
-    - Id: creature_weak_feral_ghoul
-      Weight: 25
+    - Id: creature_weak_ash_roach
+      Weight: 40
+    - Id: creature_weak_mire_leech
+      Weight: 40
+    - Id: creature_weak_radiated_hound
+      Weight: 40
+    - Id: enemy_weak_scavenger
+      Weight: 40
+    - Id: creature_mid_stalker_rat
+      Weight: 44
     - Id: creature_mid_plague_ghoul
-      Weight: 20
+      Weight: 44
     - Id: enemy_mid_blister_rusher
-      Weight: 15
-    - Id: enemy_mid_splinter_thrower
-      Weight: 15
+      Weight: 44
+    - Id: enemy_mid_pistol_duelist
+      Weight: 44
+    - Id: creature_elite_acidback_lurker
+      Weight: 26
+    - Id: creature_elite_ironhide_ravager
+      Weight: 26
+    - Id: enemy_elite_auto_gunner
+      Weight: 26
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 26
     LootTable:
-    - ResourceId: medicine
-      Min: 1
-      Max: 3
-      Weight: 80
     - ResourceId: scrap
-      Min: 5
-      Max: 14
+      Min: 1
+      Max: 12
+      Weight: 90
+    - ResourceId: scrap
+      Min: 20
+      Max: 63
       Weight: 100
     EventTable: []
-    UnlockConditions:
-    - Type: building_level
-      Id: radio_tower
-      Value: 1
-  - Id: police_outpost
-    Name: Police Outpost
+    UnlockConditions: []
+    EquipmentDropChance: 0.44
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    - Id: sawn_off_shotgun
+      Weight: 10
+    ShowInExpeditionMenu: 1
+  - Id: gather_forest_sparse
+    Name: Forest Sparse
+    RiskTier: 0
+    BaseDurationSeconds: 49
+    MinDurationSeconds: 31.85
+    MaxDurationSeconds: 80.85
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 7
+    BaseAmbushChance: 0.07500000000000001
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 70
+    - Id: creature_weak_mire_leech
+      Weight: 70
+    - Id: creature_weak_radiated_hound
+      Weight: 70
+    - Id: enemy_weak_scavenger
+      Weight: 70
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 10
+      Weight: 78
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_forest_dense
+    Name: Forest Dense
+    RiskTier: 0
+    BaseDurationSeconds: 49
+    MinDurationSeconds: 31.85
+    MaxDurationSeconds: 80.85
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 7
+    BaseAmbushChance: 0.07500000000000001
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 70
+    - Id: creature_weak_mire_leech
+      Weight: 70
+    - Id: creature_weak_radiated_hound
+      Weight: 70
+    - Id: enemy_weak_scavenger
+      Weight: 70
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 10
+      Weight: 78
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_dead_forest
+    Name: Dead Forest
     RiskTier: 1
-    BaseDurationSeconds: 300
-    MinDurationSeconds: 220
-    MaxDurationSeconds: 420
-    FoodCostPerSurvivor: 3
-    WaterCostPerSurvivor: 2
-    RecommendedPower: 22
-    BaseAmbushChance: 0.12
-    DurabilityPressure: 3
-    MinEnemyCount: 2
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 14
+      Weight: 78
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_irradiated_forest
+    Name: Irradiated Forest
+    RiskTier: 2
+    BaseDurationSeconds: 109
+    MinDurationSeconds: 70.85000000000001
+    MaxDurationSeconds: 179.85
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 17
+    BaseAmbushChance: 0.2
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 45
+    - Id: creature_weak_mire_leech
+      Weight: 45
+    - Id: creature_weak_radiated_hound
+      Weight: 45
+    - Id: enemy_weak_scavenger
+      Weight: 45
+    - Id: creature_mid_stalker_rat
+      Weight: 41
+    - Id: creature_mid_plague_ghoul
+      Weight: 41
+    - Id: enemy_mid_blister_rusher
+      Weight: 41
+    - Id: enemy_mid_pistol_duelist
+      Weight: 41
+    - Id: creature_elite_acidback_lurker
+      Weight: 24
+    - Id: creature_elite_ironhide_ravager
+      Weight: 24
+    - Id: enemy_elite_auto_gunner
+      Weight: 24
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 24
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 20
+      Weight: 78
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 0
+  - Id: gather_marsh_water
+    Name: Marsh Water
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    - ResourceId: water
+      Min: 2
+      Max: 8
+      Weight: 62
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_reed_marsh
+    Name: Reed Marsh
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    - ResourceId: water
+      Min: 2
+      Max: 8
+      Weight: 62
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_bog_islands
+    Name: Bog Islands
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    - ResourceId: water
+      Min: 2
+      Max: 8
+      Weight: 62
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_toxic_swamp
+    Name: Toxic Swamp
+    RiskTier: 2
+    BaseDurationSeconds: 121
+    MinDurationSeconds: 78.65
+    MaxDurationSeconds: 199.64999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 19
+    BaseAmbushChance: 0.225
+    DurabilityPressure: 2
+    MinEnemyCount: 1
     MaxEnemyCount: 3
     RequiredBuildingLevels: []
     EnemyTable:
-    - Id: enemy_raider
-      Weight: 25
+    - Id: creature_weak_ash_roach
+      Weight: 40
+    - Id: creature_weak_mire_leech
+      Weight: 40
+    - Id: creature_weak_radiated_hound
+      Weight: 40
+    - Id: enemy_weak_scavenger
+      Weight: 40
+    - Id: creature_mid_stalker_rat
+      Weight: 44
+    - Id: creature_mid_plague_ghoul
+      Weight: 44
+    - Id: enemy_mid_blister_rusher
+      Weight: 44
     - Id: enemy_mid_pistol_duelist
-      Weight: 20
-    - Id: enemy_mid_shotgun_butcher
-      Weight: 20
+      Weight: 44
+    - Id: creature_elite_acidback_lurker
+      Weight: 26
+    - Id: creature_elite_ironhide_ravager
+      Weight: 26
     - Id: enemy_elite_auto_gunner
-      Weight: 12
+      Weight: 26
     - Id: enemy_elite_tire_shield_mauler
-      Weight: 10
-    - Id: enemy_boss_spine_gunner
-      Weight: 3
+      Weight: 26
     LootTable:
-    - ResourceId: weapon_parts
-      Min: 2
-      Max: 8
-      Weight: 100
     - ResourceId: scrap
-      Min: 8
-      Max: 18
-      Weight: 70
+      Min: 1
+      Max: 8
+      Weight: 28
+    - ResourceId: water
+      Min: 2
+      Max: 12
+      Weight: 62
     EventTable: []
-    UnlockConditions:
-    - Type: building_level
-      Id: workshop
-      Value: 1
-  - Id: mutant_tunnel
-    Name: Mutant Tunnel
-    RiskTier: 2
-    BaseDurationSeconds: 600
-    MinDurationSeconds: 420
-    MaxDurationSeconds: 780
-    FoodCostPerSurvivor: 4
-    WaterCostPerSurvivor: 3
-    RecommendedPower: 36
-    BaseAmbushChance: 0.2
-    DurabilityPressure: 4
-    MinEnemyCount: 2
-    MaxEnemyCount: 4
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    - Id: sawn_off_shotgun
+      Weight: 10
+    ShowInExpeditionMenu: 0
+  - Id: gather_snow_field
+    Name: Snow Field
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
     RequiredBuildingLevels: []
     EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
     - Id: creature_mid_stalker_rat
-      Weight: 14
-    - Id: creature_mid_glass_spitter
-      Weight: 12
-    - Id: creature_mid_scrap_shell_crawler
-      Weight: 12
-    - Id: creature_elite_acidback_lurker
-      Weight: 10
-    - Id: creature_elite_ironhide_ravager
-      Weight: 10
-    - Id: creature_elite_spore_colossus
-      Weight: 8
-    - Id: creature_boss_ash_widow
-      Weight: 3
-    - Id: creature_boss_tunnel_king
-      Weight: 2
-    - Id: creature_boss_wasteland_apex
-      Weight: 2
-    - Id: creature_boss_apex_claw_titan
-      Weight: 1
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
     LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_snowy_forest
+    Name: Snowy Forest
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_frozen_marsh
+    Name: Frozen Marsh
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    - ResourceId: water
+      Min: 2
+      Max: 8
+      Weight: 62
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_ash_winter_wasteland
+    Name: Ash Winter Wasteland
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_desert_plain
+    Name: Desert Plain
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_rocky_hills
+    Name: Rocky Hills
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_cracked_wasteland
+    Name: Cracked Wasteland
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_dried_field
+    Name: Dried Field
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_ruined_city_residential
+    Name: Ruined City Residential
+    RiskTier: 1
+    BaseDurationSeconds: 97
+    MinDurationSeconds: 63.050000000000004
+    MaxDurationSeconds: 160.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 15
+    BaseAmbushChance: 0.17500000000000002
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 6
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 0
+  - Id: gather_ruined_city_commercial
+    Name: Ruined City Commercial
+    RiskTier: 1
+    BaseDurationSeconds: 97
+    MinDurationSeconds: 63.050000000000004
+    MaxDurationSeconds: 160.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 15
+    BaseAmbushChance: 0.17500000000000002
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 6
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 0
+  - Id: gather_ruined_city_factory
+    Name: Ruined City Factory
+    RiskTier: 1
+    BaseDurationSeconds: 97
+    MinDurationSeconds: 63.050000000000004
+    MaxDurationSeconds: 160.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 15
+    BaseAmbushChance: 0.17500000000000002
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 6
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 0
+  - Id: gather_ruined_city_intersection
+    Name: Ruined City Intersection
+    RiskTier: 1
+    BaseDurationSeconds: 97
+    MinDurationSeconds: 63.050000000000004
+    MaxDurationSeconds: 160.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 15
+    BaseAmbushChance: 0.17500000000000002
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 6
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 0
+  - Id: gather_ruined_city_overpass
+    Name: Ruined City Overpass
+    RiskTier: 1
+    BaseDurationSeconds: 97
+    MinDurationSeconds: 63.050000000000004
+    MaxDurationSeconds: 160.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 15
+    BaseAmbushChance: 0.17500000000000002
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 6
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 0
+  - Id: gather_ruined_city_apartments
+    Name: Ruined City Apartments
+    RiskTier: 1
+    BaseDurationSeconds: 97
+    MinDurationSeconds: 63.050000000000004
+    MaxDurationSeconds: 160.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 15
+    BaseAmbushChance: 0.17500000000000002
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 6
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 0
+  - Id: gather_ruined_city_rail_yard
+    Name: Ruined City Rail Yard
+    RiskTier: 1
+    BaseDurationSeconds: 97
+    MinDurationSeconds: 63.050000000000004
+    MaxDurationSeconds: 160.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 15
+    BaseAmbushChance: 0.17500000000000002
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 6
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 0
+  - Id: gather_ruined_city_civic_center
+    Name: Ruined City Civic Center
+    RiskTier: 1
+    BaseDurationSeconds: 97
+    MinDurationSeconds: 63.050000000000004
+    MaxDurationSeconds: 160.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 15
+    BaseAmbushChance: 0.17500000000000002
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 6
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 0
+  - Id: gather_power_substation
+    Name: Power Substation
+    RiskTier: 0
+    BaseDurationSeconds: 61
+    MinDurationSeconds: 39.65
+    MaxDurationSeconds: 100.64999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 9
+    BaseAmbushChance: 0.1
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 65
+    - Id: creature_weak_mire_leech
+      Weight: 65
+    - Id: creature_weak_radiated_hound
+      Weight: 65
+    - Id: enemy_weak_scavenger
+      Weight: 65
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 4
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_collapsed_bunker
+    Name: Collapsed Bunker
+    RiskTier: 0
+    BaseDurationSeconds: 61
+    MinDurationSeconds: 39.65
+    MaxDurationSeconds: 100.64999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 9
+    BaseAmbushChance: 0.1
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 65
+    - Id: creature_weak_mire_leech
+      Weight: 65
+    - Id: creature_weak_radiated_hound
+      Weight: 65
+    - Id: enemy_weak_scavenger
+      Weight: 65
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 4
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_abandoned_checkpoint
+    Name: Abandoned Checkpoint
+    RiskTier: 0
+    BaseDurationSeconds: 61
+    MinDurationSeconds: 39.65
+    MaxDurationSeconds: 100.64999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 9
+    BaseAmbushChance: 0.1
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 65
+    - Id: creature_weak_mire_leech
+      Weight: 65
+    - Id: creature_weak_radiated_hound
+      Weight: 65
+    - Id: enemy_weak_scavenger
+      Weight: 65
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 4
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_ash_cemetery
+    Name: Ash Cemetery
+    RiskTier: 0
+    BaseDurationSeconds: 61
+    MinDurationSeconds: 39.65
+    MaxDurationSeconds: 100.64999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 9
+    BaseAmbushChance: 0.1
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 65
+    - Id: creature_weak_mire_leech
+      Weight: 65
+    - Id: creature_weak_radiated_hound
+      Weight: 65
+    - Id: enemy_weak_scavenger
+      Weight: 65
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 4
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_green_field
+    Name: Green Field
+    RiskTier: 0
+    BaseDurationSeconds: 37
+    MinDurationSeconds: 24.05
+    MaxDurationSeconds: 61.05
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 5
+    BaseAmbushChance: 0.05
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 75
+    - Id: creature_weak_mire_leech
+      Weight: 75
+    - Id: creature_weak_radiated_hound
+      Weight: 75
+    - Id: enemy_weak_scavenger
+      Weight: 75
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 8
+      Weight: 78
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 2
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_wheat_field
+    Name: Wheat Field
+    RiskTier: 0
+    BaseDurationSeconds: 37
+    MinDurationSeconds: 24.05
+    MaxDurationSeconds: 61.05
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 5
+    BaseAmbushChance: 0.05
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 75
+    - Id: creature_weak_mire_leech
+      Weight: 75
+    - Id: creature_weak_radiated_hound
+      Weight: 75
+    - Id: enemy_weak_scavenger
+      Weight: 75
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 8
+      Weight: 78
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 2
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_ruins_buffer
+    Name: Ruins Buffer
+    RiskTier: 0
+    BaseDurationSeconds: 61
+    MinDurationSeconds: 39.65
+    MaxDurationSeconds: 100.64999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 9
+    BaseAmbushChance: 0.1
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 65
+    - Id: creature_weak_mire_leech
+      Weight: 65
+    - Id: creature_weak_radiated_hound
+      Weight: 65
+    - Id: enemy_weak_scavenger
+      Weight: 65
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 4
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_gas_station
+    Name: Gas Station
+    RiskTier: 0
+    BaseDurationSeconds: 61
+    MinDurationSeconds: 39.65
+    MaxDurationSeconds: 100.64999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 9
+    BaseAmbushChance: 0.1
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 65
+    - Id: creature_weak_mire_leech
+      Weight: 65
+    - Id: creature_weak_radiated_hound
+      Weight: 65
+    - Id: enemy_weak_scavenger
+      Weight: 65
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 4
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_scrapyard
+    Name: Scrapyard
+    RiskTier: 0
+    BaseDurationSeconds: 61
+    MinDurationSeconds: 39.65
+    MaxDurationSeconds: 100.64999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 9
+    BaseAmbushChance: 0.1
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 65
+    - Id: creature_weak_mire_leech
+      Weight: 65
+    - Id: creature_weak_radiated_hound
+      Weight: 65
+    - Id: enemy_weak_scavenger
+      Weight: 65
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: weapon_parts
+      Min: 2
+      Max: 4
+      Weight: 35
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_nuclear_crater
+    Name: Nuclear Crater
+    RiskTier: 3
+    BaseDurationSeconds: 157
+    MinDurationSeconds: 102.05
+    MaxDurationSeconds: 259.05
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 25
+    BaseAmbushChance: 0.30000000000000004
+    DurabilityPressure: 3
+    MinEnemyCount: 1
+    MaxEnemyCount: 3
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 25
+    - Id: creature_weak_mire_leech
+      Weight: 25
+    - Id: creature_weak_radiated_hound
+      Weight: 25
+    - Id: enemy_weak_scavenger
+      Weight: 25
+    - Id: creature_mid_stalker_rat
+      Weight: 53
+    - Id: creature_mid_plague_ghoul
+      Weight: 53
+    - Id: enemy_mid_blister_rusher
+      Weight: 53
+    - Id: enemy_mid_pistol_duelist
+      Weight: 53
+    - Id: creature_elite_acidback_lurker
+      Weight: 32
+    - Id: creature_elite_ironhide_ravager
+      Weight: 32
+    - Id: enemy_elite_auto_gunner
+      Weight: 32
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 32
+    - Id: creature_boss_ash_widow
+      Weight: 15
+    - Id: creature_boss_tunnel_king
+      Weight: 15
+    - Id: enemy_boss_spine_gunner
+      Weight: 15
+    - Id: enemy_boss_ashfall_warlord
+      Weight: 15
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 10
+      Weight: 28
     - ResourceId: medicine
       Min: 2
       Max: 6
-      Weight: 80
+      Weight: 32
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    - Id: sawn_off_shotgun
+      Weight: 10
+    - Id: hunting_rifle
+      Weight: 7
+    ShowInExpeditionMenu: 0
+  - Id: gather_waste_barrels_zone
+    Name: Waste Barrels Zone
+    RiskTier: 2
+    BaseDurationSeconds: 133
+    MinDurationSeconds: 86.45
+    MaxDurationSeconds: 219.45
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 21
+    BaseAmbushChance: 0.25
+    DurabilityPressure: 3
+    MinEnemyCount: 1
+    MaxEnemyCount: 3
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 35
+    - Id: creature_weak_mire_leech
+      Weight: 35
+    - Id: creature_weak_radiated_hound
+      Weight: 35
+    - Id: enemy_weak_scavenger
+      Weight: 35
+    - Id: creature_mid_stalker_rat
+      Weight: 47
+    - Id: creature_mid_plague_ghoul
+      Weight: 47
+    - Id: enemy_mid_blister_rusher
+      Weight: 47
+    - Id: enemy_mid_pistol_duelist
+      Weight: 47
+    - Id: creature_elite_acidback_lurker
+      Weight: 28
+    - Id: creature_elite_ironhide_ravager
+      Weight: 28
+    - Id: enemy_elite_auto_gunner
+      Weight: 28
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 28
+    LootTable:
     - ResourceId: scrap
-      Min: 12
-      Max: 30
+      Min: 1
+      Max: 8
+      Weight: 28
+    - ResourceId: medicine
+      Min: 2
+      Max: 6
+      Weight: 32
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    - Id: sawn_off_shotgun
+      Weight: 10
+    ShowInExpeditionMenu: 0
+  - Id: ruined_homestead
+    Name: Ruined Homestead
+    RiskTier: 0
+    BaseDurationSeconds: 53
+    MinDurationSeconds: 34.45
+    MaxDurationSeconds: 87.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 8
+    BaseAmbushChance: 0.16499999999999998
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 75
+    - Id: creature_weak_mire_leech
+      Weight: 75
+    - Id: creature_weak_radiated_hound
+      Weight: 75
+    - Id: enemy_weak_scavenger
+      Weight: 75
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 3
+      Weight: 90
+    - ResourceId: scrap
+      Min: 6
+      Max: 21
       Weight: 100
     EventTable: []
-    UnlockConditions:
-    - Type: building_level
-      Id: radio_tower
-      Value: 2
+    UnlockConditions: []
+    EquipmentDropChance: 0.16
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 1
+  - Id: abandoned_greenhouse
+    Name: Abandoned Greenhouse
+    RiskTier: 0
+    BaseDurationSeconds: 81
+    MinDurationSeconds: 52.65
+    MaxDurationSeconds: 133.65
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 13
+    BaseAmbushChance: 0.21
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 70
+    - Id: creature_weak_mire_leech
+      Weight: 70
+    - Id: creature_weak_radiated_hound
+      Weight: 70
+    - Id: enemy_weak_scavenger
+      Weight: 70
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 3
+      Weight: 90
+    - ResourceId: scrap
+      Min: 8
+      Max: 27
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.2
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 1
+  - Id: flooded_cellar
+    Name: Flooded Cellar
+    RiskTier: 0
+    BaseDurationSeconds: 109
+    MinDurationSeconds: 70.85000000000001
+    MaxDurationSeconds: 179.85
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 18
+    BaseAmbushChance: 0.255
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 65
+    - Id: creature_weak_mire_leech
+      Weight: 65
+    - Id: creature_weak_radiated_hound
+      Weight: 65
+    - Id: enemy_weak_scavenger
+      Weight: 65
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 3
+      Weight: 90
+    - ResourceId: scrap
+      Min: 10
+      Max: 33
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.24
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 1
+  - Id: scavenger_hideout
+    Name: Scavenger Hideout
+    RiskTier: 1
+    BaseDurationSeconds: 137
+    MinDurationSeconds: 89.05
+    MaxDurationSeconds: 226.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 23
+    BaseAmbushChance: 0.3
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 90
+    - ResourceId: scrap
+      Min: 12
+      Max: 39
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.28
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 1
+  - Id: collapsed_mine
+    Name: Collapsed Mine
+    RiskTier: 1
+    BaseDurationSeconds: 165
+    MinDurationSeconds: 107.25
+    MaxDurationSeconds: 272.25
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 28
+    BaseAmbushChance: 0.345
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 55
+    - Id: creature_weak_mire_leech
+      Weight: 55
+    - Id: creature_weak_radiated_hound
+      Weight: 55
+    - Id: enemy_weak_scavenger
+      Weight: 55
+    - Id: creature_mid_stalker_rat
+      Weight: 35
+    - Id: creature_mid_plague_ghoul
+      Weight: 35
+    - Id: enemy_mid_blister_rusher
+      Weight: 35
+    - Id: enemy_mid_pistol_duelist
+      Weight: 35
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 90
+    - ResourceId: scrap
+      Min: 14
+      Max: 45
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.32
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 1
+  - Id: marauder_camp
+    Name: Marauder Camp
+    RiskTier: 1
+    BaseDurationSeconds: 193
+    MinDurationSeconds: 125.45
+    MaxDurationSeconds: 318.45
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 33
+    BaseAmbushChance: 0.39
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 9
+      Weight: 90
+    - ResourceId: scrap
+      Min: 16
+      Max: 51
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.36
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 1
+  - Id: mutant_nest
+    Name: Mutant Nest
+    RiskTier: 2
+    BaseDurationSeconds: 221
+    MinDurationSeconds: 143.65
+    MaxDurationSeconds: 364.65
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 38
+    BaseAmbushChance: 0.435
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 45
+    - Id: creature_weak_mire_leech
+      Weight: 45
+    - Id: creature_weak_radiated_hound
+      Weight: 45
+    - Id: enemy_weak_scavenger
+      Weight: 45
+    - Id: creature_mid_stalker_rat
+      Weight: 41
+    - Id: creature_mid_plague_ghoul
+      Weight: 41
+    - Id: enemy_mid_blister_rusher
+      Weight: 41
+    - Id: enemy_mid_pistol_duelist
+      Weight: 41
+    - Id: creature_elite_acidback_lurker
+      Weight: 24
+    - Id: creature_elite_ironhide_ravager
+      Weight: 24
+    - Id: enemy_elite_auto_gunner
+      Weight: 24
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 24
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 9
+      Weight: 90
+    - ResourceId: scrap
+      Min: 18
+      Max: 57
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.4
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 1
+  - Id: military_depot
+    Name: Military Depot
+    RiskTier: 2
+    BaseDurationSeconds: 249
+    MinDurationSeconds: 161.85
+    MaxDurationSeconds: 410.84999999999997
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 43
+    BaseAmbushChance: 0.48
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 3
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 40
+    - Id: creature_weak_mire_leech
+      Weight: 40
+    - Id: creature_weak_radiated_hound
+      Weight: 40
+    - Id: enemy_weak_scavenger
+      Weight: 40
+    - Id: creature_mid_stalker_rat
+      Weight: 44
+    - Id: creature_mid_plague_ghoul
+      Weight: 44
+    - Id: enemy_mid_blister_rusher
+      Weight: 44
+    - Id: enemy_mid_pistol_duelist
+      Weight: 44
+    - Id: creature_elite_acidback_lurker
+      Weight: 26
+    - Id: creature_elite_ironhide_ravager
+      Weight: 26
+    - Id: enemy_elite_auto_gunner
+      Weight: 26
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 26
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 12
+      Weight: 90
+    - ResourceId: scrap
+      Min: 20
+      Max: 63
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.44
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    - Id: sawn_off_shotgun
+      Weight: 10
+    ShowInExpeditionMenu: 1
+  - Id: underground_laboratory
+    Name: Underground Laboratory
+    RiskTier: 2
+    BaseDurationSeconds: 277
+    MinDurationSeconds: 180.05
+    MaxDurationSeconds: 457.04999999999995
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 48
+    BaseAmbushChance: 0.5249999999999999
+    DurabilityPressure: 3
+    MinEnemyCount: 1
+    MaxEnemyCount: 3
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 35
+    - Id: creature_weak_mire_leech
+      Weight: 35
+    - Id: creature_weak_radiated_hound
+      Weight: 35
+    - Id: enemy_weak_scavenger
+      Weight: 35
+    - Id: creature_mid_stalker_rat
+      Weight: 47
+    - Id: creature_mid_plague_ghoul
+      Weight: 47
+    - Id: enemy_mid_blister_rusher
+      Weight: 47
+    - Id: enemy_mid_pistol_duelist
+      Weight: 47
+    - Id: creature_elite_acidback_lurker
+      Weight: 28
+    - Id: creature_elite_ironhide_ravager
+      Weight: 28
+    - Id: enemy_elite_auto_gunner
+      Weight: 28
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 28
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 12
+      Weight: 90
+    - ResourceId: medicine
+      Min: 2
+      Max: 9
+      Weight: 32
+    - ResourceId: scrap
+      Min: 22
+      Max: 69
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.48
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    - Id: sawn_off_shotgun
+      Weight: 10
+    ShowInExpeditionMenu: 1
+  - Id: biohazard_plant
+    Name: Biohazard Plant
+    RiskTier: 3
+    BaseDurationSeconds: 305
+    MinDurationSeconds: 198.25
+    MaxDurationSeconds: 503.25
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 53
+    BaseAmbushChance: 0.57
+    DurabilityPressure: 3
+    MinEnemyCount: 1
+    MaxEnemyCount: 3
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 30
+    - Id: creature_weak_mire_leech
+      Weight: 30
+    - Id: creature_weak_radiated_hound
+      Weight: 30
+    - Id: enemy_weak_scavenger
+      Weight: 30
+    - Id: creature_mid_stalker_rat
+      Weight: 50
+    - Id: creature_mid_plague_ghoul
+      Weight: 50
+    - Id: enemy_mid_blister_rusher
+      Weight: 50
+    - Id: enemy_mid_pistol_duelist
+      Weight: 50
+    - Id: creature_elite_acidback_lurker
+      Weight: 30
+    - Id: creature_elite_ironhide_ravager
+      Weight: 30
+    - Id: enemy_elite_auto_gunner
+      Weight: 30
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 30
+    - Id: creature_boss_ash_widow
+      Weight: 14
+    - Id: creature_boss_tunnel_king
+      Weight: 14
+    - Id: enemy_boss_spine_gunner
+      Weight: 14
+    - Id: enemy_boss_ashfall_warlord
+      Weight: 14
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 15
+      Weight: 90
+    - ResourceId: scrap
+      Min: 24
+      Max: 75
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.52
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    - Id: sawn_off_shotgun
+      Weight: 10
+    - Id: hunting_rifle
+      Weight: 7
+    ShowInExpeditionMenu: 1
+  - Id: reactor_complex
+    Name: Reactor Complex
+    RiskTier: 3
+    BaseDurationSeconds: 333
+    MinDurationSeconds: 216.45000000000002
+    MaxDurationSeconds: 549.4499999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 58
+    BaseAmbushChance: 0.615
+    DurabilityPressure: 3
+    MinEnemyCount: 1
+    MaxEnemyCount: 3
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 25
+    - Id: creature_weak_mire_leech
+      Weight: 25
+    - Id: creature_weak_radiated_hound
+      Weight: 25
+    - Id: enemy_weak_scavenger
+      Weight: 25
+    - Id: creature_mid_stalker_rat
+      Weight: 53
+    - Id: creature_mid_plague_ghoul
+      Weight: 53
+    - Id: enemy_mid_blister_rusher
+      Weight: 53
+    - Id: enemy_mid_pistol_duelist
+      Weight: 53
+    - Id: creature_elite_acidback_lurker
+      Weight: 32
+    - Id: creature_elite_ironhide_ravager
+      Weight: 32
+    - Id: enemy_elite_auto_gunner
+      Weight: 32
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 32
+    - Id: creature_boss_ash_widow
+      Weight: 15
+    - Id: creature_boss_tunnel_king
+      Weight: 15
+    - Id: enemy_boss_spine_gunner
+      Weight: 15
+    - Id: enemy_boss_ashfall_warlord
+      Weight: 15
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 15
+      Weight: 90
+    - ResourceId: scrap
+      Min: 26
+      Max: 81
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.56
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    - Id: sawn_off_shotgun
+      Weight: 10
+    - Id: hunting_rifle
+      Weight: 7
+    ShowInExpeditionMenu: 1
+  - Id: warlord_fortress
+    Name: Warlord Fortress
+    RiskTier: 3
+    BaseDurationSeconds: 361
+    MinDurationSeconds: 234.65
+    MaxDurationSeconds: 595.65
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 63
+    BaseAmbushChance: 0.66
+    DurabilityPressure: 4
+    MinEnemyCount: 1
+    MaxEnemyCount: 4
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 20
+    - Id: creature_weak_mire_leech
+      Weight: 20
+    - Id: creature_weak_radiated_hound
+      Weight: 20
+    - Id: enemy_weak_scavenger
+      Weight: 20
+    - Id: creature_mid_stalker_rat
+      Weight: 56
+    - Id: creature_mid_plague_ghoul
+      Weight: 56
+    - Id: enemy_mid_blister_rusher
+      Weight: 56
+    - Id: enemy_mid_pistol_duelist
+      Weight: 56
+    - Id: creature_elite_acidback_lurker
+      Weight: 34
+    - Id: creature_elite_ironhide_ravager
+      Weight: 34
+    - Id: enemy_elite_auto_gunner
+      Weight: 34
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 34
+    - Id: creature_boss_ash_widow
+      Weight: 16
+    - Id: creature_boss_tunnel_king
+      Weight: 16
+    - Id: enemy_boss_spine_gunner
+      Weight: 16
+    - Id: enemy_boss_ashfall_warlord
+      Weight: 16
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 18
+      Weight: 90
+    - ResourceId: scrap
+      Min: 28
+      Max: 87
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.6
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    - Id: sawn_off_shotgun
+      Weight: 10
+    - Id: hunting_rifle
+      Weight: 7
+    ShowInExpeditionMenu: 1
+  - Id: gather_grass_meadow
+    Name: Grass Meadow
+    RiskTier: 0
+    BaseDurationSeconds: 37
+    MinDurationSeconds: 24.05
+    MaxDurationSeconds: 61.05
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 5
+    BaseAmbushChance: 0.05
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 75
+    - Id: creature_weak_mire_leech
+      Weight: 75
+    - Id: creature_weak_radiated_hound
+      Weight: 75
+    - Id: enemy_weak_scavenger
+      Weight: 75
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 8
+      Weight: 78
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_grass_tall_field
+    Name: Grass Tall Field
+    RiskTier: 0
+    BaseDurationSeconds: 37
+    MinDurationSeconds: 24.05
+    MaxDurationSeconds: 61.05
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 5
+    BaseAmbushChance: 0.05
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 75
+    - Id: creature_weak_mire_leech
+      Weight: 75
+    - Id: creature_weak_radiated_hound
+      Weight: 75
+    - Id: enemy_weak_scavenger
+      Weight: 75
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 8
+      Weight: 78
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_grass_wildflower_clearing
+    Name: Grass Wildflower Clearing
+    RiskTier: 0
+    BaseDurationSeconds: 37
+    MinDurationSeconds: 24.05
+    MaxDurationSeconds: 61.05
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 5
+    BaseAmbushChance: 0.05
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 75
+    - Id: creature_weak_mire_leech
+      Weight: 75
+    - Id: creature_weak_radiated_hound
+      Weight: 75
+    - Id: enemy_weak_scavenger
+      Weight: 75
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 8
+      Weight: 78
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_grass_mossy_boulders
+    Name: Grass Mossy Boulders
+    RiskTier: 0
+    BaseDurationSeconds: 37
+    MinDurationSeconds: 24.05
+    MaxDurationSeconds: 61.05
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 5
+    BaseAmbushChance: 0.05
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 75
+    - Id: creature_weak_mire_leech
+      Weight: 75
+    - Id: creature_weak_radiated_hound
+      Weight: 75
+    - Id: enemy_weak_scavenger
+      Weight: 75
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 8
+      Weight: 78
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_grass_overgrown_ruins
+    Name: Grass Overgrown Ruins
+    RiskTier: 0
+    BaseDurationSeconds: 37
+    MinDurationSeconds: 24.05
+    MaxDurationSeconds: 61.05
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 5
+    BaseAmbushChance: 0.05
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 75
+    - Id: creature_weak_mire_leech
+      Weight: 75
+    - Id: creature_weak_radiated_hound
+      Weight: 75
+    - Id: enemy_weak_scavenger
+      Weight: 75
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 8
+      Weight: 78
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_grass_ivy_bunker
+    Name: Grass Ivy Bunker
+    RiskTier: 0
+    BaseDurationSeconds: 37
+    MinDurationSeconds: 24.05
+    MaxDurationSeconds: 61.05
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 5
+    BaseAmbushChance: 0.05
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 75
+    - Id: creature_weak_mire_leech
+      Weight: 75
+    - Id: creature_weak_radiated_hound
+      Weight: 75
+    - Id: enemy_weak_scavenger
+      Weight: 75
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 2
+      Weight: 28
+    - ResourceId: food
+      Min: 2
+      Max: 8
+      Weight: 78
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 0
+  - Id: gather_winter_snowdrifts
+    Name: Winter Snowdrifts
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_winter_cracked_ice
+    Name: Winter Cracked Ice
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_winter_frosted_boulders
+    Name: Winter Frosted Boulders
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_winter_dead_grove
+    Name: Winter Dead Grove
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_winter_snow_ruins
+    Name: Winter Snow Ruins
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: gather_winter_supply_shelter
+    Name: Winter Supply Shelter
+    RiskTier: 1
+    BaseDurationSeconds: 73
+    MinDurationSeconds: 47.45
+    MaxDurationSeconds: 120.44999999999999
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 11
+    BaseAmbushChance: 0.125
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 4
+      Weight: 28
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.02
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 0
+  - Id: grass_abandoned_farm
+    Name: Grass Abandoned Farm
+    RiskTier: 0
+    BaseDurationSeconds: 81
+    MinDurationSeconds: 52.65
+    MaxDurationSeconds: 133.65
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 13
+    BaseAmbushChance: 0.21
+    DurabilityPressure: 0
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 70
+    - Id: creature_weak_mire_leech
+      Weight: 70
+    - Id: creature_weak_radiated_hound
+      Weight: 70
+    - Id: enemy_weak_scavenger
+      Weight: 70
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 3
+      Weight: 90
+    - ResourceId: scrap
+      Min: 8
+      Max: 27
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.2
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 1
+  - Id: grass_ranger_station
+    Name: Grass Ranger Station
+    RiskTier: 0
+    BaseDurationSeconds: 109
+    MinDurationSeconds: 70.85000000000001
+    MaxDurationSeconds: 179.85
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 18
+    BaseAmbushChance: 0.255
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 65
+    - Id: creature_weak_mire_leech
+      Weight: 65
+    - Id: creature_weak_radiated_hound
+      Weight: 65
+    - Id: enemy_weak_scavenger
+      Weight: 65
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 3
+      Weight: 90
+    - ResourceId: scrap
+      Min: 10
+      Max: 33
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.24
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 1
+  - Id: grass_overgrown_church
+    Name: Grass Overgrown Church
+    RiskTier: 1
+    BaseDurationSeconds: 137
+    MinDurationSeconds: 89.05
+    MaxDurationSeconds: 226.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 23
+    BaseAmbushChance: 0.3
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 90
+    - ResourceId: scrap
+      Min: 12
+      Max: 39
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.28
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 1
+  - Id: grass_water_tower
+    Name: Grass Water Tower
+    RiskTier: 1
+    BaseDurationSeconds: 165
+    MinDurationSeconds: 107.25
+    MaxDurationSeconds: 272.25
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 28
+    BaseAmbushChance: 0.345
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 55
+    - Id: creature_weak_mire_leech
+      Weight: 55
+    - Id: creature_weak_radiated_hound
+      Weight: 55
+    - Id: enemy_weak_scavenger
+      Weight: 55
+    - Id: creature_mid_stalker_rat
+      Weight: 35
+    - Id: creature_mid_plague_ghoul
+      Weight: 35
+    - Id: enemy_mid_blister_rusher
+      Weight: 35
+    - Id: enemy_mid_pistol_duelist
+      Weight: 35
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 90
+    - ResourceId: water
+      Min: 2
+      Max: 12
+      Weight: 62
+    - ResourceId: scrap
+      Min: 14
+      Max: 45
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.32
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 1
+  - Id: grass_moss_quarry
+    Name: Grass Moss Quarry
+    RiskTier: 1
+    BaseDurationSeconds: 193
+    MinDurationSeconds: 125.45
+    MaxDurationSeconds: 318.45
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 33
+    BaseAmbushChance: 0.39
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 9
+      Weight: 90
+    - ResourceId: scrap
+      Min: 16
+      Max: 51
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.36
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 1
+  - Id: grass_relay_station
+    Name: Grass Relay Station
+    RiskTier: 2
+    BaseDurationSeconds: 221
+    MinDurationSeconds: 143.65
+    MaxDurationSeconds: 364.65
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 38
+    BaseAmbushChance: 0.435
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 45
+    - Id: creature_weak_mire_leech
+      Weight: 45
+    - Id: creature_weak_radiated_hound
+      Weight: 45
+    - Id: enemy_weak_scavenger
+      Weight: 45
+    - Id: creature_mid_stalker_rat
+      Weight: 41
+    - Id: creature_mid_plague_ghoul
+      Weight: 41
+    - Id: enemy_mid_blister_rusher
+      Weight: 41
+    - Id: enemy_mid_pistol_duelist
+      Weight: 41
+    - Id: creature_elite_acidback_lurker
+      Weight: 24
+    - Id: creature_elite_ironhide_ravager
+      Weight: 24
+    - Id: enemy_elite_auto_gunner
+      Weight: 24
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 24
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 9
+      Weight: 90
+    - ResourceId: scrap
+      Min: 18
+      Max: 57
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.4
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 1
+  - Id: winter_frozen_cabin
+    Name: Winter Frozen Cabin
+    RiskTier: 0
+    BaseDurationSeconds: 109
+    MinDurationSeconds: 70.85000000000001
+    MaxDurationSeconds: 179.85
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 18
+    BaseAmbushChance: 0.255
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 1
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 65
+    - Id: creature_weak_mire_leech
+      Weight: 65
+    - Id: creature_weak_radiated_hound
+      Weight: 65
+    - Id: enemy_weak_scavenger
+      Weight: 65
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 3
+      Weight: 90
+    - ResourceId: water
+      Min: 2
+      Max: 9
+      Weight: 62
+    - ResourceId: scrap
+      Min: 10
+      Max: 33
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.24
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    ShowInExpeditionMenu: 1
+  - Id: winter_weather_station
+    Name: Winter Weather Station
+    RiskTier: 1
+    BaseDurationSeconds: 137
+    MinDurationSeconds: 89.05
+    MaxDurationSeconds: 226.04999999999998
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 23
+    BaseAmbushChance: 0.3
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 60
+    - Id: creature_weak_mire_leech
+      Weight: 60
+    - Id: creature_weak_radiated_hound
+      Weight: 60
+    - Id: enemy_weak_scavenger
+      Weight: 60
+    - Id: creature_mid_stalker_rat
+      Weight: 32
+    - Id: creature_mid_plague_ghoul
+      Weight: 32
+    - Id: enemy_mid_blister_rusher
+      Weight: 32
+    - Id: enemy_mid_pistol_duelist
+      Weight: 32
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 90
+    - ResourceId: scrap
+      Min: 12
+      Max: 39
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.28
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 1
+  - Id: winter_ice_cave
+    Name: Winter Ice Cave
+    RiskTier: 1
+    BaseDurationSeconds: 165
+    MinDurationSeconds: 107.25
+    MaxDurationSeconds: 272.25
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 28
+    BaseAmbushChance: 0.345
+    DurabilityPressure: 1
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 55
+    - Id: creature_weak_mire_leech
+      Weight: 55
+    - Id: creature_weak_radiated_hound
+      Weight: 55
+    - Id: enemy_weak_scavenger
+      Weight: 55
+    - Id: creature_mid_stalker_rat
+      Weight: 35
+    - Id: creature_mid_plague_ghoul
+      Weight: 35
+    - Id: enemy_mid_blister_rusher
+      Weight: 35
+    - Id: enemy_mid_pistol_duelist
+      Weight: 35
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 6
+      Weight: 90
+    - ResourceId: scrap
+      Min: 14
+      Max: 45
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.32
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    ShowInExpeditionMenu: 1
+  - Id: winter_snowbound_depot
+    Name: Winter Snowbound Depot
+    RiskTier: 1
+    BaseDurationSeconds: 193
+    MinDurationSeconds: 125.45
+    MaxDurationSeconds: 318.45
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 33
+    BaseAmbushChance: 0.39
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 50
+    - Id: creature_weak_mire_leech
+      Weight: 50
+    - Id: creature_weak_radiated_hound
+      Weight: 50
+    - Id: enemy_weak_scavenger
+      Weight: 50
+    - Id: creature_mid_stalker_rat
+      Weight: 38
+    - Id: creature_mid_plague_ghoul
+      Weight: 38
+    - Id: enemy_mid_blister_rusher
+      Weight: 38
+    - Id: enemy_mid_pistol_duelist
+      Weight: 38
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 9
+      Weight: 90
+    - ResourceId: scrap
+      Min: 16
+      Max: 51
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.36
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 1
+  - Id: winter_research_outpost
+    Name: Winter Research Outpost
+    RiskTier: 2
+    BaseDurationSeconds: 221
+    MinDurationSeconds: 143.65
+    MaxDurationSeconds: 364.65
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 38
+    BaseAmbushChance: 0.435
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 2
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 45
+    - Id: creature_weak_mire_leech
+      Weight: 45
+    - Id: creature_weak_radiated_hound
+      Weight: 45
+    - Id: enemy_weak_scavenger
+      Weight: 45
+    - Id: creature_mid_stalker_rat
+      Weight: 41
+    - Id: creature_mid_plague_ghoul
+      Weight: 41
+    - Id: enemy_mid_blister_rusher
+      Weight: 41
+    - Id: enemy_mid_pistol_duelist
+      Weight: 41
+    - Id: creature_elite_acidback_lurker
+      Weight: 24
+    - Id: creature_elite_ironhide_ravager
+      Weight: 24
+    - Id: enemy_elite_auto_gunner
+      Weight: 24
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 24
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 9
+      Weight: 90
+    - ResourceId: medicine
+      Min: 2
+      Max: 6
+      Weight: 32
+    - ResourceId: scrap
+      Min: 18
+      Max: 57
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.4
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    ShowInExpeditionMenu: 1
+  - Id: winter_crash_site
+    Name: Winter Crash Site
+    RiskTier: 2
+    BaseDurationSeconds: 249
+    MinDurationSeconds: 161.85
+    MaxDurationSeconds: 410.84999999999997
+    FoodCostPerSurvivor: 0
+    WaterCostPerSurvivor: 0
+    RecommendedPower: 43
+    BaseAmbushChance: 0.48
+    DurabilityPressure: 2
+    MinEnemyCount: 1
+    MaxEnemyCount: 3
+    RequiredBuildingLevels: []
+    EnemyTable:
+    - Id: creature_weak_ash_roach
+      Weight: 40
+    - Id: creature_weak_mire_leech
+      Weight: 40
+    - Id: creature_weak_radiated_hound
+      Weight: 40
+    - Id: enemy_weak_scavenger
+      Weight: 40
+    - Id: creature_mid_stalker_rat
+      Weight: 44
+    - Id: creature_mid_plague_ghoul
+      Weight: 44
+    - Id: enemy_mid_blister_rusher
+      Weight: 44
+    - Id: enemy_mid_pistol_duelist
+      Weight: 44
+    - Id: creature_elite_acidback_lurker
+      Weight: 26
+    - Id: creature_elite_ironhide_ravager
+      Weight: 26
+    - Id: enemy_elite_auto_gunner
+      Weight: 26
+    - Id: enemy_elite_tire_shield_mauler
+      Weight: 26
+    LootTable:
+    - ResourceId: scrap
+      Min: 1
+      Max: 12
+      Weight: 90
+    - ResourceId: scrap
+      Min: 20
+      Max: 63
+      Weight: 100
+    EventTable: []
+    UnlockConditions: []
+    EquipmentDropChance: 0.44
+    EquipmentTable:
+    - Id: rusty_knife
+      Weight: 35
+    - Id: metal_pipe
+      Weight: 30
+    - Id: leather_jacket
+      Weight: 25
+    - Id: medkit
+      Weight: 20
+    - Id: toolkit
+      Weight: 18
+    - Id: rusty_revolver
+      Weight: 16
+    - Id: scrap_armor
+      Weight: 14
+    - Id: sawn_off_shotgun
+      Weight: 10
+    ShowInExpeditionMenu: 1

@@ -38,6 +38,7 @@ namespace AshfallCamp.Infrastructure
             FillTraits(snapshot);
             FillPolicies(snapshot);
             FillZones(snapshot);
+            FillWorldTiles(snapshot);
             FillEnemies(snapshot);
             FillItems(snapshot);
             FillWeapons(snapshot);
@@ -173,12 +174,41 @@ namespace AshfallCamp.Infrastructure
                     MinEnemyCount = item.MinEnemyCount,
                     MaxEnemyCount = item.MaxEnemyCount,
                     RequiredBuildingLevels = ToDictionary(item.RequiredBuildingLevels)
+                    ,EquipmentDropChance = item.EquipmentDropChance
+                    ,ShowInExpeditionMenu = item.ShowInExpeditionMenu
                 };
                 foreach (var entry in item.EnemyTable) zone.EnemyTable.Add(new WeightedEntry { Id = entry.Id, Weight = entry.Weight });
                 foreach (var entry in item.EventTable) zone.EventTable.Add(new WeightedEntry { Id = entry.Id, Weight = entry.Weight });
                 foreach (var entry in item.LootTable) zone.LootTable.Add(new LootTableEntry { ResourceId = entry.ResourceId, Min = entry.Min, Max = entry.Max, Weight = entry.Weight });
                 foreach (var entry in item.UnlockConditions) zone.UnlockConditions.Add(new UnlockCondition { Type = entry.Type, Id = entry.Id, Value = entry.Value });
+                foreach (var entry in item.EquipmentTable) zone.EquipmentTable.Add(new WeightedEntry { Id = entry.Id, Weight = entry.Weight });
                 AddDefinition(snapshot.Zones, item.Id, zone, "zones");
+            }
+        }
+
+        private void FillWorldTiles(GameConfigSnapshot snapshot)
+        {
+            if (_database.WorldTiles == null) return;
+            foreach (var asset in _database.WorldTiles.Tiles)
+            {
+                if (asset == null) continue;
+                var definition = new WorldTileDefinition
+                {
+                    Id = asset.Id,
+                    Name = asset.DisplayName,
+                    Category = asset.Category,
+                    Type = asset.Type,
+                    Strength = asset.Strength,
+                    ZoneId = asset.ZoneId,
+                    FoodCostPerSurvivor = asset.FoodCostPerSurvivor,
+                    WaterCostPerSurvivor = asset.WaterCostPerSurvivor,
+                    EncounterChance = asset.EncounterChance,
+                    RareEquipmentChance = asset.RareEquipmentChance
+                };
+                foreach (var entry in asset.ResourceRewards) definition.ResourceRewards.Add(new LootTableEntry { ResourceId = entry.ResourceId, Min = entry.Min, Max = entry.Max, Weight = entry.Weight });
+                foreach (var entry in asset.EnemyTable) definition.EnemyTable.Add(new WeightedEntry { Id = entry.Id, Weight = entry.Weight });
+                foreach (var entry in asset.EquipmentTable) definition.EquipmentTable.Add(new WeightedEntry { Id = entry.Id, Weight = entry.Weight });
+                AddDefinition(snapshot.WorldTiles, asset.Id, definition, "world tiles");
             }
         }
 
@@ -373,6 +403,9 @@ namespace AshfallCamp.Infrastructure
             var source = _database.Balance.Balance;
             snapshot.Balance = new BalanceDefinition
             {
+                MapRevealResourceId = source.MapRevealResourceId,
+                MapRevealBaseCost = source.MapRevealBaseCost,
+                MapInitialRevealRadius = source.MapInitialRevealRadius,
                 MaxOfflineSeconds = source.MaxOfflineSeconds,
                 SimulationTickSeconds = source.SimulationTickSeconds,
                 CombatTickSeconds = source.CombatTickSeconds,
@@ -591,6 +624,9 @@ namespace AshfallCamp.Infrastructure
             }
 
             ValidateRecruitmentResource(snapshot, snapshot.Balance.RecruitmentScrapResourceId);
+            ValidateRecruitmentResource(snapshot, snapshot.Balance.MapRevealResourceId);
+            if (snapshot.Balance.MapRevealBaseCost <= 0) throw new InvalidOperationException("Map reveal base cost must be positive.");
+            if (snapshot.Balance.MapInitialRevealRadius < 0) throw new InvalidOperationException("Map initial reveal radius cannot be negative.");
             ValidateRecruitmentResource(snapshot, snapshot.Balance.RecruitmentFoodResourceId);
             ValidateRecruitmentResource(snapshot, snapshot.Balance.RecruitmentWaterResourceId);
             foreach (var cost in snapshot.Balance.RecruitmentBroadcastCost)

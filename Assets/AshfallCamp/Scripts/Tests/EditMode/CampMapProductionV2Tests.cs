@@ -5,7 +5,6 @@ using System.Linq;
 using AshfallCamp.Editor;
 using NUnit.Framework;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -31,10 +30,10 @@ namespace AshfallCamp.Tests.EditMode
         };
 
         [Test]
-        public void ManifestContainsExactlyNinetySixUniqueTilesAndRequiredContent()
+        public void ManifestContainsExactlyNinetySevenUniqueTilesAndRequiredContent()
         {
-            Assert.AreEqual(96, CampMapProductionV2Manifest.Specs.Count);
-            Assert.AreEqual(96, CampMapProductionV2Manifest.Specs.Select(spec => spec.Id).Distinct(StringComparer.Ordinal).Count());
+            Assert.AreEqual(97, CampMapProductionV2Manifest.Specs.Count);
+            Assert.AreEqual(97, CampMapProductionV2Manifest.Specs.Select(spec => spec.Id).Distinct(StringComparer.Ordinal).Count());
             Assert.False(CampMapProductionV2Manifest.Specs.Any(spec => spec.Id.Contains("road")), "Production V5 must not contain road tiles.");
             Assert.AreEqual(16, CampMapProductionV2Manifest.Sheets.Count);
             Assert.AreEqual(96, CampMapProductionV2Manifest.Sheets.SelectMany(sheet => sheet.TileIds).Distinct(StringComparer.Ordinal).Count());
@@ -65,6 +64,8 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(6, CampMapProductionV2Manifest.Specs.Count(spec => spec.Category == "winter_extra"));
             Assert.AreEqual(6, CampMapProductionV2Manifest.Specs.Count(spec => spec.Category == "grass_location"));
             Assert.AreEqual(6, CampMapProductionV2Manifest.Specs.Count(spec => spec.Category == "winter_location"));
+            Assert.AreEqual(1, CampMapProductionV2Manifest.Specs.Count(spec => spec.Category == "map_border"));
+            Assert.That(CampMapProductionV2Manifest.Specs.Any(spec => spec.Id == "radioactive_sea_border"));
         }
 
         [Test]
@@ -145,14 +146,14 @@ namespace AshfallCamp.Tests.EditMode
         }
 
         [Test]
-        public void CatalogPrefabContainsAllNinetySixCellsAndLocationMarkers()
+        public void CatalogPrefabContainsAllNinetySevenCellsAndLocationMarkers()
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(CampMapProductionV2Manifest.CatalogPrefabPath);
             Assert.NotNull(prefab);
             var grid = prefab.GetComponentInChildren<GridLayoutGroup>(true);
             Assert.NotNull(grid);
             Assert.AreEqual(CampMapProductionV2Builder.CatalogColumns, grid.constraintCount);
-            Assert.AreEqual(96, grid.transform.childCount);
+            Assert.AreEqual(97, grid.transform.childCount);
             foreach (Transform cell in grid.transform)
             {
                 Assert.NotNull(cell.Find("Content"), cell.name);
@@ -204,11 +205,11 @@ namespace AshfallCamp.Tests.EditMode
             Assert.AreEqual(Vector3.zero, grid.cellGap);
             var paletteTilemap = palette.GetComponentInChildren<Tilemap>();
             Assert.NotNull(paletteTilemap);
-            Assert.AreEqual(96, paletteTilemap.GetTilesBlock(paletteTilemap.cellBounds).Count(tile => tile != null));
+            Assert.AreEqual(97, paletteTilemap.GetTilesBlock(paletteTilemap.cellBounds).Count(tile => tile != null));
 
             var categoryOrders = CampMapProductionV2Manifest.PaletteSpecs
                 .Select(spec => CampMapProductionV2Manifest.GetPaletteCategoryOrder(spec.Category)).ToArray();
-            Assert.AreEqual(96, CampMapProductionV2Manifest.PaletteSpecs.Count);
+            Assert.AreEqual(97, CampMapProductionV2Manifest.PaletteSpecs.Count);
             Assert.That(categoryOrders, Is.Ordered, "Palette categories must follow the declared production order.");
 
             foreach (var spec in CampMapProductionV2Manifest.Specs)
@@ -225,8 +226,8 @@ namespace AshfallCamp.Tests.EditMode
         {
             var brush = AssetDatabase.LoadAssetAtPath<CampMapProductionV2Brush>(CampMapProductionV2Manifest.BrushPath);
             Assert.NotNull(brush, "Missing Production V2 Tile Palette brush asset.");
-            Assert.AreEqual(96, brush.Tiles.Count);
-            Assert.AreEqual(96, brush.TileLabels.Count);
+            Assert.AreEqual(97, brush.Tiles.Count);
+            Assert.AreEqual(97, brush.TileLabels.Count);
             Assert.False(brush.Tiles.Any(tile => tile == null), "The production brush contains a missing Tile asset.");
             CollectionAssert.AreEqual(
                 CampMapProductionV2Manifest.PaletteSpecs.Select(spec => spec.Category + " / " + spec.Id).ToArray(),
@@ -248,41 +249,6 @@ namespace AshfallCamp.Tests.EditMode
             {
                 brush.SelectTile(previousIndex);
                 UnityEngine.Object.DestroyImmediate(gridObject);
-            }
-        }
-
-        [Test]
-        public void BootSceneUsesTheTwelveByTwelveProductionMapWithoutASecondFrameLayer()
-        {
-            var previousPath = EditorSceneManager.GetActiveScene().path;
-            var scene = EditorSceneManager.OpenScene(CampMapProductionV2Manifest.BootScenePath, OpenSceneMode.Single);
-            try
-            {
-                var root = scene.GetRootGameObjects().Single(gameObject => gameObject.name == "WorldTileMap");
-                var terrain = root.transform.Find("Tilemap")?.GetComponent<Tilemap>();
-                var frame = root.transform.Find("TileFrameOverlay")?.GetComponent<Tilemap>();
-                var markers = root.transform.Find("LocationMarkerOverlay")?.GetComponent<Tilemap>();
-                Assert.NotNull(terrain);
-                Assert.AreEqual(new Vector3(0.5f, 0.5f, 0f), terrain.tileAnchor);
-                Assert.AreEqual(144, terrain.GetTilesBlock(terrain.cellBounds).Count(tile => tile != null));
-                if (frame != null)
-                {
-                    Assert.AreEqual(0, frame.GetTilesBlock(frame.cellBounds).Count(tile => tile != null),
-                        "The V5 sprites already contain the shared frame and must not be double-framed.");
-                    Assert.IsNull(frame.GetComponent<TilemapCollider2D>(), "Legacy frame overlay must not create colliders.");
-                }
-                Assert.NotNull(markers);
-                Assert.AreEqual(new Vector3(0.5f, 0.5f, 0f), markers.tileAnchor);
-                Assert.AreEqual(5, markers.GetTilesBlock(markers.cellBounds).Count(tile => tile != null));
-                Assert.AreEqual(3, markers.GetComponent<TilemapRenderer>().sortingOrder);
-                Assert.IsNull(markers.GetComponent<TilemapCollider2D>());
-            }
-            finally
-            {
-                if (!string.IsNullOrEmpty(previousPath) && previousPath != CampMapProductionV2Manifest.BootScenePath)
-                {
-                    EditorSceneManager.OpenScene(previousPath, OpenSceneMode.Single);
-                }
             }
         }
 

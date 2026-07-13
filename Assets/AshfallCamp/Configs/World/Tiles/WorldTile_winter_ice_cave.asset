@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f41c5db82f5e43448ef0d41fccd90e2, type: 3}
+  m_Name: WorldTile_winter_ice_cave
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.WorldTileConfigSO
+  Id: winter_ice_cave
+  DisplayName: Winter Ice Cave
+  Category: winter_location
+  Type: 2
+  Strength: 5
+  ZoneId: winter_ice_cave
+  FoodCostPerSurvivor: 2
+  WaterCostPerSurvivor: 1
+  EncounterChance: 0.345
+  RareEquipmentChance: 0.32
+  ResourceRewards:
+  - ResourceId: scrap
+    Min: 0
+    Max: 2
+    Weight: 90
+  - ResourceId: scrap
+    Min: 7
+    Max: 15
+    Weight: 100
+  EnemyTable:
+  - Id: creature_weak_ash_roach
+    Weight: 55
+  - Id: creature_weak_mire_leech
+    Weight: 55
+  - Id: creature_weak_radiated_hound
+    Weight: 55
+  - Id: enemy_weak_scavenger
+    Weight: 55
+  - Id: creature_mid_stalker_rat
+    Weight: 35
+  - Id: creature_mid_plague_ghoul
+    Weight: 35
+  - Id: enemy_mid_blister_rusher
+    Weight: 35
+  - Id: enemy_mid_pistol_duelist
+    Weight: 35
+  EquipmentTable:
+  - Id: rusty_knife
+    Weight: 35
+  - Id: metal_pipe
+    Weight: 30
+  - Id: leather_jacket
+    Weight: 25
+  - Id: medkit
+    Weight: 20
+  - Id: toolkit
+    Weight: 18
+  - Id: rusty_revolver
+    Weight: 16
+  ContentTile: {fileID: 11400000, guid: 36c95b51832e7114892efa9f133abfd8, type: 2}
+  MarkerTile: {fileID: 11400000, guid: 5730452d1dd0000439e687ca24b78001, type: 2}
+  Thumbnail: {fileID: 21300000, guid: 35b87801e2844fc4c95b26b8e4d0a99f, type: 3}

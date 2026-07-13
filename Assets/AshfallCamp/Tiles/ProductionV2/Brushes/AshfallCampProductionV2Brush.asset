@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AshfallCampProductionV2Brush
   m_EditorClassIdentifier: AshfallCamp.Editor::AshfallCamp.Editor.CampMapProductionV2Brush
   m_Cells:
-  - m_Tile: {fileID: 11400000, guid: 43854a6a2bf70514c919f09823d78bf1, type: 2}
+  - m_Tile: {fileID: 11400000, guid: 340397bcdc778e4438cd3f2ab1ebb1f9, type: 2}
     m_Matrix:
       e00: 1
       e01: 0
@@ -32,27 +32,7 @@ MonoBehaviour:
       e32: 0
       e33: 1
     m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_TileChangeDataList:
-  - m_Position: {x: 8, y: 8, z: 0}
-    m_TileAsset: {fileID: 11400000, guid: 43854a6a2bf70514c919f09823d78bf1, type: 2}
-    m_Color: {r: 1, g: 1, b: 1, a: 1}
-    m_Transform:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
+  m_TileChangeDataList: []
   m_Size: {x: 1, y: 1, z: 1}
   m_Pivot: {x: 0, y: 0, z: 0}
   m_CanChangeZPosition: 0
@@ -158,6 +138,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 43854a6a2bf70514c919f09823d78bf1, type: 2}
   - {fileID: 11400000, guid: 2dc0e5b21d1cda7479254aeeaa262125, type: 2}
   - {fileID: 11400000, guid: f3aac48d0106253419efdbc5143ec4e4, type: 2}
+  - {fileID: 11400000, guid: fd50b5d7c9f82464897231873e49d7e8, type: 2}
   tileLabels:
   - camp / camp_core
   - camp / camp_buildable
@@ -255,4 +236,5 @@ MonoBehaviour:
   - buffer / scrapyard
   - hazard / nuclear_crater
   - hazard / waste_barrels_zone
+  - map_border / radioactive_sea_border
   selectedIndex: 0

@@ -83,6 +83,12 @@ namespace AshfallCamp.Application
         UniTask<SetAutosaveResult> ExecuteAsync(bool enabled, CancellationToken ct);
     }
 
+    public interface IMapFogUseCase
+    {
+        UniTask<ValidationResult> InitializeAsync(MapFogTopology topology, CancellationToken ct);
+        UniTask<RevealMapCellResult> RevealAsync(MapFogTopology topology, MapCellCoordinate cell, CancellationToken ct);
+    }
+
     public interface ITickGameUseCase
     {
         UniTask<TickGameResult> ExecuteAsync(double deltaSeconds, CancellationToken ct);
@@ -115,6 +121,52 @@ namespace AshfallCamp.Application
         public long NowUnixMs
         {
             get { return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(); }
+        }
+    }
+
+    public sealed class MapFogUseCase : IMapFogUseCase
+    {
+        private readonly IGameStateWriter _writer;
+        private readonly IGameConfigProvider _configs;
+        private ValidationResult _initializationResult;
+        private RevealMapCellResult _revealResult;
+
+        public MapFogUseCase(IGameStateWriter writer, IGameConfigProvider configs)
+        {
+            _writer = writer;
+            _configs = configs;
+        }
+
+        public async UniTask<ValidationResult> InitializeAsync(MapFogTopology topology, CancellationToken ct)
+        {
+            await EnsureConfigAsync(ct);
+            _initializationResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _initializationResult = MapFogSystem.Initialize(state, _configs.Current.Balance, topology);
+                return state;
+            }, ct);
+            return _initializationResult;
+        }
+
+        public async UniTask<RevealMapCellResult> RevealAsync(MapFogTopology topology, MapCellCoordinate cell, CancellationToken ct)
+        {
+            await EnsureConfigAsync(ct);
+            _revealResult = null;
+            await _writer.MutateAsync(state =>
+            {
+                _revealResult = MapFogSystem.TryReveal(state, _configs.Current.Balance, topology, cell);
+                return state;
+            }, ct);
+            return _revealResult;
+        }
+
+        private async UniTask EnsureConfigAsync(CancellationToken ct)
+        {
+            if (_configs.Current == null)
+            {
+                await _configs.LoadAsync(ct);
+            }
         }
     }
 
@@ -841,6 +893,14 @@ namespace AshfallCamp.Application
             if (state.Progress == null) state.Progress = new GameProgressState();
             if (state.Settings == null) state.Settings = new GameSettings();
             if (state.Statistics == null) state.Statistics = new GameStatistics();
+            if (state.RevealedMapCells == null) state.RevealedMapCells = new List<MapCellCoordinate>();
+
+            foreach (var expedition in state.Expeditions)
+            {
+                if (expedition == null) continue;
+                if (expedition.RouteTileIds == null) expedition.RouteTileIds = new List<string>();
+                if (expedition.FoundItems == null) expedition.FoundItems = new List<InventoryItemState>();
+            }
 
             foreach (var survivor in state.Survivors)
             {

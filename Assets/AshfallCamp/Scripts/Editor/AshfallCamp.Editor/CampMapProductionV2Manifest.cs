@@ -21,12 +21,9 @@ namespace AshfallCamp.Editor
         public const string MarkerPalettePath = MarkerTileAssetFolder + "/AshfallCampLocationMarkerSortedPalette.prefab";
         public const string CatalogPrefabPath = "Assets/AshfallCamp/Prefabs/UI/Main/PF_CampTileCatalogV2.prefab";
         public const string MarkerCatalogPrefabPath = "Assets/AshfallCamp/Prefabs/UI/Main/PF_CampLocationMarkerCatalogV2.prefab";
-        public const string BootScenePath = "Assets/AshfallCamp/Scenes/SC_Boot.unity";
         public const float WorldTileCellSize = 5f;
         public const int RuntimeTextureSize = 512;
         public const int MarkerTextureSize = 256;
-        public const int MapColumns = 12;
-        public const int MapRows = 12;
 
         private static readonly ProductionSheetSpec[] SheetsInternal =
         {
@@ -62,7 +59,7 @@ namespace AshfallCamp.Editor
             "camp", "building", "expedition", "future_location",
             "grass", "grass_location",
             "winter", "winter_extra", "winter_location",
-            "forest", "swamp", "desert", "city", "buffer", "hazard",
+            "forest", "swamp", "desert", "city", "buffer", "hazard", "map_border",
         };
 
         private static readonly ProductionTileSpec[] SpecsInternal =
@@ -173,22 +170,8 @@ namespace AshfallCamp.Editor
             S("winter_snowbound_depot", "winter_location", "reinforced olive storage bunker buried in snow with containers, fence and generator"),
             S("winter_research_outpost", "winter_location", "white-and-teal research module with antenna, cyan canisters and equipment crate"),
             S("winter_crash_site", "winter_location", "orange rescue helicopter wreck partly buried in snow with detached rotor and supply cases"),
-        };
 
-        private static readonly string[,] AuthoredMapInternal =
-        {
-            { "snow_field", "snowy_forest", "frozen_marsh", "ash_winter_wasteland", "rocky_hills", "dried_field", "cracked_wasteland", "nuclear_crater", "waste_barrels_zone", "toxic_swamp", "reed_marsh", "marsh_water" },
-            { "snowy_forest", "forest_dense", "frozen_marsh", "snow_field", "collapsed_bunker", "power_substation", "abandoned_checkpoint", "irradiated_forest", "toxic_swamp", "bog_islands", "reed_marsh", "marsh_water" },
-            { "forest_dense", "forest_sparse", "green_field", "wheat_field", "ruined_city_residential", "ruined_city_intersection", "ruined_city_commercial", "ruined_city_overpass", "irradiated_forest", "toxic_swamp", "bog_islands", "reed_marsh" },
-            { "forest_dense", "forest_sparse", "dried_field", "power_substation", "ruined_city_apartments", "ruined_city_civic_center", "ruined_city_factory", "ruined_city_rail_yard", "ruins_buffer", "scrapyard", "gas_station", "cracked_wasteland" },
-            { "forest_sparse", "green_field", "camp_buildable", "camp_buildable", "collapsed_bunker", "ash_cemetery", "power_substation", "abandoned_store", "dry_suburb", "scrapyard", "gas_station", "dried_field" },
-            { "wheat_field", "camp_buildable", "barracks_basic", "camp_core", "workshop_basic", "camp_buildable", "power_substation", "ruined_clinic", "ruins_buffer", "abandoned_checkpoint", "cracked_wasteland", "nuclear_crater" },
-            { "green_field", "camp_buildable", "mushroom_beds_basic", "water_collector_basic", "infirmary_basic", "radio_tower_basic", "collapsed_bunker", "police_outpost", "ruins_buffer", "power_substation", "waste_barrels_zone", "ash_winter_wasteland" },
-            { "forest_sparse", "wheat_field", "camp_buildable", "power_substation", "abandoned_checkpoint", "power_substation", "cracked_wasteland", "collapsed_bunker", "mutant_tunnel", "nuclear_crater", "irradiated_forest", "dead_forest" },
-            { "desert_plain", "dried_field", "rocky_hills", "collapsed_bunker", "gas_station", "scrapyard", "cracked_wasteland", "waste_barrels_zone", "toxic_swamp", "dead_forest", "frozen_marsh", "snow_field" },
-            { "desert_plain", "rocky_hills", "cracked_wasteland", "power_substation", "ash_cemetery", "power_substation", "nuclear_crater", "waste_barrels_zone", "toxic_swamp", "bog_islands", "frozen_marsh", "snowy_forest" },
-            { "desert_plain", "dried_field", "cracked_wasteland", "collapsed_bunker", "ruins_buffer", "ruins_buffer", "nuclear_crater", "irradiated_forest", "toxic_swamp", "marsh_water", "snow_field", "ash_winter_wasteland" },
-            { "rocky_hills", "desert_plain", "dried_field", "cracked_wasteland", "nuclear_crater", "waste_barrels_zone", "irradiated_forest", "dead_forest", "toxic_swamp", "reed_marsh", "frozen_marsh", "snow_field" },
+            S("radioactive_sea_border", "map_border", "impassable luminous radioactive sea for the outer map boundary with broad toxic currents, oil slicks and sparse floating debris"),
         };
 
         public static IReadOnlyList<ProductionTileSpec> Specs => SpecsInternal;
@@ -204,8 +187,6 @@ namespace AshfallCamp.Editor
         public static IReadOnlyList<ProductionMarkerSpec> PaletteMarkers => MarkersInternal
             .OrderBy(marker => GetPaletteCategoryOrder(GetSpec(marker.LocationId).Category))
             .ToArray();
-
-        public static string[,] AuthoredMap => AuthoredMapInternal;
 
         public static ProductionTileSpec GetSpec(string id)
         {

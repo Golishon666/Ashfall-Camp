@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f41c5db82f5e43448ef0d41fccd90e2, type: 3}
+  m_Name: WorldTile_military_depot
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.WorldTileConfigSO
+  Id: military_depot
+  DisplayName: Military Depot
+  Category: future_location
+  Type: 2
+  Strength: 8
+  ZoneId: military_depot
+  FoodCostPerSurvivor: 1
+  WaterCostPerSurvivor: 1
+  EncounterChance: 0.48
+  RareEquipmentChance: 0.44
+  ResourceRewards:
+  - ResourceId: scrap
+    Min: 0
+    Max: 4
+    Weight: 90
+  - ResourceId: scrap
+    Min: 10
+    Max: 21
+    Weight: 100
+  EnemyTable:
+  - Id: creature_weak_ash_roach
+    Weight: 40
+  - Id: creature_weak_mire_leech
+    Weight: 40
+  - Id: creature_weak_radiated_hound
+    Weight: 40
+  - Id: enemy_weak_scavenger
+    Weight: 40
+  - Id: creature_mid_stalker_rat
+    Weight: 44
+  - Id: creature_mid_plague_ghoul
+    Weight: 44
+  - Id: enemy_mid_blister_rusher
+    Weight: 44
+  - Id: enemy_mid_pistol_duelist
+    Weight: 44
+  - Id: creature_elite_acidback_lurker
+    Weight: 26
+  - Id: creature_elite_ironhide_ravager
+    Weight: 26
+  - Id: enemy_elite_auto_gunner
+    Weight: 26
+  - Id: enemy_elite_tire_shield_mauler
+    Weight: 26
+  EquipmentTable:
+  - Id: rusty_knife
+    Weight: 35
+  - Id: metal_pipe
+    Weight: 30
+  - Id: leather_jacket
+    Weight: 25
+  - Id: medkit
+    Weight: 20
+  - Id: toolkit
+    Weight: 18
+  - Id: rusty_revolver
+    Weight: 16
+  - Id: scrap_armor
+    Weight: 14
+  - Id: sawn_off_shotgun
+    Weight: 10
+  ContentTile: {fileID: 11400000, guid: 5509ee4f252373644a0f92991d66eb0c, type: 2}
+  MarkerTile: {fileID: 11400000, guid: 615924036a373b548bcbb07c9ca3f2a0, type: 2}
+  Thumbnail: {fileID: 21300000, guid: 61db3b3f7cb12584d80f0f91a5989413, type: 3}

@@ -103,6 +103,9 @@ namespace AshfallCamp.Infrastructure
         public List<LootTableEntryData> LootTable = new List<LootTableEntryData>();
         public List<WeightedEntryData> EventTable = new List<WeightedEntryData>();
         public List<UnlockConditionData> UnlockConditions = new List<UnlockConditionData>();
+        [Range(0, 1)] public double EquipmentDropChance;
+        public List<WeightedEntryData> EquipmentTable = new List<WeightedEntryData>();
+        public bool ShowInExpeditionMenu = true;
     }
 
     [Serializable]
@@ -244,6 +247,9 @@ namespace AshfallCamp.Infrastructure
     [Serializable]
     public sealed class BalanceConfigData
     {
+        public string MapRevealResourceId = "scrap";
+        public int MapRevealBaseCost = 50;
+        public int MapInitialRevealRadius = 1;
         public int MaxOfflineSeconds = 43200;
         public double SimulationTickSeconds = 1;
         public double CombatTickSeconds = 2;

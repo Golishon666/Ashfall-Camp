@@ -138,6 +138,7 @@ namespace AshfallCamp.Presentation
                 if (!zoneState.IsUnlocked) continue;
                 ZoneDefinition zone;
                 if (!config.TryGetZone(zoneState.Id, out zone)) continue;
+                if (!zone.ShowInExpeditionMenu) continue;
                 var title = zone.Name;
                 var subtitle = Format(
                     catalog.ExpeditionRouteSubtitleFormat,
@@ -234,6 +235,7 @@ namespace AshfallCamp.Presentation
             BuildExpeditionSetup(result, state, config, catalog, policyId, survivorIds);
             foreach (var zone in config.Zones.Values)
             {
+                if (!zone.ShowInExpeditionMenu) continue;
                 ZoneState zoneState;
                 state.Zones.TryGetValue(zone.Id, out zoneState);
                 var unlocked = zoneState != null && zoneState.IsUnlocked;
@@ -1813,13 +1815,14 @@ namespace AshfallCamp.Presentation
         private static string ResolveSelectedZoneId(GameState state, GameConfigSnapshot config, string selectedZoneId)
         {
             ZoneDefinition selectedZone;
-            if (!string.IsNullOrWhiteSpace(selectedZoneId) && config.TryGetZone(selectedZoneId, out selectedZone))
+            if (!string.IsNullOrWhiteSpace(selectedZoneId) && config.TryGetZone(selectedZoneId, out selectedZone) && selectedZone.ShowInExpeditionMenu)
             {
                 return selectedZoneId;
             }
 
             foreach (var zone in config.Zones.Values)
             {
+                if (!zone.ShowInExpeditionMenu) continue;
                 ZoneState zoneState;
                 if (state.Zones.TryGetValue(zone.Id, out zoneState) && zoneState.IsUnlocked)
                 {
@@ -1829,6 +1832,7 @@ namespace AshfallCamp.Presentation
 
             foreach (var zone in config.Zones.Values)
             {
+                if (!zone.ShowInExpeditionMenu) continue;
                 return zone.Id;
             }
 

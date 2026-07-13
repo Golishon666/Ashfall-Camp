@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 28, y: 24}
+  m_SizeDelta: {x: 36, y: 36}
   m_Pivot: {x: 0, y: 1}
 --- !u!225 &4798579897109749607
 CanvasGroup:
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 9152752875046551839}
   - component: {fileID: 3623303630511416199}
   - component: {fileID: 2717690500858383756}
-  - component: {fileID: 7483579553194970259}
+  - component: {fileID: 8153580049296280105}
   m_Layer: 0
   m_Name: Icon
   m_TagString: Untagged
@@ -85,7 +85,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 28, y: 24}
+  m_SizeDelta: {x: 36, y: 36}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3623303630511416199
 MonoBehaviour:
@@ -99,15 +99,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfd9ad0e47a3f6a41b43a34d319d5b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Figunity.Runtime::Figunity.Runtime.FigunityImportedNode
-  figmaId: 94:24894
+  figmaId: 202:19226
   figmaName: Icon
-  figmaType: TEXT
+  figmaType: RECTANGLE
   renderMode: visual
-  sourcePath: 'Ashfall Camp - Full HD Elements / 02 Buildings Elementwise/Button
-    / BACK[16]/Icon[0]'
+  sourcePath: '08 Radio Recruitment Choice Elementwise/Top Resource Bar[20]/Resource
+    SCRAP[1]/Icon[0]'
   componentKey: 
   repeatKey: icon
   controlHint: 
+  overrideHint: 
+  decisionReason: leaf visual paint
+  horizontalConstraint: MIN
+  verticalConstraint: MIN
   mask: 0
   repeated: 1
 --- !u!222 &2717690500858383756
@@ -118,7 +122,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2409760674985563788}
   m_CullTransparentMesh: 1
---- !u!114 &7483579553194970259
+--- !u!114 &8153580049296280105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,7 +142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 9b71f8108cd39684bbb1bfd19099aab4, type: 3}
+  m_Texture: {fileID: 2800000, guid: 5d65b4547abbd5943aafd5d4ee58f961, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

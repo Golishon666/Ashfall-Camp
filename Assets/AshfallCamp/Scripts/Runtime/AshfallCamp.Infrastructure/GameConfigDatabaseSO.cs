@@ -11,6 +11,7 @@ namespace AshfallCamp.Infrastructure
         public TraitCatalogSO Traits;
         public ExpeditionPolicyCatalogSO Policies;
         public ZoneCatalogSO Zones;
+        public WorldTileCatalogSO WorldTiles;
         public EnemyCatalogSO Enemies;
         public ItemCatalogSO Items;
         public WeaponCatalogSO Weapons;

@@ -55,6 +55,12 @@ namespace AshfallCamp.Domain
             return Require("Zone", config != null ? config.Zones : null, id);
         }
 
+        public static bool TryGetWorldTile(this GameConfigSnapshot config, string id, out WorldTileDefinition definition)
+        {
+            definition = null;
+            return config != null && !string.IsNullOrWhiteSpace(id) && config.WorldTiles.TryGetValue(id, out definition);
+        }
+
         public static bool TryGetEnemy(this GameConfigSnapshot config, string id, out EnemyDefinition definition)
         {
             return TryGet(config != null ? config.Enemies : null, id, out definition);

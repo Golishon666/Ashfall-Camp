@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Figunity.Editor::Figunity.Editor.FigunitySettingsAsset
   figmaWsPort: 9225
   expectedFileName: 
-  frameConfigPath: Assets/FIGUNITY/figunity.frames.json
+  frameConfigPath: Assets/FIGUNITY/radio-recruitment-choice.frames.json
   importFolder: Assets/FIGUNITY/Imports
   prefabFolder: Assets/FIGUNITY/Prefabs
   repeatedPrefabFolder: Assets/FIGUNITY/Prefabs/Repeated

@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 188, y: 28}
+  m_SizeDelta: {x: 102, y: 22}
   m_Pivot: {x: 0, y: 1}
 --- !u!225 &1727859126539315088
 CanvasGroup:
@@ -85,7 +85,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 188, y: 28}
+  m_SizeDelta: {x: 102, y: 22}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1612035811255613286
 MonoBehaviour:
@@ -99,16 +99,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfd9ad0e47a3f6a41b43a34d319d5b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Figunity.Runtime::Figunity.Runtime.FigunityImportedNode
-  figmaId: 45:11971
+  figmaId: 202:19227
   figmaName: Label
   figmaType: TEXT
   renderMode: text
-  sourcePath: 'Ashfall Camp - Full HD Elements / 02 Buildings Elementwise/Tab / ALL[4]/Label[0]'
+  sourcePath: '08 Radio Recruitment Choice Elementwise/Top Resource Bar[20]/Resource
+    SCRAP[1]/Label[1]'
   componentKey: 
   repeatKey: label
   controlHint: 
   overrideHint: 
-  decisionReason: 
+  decisionReason: Figma TEXT node
   horizontalConstraint: MIN
   verticalConstraint: MIN
   mask: 0
@@ -134,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.9607843, b: 0.8627451, a: 1}
+  m_Color: {r: 0.6627451, g: 0.60784316, b: 0.50980395, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

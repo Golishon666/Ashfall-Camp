@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f41c5db82f5e43448ef0d41fccd90e2, type: 3}
+  m_Name: WorldTile_biohazard_plant
+  m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.WorldTileConfigSO
+  Id: biohazard_plant
+  DisplayName: Biohazard Plant
+  Category: future_location
+  Type: 2
+  Strength: 10
+  ZoneId: biohazard_plant
+  FoodCostPerSurvivor: 1
+  WaterCostPerSurvivor: 1
+  EncounterChance: 0.57
+  RareEquipmentChance: 0.52
+  ResourceRewards:
+  - ResourceId: scrap
+    Min: 0
+    Max: 5
+    Weight: 90
+  - ResourceId: scrap
+    Min: 12
+    Max: 25
+    Weight: 100
+  EnemyTable:
+  - Id: creature_weak_ash_roach
+    Weight: 30
+  - Id: creature_weak_mire_leech
+    Weight: 30
+  - Id: creature_weak_radiated_hound
+    Weight: 30
+  - Id: enemy_weak_scavenger
+    Weight: 30
+  - Id: creature_mid_stalker_rat
+    Weight: 50
+  - Id: creature_mid_plague_ghoul
+    Weight: 50
+  - Id: enemy_mid_blister_rusher
+    Weight: 50
+  - Id: enemy_mid_pistol_duelist
+    Weight: 50
+  - Id: creature_elite_acidback_lurker
+    Weight: 30
+  - Id: creature_elite_ironhide_ravager
+    Weight: 30
+  - Id: enemy_elite_auto_gunner
+    Weight: 30
+  - Id: enemy_elite_tire_shield_mauler
+    Weight: 30
+  - Id: creature_boss_ash_widow
+    Weight: 14
+  - Id: creature_boss_tunnel_king
+    Weight: 14
+  - Id: enemy_boss_spine_gunner
+    Weight: 14
+  - Id: enemy_boss_ashfall_warlord
+    Weight: 14
+  EquipmentTable:
+  - Id: rusty_knife
+    Weight: 35
+  - Id: metal_pipe
+    Weight: 30
+  - Id: leather_jacket
+    Weight: 25
+  - Id: medkit
+    Weight: 20
+  - Id: toolkit
+    Weight: 18
+  - Id: rusty_revolver
+    Weight: 16
+  - Id: scrap_armor
+    Weight: 14
+  - Id: sawn_off_shotgun
+    Weight: 10
+  - Id: hunting_rifle
+    Weight: 7
+  ContentTile: {fileID: 11400000, guid: b1b74edd0e3424c4eb9ae26d601a4170, type: 2}
+  MarkerTile: {fileID: 11400000, guid: 1cd400778b5efad4eb699b94db4756db, type: 2}
+  Thumbnail: {fileID: 21300000, guid: 98e5dba8afacebd4681a078039a7edc2, type: 3}

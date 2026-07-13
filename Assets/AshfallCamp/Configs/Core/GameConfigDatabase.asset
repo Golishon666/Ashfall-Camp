@@ -18,6 +18,7 @@ MonoBehaviour:
   Traits: {fileID: 11400000, guid: 18607390f013311458805ec41a0be043, type: 2}
   Policies: {fileID: 11400000, guid: 73fa9b49698eb074590b63eb6750e8f1, type: 2}
   Zones: {fileID: 11400000, guid: 182fc8e0e17646e459793e3dda08f827, type: 2}
+  WorldTiles: {fileID: 11400000, guid: a1491b37a0a2e524786f70c32f745496, type: 2}
   Enemies: {fileID: 11400000, guid: 0aa6fed55dd771c41b6dc845b8f60eff, type: 2}
   Items: {fileID: 11400000, guid: 54b618f851928504f81a16593375e72f, type: 2}
   Weapons: {fileID: 11400000, guid: 6d49fb4f1bbe4fa6880d478181056678, type: 2}

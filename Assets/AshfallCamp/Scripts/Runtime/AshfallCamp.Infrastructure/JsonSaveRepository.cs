@@ -101,6 +101,8 @@ namespace AshfallCamp.Infrastructure
             public GameProgressSaveData Progress = new GameProgressSaveData();
             public GameSettingsSaveData Settings = new GameSettingsSaveData();
             public GameStatisticsSaveData Statistics = new GameStatisticsSaveData();
+            public bool MapFogInitialized;
+            public List<MapCellSaveData> RevealedMapCells = new List<MapCellSaveData>();
 
             public static SaveData FromState(GameState state)
             {
@@ -119,7 +121,8 @@ namespace AshfallCamp.Infrastructure
                     LastOfflineReport = OfflineReportSaveData.FromState(state.LastOfflineReport),
                     Progress = GameProgressSaveData.FromState(state.Progress),
                     Settings = new GameSettingsSaveData { AutosaveEnabled = state.Settings.AutosaveEnabled },
-                    Statistics = GameStatisticsSaveData.FromState(state.Statistics)
+                    Statistics = GameStatisticsSaveData.FromState(state.Statistics),
+                    MapFogInitialized = state.MapFogInitialized
                 };
                 dto.Resources = FromDictionary(state.Resources);
                 dto.ResourceCaps = FromDictionary(state.ResourceCaps);
@@ -132,6 +135,10 @@ namespace AshfallCamp.Infrastructure
                 foreach (var item in state.Upgrades.Values) dto.Upgrades.Add(UpgradeSaveData.FromState(item));
                 foreach (var item in state.Expeditions) dto.Expeditions.Add(ExpeditionSaveData.FromState(item));
                 foreach (var item in state.CampEvents) dto.CampEvents.Add(CampEventSaveData.FromState(item));
+                if (state.RevealedMapCells != null)
+                {
+                    foreach (var cell in state.RevealedMapCells) dto.RevealedMapCells.Add(MapCellSaveData.FromState(cell));
+                }
                 return dto;
             }
 
@@ -156,7 +163,9 @@ namespace AshfallCamp.Infrastructure
                     LastOfflineReport = LastOfflineReport != null ? LastOfflineReport.ToState() : null,
                     Progress = Progress != null ? Progress.ToState() : new GameProgressState(),
                     Settings = Settings != null ? Settings.ToState() : new GameSettings(),
-                    Statistics = Statistics != null ? Statistics.ToState() : new GameStatistics()
+                    Statistics = Statistics != null ? Statistics.ToState() : new GameStatistics(),
+                    MapFogInitialized = MapFogInitialized,
+                    RevealedMapCells = new List<MapCellCoordinate>()
                 };
                 foreach (var item in Survivors) state.Survivors.Add(item.ToState());
                 foreach (var item in Inventory) state.Inventory.Add(item.ToState());
@@ -168,8 +177,29 @@ namespace AshfallCamp.Infrastructure
                 {
                     foreach (var item in CampEvents) state.CampEvents.Add(item.ToState());
                 }
+                if (RevealedMapCells != null)
+                {
+                    foreach (var cell in RevealedMapCells) state.RevealedMapCells.Add(cell.ToState());
+                }
 
                 return state;
+            }
+        }
+
+        [Serializable]
+        private sealed class MapCellSaveData
+        {
+            public int X;
+            public int Y;
+
+            public static MapCellSaveData FromState(MapCellCoordinate cell)
+            {
+                return new MapCellSaveData { X = cell.X, Y = cell.Y };
+            }
+
+            public MapCellCoordinate ToState()
+            {
+                return new MapCellCoordinate(X, Y);
             }
         }
 
@@ -419,6 +449,10 @@ namespace AshfallCamp.Infrastructure
             public List<string> WoundedSurvivorIds = new List<string>();
             public List<IntPairData> EquipmentDurabilityLost = new List<IntPairData>();
             public List<string> BrokenItemUids = new List<string>();
+            public string WorldTileId;
+            public MapCellSaveData TargetCell;
+            public List<string> RouteTileIds = new List<string>();
+            public bool ReturnTravelApplied;
 
             public static ExpeditionSaveData FromState(ExpeditionState state)
             {
@@ -455,6 +489,10 @@ namespace AshfallCamp.Infrastructure
                     WoundedSurvivorIds = new List<string>(state.WoundedSurvivorIds),
                     EquipmentDurabilityLost = FromDictionary(state.EquipmentDurabilityLost),
                     BrokenItemUids = new List<string>(state.BrokenItemUids)
+                    ,WorldTileId = state.WorldTileId
+                    ,TargetCell = new MapCellSaveData { X = state.TargetCell.X, Y = state.TargetCell.Y }
+                    ,RouteTileIds = new List<string>(state.RouteTileIds)
+                    ,ReturnTravelApplied = state.ReturnTravelApplied
                 };
             }
 
@@ -479,6 +517,10 @@ namespace AshfallCamp.Infrastructure
                     WoundedSurvivorIds = WoundedSurvivorIds ?? new List<string>(),
                     EquipmentDurabilityLost = ToDictionary(EquipmentDurabilityLost),
                     BrokenItemUids = BrokenItemUids ?? new List<string>()
+                    ,WorldTileId = WorldTileId ?? string.Empty
+                    ,TargetCell = TargetCell != null ? new MapCellCoordinate(TargetCell.X, TargetCell.Y) : default(MapCellCoordinate)
+                    ,RouteTileIds = RouteTileIds ?? new List<string>()
+                    ,ReturnTravelApplied = ReturnTravelApplied
                 };
 
                 if (Log != null)

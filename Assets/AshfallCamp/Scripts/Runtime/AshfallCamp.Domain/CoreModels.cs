@@ -5,7 +5,7 @@ namespace AshfallCamp.Domain
 {
     public static class GameConstants
     {
-        public const string CurrentSaveVersion = "0.1.0";
+        public const string CurrentSaveVersion = "0.3.0";
     }
 
     public static class GameEventIds
@@ -33,6 +33,14 @@ namespace AshfallCamp.Domain
         Resting,
         Wounded,
         Missing
+    }
+
+    public enum WorldTileType
+    {
+        Camp,
+        Normal,
+        Expedition,
+        Impassable
     }
 
     public enum ExpeditionStatus
@@ -138,6 +146,67 @@ namespace AshfallCamp.Domain
         public GameProgressState Progress = new GameProgressState();
         public GameSettings Settings = new GameSettings();
         public GameStatistics Statistics = new GameStatistics();
+        public bool MapFogInitialized;
+        public List<MapCellCoordinate> RevealedMapCells = new List<MapCellCoordinate>();
+    }
+
+    [Serializable]
+    public struct MapCellCoordinate : IEquatable<MapCellCoordinate>
+    {
+        public int X;
+        public int Y;
+
+        public MapCellCoordinate(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public bool Equals(MapCellCoordinate other)
+        {
+            return X == other.X && Y == other.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is MapCellCoordinate && Equals((MapCellCoordinate)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (X * 397) ^ Y;
+            }
+        }
+
+        public override string ToString()
+        {
+            return X + ":" + Y;
+        }
+    }
+
+    public enum MapFogVisibility
+    {
+        None,
+        Revealed,
+        Frontier,
+        Deep
+    }
+
+    public sealed class MapFogTopology
+    {
+        public MapCellCoordinate Core;
+        public List<MapCellCoordinate> RevealableCells = new List<MapCellCoordinate>();
+        public List<MapCellCoordinate> RadioactiveSeaCells = new List<MapCellCoordinate>();
+    }
+
+    public sealed class RevealMapCellResult
+    {
+        public ValidationResult Validation = new ValidationResult();
+        public MapCellCoordinate Cell;
+        public int Distance;
+        public int Cost;
     }
 
     public sealed class GameProgressState
@@ -280,6 +349,10 @@ namespace AshfallCamp.Domain
         public List<string> WoundedSurvivorIds = new List<string>();
         public Dictionary<string, int> EquipmentDurabilityLost = new Dictionary<string, int>(StringComparer.Ordinal);
         public List<string> BrokenItemUids = new List<string>();
+        public string WorldTileId = string.Empty;
+        public MapCellCoordinate TargetCell;
+        public List<string> RouteTileIds = new List<string>();
+        public bool ReturnTravelApplied;
     }
 
     public sealed class ExpeditionLogEntry
@@ -303,6 +376,9 @@ namespace AshfallCamp.Domain
         public uint Seed;
         public long NowUnixMs;
         public bool ConfirmWarnings;
+        public string WorldTileId = string.Empty;
+        public MapCellCoordinate TargetCell;
+        public List<string> RouteTileIds = new List<string>();
     }
 
     public sealed class LaunchExpeditionResult
@@ -444,6 +520,7 @@ namespace AshfallCamp.Domain
         public Dictionary<string, TraitDefinition> Traits = new Dictionary<string, TraitDefinition>(StringComparer.Ordinal);
         public Dictionary<string, ExpeditionPolicyDefinition> Policies = new Dictionary<string, ExpeditionPolicyDefinition>(StringComparer.Ordinal);
         public Dictionary<string, ZoneDefinition> Zones = new Dictionary<string, ZoneDefinition>(StringComparer.Ordinal);
+        public Dictionary<string, WorldTileDefinition> WorldTiles = new Dictionary<string, WorldTileDefinition>(StringComparer.Ordinal);
         public Dictionary<string, EnemyDefinition> Enemies = new Dictionary<string, EnemyDefinition>(StringComparer.Ordinal);
         public Dictionary<string, ItemDefinition> Items = new Dictionary<string, ItemDefinition>(StringComparer.Ordinal);
         public Dictionary<string, WeaponDefinition> Weapons = new Dictionary<string, WeaponDefinition>(StringComparer.Ordinal);
@@ -513,6 +590,26 @@ namespace AshfallCamp.Domain
         public List<LootTableEntry> LootTable = new List<LootTableEntry>();
         public List<WeightedEntry> EventTable = new List<WeightedEntry>();
         public List<UnlockCondition> UnlockConditions = new List<UnlockCondition>();
+        public double EquipmentDropChance;
+        public List<WeightedEntry> EquipmentTable = new List<WeightedEntry>();
+        public bool ShowInExpeditionMenu = true;
+    }
+
+    public sealed class WorldTileDefinition
+    {
+        public string Id = string.Empty;
+        public string Name = string.Empty;
+        public string Category = string.Empty;
+        public WorldTileType Type;
+        public int Strength = 1;
+        public string ZoneId = string.Empty;
+        public int FoodCostPerSurvivor;
+        public int WaterCostPerSurvivor;
+        public double EncounterChance;
+        public double RareEquipmentChance;
+        public List<LootTableEntry> ResourceRewards = new List<LootTableEntry>();
+        public List<WeightedEntry> EnemyTable = new List<WeightedEntry>();
+        public List<WeightedEntry> EquipmentTable = new List<WeightedEntry>();
     }
 
     public sealed class WeightedEntry
@@ -660,6 +757,9 @@ namespace AshfallCamp.Domain
 
     public sealed class BalanceDefinition
     {
+        public string MapRevealResourceId = GameIds.Resources.Scrap;
+        public int MapRevealBaseCost = 50;
+        public int MapInitialRevealRadius = 1;
         public int MaxOfflineSeconds = 43200;
         public double SimulationTickSeconds = 1;
         public double CombatTickSeconds = 2;

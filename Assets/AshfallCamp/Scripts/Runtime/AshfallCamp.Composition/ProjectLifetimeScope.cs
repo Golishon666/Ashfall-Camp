@@ -11,11 +11,23 @@ namespace AshfallCamp.Composition
     {
         [SerializeField] private GameConfigDatabaseSO configDatabase;
         [SerializeField] private CampDashboardView campDashboardView;
+        [SerializeField] private CampMapFogView campMapFogView;
+        [SerializeField] private CampWorldTileView campWorldTileView;
 
         public void SetDashboardReferences(GameConfigDatabaseSO database, CampDashboardView dashboardView)
         {
             configDatabase = database;
             campDashboardView = dashboardView;
+        }
+
+        public void SetMapFogView(CampMapFogView view)
+        {
+            campMapFogView = view;
+        }
+
+        public void SetWorldTileView(CampWorldTileView view)
+        {
+            campWorldTileView = view;
         }
 
         protected override void Configure(IContainerBuilder builder)
@@ -45,6 +57,7 @@ namespace AshfallCamp.Composition
             builder.Register<StopRestUseCase>(Lifetime.Singleton).As<IStopRestUseCase>();
             builder.Register<StartEmergencyScavengeUseCase>(Lifetime.Singleton).As<IStartEmergencyScavengeUseCase>();
             builder.Register<SetAutosaveUseCase>(Lifetime.Singleton).As<ISetAutosaveUseCase>();
+            builder.Register<MapFogUseCase>(Lifetime.Singleton).As<IMapFogUseCase>();
             builder.Register<TickGameUseCase>(Lifetime.Singleton).As<ITickGameUseCase>();
             builder.Register<OfflineProgressUseCase>(Lifetime.Singleton).As<IOfflineProgressUseCase>();
             builder.Register<SaveLoadUseCase>(Lifetime.Singleton).As<ISaveLoadUseCase>();
@@ -58,6 +71,20 @@ namespace AshfallCamp.Composition
             builder.RegisterEntryPoint<GameClockLoop>();
             builder.RegisterEntryPoint<AutoSaveLoop>();
             builder.RegisterEntryPoint<CampHudPresenter>();
+            if (campMapFogView != null)
+            {
+                builder.RegisterComponent(campMapFogView).AsSelf();
+                builder.RegisterEntryPoint<CampMapFogPresenter>();
+            }
+            if (campWorldTileView != null && campMapFogView != null)
+            {
+                builder.RegisterComponent(campWorldTileView).AsSelf();
+                builder.RegisterEntryPoint<CampWorldTilePresenter>();
+            }
+            else if (campWorldTileView != null)
+            {
+                Debug.LogError("CampWorldTileView requires CampMapFogView for map click routing.", campWorldTileView);
+            }
         }
     }
 }

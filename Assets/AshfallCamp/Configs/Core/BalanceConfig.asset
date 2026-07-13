@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: BalanceConfig
   m_EditorClassIdentifier: AshfallCamp.Infrastructure::AshfallCamp.Infrastructure.BalanceConfigSO
   Balance:
+    MapRevealResourceId: scrap
+    MapRevealBaseCost: 50
+    MapInitialRevealRadius: 1
     MaxOfflineSeconds: 43200
     SimulationTickSeconds: 1
     CombatTickSeconds: 2

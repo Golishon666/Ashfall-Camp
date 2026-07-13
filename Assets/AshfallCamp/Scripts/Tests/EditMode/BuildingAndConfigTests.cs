@@ -935,6 +935,7 @@ namespace AshfallCamp.Tests.EditMode
             }
 
             var balance = database.Balance.Balance;
+            if (balance.MapRevealResourceId == oldId) balance.MapRevealResourceId = newId;
             if (balance.RecruitmentScrapResourceId == oldId) balance.RecruitmentScrapResourceId = newId;
             if (balance.RecruitmentFoodResourceId == oldId) balance.RecruitmentFoodResourceId = newId;
             if (balance.RecruitmentWaterResourceId == oldId) balance.RecruitmentWaterResourceId = newId;

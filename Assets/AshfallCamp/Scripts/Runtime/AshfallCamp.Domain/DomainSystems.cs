@@ -1665,7 +1665,11 @@ namespace AshfallCamp.Domain
                 }
             }
 
+            var routeValidation = WorldTileTravelSystem.ValidateRoute(config, request.RouteTileIds);
+            result.Errors.AddRange(routeValidation.Errors);
+
             var cost = CalculateCost(config, zone, GetPolicy(config, request.PolicyId), request.SurvivorIds.Count);
+            MergeCost(cost, WorldTileTravelSystem.CalculateRoundTripCost(config, request.RouteTileIds, request.SurvivorIds.Count));
             if (!ResourceSystem.CanSpend(state, cost))
             {
                 result.Errors.Add("Not enough expedition resources.");
@@ -1714,6 +1718,17 @@ namespace AshfallCamp.Domain
             cost[resourceId] = amount;
         }
 
+        internal static void MergeCost(Dictionary<string, int> target, Dictionary<string, int> addition)
+        {
+            if (target == null || addition == null) return;
+            foreach (var pair in addition)
+            {
+                int current;
+                target.TryGetValue(pair.Key, out current);
+                target[pair.Key] = current + Math.Max(0, pair.Value);
+            }
+        }
+
         private static int GetMaxSquadSize(GameState state)
         {
             return Math.Max(1, state.SquadSize);
@@ -1749,7 +1764,9 @@ namespace AshfallCamp.Domain
             var zone = config.RequireZone(request.ZoneId);
             ExpeditionPolicyDefinition policy;
             if (!config.TryGetPolicy(request.PolicyId, out policy)) policy = new ExpeditionPolicyDefinition();
-            ResourceSystem.TrySpend(state, ExpeditionValidator.CalculateCost(config, zone, policy, request.SurvivorIds.Count));
+            var launchCost = ExpeditionValidator.CalculateCost(config, zone, policy, request.SurvivorIds.Count);
+            ExpeditionValidator.MergeCost(launchCost, WorldTileTravelSystem.CalculateRoundTripCost(config, request.RouteTileIds, request.SurvivorIds.Count));
+            ResourceSystem.TrySpend(state, launchCost);
 
             var expedition = new ExpeditionState
             {
@@ -1760,7 +1777,10 @@ namespace AshfallCamp.Domain
                 StartedAtUnixMs = request.NowUnixMs,
                 ExpectedDurationSeconds = CalculateDuration(state, config, zone, policy, request.SurvivorIds),
                 RandomState = request.Seed == 0 ? (uint)state.NextId * 7919u : request.Seed,
-                Status = ExpeditionStatus.Active
+                Status = ExpeditionStatus.Active,
+                WorldTileId = request.WorldTileId,
+                TargetCell = request.TargetCell,
+                RouteTileIds = request.RouteTileIds != null ? new List<string>(request.RouteTileIds) : new List<string>()
             };
 
             foreach (var survivorId in request.SurvivorIds)
@@ -1772,6 +1792,11 @@ namespace AshfallCamp.Domain
             }
 
             state.Expeditions.Add(expedition);
+            if (!WorldTileTravelSystem.ResolveOutbound(state, config, expedition))
+            {
+                expedition.Status = ExpeditionStatus.Failed;
+                ExpeditionSimulator.Fail(state, config, expedition);
+            }
             result.Expedition = expedition;
             return result;
         }
@@ -2962,15 +2987,38 @@ namespace AshfallCamp.Domain
                 expedition,
                 "found " + ExpeditionLogMarkup.Number(amount, ExpeditionLogMarkup.Loot) +
                 " " + ExpeditionLogMarkup.Color(resourceName, ExpeditionLogMarkup.Loot) + ".");
+            RollEquipment(config, expedition, zone, ref rng);
+        }
+
+        private static void RollEquipment(GameConfigSnapshot config, ExpeditionState expedition, ZoneDefinition zone, ref SeededRandom rng)
+        {
+            if (zone.EquipmentTable == null || zone.EquipmentTable.Count == 0 || rng.NextDouble() > GameMath.Clamp(zone.EquipmentDropChance, 0, 1)) return;
+            var itemId = PickWeighted(zone.EquipmentTable, ref rng);
+            ItemDefinition definition;
+            if (!config.TryGetItem(itemId, out definition)) return;
+            var item = GameStateFactory.CreateItemState(itemId, config, "item_" + Math.Abs((long)rng.State));
+            if (item == null) return;
+            expedition.FoundItems.Add(item);
+            AddExpeditionLog(expedition, "found equipment: " + ExpeditionLogMarkup.Color(definition.Name, ExpeditionLogMarkup.Loot) + ".");
         }
 
         public static void Complete(GameState state, GameConfigSnapshot config, ExpeditionState expedition)
         {
+            if (!WorldTileTravelSystem.ResolveReturn(state, config, expedition))
+            {
+                expedition.Status = ExpeditionStatus.Failed;
+                Fail(state, config, expedition);
+                return;
+            }
             expedition.Status = ExpeditionStatus.Completed;
             expedition.Progress = 100;
             foreach (var pair in expedition.AccumulatedLoot)
             {
                 ResourceSystem.Add(state, pair.Key, pair.Value);
+            }
+            foreach (var item in expedition.FoundItems)
+            {
+                if (item != null && !state.Inventory.Exists(existing => existing.Uid == item.Uid)) state.Inventory.Add(item);
             }
 
             ApplyEquipmentDurabilityLoss(state, config, expedition);
@@ -3091,7 +3139,7 @@ namespace AshfallCamp.Domain
             }
         }
 
-        private static void Fail(GameState state, GameConfigSnapshot config, ExpeditionState expedition)
+        public static void Fail(GameState state, GameConfigSnapshot config, ExpeditionState expedition)
         {
             foreach (var survivorId in expedition.SurvivorIds)
             {

@@ -60,8 +60,9 @@ const frames = [
   },
   {
     key: "radioRecruitment",
-    slug: "08-radio-recruitment-elementwise",
-    name: "08 Radio Recruitment Elementwise",
+    slug: "08-radio-recruitment-choice-elementwise",
+    name: "08 Radio Recruitment Choice Elementwise",
+    nodeId: process.env.ASHFALL_RADIO_RECRUITMENT_FIGMA_NODE_ID || "201:18073",
   },
   {
     key: "expeditionCombat",
@@ -72,6 +73,11 @@ const frames = [
     key: "reports",
     slug: "10-reports-elementwise",
     name: "10 Reports Elementwise",
+  },
+  {
+    key: "worldTileTooltip",
+    slug: "11-world-tile-tooltip-elementwise",
+    name: "11 World Tile Tooltip Elementwise",
   },
 ];
 
